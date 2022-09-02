@@ -6,11 +6,11 @@
         
         <meta name="csrf-token" content="{{ csrf_token() }}">
          <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
-         <link  href="/css/app.css" rel="stylesheet">
+         {{-- <link  href="/css/app.css" rel="stylesheet"> --}}
          
          {{-- <link href="/css/app.css" rel="stylesheet"> --}}
       
- {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}">  --}}
+ <link rel="stylesheet" href="{{ mix('css/app.css') }}"> 
            {{-- <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet">
           <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css' rel="stylesheet">
           <link href=' https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel="stylesheet">
