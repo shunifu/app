@@ -7,6 +7,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
          <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
          <link  href="/css/app.css" rel="stylesheet">
+         
          {{-- <link href="/css/app.css" rel="stylesheet"> --}}
       
  {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}">  --}}
@@ -15,12 +16,12 @@
           <link href=' https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel="stylesheet">
           <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
           
-          <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
+       
 
-          <script src="{{asset('js/jquery.min.js')}}"></script>
-
+         
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
            <!-- Step 1 - Include the fusioncharts core library -->
-   
+           <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
            <!-- FusionCharts -->
            <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
            <!-- jQuery-FusionCharts -->
@@ -1719,11 +1720,13 @@
            {{-- <script src="https://cdn.statically.io/gh/innovazania/assets/master/app.js"></script>
            <script src="https://cdn.statically.io/gh/innovazania/assets/7f444680/admin-lte.js"></script>
            <script src="https://cdn.statically.io/gh/innovazania/assets/9ec219d9/notify.js"></script>
-           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+
+        
            
-          {{-- <script  src="/js/app.js" ></script> --}}
-           
-      
+         {{-- // <script  src="/js/app.js" ></script> --}}
+        
+          <script src="{{asset('js/app.js')}}"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
            {{-- <script src="https://code.highcharts.com/highcharts.js"></script> --}}
            {{-- <script src="https://cdn.jsdelivr.net/npm/@wiris/mathtype-tinymce5@7.24.6/plugin.min.js"></script> --}}
            <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
