@@ -565,13 +565,13 @@
 {{-- 
              <h4>{{$term}}</h4>
               <small>The following assessements will be written in {{$term}}</small> --}}
-            <table class="table table-bordered table-hover " >
+            <table class="table table-bordered table-hover table-responsive table-compact" >
               <thead class="thead-light">
                 <tr>
                   <th>Assessement Name</th>
                   <th> Assessement Month</th>
                   <th>Marks Deadline</th>
-                  <th>Deadline Extension</th>
+                
                   <th>Manage</th>
                 </tr>
               </thead>
@@ -594,11 +594,7 @@
                     {{ \Carbon\Carbon::parse($assessements->marks_deadline)->diffForHumans() }}
                 @endif
               </td>
-                  <td>   @if (is_null($assessements->marks_extension))
-                    Not set
-                    @else
-                    {{ \Carbon\Carbon::parse($assessements->marks_extension)->diffForHumans() }}
-                @endif</td>
+                 
 
                 <td class="py-0 align-middle">
                   <div class="btn-group btn-group-sm">
