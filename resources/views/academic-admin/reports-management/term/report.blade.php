@@ -15,19 +15,22 @@
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-   border: 0.4px solid {{$column_color}};
+   border: 0.3px solid {{$column_color}};
 }
 
             
-            textarea {
-            border: none;
-            background-color: transparent;
-            resize: none;
-            outline: none;
-            height: auto;
-            
-            }
-            input,select{
+textarea.form-control
+{  
+width: 100%;
+height: 100%;
+border-color: Transparent;     
+text-align: justify;
+}
+
+/* col{
+    vertical-align: middle;
+} */
+          input,select{
             color:black;
             }
             #img{
@@ -47,9 +50,11 @@
             
             @media print {
             th.background {
+                font-size: 14px;
             background-color: {{$column_color}} !important;
             -webkit-print-color-adjust: exact; 
             color: #FFFFFF !important;
+            
             }}
 
             @media all {
@@ -408,21 +413,27 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
     student_subject_averages.student_average,
     student_subject_averages.ca_average,
     student_subject_averages.exam_mark,
-    users.salutation,
-    users.lastname,
-    users.name,
     subjects.subject_name, 
     subjects.subject_type, 
-    subjects.id as subject_id
+    subjects.id as subject_id,
+    users.name,
+    users.salutation,
+    users.lastname,
+    (AVG( CASE WHEN assessements.id = 1 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test1,
+     (AVG( CASE WHEN assessements.id = 2 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test2
+    
+    FROM
+    marks
+    INNER JOIN assessements ON assessements.id = marks.assessement_id
+    INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
+    INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
+    INNER JOIN users ON users.id = marks.teacher_id
+     INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
+    WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id
+    GROUP BY
+    marks.student_id,student_subject_averages.student_id,
+    subjects.id"));
 
-FROM
-    student_subject_averages
-INNER JOIN teaching_loads ON teaching_loads.id = student_subject_averages.teaching_load_id
-INNER JOIN subjects ON subjects.id = student_subject_averages.subject_id
-INNER JOIN grades ON grades.id = student_subject_averages.student_class
-INNER JOIN users on users.id=teaching_loads.teacher_id
-WHERE
-    grades.stream_id = ".$stream." AND student_subject_averages.term_id = ".$term." AND student_subject_averages.student_id = ".$student." ORDER BY student_average DESC"));
 ?>
 
 
@@ -431,10 +442,12 @@ WHERE
         <tr class="hope">
             <th class="background">Subject Name</th>
            
-            <th class="background">Continuous Assessment (40%)</th>    
+            <th class="background">Test 1</th>    
+            <th class="background">Test 2</th>   
+            <th class="background">CA</th>   
 
             @if ($examExists)
-            <th class="background"> Examination (60%)</th>    
+            <th class="background"> Examination</th>    
             @endif
 
             <th class="background">Subject Average</th>   
@@ -453,6 +466,20 @@ WHERE
     @foreach($student_subject_average as $item2)
       <tr>
          <td> {{ $item2->subject_name }}  </td>
+         <td> 
+            @if ($item2->Test1<$pass_rate)
+            <span class="text-danger">{{round($item2->Test1)}}%</span>
+            @else
+            {{round($item2->Test1)}}%
+            @endif
+        </td>
+        <td> 
+            @if ($item2->Test2<$pass_rate)
+            <span class="text-danger">{{round($item2->Test2)}}%</span>
+            @else
+            {{round($item2->Test2)}}%
+            @endif
+        </td>
          <td> 
             @if ($item2->ca_average<$pass_rate)
             <span class="text-danger">{{round($item2->ca_average)}}%</span>
@@ -570,21 +597,21 @@ foreach ($term_average as $student_term_data) {
 
     ?>
                    {{-- Comments --}}
-                   <div class="col">
+                   <div class="col" id="i">
                        <label>Class Teacher Comment</label>
                     @foreach ($class_teacher_comments as $teacher_comment)
                    
-                    @if (in_array($student_term_data->student_average, range($teacher_comment->from,$teacher_comment->to,  0.01)) )
-                    <textarea class="form-control">{{$teacher_comment->comment}}</textarea>
+                    @if (in_array(number_format($student_term_data->student_average), range($teacher_comment->from,$teacher_comment->to,  0.01)) )
+                    <textarea class="form-control" id="j">{{$teacher_comment->comment}}</textarea>
                         
                     @endif
                     @endforeach
                    </div>
 
-                   <div class="col">
+                   <div class="col" id="i">
                     <label>Headteacher's Comment</label>
                     @foreach ($headteacher_comments  as $headteacher_comment)
-                    @if (in_array($student_term_data->student_average, range($headteacher_comment->from,$headteacher_comment->to, 0.01)) )
+                    @if (in_array(number_format($student_term_data->student_average), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
                     <textarea class="form-control">{{$headteacher_comment->comment}}</textarea>
                         
                     @endif
@@ -595,36 +622,25 @@ foreach ($term_average as $student_term_data) {
                                   ?>
                    </div>
 
-                   <div class="row py-3">
+                   <div class="row ">
+                    
                     <div class="col">
+                        <hr>
                         <label> Report Guide</label>
                         <br>
                        
  
                         In order for a student to pass, she/he must at least.
   <ol>
-    <li>Get an overall average of a minimum of <span class="text-bold">{{$pass_rate}}% </span> or more.</li>
-    <li>Get a minimum average of at least <span class="text-bold">{{$pass_rate}}%</span> subjects inclusive of  <span class="text-bold">English Language</span></li> 
     
+    <li>Get a minimum average of at least <span class="text-bold">{{$pass_rate}}%</span></li> 
+    {{-- 2. language and number of subjects --}}
+    <li>Get an average of <span class="text-bold">{{$pass_rate}}% or more </span> in at least {{$number_of_subjects}} subjects 
+        
+        @if ($passing_subject_rule==1)
+        inclusive of  <span class="text-bold">English Language</span></li>   
+        @endif
 
-    @php
-$school_is=\App\Models\School::first();
-      
-
-      if($school_is->school_code=='0387'){
-          if($stream==1){
-            echo '<li>Get an average of <span class="text-bold">'.$pass_rate.'% or more </span> in at least 6 subjects inclusive of  <span class="text-bold">English Language</span></li>';
-          }else{
-            echo '<li>Get an average of <span class="text-bold">'.$pass_rate.'% or more </span> in at least '.$number_of_subjects.' subjects inclusive of  <span class="text-bold">English Language</span></li>';
-          }
-      }else{
-        echo '<li>Get an average of <span class="text-bold">'.$pass_rate.'% or more </span> in at least '.$number_of_subjects.' subjects   <span class="text-bold"></span></li>';
-      }
-
-
-@endphp
-   
-    
   </ol>
 
                        </div>
@@ -660,6 +676,8 @@ $school_is=\App\Models\School::first();
 
                        </div>
                    </div>
+                   <hr>
+                   <center><small>&copy; 2022 Report generated by the <strong>Shunifu Intergrated School Management Platform</strong>-Developed by <strong>Innovazania</strong> based at the Royal Science & Technology Park. 7689 0726 | 7989 0726</small></center>
                </div>
     
 

@@ -279,11 +279,11 @@ a[target='_blank']{
                 </div>
             @endif
                 <div class="panel-body p-3">
-                  <form method="POST"  action="/forgot-password">
+                  <form method="POST"  action="/password/reset">
                     @csrf
                         <div class="form-group ">
                             <div class="input-field">
-                              <label  for="">Enter cellnumber or email</label>
+                              <label  for="">Enter registered Cell Number</label>
                                 <span class="far fa-user p-2"></span>
                                 <input type="text" required class="form-control{{ $errors->has('auth') ? ' is-invalid' : '' }}" name="auth" value="{{ old('auth') }}" placeholder="Enter Email or Cell Number ">
                                 <x-jet-input-error for="auth"></x-jet-input-error>

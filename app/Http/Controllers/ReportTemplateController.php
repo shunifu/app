@@ -17,6 +17,8 @@ class ReportTemplateController extends Controller
         return view('academic-admin.reports-management.templates.index', compact('template'));
     }
 
+    
+
     public function store(Request $request){
 
        
@@ -49,6 +51,12 @@ class ReportTemplateController extends Controller
 
 
         
+    }
+
+    public function settings_index(){
+
+        
+
     }
 
 }

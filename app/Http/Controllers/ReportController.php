@@ -458,12 +458,13 @@ class ReportController extends Controller
     assessements.term_id as term_id,
     teaching_loads.class_id as student_class,
     teaching_loads.id as teaching_load_id,
-    (AVG(CASE WHEN assessements.assessement_type = 1 AND assessements.term_id = ".$term." THEN marks.mark END))AS ca,
-    (AVG( CASE WHEN assessements.assessement_type = 2 AND assessements.term_id = ".$term." THEN marks.mark END))AS exam,
-    (AVG( CASE WHEN assessements.assessement_type = 1 AND assessements.term_id = ".$term." THEN (marks.mark)*".$ca_weight." END)) as ca_weight,
-    (AVG( CASE WHEN assessements.assessement_type = 2 AND assessements.term_id = ".$term." THEN (marks.mark)*".$exam_weight." END)) as exam_weight
+    (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN marks.mark END))AS ca,
+    (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN marks.mark END))AS exam,
+    (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN (marks.mark)*".$ca_weight." END))AS ca_weight,
+    (AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN (marks.mark)*".$exam_weight." END)) as exam_weight
     FROM
     marks
+    INNER JOIN c_a__exams ON c_a__exams.assessement_id = marks.assessement_id
     INNER JOIN assessements ON assessements.id = marks.assessement_id
     INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
     INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
@@ -589,7 +590,7 @@ class ReportController extends Controller
     INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
     INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
     INNER JOIN grades ON grades.id=student_subject_averages.student_class
-    where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term."
+    where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
     GROUP BY student_subject_averages.subject_id
     order by (student_subject_averages.subject_id =".$passing_subject.") desc, mark desc
     LIMIT ".$number_of_subjects.") t, 
@@ -620,7 +621,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
                     INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
                     INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
                     INNER JOIN grades ON grades.id=student_subject_averages.student_class
-                    where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term."
+                    where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
                     GROUP BY student_subject_averages.subject_id
                     order by  mark desc
                     LIMIT ".$number_of_subjects.") t, 
@@ -647,6 +648,18 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
                
           
         }else if($criteria->average_calculation=="default"){
+
+
+            $total_subjects = DB::table('student_loads')
+            ->join('teaching_loads', 'student_loads.teaching_load_id', '=', 'teaching_loads.id')
+            ->join('academic_sessions', 'academic_sessions.id', '=', 'teaching_loads.session_id')
+            ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+            ->where('teaching_loads.active', 1)
+            ->where('student_loads.student_id', $student)
+            ->where('subjects.subject_type','<>', 'non-value')
+            ->where('academic_sessions.active', 1)//Scoping to active academic year. 
+            ->get()->count();
+
           if($term_average_type=="decimal"){
             $avg_calculation="ROUND(SUM(t.mark) /".$total_subjects.", $number_of_decimal_places )";
 
@@ -674,7 +687,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
             student_subject_averages
             INNER JOIN teaching_loads ON teaching_loads.id = student_subject_averages.teaching_load_id
             INNER JOIN grades ON grades.id = student_subject_averages.student_class
-            WHERE student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id = ".$term."
+            WHERE student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id = ".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
             GROUP BY
             student_subject_averages.id
         ) t,
@@ -756,7 +769,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
 
  
     
-return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule', 'column_color','examExists', "p_key"));   
+return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule', 'column_color','examExists', "p_key", 'school_is'));   
  }
 
 

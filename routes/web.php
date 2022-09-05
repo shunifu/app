@@ -79,6 +79,7 @@ use App\Http\Controllers\ReportTemplateController;
 use App\Http\Controllers\VirtualMeetingController;
 use App\Http\Controllers\AcademicSessionController;
 use App\Http\Controllers\AssessementTypeController;
+use App\Http\Controllers\OneTimePasswordController;
 use App\Http\Controllers\RolesManagementController;
 use App\Http\Controllers\AssessementWeightController;
 use App\Http\Controllers\ProgressionStatusController;
@@ -95,6 +96,8 @@ Route::get('/', function () {
 Route::get('/reset', function () {
     return view('auth.forgot-password');
 });
+
+Route::post('/password/reset', [OneTimePasswordController::class,'sendOTP']);
 
 // 
 Route::post('/update-password',  [PasswordController::class,'change'])->name('password.change');
