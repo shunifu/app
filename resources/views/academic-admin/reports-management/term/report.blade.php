@@ -457,7 +457,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
     users.salutation,
     users.lastname,
     (AVG( CASE WHEN assessements.id = 1 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test1,
-     (AVG( CASE WHEN assessements.id = 2 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test2,
+     (AVG( CASE WHEN assessements.id = 2 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test2
  
     
     FROM
