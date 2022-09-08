@@ -465,10 +465,10 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
     INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
     INNER JOIN users ON users.id = marks.teacher_id
      INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
-    WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id ORDER BY student_average
+    WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id 
     GROUP BY
     marks.student_id,student_subject_averages.student_id,
-    subjects.id"));
+    subjects.id ORDER BY student_average"));
 
 ?>
 
