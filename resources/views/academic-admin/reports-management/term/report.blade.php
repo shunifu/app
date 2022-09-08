@@ -444,10 +444,10 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
            
             <th class="background">Test 1</th>    
             <th class="background">Test 2</th>   
-            <th class="background">CA</th>   
+            <th class="background">CA (40%)</th>   
 
             @if ($examExists)
-            <th class="background"> Examination</th>    
+            <th class="background"> Examination (60%)</th>    
             @endif
 
             <th class="background">Subject Average</th>   
