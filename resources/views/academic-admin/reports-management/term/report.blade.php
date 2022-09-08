@@ -205,16 +205,18 @@ echo '<h2 class="text-center lead text-bold">'.$student_term_data->lastname.' '.
 
 $classofstudent=$student_term_data->grade_id;
 
-if ($tie_type=="share_n_+_1") {
- //    if tie type is share, i.e ties share the same position run the query below
 
- if ($p_key=="stream_based") {
+
+
+if ($tie_type=="share_n_+_1") {
+
+    if ($p_key=="stream_based") {
        $sql_piece="where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream."";
  } else {
      $sql_piece="where term_averages.term_id=".$term." AND term_averages.student_class=".$classofstudent."";
  }
  
-
+ //    if tie type is share, i.e ties share the same position run the query below
 
 
 
@@ -232,6 +234,41 @@ echo $key->student_position.' out of '.$total_students.' ';
 }
 
 
+}else if ($tie_type=="share") {
+//     $student_position=\DB::select(\DB::raw("select t.*
+// from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
+// from term_averages ".$sql_piece.") t
+// where student_id = ".$student.""));
+// foreach ($student_position as $key) {
+// if ($p_key=="stream_based") {
+// echo $key->student_position.' out of '.$total_students.' ' ;
+// }else{
+// echo $key->student_position.' out of '.$total_students.' ';
+// }
+
+// }
+if ($p_key=="stream_based") {
+       $sql_piece="where sc.term_id=".$term." AND sc.student_stream=".$stream."";
+ } else {
+     $sql_piece="where sc.term_id=".$term." AND sc.student_class=".$classofstudent."";
+ }
+ 
+
+$student_position=\DB::select(\DB::raw("SELECT * FROM (SELECT st.id as student_id,
+          sc.student_average,
+          CASE 
+            WHEN @grade = COALESCE(sc.student_average, 0) THEN @rownum 
+            ELSE @rownum := @rownum + 1 
+          END AS student_position,
+          @grade := COALESCE(sc.student_average, 0) as avg
+         
+     FROM users st
+LEFT JOIN term_averages sc ON sc.student_id = st.id
+     JOIN (SELECT @rownum := 0, @grade := NULL) r  
+     ".$sql_piece."
+ ORDER BY sc.student_average DESC ) as sub
+WHERE sub.student_id=".$student.""));
+    
 }
         
 
@@ -420,6 +457,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
     users.salutation,
     users.lastname,
     (AVG( CASE WHEN assessements.id = 1 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test1,
+     (AVG( CASE WHEN assessements.id = 2 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test2,
      (AVG( CASE WHEN assessements.id = 2 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test2
     
     FROM
@@ -444,10 +482,10 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
            
             <th class="background">Test 1</th>    
             <th class="background">Test 2</th>   
-            <th class="background">CA (40%)</th>   
+            <th class="background">CA</th>   
 
             @if ($examExists)
-            <th class="background"> Examination (60%)</th>    
+            <th class="background"> Examination</th>    
             @endif
 
             <th class="background">Subject Average</th>   
@@ -481,27 +519,26 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
             @endif
         </td>
          <td> 
-            {{-- @if ($item2->ca_average<$pass_rate)
+            @if ($item2->ca_average<$pass_rate)
             <span class="text-danger">{{round($item2->ca_average)}}%</span>
-            @else --}}
-            {{round($item2->ca_average)*0.4}}
-            {{-- @endif --}}
+            @else
+            {{round($item2->ca_average)}}%
+            @endif
         </td>  
         @if ($examExists)
-        <td>  
-        {{-- @if(!isset($item2->exam_mark)) class="bg-danger" @endif>  --}}
-            {{-- @if ($item2->exam_mark<$pass_rate) --}}
-            {{-- @isset($item2->exam_mark)
+        <td  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
+            @if ($item2->exam_mark<$pass_rate)
+            @isset($item2->exam_mark)
             <span class="text-danger">{{round($item2->exam_mark)}}%</span>
-            @endisset --}}
+            @endisset
 
-            {{-- @if(!isset($item2->exam_mark)) --}}
-           {{-- <span class="small text-white">mark not entered</span> 
-            @endif --}}
+            @if(!isset($item2->exam_mark))
+           <span class="small text-white">mark not entered</span> 
+            @endif
             
-            {{-- @else --}}
-            {{round($item2->exam_mark)*0.6}}
-            {{-- @endif --}}
+            @else
+            {{round($item2->exam_mark)}}%
+            @endif
         </td> 
         @endif
         <td> 
