@@ -34,7 +34,7 @@ $cellIs=$userExists->cell_number;
         $url=substr( URL::to('/'),7);
 
 
-        User::where('id', $userID)->update(['password' => Hash::make($otp)]);
+        User::where('id', $userID)->update(['password' => Hash::make($otp), 'status'=>0]);
 
         
        
