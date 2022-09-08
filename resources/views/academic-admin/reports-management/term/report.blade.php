@@ -501,13 +501,13 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
     @foreach($student_subject_average as $item2)
       <tr>
          <td> {{ $item2->subject_name }}  </td>
-         <td> 
+         {{-- <td> 
             @if ($item2->Test1<$pass_rate)
             <span class="text-danger">{{round($item2->Test1)}}%</span>
             @else
             {{round($item2->Test1)}}%
             @endif
-        </td>
+        </td> --}}
        
          <td> 
             @if ($item2->ca_average<$pass_rate)
