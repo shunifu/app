@@ -523,13 +523,13 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
         <td> 
            
            
-            {{round($item2->Test1+$item2->Test2)}}%
+            {{round($item2->Test1+$item2->Test2)}}
            
         </td> 
         <td> 
            
            
-            {{round($item2->ca_average*0.4)}}%
+            {{round($item2->ca_average*0.4)}}
            
         </td> 
         @if ($examExists)
