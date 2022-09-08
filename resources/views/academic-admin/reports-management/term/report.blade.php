@@ -15,7 +15,7 @@
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-   border: 0.3px solid {{$column_color}};
+   border: 0.3px solid grey;
 }
 
             
@@ -521,14 +521,10 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
             @endif
         </td>
         <td> 
-           
-           
-            {{round($item2->Test1+$item2->Test2)}}
-           
+        {{round($item2->Test1+$item2->Test2)}}
         </td> 
         <td> 
-           
-           
+
             {{round($item2->ca_average*0.4)}}
            
         </td> 
