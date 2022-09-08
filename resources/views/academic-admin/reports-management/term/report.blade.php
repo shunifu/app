@@ -478,8 +478,8 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
         <tr class="hope">
             <th class="background">Subject Name</th>
            
-            <th class="background">Test 1</th>    
-            <th class="background">CA</th>   
+            
+            <th class="background">Continuous Assessement</th>   
 
             @if ($examExists)
             <th class="background"> Examination</th>    
