@@ -457,8 +457,8 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
     users.salutation,
     users.lastname,
     (AVG( CASE WHEN assessements.id = 1 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test1,
-     (AVG( CASE WHEN assessements.id = 2 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test2,
-     (AVG( CASE WHEN assessements.id = 2 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test2
+   
+
     
     FROM
     marks
@@ -481,7 +481,6 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
             <th class="background">Subject Name</th>
            
             <th class="background">Test 1</th>    
-            <th class="background">Test 2</th>   
             <th class="background">CA</th>   
 
             @if ($examExists)
@@ -511,13 +510,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
             {{round($item2->Test1)}}%
             @endif
         </td>
-        <td> 
-            @if ($item2->Test2<$pass_rate)
-            <span class="text-danger">{{round($item2->Test2)}}%</span>
-            @else
-            {{round($item2->Test2)}}%
-            @endif
-        </td>
+       
          <td> 
             @if ($item2->ca_average<$pass_rate)
             <span class="text-danger">{{round($item2->ca_average)}}%</span>
