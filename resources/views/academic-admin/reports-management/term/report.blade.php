@@ -7,7 +7,7 @@
 
 
             .table {
-  border: 0.5px solid{{$column_color}};
+  border: 0.5px solid grey;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
