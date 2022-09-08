@@ -972,12 +972,17 @@
                                 <x-jet-label> Settings Apply To:</x-jet-label>
                               <div class="form-check">
                                 <label class="form-check-label">
-                                  <input type="radio" class="form-check-input" name="stream_type" id="" value="all_classes" >
+                                  <input type="radio" class="form-check-input" name="settings_application" id="settings_application" value="all_classes" >
                                   All Streams
                                 </label>
                                 <br>
-                                <input type="radio" class="form-check-input" name="stream_type" id="" value="external_only" >
+                                <input type="radio" class="form-check-input" name="settings_application" id="settings_application" value="external_only" >
                                   External Classes Only
+                                <br>
+                                  <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="settings_application" id="settings_application" value="internal_only" >
+                                    Internal Classes Only
+                                  </label>
 
                               </div>
 
