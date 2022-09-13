@@ -390,7 +390,7 @@ $otp =  mt_rand(1000,9999);
                 // if ($user_data->active==1) {
                 // }
 
-                $userIs=User::find($id)->update([
+                $userIs=$user_data->update([
                     'status'=>1,
                 ]);
 
