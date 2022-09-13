@@ -120,9 +120,42 @@
             <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
+
+    <div class="col-auto  form-group">
+        <x-jet-label>Choose Report Template</x-jet-label>
+       
+        <select name="report_template" id="report_template" class="form-control">
+            <option value="">Select Template</option>
+            <option value="default">Shunifu Default</option>
+            <option value="plus">Shunifu Plus</option>
+            <option value="lite">Shunifu Lite</option>
+           
+
+        </select>
+
+       
+    </div>
+
+    <div class="form-group col-auto" id="lite_report">
+      <label for="">Lite template</label>
+      <select name="lite_report_template" id="lite_report_template" class="form-control">
+        <option value="">Select Template</option>
+        <option value="plus">Exam Only</option>
+        <option value="lite">CA Only</option>
+       
+
+    </select>
+
+    @error('report_template')
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
+    </div>
+
+
+    
        </div>
        <div class="card-footer text-muted">
-         <x-jet-button id="btnSelector" onclick="callAjax();">Generate Stream Report</x-jet-button>
+         <x-jet-button id="btnSelector" onclick="callAjax();">Generate Report</x-jet-button>
        </div>
        </form>
    </div>
@@ -131,124 +164,29 @@
 {{-- End of Stream Card --}}
 
 
-{{-- Beginning of Class Card --}}
-{{-- <div class="col-md-3 pb-5">
-   <div class="card border-top border-primary">
-       <div class="card-header">
-           <h4 class="lead">Class Based Report</h4>
-           <small> If you want to print or view reports for a stream then use section.</small>
-       </div>
-       <form action="{{route('report.class')}}" method="post">
-         @csrf
-       <div class="card-body">
-         @include('partials.term')
-
-        <div class="col form-group">
-         <x-jet-label>Class</x-jet-label>
-         <select class="form-control" name="section">
-             <option value="">Select Class</option>
-             @foreach($classes as $class)
-                 <option value="{{ $class->id }}">
-                     {{ $class->grade_name }}
-                 </option>
-             @endforeach
-         </select>
-         @error('class')
-             <span class="text-danger">{{ $message }}</span>
-         @enderror
-     </div>
-     <div class="col-auto  form-group">
-        <x-jet-label>Position Type</x-jet-label>
-        <select class="form-control" name="position_type">
-            <option value="">Select Position Type</option>
-            <option value="stream_based">Stream Based</option>
-            <option value="class_based">Class Based</option>    
-        </select>
-        @error('position_type')
-            <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-       </div>
-       <div class="card-footer text-muted">
-         <x-jet-button id="btnSelector">Generate Class Report</x-jet-button>
-       </div>
-      </form>
-   </div>
-
-</div> --}}
-{{-- End of Stream Card --}}
 
 
 
-{{-- Beginning of Student Card --}}
-{{-- <div class="col">
-   <div class="card border-top border-primary">
-       <div class="card-header">
-           <h4 class="lead">Student Based Report</h4>
-           <small> If you want to print or view reports for a stream then use section.</small>
-       </div>
-       <form action="{{route('report.student')}}" method="post">
-         @csrf
-       <div class="card-body">
-         @include('partials.term')
 
-        <div class="col-auto form-group">
-         <x-jet-label>Class</x-jet-label>
-         <select class="form-control" name="section">
-             <option value="">Select Class</option>
-             @foreach($classes as $class)
-                 <option value="{{ $class->id }}">
-         {{ $class->grade_name }}
-                 </option>
-                  
-             @endforeach
-         </select>
-         @error('class')
-             <span class="text-danger">{{ $message }}</span>
-         @enderror
-     </div>
-     <div class="col-auto  form-group">
-        <x-jet-label>Position Type</x-jet-label>
-        <select class="form-control" name="position_type">
-            <option value="">Select Position Type</option>
-            <option value="stream_based">Stream Based</option>
-      
-        </select>
-        @error('position_type')
-            <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-       </div>
-       <div class="card-footer text-muted">
-          
-         <x-jet-button id="btnSelector">Generate Student Report</x-jet-button>
 
-       </div>
-      </form>
-   </div>
 
-</div> --}}
-{{-- End of Stream Card --}}
+    <script>
+        $(document).ready(function () {
+            $("#lite_report").hide();
+            $("#report_template").on('change', function() {
 
-    </div>
-    {{-- <script>
-        function callAjax(e){
-    $('#loaderIcon').show();
-    $.ajax({
-        type: "GET",
-        url: 'https://api.joind.in/v2.1/talks/10889',
-        data: {
-            format: 'json'
-        },
-        success: function(response){
-           console.log(response);
-        },
-        complete: function(){
-            $('#loaderIcon').hide();
-        }
-    });
-}
-    </script> --}}
+                var item= $(this).find(":selected").val();
+            if (item=="lite") {
+                $("#lite_report").show();
+            }else{
+                $("#lite_report").hide();
+            }
+               
+            });
+
+           
+        });
+    </script>
 
 
 </x-app-layout>

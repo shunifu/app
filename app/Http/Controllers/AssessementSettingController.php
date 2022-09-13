@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Term;
+use App\Models\Stream;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Models\AssessementType;
@@ -66,12 +67,19 @@ class AssessementSettingController extends Controller
        $assessement_weight=DB::table('assessement_weights')
        ->join('terms','terms.id','=','assessement_weights.term_id')
        ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
+       ->join('streams','streams.id','=','assessement_weights.stream_id')
        ->where('academic_sessions.active', 1)
-       ->select('assessement_weights.id as assessement_weight_id','ca_percentage','exam_percentage','terms.term_name')
+       ->select('terms.id as term_id','streams.stream_name','streams.id as stream_id','assessement_weights.id as assessement_weight_id','ca_percentage','exam_percentage','terms.term_name')
        ->get();
 
        //Section
        $sections=Section::all();
+       $streams=Stream::all();
+
+       $assessement_weight_collection=$assessement_weight->collect();
+       $assessement_weight_=$assessement_weight_collection->groupBy('term_id')->toArray();
+
+    //    dd($assessement_weight_);
 
        //Pass Rates
        $pass_rates=DB::table('pass_rates')
@@ -84,7 +92,7 @@ class AssessementSettingController extends Controller
        ->select('terms.id as term_id','terms.term_name', 'academic_sessions.academic_session')
        ->get();
 
-    return view('academic-admin.settings-management.assessements.index', compact('assessements_','assessement_types', 'assessement_terms', 'assessements', 'ca_exam_assignments', 'assessement_weight', 'sections', 'pass_rates', 'ca_exam_assignments_'));
+    return view('academic-admin.settings-management.assessements.index', compact('streams','assessements_','assessement_types', 'assessement_terms', 'assessements', 'ca_exam_assignments',  'sections', 'pass_rates', 'ca_exam_assignments_', 'assessement_weight_'));
     }
 
    

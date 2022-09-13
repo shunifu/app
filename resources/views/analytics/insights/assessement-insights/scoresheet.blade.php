@@ -192,6 +192,7 @@ if ($result) {
           //  dd($row[0]);
             if ($cell === NULL) { $cell = '-'; }
             
+            
             echo "<td class='align-middle'>".$cell."</td>";
           }
           echo "</tr>";

@@ -13,6 +13,7 @@ class AssessementWeight extends Model
         'term_id',
         'ca_percentage',
         'exam_percentage',
+        'stream_id',
     ];
 
 }

@@ -14,7 +14,7 @@ class AddApplicableToColumnToAssessementWeightsTable extends Migration
     public function up()
     {
         Schema::table('assessement_weights', function (Blueprint $table) {
-            $table->string('applicable_to');
+            $table->string('stream_id');
         });
     }
 

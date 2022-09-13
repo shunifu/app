@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\AcademicSession;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\StudentSubjectAverage;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\Console\Input\Input;
 
@@ -626,6 +627,59 @@ return redirect('users/teacher/loads/view/'.$load_id)->with('Teaching Load succe
   
       return redirect('/users/teacher/loads/view/'.$id);
     }
+
+    public function archive(Request $request){
+
+      // dd($request->all());
+    $load=TeachingLoad::find($request->teaching_load_id);
+
+    $teacher=$load['0']->teacher_id;
+
+
+    $teacherIs=User::find($teacher);
+    $teacher_id=$teacherIs->id;
+
+    if (Auth::user()->hasRole('admin_teacher') or Auth::user()->id==$teacher_id) {
+        if ($request->action=="archive") {
+            //1. Update settings, make
+            //a) student_loads.active=0;
+            //b) marks.active=0;
+        }
+
+
+        if ($request->action=="archive") {
+            for ($i = 0; $i <count($request->students); $i++) {
+              
+                $student_load=StudentLoad::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+                $student_mark=Mark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+    
+                $student_subject_average=StudentSubjectAverage::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+                //archive workflow
+
+                //delete in teaching load
+                if ($student_subject_average->exists()) {
+                  $student_subject_average->delete();
+              }
+
+                //1. student_loads.active=0
+                if ($student_load->exists()) {
+                    $student_load->update(['active'=>'0']);
+                }
+
+                //2. mark.active=0
+                if ($student_mark->exists()) {
+                    $student_mark->update(['active'=>'0']);
+                   
+                }
+
+
+            }
+            flash()->overlay('<i class="fas fa-check-circle "></i>'.' Success. You have archived that student', 'Archive Student');
+        }
+    }
+}
 
     public function view($id){
 

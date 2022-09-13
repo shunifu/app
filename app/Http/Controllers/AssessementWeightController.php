@@ -41,15 +41,16 @@ class AssessementWeightController extends Controller
 
            
             $validation=$request->validate([
+                'stream'=>'required',
                 'assessement_term'=>'required',
                 'ca_percentage'=>'required|numeric|max:100', 
                 'exam_percentage'=>'required|numeric|max:100'
             ]);
 
-            $termExists=AssessementWeight::where('term_id',$request->assessement_term)->exists();
+            $termExists=AssessementWeight::where('term_id',$request->assessement_term)->where('stream_id', $request->stream)->exists();
 
             if($termExists){
-                flash()->overlay('<i class="fas fa-exclamation-circle text-warning"></i> Error. Term already exists. You can either edit or delete the term before assigning new assessement weight to it', 'Add Assessement Weights');
+                flash()->overlay('<i class="fas fa-exclamation-circle text-warning"></i> Error. Assessement weight  already exists. You can either edit or delete the term before assigning new assessement weight to it', 'Add Assessement Weights');
                 return redirect()->back();
             }
 
@@ -58,6 +59,7 @@ class AssessementWeightController extends Controller
                
 
             AssessementWeight::create([
+                'stream_id'=>$request->stream,
                 'term_id'=>$request->assessement_term,
                 'ca_percentage'=>$request->ca_percentage,
                 'exam_percentage'=>$request->exam_percentage

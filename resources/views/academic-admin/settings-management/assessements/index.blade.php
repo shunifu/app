@@ -929,6 +929,20 @@
                       @csrf
 
                       <div class="form-group">
+                        <x-jet-label>Stream</x-jet-label>
+                        <select class="form-control" name="stream" id="stream">
+                        <option value="">Select Stream</option>
+                        <option value="0">All Streams</option>
+                        @foreach ($streams as $stream)
+                        <option value="{{$stream->id}}">{{$stream->stream_name}} </option>
+                        @endforeach
+                        </select>
+                        @error('stream')
+                        <span class="text-danger">{{$message}}</span>  
+                        @enderror
+                    </div>
+
+                      <div class="form-group">
                           <x-jet-label>Term</x-jet-label>
                           <select class="form-control" name="assessement_term">
                           <option value="">Select Term</option>
@@ -968,7 +982,7 @@
                               </div>
                     
 
-                              <div class="form-group">
+                              {{-- <div class="form-group">
                                 <x-jet-label> Settings Apply To:</x-jet-label>
                               <div class="form-check">
                                 <label class="form-check-label">
@@ -989,7 +1003,7 @@
                                 @error('exam_percentage')
                                 <span class="text-danger">{{$message}}</span>  
                                 @enderror
-                                </div>         
+                                </div>          --}}
                   
                       
     
@@ -1004,7 +1018,7 @@
 
         </div>
   
-   <div class="col-md-8">
+   <div class="col">
      
       <div class="card card-light">
           <div class="card-header">
@@ -1013,44 +1027,55 @@
           <!-- /.card-header -->
         
           <!-- /beginning of card-body -->
-            <div class="card-body">
-
-               <table class="table table-hover table-bordered ">
-                    <thead class="thead-light" >
+          
+                    <!-- /beginning of card-body -->
+                    <div class="card-body">
+  
+                      @foreach ($assessement_weight_ as $term_assessement_weight => $data)
+                      @foreach (\App\Models\Term::where('id', $term_assessement_weight)->get() as $term_a_weight)
+                      <h4>{{$term_a_weight->term_name }}</h4>
+                      {{-- <small>The following assessement weights apply in the following term {{$term_a_weight->term_name}}  </small> --}}
+                       @endforeach
+        {{-- 
+                     <h4>{{$term}}</h4>
+                      <small>The following assessements will be written in {{$term}}</small> --}}
+                    <table class="table table-bordered table-hover table-responsive table-compact" >
+                      <thead class="thead-light" >
                         <tr>
     
-                            <th>Term</th>
+                            <th>Stream</th>
                             <th>Continuous Assessement</th>
                             <th>Examination</th>
                             <th>Manage</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($assessement_weight as $weight)
+                      <tbody>
+                      @foreach($data as $assessements_weight)
                         <tr>
-                          <td>{{$weight->term_name}}</td>
-                          <td>{{$weight->ca_percentage}}%</td>
-                          <td>{{$weight->exam_percentage}}%</td>
-
-                          <td class="py-0 align-middle">
-                            <div class="btn-group btn-group-sm">
-    <a href="/assessements/assessement-weight/edit/{{$weight->assessement_weight_id}}" class="btn btn-info"><i class="fas fa-edit"></i>Change</a>
-    <a href="/assessements/assessement-weight/delete/{{$weight->assessement_weight_id}}" class="btn btn-danger"><i class="fas fa-trash"></i>Delete</a>
-                            </div>
-                          </td>
-
-  {{-- <td>
-<a href="/assessements/assessement-weight/edit/{{$weight->assessement_weight_id}}"><i class="fas fa-edit text-primary mr-4 pr-2"> <span>Edit</span> </i></a>
-<a href="/assessements/assessement-weight/delete/{{$weight->assessement_weight_id}}"><i class="fas fa-trash-alt text-danger mr-4 pr-2"><span class="ml-1">Delete</span></i></a>  
-  </td> --}}
-                      </tr>  
-                        @endforeach
+                          <td>{{$assessements_weight->stream_name}}</td>
+                          <td>{{$assessements_weight->ca_percentage}}%</td>
+                          <td>{{$assessements_weight->exam_percentage}}%</td>
                         
-                        
-                    </tbody>
-                </table>
-
-            </div>
+                        <td class="py-0 align-middle">
+                          <div class="btn-group btn-group-sm">
+                            <button class="btn btn-info assessement_weight_edit" value="{{$assessements_weight->assessement_weight_id}}"><i class="fas fa-edit"></i>Change</button>
+                            <button class="btn btn-danger assessement_weight_delete" value="{{$assessements_weight->assessement_weight_id}}"><i class="fas fa-trash"></i>Delete</button>
+                          </div>
+                        </td>
+                        </tr>
+                      @endforeach
+                      </tbody>
+                    </table>
+        <hr>   
+                  
+                  
+                  @endforeach
+        
+        
+        
+        
+        
+                    </div>
             <!-- /end of card-body -->
         </div>
 

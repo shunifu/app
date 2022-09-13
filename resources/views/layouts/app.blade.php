@@ -325,6 +325,18 @@
               </li>
             </ul>
 
+
+            @role('admin_teacher')
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('admin_check.loads') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Loads (Admin)</p>
+                </a>
+              </li>
+            </ul>
+            @endrole
+
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/teaching-loads/transfer/" class="nav-link">
@@ -1724,7 +1736,7 @@
 
         
            
-          <script  src="/js/app.js" ></script>
+          {{-- <script  src="/js/app.js" ></script> --}}
         
           {{-- <script src="{{asset('js/app.js')}}"></script> --}}
           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 

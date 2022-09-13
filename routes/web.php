@@ -329,6 +329,9 @@ Route::get('/users/teacher/loads/view/{id}', [TeachingLoadController::class,'vie
 Route::get('/users/teacher/loads/update/{id}', [TeachingLoadController::class,'update'])->name('teaching_loads.update');
 Route::get('/users/teacher/loads/delete/{id}', [TeachingLoadController::class,'destroy'])->name('teaching_loads.destroy');
 Route::get('/users/teacher/loads/student/delete/{id}/{student}', [TeachingLoadController::class,'student_destroy'])->name('teaching_loads.student_destroy');
+
+Route::post('/teaching-loads/archive', [TeachingLoadController::class,'archive'])->name('teaching_loads.archive');
+
 //Support Staff Data Route
 Route::get('/users/support', [AdminStaffController::class,'create'])->name('support.create');
 Route::post('/users/support/add', [AdminStaffController::class,'store'])->name('support.store');
@@ -566,9 +569,16 @@ Route::post('/checker/ratio/process',[RatioCheckerController::class,'process'])-
 
 //Checks
 Route::get('/check/loads/',[CheckController::class,'check_loads_index'])->name('check.loads');
+Route::get('admin/check/loads/',[CheckController::class,'admin_check_loads_index'])->name('admin_check.loads');
+
 Route::post('/check/loads/process',[CheckController::class,'check_loads_process'])->name('check_loads_process');
+Route::post('admin/check/loads/process',[CheckController::class,'admin_check_loads_process'])->name('admin_check_loads_process');
+
 Route::get('/check/loads/view/{id}', [CheckController::class,'view_students'])->name('teaching_loads.view-checker');
 Route::post('/check/marks/',[CheckController::class,'check_marks'])->name('check.marks');
+
+
+
 //end of checks
 
 
