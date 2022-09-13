@@ -392,7 +392,7 @@ $otp =  mt_rand(1000,9999);
 
 
                 $userIs=User::find($id)->update([
-                    'status'=>1;
+                    'status'=>1,
                 ]);
 
 
