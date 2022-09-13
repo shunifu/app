@@ -363,12 +363,12 @@ where student_id = ".$student->learner_id.""));
                     <td class="align-middle p-2">
          
                      
-                        @if ($student->ConsumerScience>=$pass_rate)
-                        <span class="text-secondary">{{ $student->ConsumerScience}}% </span>
-                        @elseif(is_null($student->ConsumerScience))
+                        @if ($student->HomeEconomics>=$pass_rate)
+                        <span class="text-secondary">{{ $student->HomeEconomics}}% </span>
+                        @elseif(is_null($student->HomeEconomics))
                         -
-                        @elseif($student->ConsumerScience<$pass_rate )
-                        <span class="text-danger">{{ $student->ConsumerScience}}% </span>
+                        @elseif($student->HomeEconomics<$pass_rate )
+                        <span class="text-danger">{{ $student->HomeEconomics}}% </span>
                         @endif
                     </td>
 
