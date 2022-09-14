@@ -617,7 +617,7 @@ class ReportController extends Controller
             FROM
             student_subject_averages
             WHERE
-            student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate."
+            student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
             ORDER BY
             student_average
             DESC
@@ -648,7 +648,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
                             FROM
                             student_subject_averages
                             WHERE
-                            student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate."
+                            student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
                             ORDER BY
                             student_average
                             DESC
@@ -716,7 +716,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
             FROM
             student_subject_averages
             WHERE
-            student_subject_averages.student_id =".$student." AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >= ".$pass_rate."
+            student_subject_averages.student_id =".$student." AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >= ".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
             ORDER BY
             student_average
             DESC
