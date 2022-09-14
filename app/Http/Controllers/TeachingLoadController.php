@@ -676,8 +676,45 @@ return redirect('users/teacher/loads/view/'.$load_id)->with('Teaching Load succe
 
 
             }
+           
             flash()->overlay('<i class="fas fa-check-circle "></i>'.' Success. You have archived that student', 'Archive Student');
+            return Redirect::back();
         }
+
+        if ($request->action=="unarchive") {
+          for ($i = 0; $i <count($request->students); $i++) {
+            
+              $student_load=StudentLoad::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+              $student_mark=Mark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+  
+              $student_subject_average=StudentSubjectAverage::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+              //archive workflow
+
+              //delete in teaching load
+              if ($student_subject_average->exists()) {
+                $student_subject_average->delete();
+            }
+
+              //1. student_loads.active=0
+              if ($student_load->exists()) {
+                  $student_load->update(['active'=>'1']);
+              }
+
+              //2. mark.active=0
+              if ($student_mark->exists()) {
+                  $student_mark->update(['active'=>'1']);
+                 
+              }
+
+
+          }
+         
+          flash()->overlay('<i class="fas fa-check-circle "></i>'.' Success. You have unarchived that student', 'Archive Student');
+          return Redirect::back();
+      }
+
     }
 }
 

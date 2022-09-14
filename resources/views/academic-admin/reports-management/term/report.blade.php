@@ -8,6 +8,7 @@
 
             .table {
   border: 0.5px solid grey;
+  table-layout: fixed;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
@@ -582,6 +583,13 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
 </table> 
 @endif
 
+@if ($report_template=="lite")
+{{-- @if ($lite)
+    
+@endif --}}
+    
+@endif
+
 @if ($report_template=="plus")
 @php
 $db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
@@ -600,12 +608,13 @@ SET @sql = CONCAT('SELECT
     subjects.subject_name as Subject, 
     ', @sql, ',
    
-    student_subject_averages.ca_average as CA,
-    student_subject_averages.student_average as Average,
+    ROUND(student_subject_averages.ca_average) as CA,
+    ROUND(student_subject_averages.student_average) as Average,
     
     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
      (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
-     CONCAT(' ',users.name,,users.lastname) AS Teacher 
+     (lastname) AS Teacher
+   
      from marks 
     INNER JOIN assessements ON assessements.id = marks.assessement_id
     INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
@@ -640,12 +649,21 @@ if ($result) {
       // printing table rows
       while($row = $res->fetch_row())
       {
-          echo "<tr>";
+     //   dd($row[5]);
+        if ($row['5'] <= 40) {
+        $class = 'class=text-danger';
+     
+    } else {
+        $class = 'class=text-info';
+    }
+    echo "<tr>";
           foreach($row as $cell) {
-           // dd($row);
+        //   foreach ($scell as $key => $value) {
+        //     # code...
+        //   }
             if ($cell === NULL) { $cell = '-'; }
          
-            echo "<td>$cell</td>";
+            echo "<td $class>$cell</td>";
           }
           echo "</tr>\n";
       }

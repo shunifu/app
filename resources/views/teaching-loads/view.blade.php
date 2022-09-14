@@ -72,6 +72,7 @@
                 <select name="action" id="action" class="form-control">
                     <option value="">Select Action</option>
                     <option value="archive">Archive</option>
+                    <option value="unarchive">Unarchive</option>
                     <option value="delete">Delete</option>
                 </select>
                 
