@@ -127,8 +127,8 @@
         <select name="report_template" id="report_template" class="form-control">
             <option value="">Select Template</option>
             <option value="default">Shunifu Default</option>
-            <option value="plus">Shunifu Plus</option>
-            <option value="lite">Shunifu Lite</option>
+            {{-- <option value="plus">Shunifu Plus</option>
+            <option value="lite">Shunifu Lite</option> --}}
            
 
         </select>
