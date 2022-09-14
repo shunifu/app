@@ -90,6 +90,8 @@
        <div class="card-header">
            <h4 class="lead">School  Report</h4>
            <small> If you want to print or view reports for a stream then use section.</small><br>
+           <small><span class="text-bold"><span class="text-danger">!Important! </span> Please ensure that you have verified that <strong>all marks have been entered by the teachers.</strong> </span></small>
+           <p></p>
            <small><span class="text-bold">The loading of the report may take a few minutes depending on the speed of the network and the number of students in the stream. </span></small>
        </div>
        <form action="{{route('report.stream')}}" method="post">
@@ -117,6 +119,21 @@
         @error('column_color')
             <span class="text-danger">{{ $message }}</span>
         @enderror
+    </div>
+
+    <div class="col-auto  form-group">
+        <x-jet-label>Choose Report Template</x-jet-label>
+       
+        <select name="report_template" id="report_template" class="form-control">
+            <option value="">Select Template</option>
+            <option value="default">Shunifu Default</option>
+            {{-- <option value="plus">Shunifu Plus</option>
+            <option value="lite">Shunifu Lite</option> --}}
+           
+
+        </select>
+
+       
     </div>
        </div>
        <div class="card-footer text-muted">
