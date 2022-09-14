@@ -799,6 +799,22 @@ foreach ($term_average as $student_term_data) {
                         <div id="signaturetitle">
                           Class Teacher Signature
                           </div>
+                          <div class="text-center">
+                            <?php
+
+$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id where grade_id=".$classofstudent.""));
+foreach ($class_t as $key_t) {
+
+echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
+
+
+}
+
+
+
+
+                            ?>
+                          </div>
 
                        </div>
 
@@ -809,7 +825,7 @@ foreach ($term_average as $student_term_data) {
                           </div>
                          
                           <div class="text-center">
-<img class="img-fluid mx-auto " width="80" height="80" src="{{$school_is->base64}} " alt="">
+<img class="img-fluid mx-auto " width="40" height="40" src="{{$school_is->base64}} " alt="">
                        </div>
                     </div>
 

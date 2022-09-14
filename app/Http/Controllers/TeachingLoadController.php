@@ -210,10 +210,21 @@ return view('teaching-loads.index', compact('classes', 'sessions', 'subjects'));
         
          }
       
-         flash()->overlay('<i class="fas fa-check-circle success"></i>'.' Congratulations. You have successfully added teaching loads.', 'Add Teaching Load');
+         $view_loads=DB::table('student_loads')
+         ->join('users','student_loads.student_id','=','users.id')
+         ->join('teaching_loads','student_loads.teaching_load_id','=','teaching_loads.id')
+      
+         ->where('teaching_loads.id', $load_id )
+      
+         ->select('teaching_loads.id as teaching_load_id','student_loads.student_id','student_loads.id as student_load_id', 'users.name', 'users.lastname', 'users.middlename', 'users.profile_photo_path', 'teaching_loads.teacher_id', 'teaching_loads.subject_id', 'class_id', 'teaching_loads.session_id')
+         ->get();
+
+        //  flash()->overlay('<i class="fas fa-check-circle success"></i>'.' Congratulations. You have successfully added teaching loads.', 'Add Teaching Load');
               
         
-         return redirect('users/teacher/loads/view/'.$load_id,)->with('Teaching Load successfully created');
+         return view('teaching-loads.view', compact('load_id', 'view_loads'));
+
+         //return redirect('users/teacher/loads/view/'.$load_id,)->with('Teaching Load successfully created');
         }
         
   
