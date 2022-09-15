@@ -62,6 +62,14 @@
                   @enderror
                   </div>
 
+                  <div class="form-group">
+                    <x-jet-label>code</x-jet-label>
+                  <input type="text" class="form-control" name="subject_code">
+                    @error('subject_code')
+                    <span class="text-danger">{{$message}}</span>  
+                    @enderror
+                    </div>
+
          
 
                

@@ -58,11 +58,13 @@ class SubjectController extends Controller
         
         $subject_name=$request->input('subject_name');
         $subject_type=$request->input('subject_type');
+        $subject_code=$request->input('subject_code');
         $subject_section=$request->input('subject_section');
         Subject::create([
             'subject_name' => $subject_name,
             'subject_type' => $subject_type,
-            'subject_section'=>$subject_section
+            'subject_section'=>$subject_section,
+            'subject_code'=>$subject_code
         ]);
 
         flash()->overlay('<i class="fas fa-check-circle text-success "></i> Congratulations. You have successfully added subject', 'Add Subject');
@@ -129,6 +131,7 @@ class SubjectController extends Controller
     $subject_data->subject_name = $request->subject_name;
     $subject_data->subject_type = $request->subject_type;
     $subject_data->section_level = $request->subject_level;
+    $subject_data->subject_code = $request->subject_code;
     $subject_data->save();
 
     flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Success. You have updated subject', 'Update Subject');
