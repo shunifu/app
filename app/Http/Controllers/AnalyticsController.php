@@ -442,7 +442,7 @@ if($criteria->average_calculation=="custom" ){
                     GROUP BY subject_id
                     order by (subject_id =".$passing_subject.") desc, mark desc
                     LIMIT ".$number_of_subjects.") t, 
-                    (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON 				subjects.id=teaching_loads.subject_id WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." order by  mark desc
+                    (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON 				subjects.id=teaching_loads.subject_id WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject." order by  mark desc
                    ) nps, 
                    (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id = ".$student." AND marks.assessement_id = ".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id=".$passing_subject." ) prm,
                    (SELECT (SELECT COUNT(*) from marks  where marks.student_id=".$student." and marks.assessement_id=".$assessement_id." ) as marks_count, (SELECT COUNT(*) from student_loads  where student_loads.student_id=".$student."  ) as loads_count
@@ -471,7 +471,7 @@ if($criteria->average_calculation=="custom" ){
                         GROUP BY subject_id
                         order by  mark desc
                         LIMIT ".$number_of_subjects.") t, 
-                        (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON subjects.id=teaching_loads.subject_id WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id." AND marks.mark>=".$pass_rate." order by  mark desc
+                        (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON subjects.id=teaching_loads.subject_id WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject." AND marks.mark>=".$pass_rate." order by  mark desc
                        ) nps, 
                        (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id = ".$student." AND marks.assessement_id = ".$assessement_id." AND marks.mark>=".$pass_rate." AND subject_id=".$passing_subject." ) prm,
 
@@ -556,7 +556,7 @@ INNER JOIN grades ON grades.id=teaching_loads.class_id
 where marks.student_id =".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject."
           GROUP BY marks.id 
         ) t, 
-              (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON subjects.id=teaching_loads.subject_id WHERE  marks.student_id = ".$student."  AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate."  order by  mark desc
+              (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON subjects.id=teaching_loads.subject_id WHERE  marks.student_id = ".$student."  AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject."  order by  mark desc
              ) nps, 
              (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id =".$student."  AND marks.assessement_id =".$assessement_id." AND marks.mark>=".$pass_rate."  AND subject_id=".$passing_subject.") prm,
 

@@ -35,7 +35,7 @@ th span {
               </div>
               
               <div class="card-header no-print">
-                <h3 class="card-title">Stream Analytics</h3>
+                <h3 class="card-title">Mark Analytics</h3>
               </div>
             
             <div class="card-body">
@@ -276,8 +276,7 @@ where student_id = ".$student->learner_id.""));
                         @endif
                         
                     </td>
-                  
-
+                    
                     <td class="align-middle p-2">
                        
                         @if ($student->Mathametics>=$pass_rate)
@@ -300,23 +299,7 @@ where student_id = ".$student->learner_id.""));
                         @endif
                     </td>
                     
-                    <td class="align-middle p-2">
-                        
-                      
-                        @if ($student->French>=$pass_rate)
-                        <span class="text-secondary">{{ $student->French}}% </span>
-                        @elseif(is_null($student->French))
-                        -
-                        @elseif($student->French<$pass_rate )
-                        <span class="text-danger">{{ $student->French}}% </span>
-                        @endif
-                    </td>
-                   
                 
-
-                
-                  
-                    
 
                     <td class="align-middle p-2">
                         @if ($student->RE>=$pass_rate)
