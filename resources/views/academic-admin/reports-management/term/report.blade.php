@@ -509,16 +509,16 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
         <td>{{ $item2->subject_name }}</td>
          <td> 
             @if (($item2->ca_average<$pass_rate))
-            <span class="text-danger">{{round($item2->ca_average)}}%</span>
+            <span class="text-danger">{{($item2->ca_average)}}%</span>
             @else
-            {{round($item2->ca_average)}}%
+            {{($item2->ca_average)}}%
             @endif
         </td>   
         @if ($examExists)
         <td  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
             @if ($item2->exam_mark<$pass_rate)
             @isset($item2->exam_mark)
-            <span class="text-danger">{{round($item2->exam_mark)}}%</span>
+            <span class="text-danger">{{($item2->exam_mark)}}%</span>
             @endisset
 
             @if(!isset($item2->exam_mark))
