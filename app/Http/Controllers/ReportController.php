@@ -537,7 +537,7 @@ class ReportController extends Controller
             'teaching_load_id' =>$item->teaching_load_id,
             'ca_average' =>$item->ca,
             'exam_mark' =>$item->exam,
-            'student_average' =>(round($item->ca_weight)+($item->exam_weight)),
+            'student_average' =>(round(($item->ca_weight)+($item->exam_weight))),
             'student_class'  =>$item->student_class,
             'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
                 ];
