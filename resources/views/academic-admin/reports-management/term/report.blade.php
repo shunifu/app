@@ -825,7 +825,7 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                           </div>
                          
                           <div class="text-center">
-<img class="img-fluid mx-auto " width="40" height="40" src="{{$school_is->base64}} " alt="">
+<img class="img-fluid mx-auto " width="80" height="80" src="{{$school_is->base64}} " alt="">
                        </div>
                     </div>
 
