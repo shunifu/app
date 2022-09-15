@@ -88,6 +88,7 @@ th span {
         <th><span>Maths</span></th>
         <th><span>Siswati</span></th>
         <th><span>Religious Education</span></th>
+        <th><span>Science</span></th>
         <th><span>Social Studies</span></th>
         <th><span>Practical Arts</span></th>
         <th><span>General Studies</span></th>
