@@ -94,6 +94,7 @@ th span {
         <th><span>Agriculture</span></th>
         <th><span>Expressive Arts</span></th>
         <th><span>ICT</span></th>
+        <th><span>Consumer</span></th>
         <th><span>HPE</span></th>
       
    
@@ -371,6 +372,16 @@ where student_id = ".$student->learner_id.""));
                         <span class="text-danger">{{ $student->ICT}}% </span>
                         @endif
                     </td>
+                    <td class="align-middle p-2">
+                        @if ($student->Consumer>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Consumer}}% </span>
+                        @elseif(is_null($student->Consumer))
+                        -
+                        @elseif($student->Consumer<$pass_rate )
+                        <span class="text-danger">{{ $student->Consumer}}% </span>
+                        @endif
+                    </td>
+                    
                   
                     <td class="align-middle p-2">
                         @if ($student->HPE>=$pass_rate)
