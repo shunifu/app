@@ -85,10 +85,8 @@ th span {
          <th><span>Ratio</span></th>
         <th><span>Comment</span></th>
         <th><span>English Language</span> </th>
-        <th><span>English Lit</span></th>
         <th><span>Maths</span></th>
         <th><span>Siswati</span></th>
-        <th><span>French</span></th>
         <th><span>Religious Education</span></th>
         <th><span>Social Studies</span></th>
         <th><span>Practical Arts</span></th>
@@ -278,16 +276,7 @@ where student_id = ".$student->learner_id.""));
                         @endif
                         
                     </td>
-                    <td class="align-middle p-2">
-                     
-                        @if ($student->EnglishInLiterature>=$pass_rate)
-                        <span class="text-secondary">{{ $student->EnglishInLiterature}}% </span>
-                        @elseif(is_null($student->EnglishInLiterature))
-                        -
-                        @elseif($student->EnglishInLiterature<$pass_rate )
-                        <span class="text-danger">{{ $student->EnglishInLiterature}}% </span>
-                        @endif
-                    </td>
+                  
 
                     <td class="align-middle p-2">
                        

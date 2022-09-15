@@ -92,7 +92,7 @@ th span {
 
         @if ($section_id=='2')
         <th><span>Science</span></th> 
-     
+        <th><span>Consumer</span></th> 
         <th><span>BK</span></th>
         <th><span>COMP</span></th>
        
@@ -398,6 +398,8 @@ where student_id = ".$student->learner_id.""));
 
                     @endif
 
+
+        
                     <td class="align-middle p-2">
                         @if ($student->BusinessStudies>=$pass_rate)
                         <span class="text-secondary">{{ $student->BusinessStudies}}% </span>
@@ -555,11 +557,7 @@ where student_id = ".$student->learner_id.""));
                     @endif
 
                     @if ($item->school_type=="Prevoc")
-
-
-                   
-                   
-                 
+  m 
                           <td class="align-middle p-2">
                         @if ($student->PrevocICT>=$pass_rate)
                         <span class="text-secondary">{{ $student->PrevocICT}}% </span>
