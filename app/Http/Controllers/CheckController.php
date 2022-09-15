@@ -94,7 +94,7 @@ class CheckController extends Controller
         ->select('teaching_loads.id as teaching_load_id','student_loads.student_id','student_loads.id as student_load_id', 'users.name', 'users.lastname', 'users.middlename', 'users.profile_photo_path', 'teaching_loads.teacher_id', 'teaching_loads.subject_id', 'class_id', 'teaching_loads.session_id')
         ->get();
  
-     return view('teaching-loads.view', compact('view_loads'));
+     return view('teaching-loads.admin-view', compact('view_loads'));
 
     }
 }

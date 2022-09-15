@@ -222,9 +222,9 @@ return view('teaching-loads.index', compact('classes', 'sessions', 'subjects'));
         //  flash()->overlay('<i class="fas fa-check-circle success"></i>'.' Congratulations. You have successfully added teaching loads.', 'Add Teaching Load');
               
         
-         return view('teaching-loads.view', compact('load_id', 'view_loads'));
+        //  return view('teaching-loads.view', compact('load_id', 'view_loads'));
 
-         //return redirect('users/teacher/loads/view/'.$load_id,)->with('Teaching Load successfully created');
+         return redirect('users/teacher/loads/view/'.$load_id,)->with('Teaching Load successfully created');
         }
         
   
