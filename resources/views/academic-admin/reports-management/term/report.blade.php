@@ -508,7 +508,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
       <tr>
         <td>{{ $item2->subject_name }}</td>
          <td> 
-            @if (round($item2->ca_average<$pass_rate))
+            @if (($item2->ca_average<$pass_rate))
             <span class="text-danger">{{round($item2->ca_average)}}%</span>
             @else
             {{round($item2->ca_average)}}%
