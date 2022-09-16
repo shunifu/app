@@ -607,8 +607,9 @@ Route::get('/users/parent/discipline', [ParentController::class,'discipline'])->
 
 Route::post('/parents/view/child-performance', [ParentController::class,'child_performance'])->name('parents.child_performance');
 
+Route::get('/parents/communication', [ParentController::class,'communication_index'])->name('parent.communication_index');
 
-//Promotions Management
+//Promotions Managements
 
 Route::get('/promotions/', [ProgressionStatusController::class,'create'])->name('progression.create');
 Route::post('/promotions/process', [ProgressionStatusController::class,'store'])->name('progression.store');

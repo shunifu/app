@@ -250,6 +250,8 @@ class ParentController extends Controller
 
     }
 
+    public function
+
     /**
      * Update the specified resource in storage.
      *
@@ -261,6 +263,8 @@ class ParentController extends Controller
     {
         //
     }
+
+
 
     /**
      * Remove the specified resource from storage.

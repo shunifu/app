@@ -550,39 +550,7 @@
             </li> --}}
         <!---end of Online Learning-----> 
 
-        {{-- @role('admin_teacher')
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="fas fa-comments nav-icon"></i>
-            <p>
-              Communication 
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chevron-circle-right"></i>
-                <p>Students</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chevron-circle-right"></i>
-                <p>Teachers</p>
-              </a>
-            </li> --}}
-{{-- 
-            <li class="nav-item">
-              <a href="/communication/otp" class="nav-link">
-                <i class="nav-icon fas fa-chevron-circle-right"></i>
-                <p>OTP SMS</p>
-              </a>
-            </li> --}}
 
-          {{-- </ul>
-        </li>
-        @endrole --}}
 
         @role('parent')
                    
@@ -713,7 +681,28 @@
                   
               <!---end of analytics-----> 
 
-
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="fas fa-comments nav-icon"></i>
+                  <p>
+                    Communication 
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="/parents/communication" class="nav-link">
+                      <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Parents</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Teachers</p>
+                    </a>
+                  </li> 
+                </ul>
 
 
               <!----Beginning of Reports Management---------->
