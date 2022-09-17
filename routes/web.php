@@ -72,6 +72,7 @@ use App\Http\Controllers\TeachingLoadController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\VirtualClassController;
 use App\Http\Controllers\ClassSequenceController;
+use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\LessonCommentController;
 use App\Http\Controllers\CommentSettingController;
 use App\Http\Controllers\OnlineLearningController;
@@ -608,6 +609,14 @@ Route::get('/users/parent/discipline', [ParentController::class,'discipline'])->
 Route::post('/parents/view/child-performance', [ParentController::class,'child_performance'])->name('parents.child_performance');
 
 Route::get('/parents/communication', [ParentController::class,'communication_index'])->name('parent.communication_index');
+
+
+//Communication Management
+
+Route::get('/communication', [CommunicationController::class,'index'])->name('communication.index');
+Route::post('/communication/send', [CommunicationController::class,'store'])->name('communication.store');
+
+//End of Communication Management
 
 //Promotions Managements
 

@@ -49,7 +49,11 @@ background: transparent;
             
             }}
 
-            
+            @media print{
+                @page { margin: 0px; }
+body { margin: 0px; }
+            }
+
             @media print {
             th.background {
                 font-size: 14px;
