@@ -45,10 +45,10 @@ class CommunicationController extends Controller
         $message=$request->message;
 
 if ($channel=="sms") {
-    // $username = config('app.sms_username');
-    // $apiKey   = config('app.sms_password');
-    // $AT = new AfricasTalking($username, $apiKey);
-    // $sms      = $AT->sms();
+    $username = config('app.sms_username');
+    $apiKey   = config('app.sms_password');
+    $AT = new AfricasTalking($username, $apiKey);
+    $sms      = $AT->sms();
 
 
 
@@ -70,13 +70,15 @@ if ($channel=="sms") {
             $id=$teachers[$i]->id;
 
 
-            // Use the service
-//             $result   = $sms->send([
-//             'to'      => '+268'.$cell_number,
-//             'message' => 'Hi '.$name.' '.$message,
-//             'from'=>'Shunifu'
-// ]);
+    //        Use the service
+            $result   = $sms->send([
+            'to'      => '+268'.$cell_number,
+            'message' => 'Hi '.$name.' '.$message,
+            'from'=>'Shunifu'
+]);
         }
+
+        
     }
 
     if ($audience=="parents") {
@@ -97,11 +99,11 @@ if ($channel=="sms") {
 
 
 //             // Use the service
-//             $result   = $sms->send([
-//             'to'      => '+268'.$cell_number,
-//             'message' => 'Hi'.' '.$message,
-//             'from'=>'Shunifu'
-// ]);
+            $result   = $sms->send([
+            'to'      => '+268'.$cell_number,
+            'message' => 'Hi'.' '.$message,
+            'from'=>'Shunifu'
+]);
         }
     }
 }
