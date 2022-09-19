@@ -733,6 +733,10 @@ foreach ($term_average as $student_term_data) {
             </td>
         </tr>
     </tbody>
+
+
+                                   
+</table> 
     
      {{-- <div class="row"> --}}
                    {{-- Comments --}}
