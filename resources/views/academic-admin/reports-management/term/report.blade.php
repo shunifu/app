@@ -300,7 +300,7 @@ WHERE sub.student_id=".$student.""));
                             
                                 @if ($student_term_data->student_average<$pass_rate)
                                 <li>
-                                   Low Average 
+                                   Below Average 
                                 </li>
                                 @endif
                             
@@ -522,7 +522,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
             @endif
         </td>   
         @if ($examExists)
-        <td  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
+        <td width="40%"  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
             @if ($item2->exam_mark<$pass_rate)
             @isset($item2->exam_mark)
             <span class="text-danger">{{($item2->exam_mark)}}%</span>
@@ -542,7 +542,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
         @endif
       
      
-        <td> 
+        <td width="40%"> 
             @if (($item2->student_average<$pass_rate))
             <span class="text-danger">{{($item2->student_average)}}%</span>
             @else
@@ -551,7 +551,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
         </td> 
  
 
-        <td>
+        <td width="10%">
             @foreach ($comments as $comment_symbol)
               
             @if(in_array(round($item2->student_average), range($comment_symbol->from,$comment_symbol->to, 0.01)) ) 
