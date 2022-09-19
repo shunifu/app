@@ -699,9 +699,9 @@ $db->close();
 foreach ($term_average as $student_term_data) {
 
     ?>
+    <div class="text-center">
      <div class="row">
                    {{-- Comments --}}
-                   <div class="text-center">
                    <div class="col" >
                        <label>Class Teacher Comment</label>
                     @foreach ($class_teacher_comments as $teacher_comment)
@@ -712,9 +712,7 @@ foreach ($term_average as $student_term_data) {
                     @endif
                     @endforeach
                    </div>
-                   </div>
 
-                   <div class="text-center">
                    <div class="col" >
                     <label>Headteacher's Comment</label>
                     @foreach ($headteacher_comments  as $headteacher_comment)
@@ -724,12 +722,12 @@ foreach ($term_average as $student_term_data) {
                     @endif
                     @endforeach
                    </div>
-                </div>
                    <?php
                 }
                                   ?>
                                   
                    </div>
+    </div>
                    <hr>
                
                        
