@@ -511,8 +511,11 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
     @foreach($student_subject_average as $item2)
       <tr>
         <td>{{ $item2->subject_name }}</td>
+       
          <td> 
-            @if (($item2->ca_average<$pass_rate))
+            @if (is_null($item2->ca_average))
+            N/A
+            @elseif (($item2->ca_average<$pass_rate))
             <span class="text-danger">{{($item2->ca_average)}}%</span>
             @else
             {{($item2->ca_average)}}%
