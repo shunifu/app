@@ -679,6 +679,7 @@ Route::post('/report/variable/store', [ReportTemplateController::class,'variable
 //Term Based
 Route::get('/report/term-based', [ReportController::class,'create'])->name('report.create');
 Route::get('/report/term-based/class', [ReportController::class,'class_index'])->name('report.class_index');
+Route::get('/report/term-based/class/teacher', [ReportController::class,'classteacher_index']);
 Route::get('/report/term-based/student', [ReportController::class,'create_student'])->name('report.create_student');
 Route::post('/report/term-based/section/', [ReportController::class,'section'])->name('report.section');
 Route::post('/report/term-based/stream/', [ReportController::class,'stream'])->name('report.stream');

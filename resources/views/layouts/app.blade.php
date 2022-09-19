@@ -864,7 +864,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/class/class-report" class="nav-link">
+                <a href="/report/term-based/class/teacher" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>Class Report</p>
                 </a>

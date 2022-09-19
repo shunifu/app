@@ -112,6 +112,39 @@ class ReportController extends Controller
 
     }
 
+    public function classteacher_index(){
+        $terms=DB::table('terms')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
+      
+        ->select('terms.id as term_id','terms.term_name', 'academic_sessions.academic_session')
+        ->get();
+
+        //Scope to current session ....think about it.
+
+        //Streams
+        $streams=Stream::all();
+
+        //Classes
+        $classes=DB::table('grades_teachers')
+        ->join('grades','grades.id','=','grades_teachers.grade_id')
+        ->where('teacher_id',Auth::user()->id )//
+        ->select('grades.id as id','grades.grade_name')
+        ->get();
+
+        //Section
+        $sections=Section::all();
+
+        $assessements=DB::table('assessements')
+        ->join('terms','terms.id','=','assessements.term_id')
+        ->join('assessement_types','assessement_types.id','=','assessements.assessement_type')
+        ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
+        ->where('academic_sessions.active', 1 )//
+        ->select('assessements.id as assessement_id','terms.term_name', 'assessement_name', 'assessement_type_name')
+        ->get();
+        
+        return view('academic-admin.reports-management.term.index_class', compact('terms','streams','classes','sections', 'assessements'));
+    }
+
     
 
     /**

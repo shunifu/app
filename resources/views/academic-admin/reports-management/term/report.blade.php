@@ -1,7 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <style type="text/css">
-         
+            i {
+            margin-right: 5px;
+            }
+
 
             .table {
   border: 0.5px solid grey;
@@ -80,6 +83,12 @@ body { margin: 0px; }
   height: 30px;
 }
 </style>
+
+<!-- Latest compiled and minified CSS -->
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
+
 
 
 
@@ -823,7 +832,7 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                           </div>
                          
                           <div class="text-center">
-<img class="img-fluid mx-auto " width="40" height="40" src="{{$school_is->base64}} " alt="">
+<img class="img-fluid mx-auto " width="80" height="80" src="{{$school_is->base64}} " alt="">
                        </div>
                     </div>
 
