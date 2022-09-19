@@ -701,6 +701,7 @@ foreach ($term_average as $student_term_data) {
     ?>
      <div class="row">
                    {{-- Comments --}}
+                   <div class="text-center">
                    <div class="col" >
                        <label>Class Teacher Comment</label>
                     @foreach ($class_teacher_comments as $teacher_comment)
@@ -711,7 +712,9 @@ foreach ($term_average as $student_term_data) {
                     @endif
                     @endforeach
                    </div>
+                   </div>
 
+                   <div class="text-center">
                    <div class="col" >
                     <label>Headteacher's Comment</label>
                     @foreach ($headteacher_comments  as $headteacher_comment)
@@ -721,6 +724,7 @@ foreach ($term_average as $student_term_data) {
                     @endif
                     @endforeach
                    </div>
+                </div>
                    <?php
                 }
                                   ?>
@@ -760,7 +764,7 @@ foreach ($term_average as $student_term_data) {
              
                         <td> {{$student_term_data->name}}'s subject average was calculated based on the following assessement weight's;
                             <ul>
-                                <li>Continuos Assessement: <strong>{{$ca_weight*100}}%</strong> </li>
+                                <li>Continuous Assessement: <strong>{{$ca_weight*100}}%</strong> </li>
                                 <li>Examination: <strong>{{$exam_weight*100}}%</strong></li>
                             </ul>
                         
