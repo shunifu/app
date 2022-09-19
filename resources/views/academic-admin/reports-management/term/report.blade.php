@@ -20,14 +20,14 @@
 }
 
             
-textarea.form-control
+/* textarea.form-control
 {  
 width: 100%;
 height: 100%;
 border-color: Transparent;     
 text-align: justify;
 background: transparent;
-}
+} */
 
 /* col{
     vertical-align: middle;
@@ -717,7 +717,7 @@ foreach ($term_average as $student_term_data) {
                 @foreach ($class_teacher_comments as $teacher_comment)
                    
                 @if (in_array(number_format($student_term_data->student_average), range($teacher_comment->from,$teacher_comment->to,  0.01)) )
-                <textarea class="form-control" id="j">{{$teacher_comment->comment}}</textarea>
+               {{$teacher_comment->comment}}
                     
                 @endif
                 @endforeach
@@ -726,7 +726,7 @@ foreach ($term_average as $student_term_data) {
             <td>
                 @foreach ($headteacher_comments  as $headteacher_comment)
                 @if (in_array(number_format($student_term_data->student_average), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
-                <textarea class="form-control">{{$headteacher_comment->comment}}</textarea>
+                {{$headteacher_comment->comment}}
                     
                 @endif
                 @endforeach   
