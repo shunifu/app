@@ -68,8 +68,19 @@ body { margin: 0px; }
             .table td#fit, 
 .table th#fit {
     white-space: nowrap;
-    width: 10%;
-    vertical-align: middle;
+    width: 6%;
+   
+    text-align: center;
+}
+
+.table td#ft{
+    white-space: nowrap;
+}
+
+.table td#f{
+    white-space: nowrap;
+    width: 6%;
+    text-align: center;
 }
    
         
@@ -504,13 +515,13 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
         <tr class="hope">
             <th class="background">Subject Name</th>
            
-            <th class="background">Continuous Assessement</th>    
+            <th class="background" id="f">CA</th>    
            
             @if ($examExists)
             <th class="background">Examination</th>   
             @endif
 
-            <th class="background">Subject Average</th>   
+            <th class="background" id="f">Subject Average</th>   
         
             <th class="background" id="fit">Symbol</th>
             <th class="background">Comment</th>
@@ -527,7 +538,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
       <tr>
         <td>{{ $item2->subject_name }}</td>
        
-         <td> 
+         <td id="f"> 
             @if (is_null($item2->ca_average))
             N/A
             @elseif (($item2->ca_average<$pass_rate))
@@ -557,7 +568,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
         @endif
       
      
-        <td > 
+        <td id="f"> 
             @if (($item2->student_average<$pass_rate))
             <span class="text-danger">{{($item2->student_average)}}%</span>
             @else
@@ -579,7 +590,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
               
             </td>
 
-            <td>
+            <td id="ft">
                 @foreach ($comments as $comment)
                 
                 
