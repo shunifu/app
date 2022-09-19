@@ -60,11 +60,23 @@ body { margin: 0px; }
             background-color: {{$column_color}} !important;
             -webkit-print-color-adjust: exact; 
             color: #FFFFFF !important;
+
             
-            }}
+            
+            }
+            td {
+max-width:100%;
+white-space:nowrap;
+            }
+        
+        }
 
             @media all {
 .page-break { display: none; }
+td {
+max-width:100%;
+white-space:nowrap;
+            }
 }
 
 @media print {
@@ -84,7 +96,7 @@ body { margin: 0px; }
 }
 
 td:nth-child(5) {
-                width: 10%;
+                width: 10px;
             }
 </style>
 
