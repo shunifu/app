@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use App\Models\StudentAttendance;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class StudentAttendanceController extends Controller
 {
@@ -18,33 +19,32 @@ class StudentAttendanceController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->hasRole('class_teacher')){
-
+        if (Auth::user()->hasRole('class_teacher')) {
             $classteacher_list=DB::table('grades_teachers')
-            ->join('academic_sessions','academic_sessions.id','=','grades_teachers.academic_session')
-            ->join('grades','grades.id','=','grades_teachers.grade_id')
-            ->join('users','users.id','=','grades_teachers.teacher_id')
-            ->where('academic_sessions.active', 1 )
+            ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_teachers.academic_session')
+            ->join('grades', 'grades.id', '=', 'grades_teachers.grade_id')
+            ->join('users', 'users.id', '=', 'grades_teachers.teacher_id')
+            ->where('academic_sessions.active', 1)
             ->where('grades_teachers.teacher_id', Auth::user()->id)
-            ->select('users.id as teacher_id','users.name','users.middlename','users.lastname','users.salutation','grades_teachers.teacher_id','grades_teachers.grade_id', 'grades.grade_name')
+            ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name')
             ->first();
-           //  dd($classteacher_list);
-           $date= Carbon::now()->format('Y-m-d');
+            //  dd($classteacher_list);
+            $date= Carbon::now()->format('Y-m-d');
 
-           $student_list=DB::table('grades_students')
-           ->join('academic_sessions','academic_sessions.id','=','grades_students.academic_session')
-           ->join('grades','grades.id','=','grades_students.grade_id')
-           ->join('users','users.id','=','grades_students.student_id')
-           ->where('academic_sessions.active', 1 )
-           ->where('grades_students.grade_id', $classteacher_list->grade_id)
-           ->select('users.name','users.middlename','users.lastname','users.salutation','grades_students.student_id', 'grades.grade_name')
-           ->get();
-
-        
+            $student_list=DB::table('grades_students')
+            ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
+            ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+            ->join('users', 'users.id', '=', 'grades_students.student_id')
+            ->where('academic_sessions.active', 1)
+            ->where('grades_students.grade_id', $classteacher_list->grade_id)
+            ->select('users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_students.student_id', 'grades.grade_name')
+            ->get();
 
 
-         
-        return view('academic-admin.attendance-management.index', compact('classteacher_list', 'date', 'student_list'));
+
+
+
+            return view('academic-admin.attendance-management.index', compact('classteacher_list', 'date', 'student_list'));
         }
     }
 
@@ -68,30 +68,21 @@ class StudentAttendanceController extends Controller
     {
         $validation=$request->validate([
             'attendance_date'=>'required|date',
-          
+
         ]);
-       
-           $count_list=count($request->all());
-      
+
+        $count_list=count($request->all());
+
         $grade_id=$request->grade_id;
         $date=$request->attendance_date;
         $teacher=$request->teacher_id;
-      //  $student=$request->
 
-        
-
-//         for ($i=0; $i <count_list ; $i++) { 
-// $key=$request->$i;
-// dd($i);
-//         }
-
-        // foreach ($variable as $key => $value) {
-        //     dd()
-        // }
-
+        flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added student attendance'.' '.'</span> '.'into the attendance register.', 'Attendence Data');
+ 
+        return Redirect::back();
+   
     }
-
-    /**
+   /**
      * Display the specified resource.
      *
      * @param  \App\Models\StudentAttendance  $studentAttendance
