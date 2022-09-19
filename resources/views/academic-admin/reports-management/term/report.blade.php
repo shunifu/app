@@ -64,19 +64,20 @@ body { margin: 0px; }
             
             
             }
-            td {
-max-width:100%;
-white-space:nowrap;
-            }
+
+            .table td#fit, 
+.table th#fit {
+    white-space: nowrap;
+    width: 10%;
+    vertical-align: middle;
+}
+   
         
         }
 
             @media all {
 .page-break { display: none; }
-td {
-max-width:100%;
-white-space:nowrap;
-            }
+
 }
 
 @media print {
@@ -95,9 +96,7 @@ white-space:nowrap;
   height: 30px;
 }
 
-td:nth-child(5) {
-                width: 10px;
-            }
+
 </style>
 
 <!-- Latest compiled and minified CSS -->
@@ -513,7 +512,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
 
             <th class="background">Subject Average</th>   
         
-            <th class="background">Symbol</th>
+            <th class="background" id="fit">Symbol</th>
             <th class="background">Comment</th>
             <th class="background">Teacher</th>
 
@@ -538,7 +537,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
             @endif
         </td>   
         @if ($examExists)
-        <td width="40%"  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
+        <td  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
             @if ($item2->exam_mark<$pass_rate)
             @isset($item2->exam_mark)
             <span class="text-danger">{{($item2->exam_mark)}}%</span>
@@ -558,7 +557,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
         @endif
       
      
-        <td width="40%"> 
+        <td > 
             @if (($item2->student_average<$pass_rate))
             <span class="text-danger">{{($item2->student_average)}}%</span>
             @else
@@ -567,7 +566,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
         </td> 
  
 
-        <td width="10%">
+        <td id="fit">
             @foreach ($comments as $comment_symbol)
               
             @if(in_array(round($item2->student_average), range($comment_symbol->from,$comment_symbol->to, 0.01)) ) 
