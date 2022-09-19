@@ -82,6 +82,10 @@ body { margin: 0px; }
   border-bottom: 1px solid black;
   height: 30px;
 }
+
+td:nth-child(5) {
+                width: 10%;
+            }
 </style>
 
 <!-- Latest compiled and minified CSS -->
