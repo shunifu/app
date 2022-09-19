@@ -1,10 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <style type="text/css">
-            i {
-            margin-right: 5px;
-            }
-
+         
 
             .table {
   border: 0.5px solid grey;
@@ -83,12 +80,6 @@ body { margin: 0px; }
   height: 30px;
 }
 </style>
-
-<!-- Latest compiled and minified CSS -->
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
-
 
 
 
