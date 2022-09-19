@@ -262,49 +262,49 @@ if($outcome=="scoresheet"){
 
 
 
-   //Class- Assessement Basesd
-   SET @sql = NULL;
-   SELECT
-     GROUP_CONCAT(DISTINCT
-       CONCAT(
+//    //Class- Assessement Basesd
+//    SET @sql = NULL;
+//    SELECT
+//      GROUP_CONCAT(DISTINCT
+//        CONCAT(
            
-         'MAX(IF(subjects.subject_name = ''',
-     subject_name,
-     ''', marks.mark, NULL)) AS ',
-     replace(subjects.subject_name, ' ', '')
-       )
-     ) INTO @sql
-      FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN allocations ON allocations.subject_id=subjects.id WHERE allocations.grade_id=1;
+//          'MAX(IF(subjects.subject_name = ''',
+//      subject_name,
+//      ''', marks.mark, NULL)) AS ',
+//      replace(subjects.subject_name, ' ', '')
+//        )
+//      ) INTO @sql
+//       FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN allocations ON allocations.subject_id=subjects.id WHERE allocations.grade_id=1;
 
-SET @sql = CONCAT('SELECT 
-(select t.student_position
-from (select assessement_progress_reports.student_id,assessement_progress_reports.student_average, rank() over (order by assessement_progress_reports.student_average desc) as student_position
-from assessement_progress_reports where assessement_progress_reports.assessement_id=1 AND assessement_progress_reports.student_class=1
-    ) t
-where student_id = marks.student_id) as position,
-(CASE WHEN assessement_progress_reports.number_of_passed_subjects>="4" AND assessement_progress_reports.passing_subject_status<>0 AND assessement_progress_reports.student_average>=40 THEN "Passed" ELSE "Failed" END)  AS "remark",
-       grades.grade_name as Grade,
-       CONCAT(loads_count,":", marks_count ) as ratio,
-       users.name,
-       users.lastname,
-       assessement_progress_reports.student_average,
+// SET @sql = CONCAT('SELECT 
+// (select t.student_position
+// from (select assessement_progress_reports.student_id,assessement_progress_reports.student_average, rank() over (order by assessement_progress_reports.student_average desc) as student_position
+// from assessement_progress_reports where assessement_progress_reports.assessement_id=1 AND assessement_progress_reports.student_class=1
+//     ) t
+// where student_id = marks.student_id) as position,
+// (CASE WHEN assessement_progress_reports.number_of_passed_subjects>="4" AND assessement_progress_reports.passing_subject_status<>0 AND assessement_progress_reports.student_average>=40 THEN "Passed" ELSE "Failed" END)  AS "remark",
+//        grades.grade_name as Grade,
+//        CONCAT(loads_count,":", marks_count ) as ratio,
+//        users.name,
+//        users.lastname,
+//        assessement_progress_reports.student_average,
    
-', @sql,'
-FROM marks 
-INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id 
-INNER JOIN subjects ON teaching_loads.subject_id=subjects.id 
-INNER JOIN users ON users.id=marks.student_id  
-INNER JOIN grades_students ON grades_students.student_id=marks.student_id
-INNER JOIN assessement_progress_reports ON assessement_progress_reports.student_id=marks.student_id
-INNER JOIN grades ON assessement_progress_reports.student_class=grades.id 
-WHERE assessement_progress_reports.student_class=1 AND marks.assessement_id=1 AND assessement_progress_reports.assessement_id=1 AND teaching_loads.active=1 AND grades.id=assessement_progress_reports.student_class AND grades.id=assessement_progress_reports.student_class AND grades_students.active=1 
-GROUP BY marks.student_id  
-ORDER BY assessement_progress_reports.student_average DESC');
+// ', @sql,'
+// FROM marks 
+// INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id 
+// INNER JOIN subjects ON teaching_loads.subject_id=subjects.id 
+// INNER JOIN users ON users.id=marks.student_id  
+// INNER JOIN grades_students ON grades_students.student_id=marks.student_id
+// INNER JOIN assessement_progress_reports ON assessement_progress_reports.student_id=marks.student_id
+// INNER JOIN grades ON assessement_progress_reports.student_class=grades.id 
+// WHERE assessement_progress_reports.student_class=1 AND marks.assessement_id=1 AND assessement_progress_reports.assessement_id=1 AND teaching_loads.active=1 AND grades.id=assessement_progress_reports.student_class AND grades.id=assessement_progress_reports.student_class AND grades_students.active=1 
+// GROUP BY marks.student_id  
+// ORDER BY assessement_progress_reports.student_average DESC');
 
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
+// PREPARE stmt FROM @sql;
+// EXECUTE stmt;
 
-DEALLOCATE PREPARE stmt;
+// DEALLOCATE PREPARE stmt;
 
 
 
