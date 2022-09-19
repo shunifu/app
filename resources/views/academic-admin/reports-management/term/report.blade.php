@@ -548,7 +548,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
             @endif
         </td>   
         @if ($examExists)
-        <td  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
+        <td id="f"  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
             @if ($item2->exam_mark<$pass_rate)
             @isset($item2->exam_mark)
             <span class="text-danger">{{($item2->exam_mark)}}%</span>
