@@ -20,7 +20,7 @@
        
 
          
-
+{{-- 
            <!-- Step 1 - Include the fusioncharts core library -->
           
            <!-- FusionCharts -->
@@ -28,7 +28,7 @@
            <!-- jQuery-FusionCharts -->
            <script type="text/javascript" src="https://rawgit.com/fusioncharts/fusioncharts-jquery-plugin/develop/dist/fusioncharts.jqueryplugin.min.js"></script>
            <!-- Fusion Theme -->
-           <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+           <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script> --}}
      
         @livewireStyles
           <!-- Google Font: Source Sans Pro -->
@@ -681,6 +681,8 @@
                   
               <!---end of analytics-----> 
 
+              @role('admin_teacher')
+
               <li class="nav-item">
                 <a href="/communication" class="nav-link">
                   <i class="fas fa-comments nav-icon"></i>
@@ -689,7 +691,7 @@
                   </p>
                 </a>
               </li>
-
+@endrole
             
 
 
@@ -973,6 +975,14 @@
                   <i class="nav-icon fas fa-book-open"></i>
                   <p>
                     Subjects Management
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('allocation.create') }}" class="nav-link">
+                  <i class="nav-icon fas fa-book-open"></i>
+                  <p>
+                    Subjects Allocations
                   </p>
                 </a>
               </li>
@@ -1707,22 +1717,22 @@
         <script src="https://cdn.statically.io/gist/innovazania/b8793c83a804e280c38ddcfe14d23f20/raw/d22fe37eb7ca6cdcbb3def5761244fae4dca450c/livewire.js" ></script>  
            @livewireScripts
 
-          <script src="https://cdn.statically.io/gh/innovazania/assets/master/app.js"></script>
+          {{-- <script src="https://cdn.statically.io/gh/innovazania/assets/master/app.js"></script>
            <script src="https://cdn.statically.io/gh/innovazania/assets/7f444680/admin-lte.js"></script>
-           <script src="https://cdn.statically.io/gh/innovazania/assets/9ec219d9/notify.js"></script>
+           <script src="https://cdn.statically.io/gh/innovazania/assets/9ec219d9/notify.js"></script> --}}
 
         
            
           {{-- <script  src="/js/app.js" ></script> --}}
         
           {{-- <script src="{{asset('js/app.js')}}"></script> --}}
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+          {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  --}}
            {{-- <script src="https://code.highcharts.com/highcharts.js"></script> --}}
            {{-- <script src="https://cdn.jsdelivr.net/npm/@wiris/mathtype-tinymce5@7.24.6/plugin.min.js"></script> --}}
-           <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+           {{-- <script src="https://cdn.jsdelivr.net/npm/d3@7"></script> --}}
            <script>
            
-           const div = d3.selectAll("div");
+          //  const div = d3.selectAll("div");
            
            </script>
           

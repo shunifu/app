@@ -44,62 +44,67 @@ class CommunicationController extends Controller
         $channel=$request->channel;
         $message=$request->message;
 
-      //  $username = config('app.sms_username');// use 'sandbox' for development in the test environment
-     //   $apiKey   = config('app.sms_password'); // use your sandbox app API key for development in the test environment
-     //   $AT = new AfricasTalking($username, $apiKey);
-       
-        if($audience=="teachers"){
-            $teacher_role=Role::where('name', 'teacher')->first();
-    $teacher_role_id=$teacher_role->id;
-
-    $teachers=User::where('role_id', $teacher_role_id)->where('active', '1')->get();
-    $total_teachers=$teachers->count();
-
-  
-
-    // for($i = 0; $i <count($load); $i++) {
-
-    //     $addTeachingLoads=StudentLoad::create([
-    //     'student_id'=>$teachers[$i],
-    //     'teaching_load_id'=>$teaching_load_id,
-    //     'session_id'=>$request->academic_session,
-    //     'active'=>1
-    //     ]);
-    
-    //  }
-  
-
-    
-    for ($i=0; $i <$total_teachers; $i++) { 
-
-        $cell_number=$teachers[$i]->cell_number;
-        $name=$teachers[$i]->name;
-        $lastname=$teachers[$i]->lastname;
-        $salutation=$teachers[$i]->salutation;
-        $id=$teachers[$i]->id;
+if ($channel=="sms") {
+    // $username = config('app.sms_username');
+    // $apiKey   = config('app.sms_password');
+    // $AT = new AfricasTalking($username, $apiKey);
+    // $sms      = $AT->sms();
 
 
-        $teacher=Communication::create([
-            'channel'=>$channel,
-            'sender'=>Auth::user()->id,
-            'total'=>$total_teachers,
-            'message'=>$message,
-            'audience'=>$audience,
-            'recipients'=> implode($cell_number, ',');
-            ]);
-      
-    }
-   
-    
 
 
-    
+    if ($audience=="teachers") {
+        $teacher_role=Role::where('name', 'teacher')->first();
+        $teacher_role_id=$teacher_role->id;
 
-  
+        $teachers=User::where('role_id', $teacher_role_id)->where('active', '1')->whereNotNull('cell_number')->get();
+        $total_teachers=$teachers->count();
 
- 
 
+
+        for ($i=0; $i <$total_teachers; $i++) {
+            $cell_number=$teachers[$i]->cell_number;
+            $name=$teachers[$i]->name;
+            $lastname=$teachers[$i]->lastname;
+            $salutation=$teachers[$i]->salutation;
+            $id=$teachers[$i]->id;
+
+
+            // Use the service
+//             $result   = $sms->send([
+//             'to'      => '+268'.$cell_number,
+//             'message' => 'Hi '.$name.' '.$message,
+//             'from'=>'Shunifu'
+// ]);
         }
+    }
+
+    if ($audience=="parents") {
+        $parent_role=Role::where('name', 'parent')->first();
+        $parent_role_id=$parent_role->id;
+
+        $parents=User::where('role_id', $parent_role_id)->where('active', '1')->whereNotNull('cell_number')->get();
+        $total_parents=$parents->count();
+
+
+
+        for ($i=0; $i <$total_parents; $i++) {
+            $cell_number=$parents[$i]->cell_number;
+            $name=$parents[$i]->name;
+            $lastname=$parents[$i]->lastname;
+            $salutation=$parents[$i]->salutation;
+            $id=$parents[$i]->id;
+
+
+//             // Use the service
+//             $result   = $sms->send([
+//             'to'      => '+268'.$cell_number,
+//             'message' => 'Hi'.' '.$message,
+//             'from'=>'Shunifu'
+// ]);
+        }
+    }
+}
 
     }
 

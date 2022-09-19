@@ -219,11 +219,6 @@ class AnalyticsController extends Controller
     public function generate(Request $request){
 
 
-    //  dd($request->all());
-
-
-
-
     //validation //you have to redo validation
     $validation=$request->validate([
         'session'=>'required',

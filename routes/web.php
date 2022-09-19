@@ -56,6 +56,7 @@ use App\Http\Controllers\ErrorToolController;
 use App\Http\Controllers\PettyCashController;
 use App\Http\Controllers\SchoolFeeController;
 use App\Http\Controllers\AdminStaffController;
+use App\Http\Controllers\AllocationController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendenceController;
 use App\Http\Controllers\DepartmentController;
@@ -604,6 +605,12 @@ Route::get('/parent/view/{id}',  [ParentController::class,'show'])->name('parent
 Route::post('/parent/edit/',  [ParentController::class,'edit'])->name('parent.edit');
 Route::post('/parent/import/',  [ParentController::class,'import'])->name('parents.import');
 
+
+//Parent Data Route
+Route::get('/allocations', [AllocationController::class,'create'])->name('allocation.create');
+Route::post('/allocations/store', [AllocationController::class,'store'])->name('allocation.store');
+
+
 Route::get('/users/parent/discipline', [ParentController::class,'discipline'])->name('parents.discipline');
 
 Route::post('/parents/view/child-performance', [ParentController::class,'child_performance'])->name('parents.child_performance');
@@ -634,7 +641,7 @@ Route::get('/kids/data/performance/{id}', [ParentController::class,'performance'
 
 //Beginning of Class Teacher
 Route::get('/class/student-attendance/', [StudentAttendanceController::class,'index']);
-Route::post('/class/student-attendance/mark-attendance', [StudentAttendanceController::class,'store']);
+Route::post('/class/student-attendance/mark-attendance', [StudentAttendanceController::class,'store'])->name('attendance.store');
 
 
 //End of Class Teacher

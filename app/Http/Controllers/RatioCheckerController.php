@@ -113,7 +113,7 @@ class RatioCheckerController extends Controller
     INNER JOIN grades ON grades.id=grades_students.grade_id
     WHERE
         grades.stream_id=".$stream_id."
-        grades_students.ative=1
+        grades_students.active=1
     GROUP BY
         users.id"));
        }

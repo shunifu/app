@@ -24,7 +24,7 @@
               
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="#" method="post">
+              <form action="{{route('attendance.store')}}" method="post">
                 <div class="card-body">
                       @csrf
                       <div class="form-row">
@@ -40,13 +40,17 @@
 
                         <div class="col-md-6 form-group">
                             <x-jet-label>Attendance Date</x-jet-label>
-                           <select class="form-control" name="attendance_date">
+
+                           <input type="date" class="form-control" name="attendance_date" id="attendance_date">
+                           {{-- <select class="form-control" name="attendance_date">
                          
                            
                             <option value="{{$date}}">{{$date}}</option>
                            
-                           </select>
-                            @error('attendance_date')
+                           </select> --}}
+
+                           <input type="hidden" value="{{$classteacher_list->teacher_id}}" name="teacher_id" id="teacher_id">
+                            @error('teacher_id')
                             <span class="text-danger">{{$message}}</span>  
                             @enderror
                         </div>
@@ -57,7 +61,7 @@
                 <table class="table table-bordered table table-hover table-responsive-md ">
                   <thead class="thead-light">
                       <tr>
-                     
+                        <th>No.</th>
                           <th>Student Name </th>
                           <th>Attendance Status </th>
                       </tr>
@@ -65,6 +69,7 @@
                   <tbody>
                       @foreach ($student_list as $student_item)
                       <tr>
+                        <td>{{$loop->iteration}}</td>
                       
                           <td>{{$student_item->lastname}} {{$student_item->middlename}} {{$student_item->name}}</td>
                       
@@ -83,7 +88,7 @@
                               </label>
                             </div> --}}
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="{{$student_item->student_id}}" id="{{$student_item->student_id}}" value="present">
+                              <input class="form-check-input" type="radio" name="{{$student_item->student_id}}" id="{{$student_item->student_id}}"  checked value="present">
                               <label class="form-check-label" for="{{$student_item->student_id}}">
                               Present
                               </label>

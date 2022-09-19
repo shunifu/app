@@ -26,7 +26,7 @@ class StudentAttendanceController extends Controller
             ->join('users','users.id','=','grades_teachers.teacher_id')
             ->where('academic_sessions.active', 1 )
             ->where('grades_teachers.teacher_id', Auth::user()->id)
-            ->select('users.name','users.middlename','users.lastname','users.salutation','grades_teachers.teacher_id','grades_teachers.grade_id', 'grades.grade_name')
+            ->select('users.id as teacher_id','users.name','users.middlename','users.lastname','users.salutation','grades_teachers.teacher_id','grades_teachers.grade_id', 'grades.grade_name')
             ->first();
            //  dd($classteacher_list);
            $date= Carbon::now()->format('Y-m-d');
@@ -66,7 +66,29 @@ class StudentAttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation=$request->validate([
+            'attendance_date'=>'required|date',
+          
+        ]);
+       
+           $count_list=count($request->all());
+      
+        $grade_id=$request->grade_id;
+        $date=$request->attendance_date;
+        $teacher=$request->teacher_id;
+      //  $student=$request->
+
+        
+
+//         for ($i=0; $i <count_list ; $i++) { 
+// $key=$request->$i;
+// dd($i);
+//         }
+
+        // foreach ($variable as $key => $value) {
+        //     dd()
+        // }
+
     }
 
     /**
