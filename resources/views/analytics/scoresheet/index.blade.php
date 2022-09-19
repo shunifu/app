@@ -557,7 +557,7 @@ where student_id = ".$student->learner_id.""));
                     @endif
 
                     @if ($item->school_type=="Prevoc")
-  m 
+  
                           <td class="align-middle p-2">
                         @if ($student->PrevocICT>=$pass_rate)
                         <span class="text-secondary">{{ $student->PrevocICT}}% </span>
@@ -606,6 +606,16 @@ where student_id = ".$student->learner_id.""));
                         -
                         @elseif($student->TechnicalStudies<$pass_rate )
                         <span class="text-danger">{{ $student->TechnicalStudies}}% </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->Entreprenuership>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Entreprenuership}}% </span>
+                        @elseif(is_null($student->Entreprenuership))
+                        -
+                        @elseif($student->Entreprenuership<$pass_rate )
+                        <span class="text-danger">{{ $student->Entreprenuership}}% </span>
                         @endif
                     </td>
                     
