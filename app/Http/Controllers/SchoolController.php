@@ -168,7 +168,7 @@ class SchoolController extends Controller
 				
 			$background_image_result = $request->file('background_image')->storeOnCloudinaryAs('shunifu', 'background_image'.$school_code);
 			$background_file=$background_image_result->getSecurePath();
-			dd($background_file);
+		//	dd($background_file);
 		}else{
 			$background_file="";
 		}
@@ -184,8 +184,41 @@ class SchoolController extends Controller
 		// "background_image" => null
 		// "id" => "1"
 
+		// 'school_code'=>$school_code,
+		// 'school_name'=>$school_name,
+		// 'school_slogan'=>$school_slogan,
+		// 'school_type'=>$school_type,
+		// 'school_telephone'=>$school_number,
+		// 'school_domain'=>$school_domain,
+		// 'school_email'=>$school_email,
+		// 'school_logo'=>$school_logo_file,
+		// 'school_letter_head'=>$letterhead_file,
+		// 'school_background_image'=>$background_file,
 
-	$update=School::find($id)->update(['school_code'=>$request->school_code, 'school_name'=>$request->school_name,'school_slogan'=>$request->school_slogan, 'school_type'=>$request->school_type,'school_email'=>$request->school_email,'school_telephone'=>$request->school_number,'school_telephone'=>$request->school_number,'school_logo'=>$request->school_logo, 'school_letter_head'=>$request->school_letter_head]);
+		$school_name=$request->school_name;
+		$school_slogan=$request->school_slogan;
+		$school_code=$request->school_code;
+		$school_type=$request->school_type;
+		$school_number=$request->school_number;
+		$school_email=$request->school_email;
+		$school_logo=$request->school_logo;
+		$school_letter_head=$request->school_letter_head;
+		$school_background=$request->background_image;
+		$school_domain=$request->school_code.'.shunifu.app';
+
+
+	$update=School::find($id)->update(['school_code'=>$request->school_code, 
+	'school_code'=>$school_code,
+	'school_name'=>$school_name,
+	'school_slogan'=>$school_slogan,
+	'school_type'=>$school_type,
+	'school_telephone'=>$school_number,
+	'school_domain'=>$school_domain,
+	'school_email'=>$school_email,
+	'school_logo'=>$school_logo_file,
+	'school_letter_head'=>$letterhead_file,
+	'school_background_image'=>$background_file
+]);
 
 		flash()->overlay('<i class="fas fa-check-circle text-success"></i> Congratulations. You have successfully updated school information', 'Edit School Information');
 
