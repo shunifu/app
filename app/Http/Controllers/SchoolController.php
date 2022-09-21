@@ -114,18 +114,18 @@ class SchoolController extends Controller
 
 		//validation
 
-		$validation=$request->validate([
-            'school_name'=>'required',
-            'school_slogan'=>'required',
-            'school_code'=>'required|integer',
-			'school_type'=>'required',
-			'school_number'=>'required|integer',
-			'school_email'=>'required|email',
+		// $validation=$request->validate([
+        //     'school_name'=>'required',
+        //     'school_slogan'=>'required',
+        //     'school_code'=>'required|integer',
+		// 	'school_type'=>'required',
+		// 	'school_number'=>'required|integer',
+		// 	'school_email'=>'required|email',
 		
 
-        ]);
+        // ]);
 
-		dd($request->all());
+		// dd($request->all());
 
 		// "_token" => "PNWVIGP8P4tncnCqK5VrT6sDxme9uGR4CEm876me"
 		// "school_name" => "Demo School"
