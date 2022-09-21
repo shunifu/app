@@ -140,6 +140,17 @@ class SchoolController extends Controller
 		// "id" => "1"
 	
 		// dd($request->all());
+
+		$school_name=$request->school_name;
+		$school_slogan=$request->school_slogan;
+		$school_code=$request->school_code;
+		$school_type=$request->school_type;
+		$school_number=$request->school_number;
+		$school_email=$request->school_email;
+		$school_logo=$request->school_logo;
+		$school_letter_head=$request->school_letter_head;
+		$school_background=$request->background_image;
+		$school_domain=$request->school_code.'.shunifu.app';
 		$id=$request->id;
 	
 		$school_code=$request->school_code;
@@ -148,10 +159,11 @@ class SchoolController extends Controller
 
 		if($request->hasFile('school_logo')){
 			
+			// $school_logo_file = 'logo_'.$school_code.'.'.$school_code->extension();  
 			$logo_result = $request->file('school_logo')->storeOnCloudinaryAs('shunifu', 'logo_'.$school_code);
 			$school_logo_file=$logo_result->getSecurePath();
 		}else{
-			$school_logo_file=$school->school_logo;
+			$school_logo_file="";
 		}
 
 		if($request->hasFile('school_letter_head')){
@@ -160,18 +172,18 @@ class SchoolController extends Controller
 			$letterhead_file=$letter_head_result->getSecurePath();
 			
 		}else{
-			$letterhead_file=$school->school_letterhead;
+			$letterhead_file="";
 		}
 
 
 		if($request->hasFile('background_image')){
-				
+			
 			$background_image_result = $request->file('background_image')->storeOnCloudinaryAs('shunifu', 'background_image'.$school_code);
 			$background_file=$background_image_result->getSecurePath();
-		//	dd($background_file);
 		}else{
 			$background_file="";
 		}
+
 			// "_token" => "PNWVIGP8P4tncnCqK5VrT6sDxme9uGR4CEm876me"
 		// "school_name" => "Demo School"
 		// "school_slogan" => "Innovative School"
@@ -195,20 +207,10 @@ class SchoolController extends Controller
 		// 'school_letter_head'=>$letterhead_file,
 		// 'school_background_image'=>$background_file,
 
-		$school_name=$request->school_name;
-		$school_slogan=$request->school_slogan;
-		$school_code=$request->school_code;
-		$school_type=$request->school_type;
-		$school_number=$request->school_number;
-		$school_email=$request->school_email;
-		$school_logo=$request->school_logo;
-		$school_letter_head=$request->school_letter_head;
-		$school_background=$request->background_image;
-		$school_domain=$request->school_code.'.shunifu.app';
+		
 
 
-	$update=School::find($id)->update(['school_code'=>$request->school_code, 
-	'school_code'=>$school_code,
+	$update=$school->update(['school_code'=>$request->school_code,
 	'school_name'=>$school_name,
 	'school_slogan'=>$school_slogan,
 	'school_type'=>$school_type,
@@ -219,6 +221,10 @@ class SchoolController extends Controller
 	'school_letter_head'=>$letterhead_file,
 	'school_background_image'=>$background_file
 ]);
+
+// Flight::where('active', 1)
+//       ->where('destination', 'San Diego')
+//       ->update(['delayed' => 1]);
 
 		flash()->overlay('<i class="fas fa-check-circle text-success"></i> Congratulations. You have successfully updated school information', 'Edit School Information');
 
