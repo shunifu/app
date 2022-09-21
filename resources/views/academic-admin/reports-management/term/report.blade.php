@@ -479,15 +479,18 @@ WHERE sub.student_id=".$student.""));
 <?php
 
 $student_subject_average=\DB::select(\DB::raw("SELECT
+grades.stream_id,
     student_subject_averages.student_average,
     student_subject_averages.ca_average,
     student_subject_averages.exam_mark,
     subjects.subject_name, 
     subjects.subject_type, 
     subjects.id as subject_id,
+    users.id as teacher_id,
     users.name,
     users.salutation,
     users.lastname,
+    
     (AVG( CASE WHEN assessements.id = 1 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test1,
     (AVG( CASE WHEN assessements.id = 2 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test2
     FROM
@@ -497,6 +500,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
     INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
     INNER JOIN users ON users.id = marks.teacher_id
      INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
+     INNER JOIN grades ON grades.id=student_subject_averages.student_class
     WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id
     GROUP BY
     marks.student_id,student_subject_averages.student_id,
@@ -522,7 +526,7 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
             @endif
 
             <th class="background" id="f">Subject Average</th>   
-        
+            <th class="background" id="f">Subject Position</th>   
             <th class="background" id="fit">Symbol</th>
             <th class="background">Comment</th>
             <th class="background">Teacher</th>
@@ -576,6 +580,37 @@ $student_subject_average=\DB::select(\DB::raw("SELECT
             @endif
         </td> 
  
+
+             <td>
+
+            <?php
+           
+ $sub_position=\DB::select(\DB::raw("select t.*
+from (select student_subject_averages.student_id,student_subject_averages.student_average, rank() over (order by student_subject_averages.student_average  desc) as student_position
+from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." AND  student_subject_averages.student_class IN(SELECT teaching_loads.class_id  FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id  where teaching_loads.teacher_id=".$item2->teacher_id."  and grades.stream_id=".$item2->stream_id.") ) t
+where student_id =".$student.""));
+
+$total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads WHERE student_loads.teaching_load_id IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id.")"));
+
+ foreach ($sub_position as $key_position) {
+     if(!isset($item2->exam_mark)){
+         echo '<span class="small text-danger">No Position because of missing mark.</span>';
+    }else{
+        foreach($total as $subtotal){
+            echo $key_position->student_position.' / '.$subtotal->total;
+        }
+       
+    }
+    
+      }
+?>
+
+
+
+
+        </td>
+         
+       
 
         <td id="fit">
             @foreach ($comments as $comment_symbol)
