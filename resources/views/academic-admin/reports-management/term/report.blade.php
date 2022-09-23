@@ -917,7 +917,7 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                             <ul>
                             
                                 @if ($calculation_type=="default")
-                                <li> Average of subjects all subjects  excluding {{$non_value_subject_name}} 
+                                <li> Average of  all subjects  excluding {{$non_value_subject_name}} 
                                 </li> 
                                    @endif
                                
