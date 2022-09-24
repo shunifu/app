@@ -67,14 +67,14 @@ body { margin: 0px; }
 
             .table td#fit, 
 .table th#fit {
-    white-space: nowrap;
+   
     width: 6%;
    
     text-align: center;
 }
 
 .table td#ft{
-    white-space: nowrap;
+   
 }
 
 .table td#f{
