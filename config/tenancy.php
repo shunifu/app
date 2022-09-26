@@ -41,6 +41,7 @@ return [
         'zombodzenationalhigh.shunifu.app',
         'stmaryshigh.shunifu.app',
         'soshigh.shunifu.app',
+        'mpofuhigh.shunifu.app', 
         'charleswesleyhigh.shunifu.app',
         'mhlatanehigh.shunifu.app',
         'londudumahigh.shunifu.app',
