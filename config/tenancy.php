@@ -27,6 +27,7 @@ return [
         'duzehigh.shunifu.app',
         'siphofanenihigh.shunifu.app',
         'mdshigh.shunifu.app',
+        'mdsprimary.shunifu.app',
         'nyamanehigh.shunifu.app', 
         'edwalenihigh.shunifu.app',
         'evelynbaringhigh.shunifu.app', 
