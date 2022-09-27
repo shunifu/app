@@ -125,9 +125,9 @@ th span {
         @if ($item->school_type=="Prevoc")
             <th><span>PrevocICT</span></th>
             <th><span>AgriTech</span></th>
-            <th><span>BusinessAccounting</span></th>
+            <th><span>BA</span></th>
             <th><span>FTT</span></th>
-            <th><span>TechStudies</span></th>
+            <th><span>TS</span></th>
             <th><span>Entreprenuership</span></th>
         @endif
         @endforeach
