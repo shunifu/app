@@ -546,9 +546,9 @@ grades.stream_id,
             @if (is_null($item2->ca_average))
             N/A
             @elseif (($item2->ca_average<$pass_rate))
-            <span class="text-danger">{{($item2->ca_average)}}%</span>
+            <span class="text-danger">{{round(($item2->ca_average),2)}}%</span>
             @else
-            {{($item2->ca_average)}}%
+            {{round(($item2->ca_average),2)}}%
             @endif
         </td>   
         @if ($examExists)
