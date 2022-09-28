@@ -593,14 +593,12 @@ where student_id =".$student.""));
 $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads WHERE student_loads.teaching_load_id IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id." AND student_loads.active=1)"));
 
  foreach ($sub_position as $key_position) {
-     if(!isset($item2->exam_mark)){
-         echo '<span class="small text-danger">No Position because of missing mark.</span>';
-    }else{
+   
         foreach($total as $subtotal){
             echo $key_position->student_position.' / '.$subtotal->total;
         }
        
-    }
+    
     
       }
 ?>
