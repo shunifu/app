@@ -924,10 +924,10 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
 
                                    @if ($calculation_type=="custom")
                                   
-                                <li> Average of  <strong>best {{$number_of_subjects}} subjects </strong>@if ($passing_subject_rule==1)@endif
-                                    inclusive of  <span class="text-bold">English Language</span>  & excluding {{$non_value_subject_name }}</li>
+                                <li> Average of  <strong>best {{$number_of_subjects}} subjects </strong>@if ($passing_subject_rule==1)
+                                    inclusive of  <span class="text-bold">English Language</span>@endif  & excluding {{$non_value_subject_name }}</li>
                                 </li> 
-                                    @endif
+                                    
                                 @endif
 
                             
