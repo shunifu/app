@@ -67,7 +67,18 @@
                       </tr>
                   </thead>
                   <tbody>
-                      @foreach ($student_list as $student_item)
+                      @foreach ($student_list as $key=>$student_item)
+                      {{-- @foreach ($nodes as $key => $node)
+    <li>{{ $key }}: {{ $node->url }}</li>
+
+
+@endforeach --}}
+
+{{-- @php
+    dd($key)
+@endphp --}}
+
+
                       <tr>
                         <td>{{$loop->iteration}}</td>
                       
@@ -78,7 +89,7 @@
                       
                       
                         <td>
-                          <div class="row">
+                          <div class="row" id="attendance_data">
                             {{-- <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               <label class="btn btn-success ">
                                 <input type="radio" name="{{$student_item->student_id}}" id="{{$student_item->student_id}}" autocomplete="off" > Present
@@ -88,21 +99,23 @@
                               </label>
                             </div> --}}
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="{{$student_item->student_id}}" id="{{$student_item->student_id}}"  checked value="present">
+                              <input class="form-check-input" type="radio" name="status[{{$key}}]" id="{{$student_item->student_id}}"  checked value="1">
                               <label class="form-check-label" for="{{$student_item->student_id}}">
                               Present
                               </label>
+                            
                            </div>
+                           <input type="hidden" name="student_id[{{$key}}]" value="{{$student_item->student_id}}">
 
                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="{{$student_item->student_id}}" id="{{$student_item->student_id}}" value="absent">
+                            <input class="form-check-input" type="radio" name="status[{{$key}}]" id="{{$student_item->student_id}}" value="0">
                             <label class="form-check-label" for="{{$student_item->student_id}}">
                             Absent
                             </label>
                          </div>
                          
                          <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="{{$student_item->student_id}}" id="{{$student_item->student_id}}" value="sick">
+                          <input class="form-check-input" type="radio" name="status[{{$key}}]" id="{{$student_item->student_id}}" value="2">
                           <label class="form-check-label" for="{{$student_item->student_id}}">
                           Sick
                           </label>
@@ -131,6 +144,12 @@
      
             
           </div>  
+
+          <script>
+            $(document).ready(function () {
+              
+            });
+          </script>
     
 </x-app-layout>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendence;
 use App\Models\GradeTeacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -74,8 +75,33 @@ class StudentAttendanceController extends Controller
         $count_list=count($request->all());
 
         $grade_id=$request->grade_id;
-        $date=$request->attendance_date;
-        $teacher=$request->teacher_id;
+        $attendance_date=$request->attendance_date;
+        $teacher_id=$request->teacher_id;
+        $students=$request->student_id;
+        $status=$request->status;
+
+       
+
+        //Check if exists
+
+
+        
+
+
+        for($i = 0; $i <count($students); $i++) {
+
+            $addTeachingLoads=Attendence::create([
+            'student_id'=>$students[$i],
+            'teacher_id'=>$teacher_id,
+            'grade_id'=>$grade_id,
+            'attendence_date'=>$attendance_date,
+            'attendence_status'=>$status[$i],
+            ]);
+        
+         }
+
+        // send to parents
+
 
         flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added student attendance'.' '.'</span> '.'into the attendance register.', 'Attendence Data');
  

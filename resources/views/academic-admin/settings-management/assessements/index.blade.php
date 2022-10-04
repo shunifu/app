@@ -384,16 +384,23 @@
              </button>
          </div>
          <div class="modal-body">
-           <input type="text"  name="delete_entry_val" id="delete_entry_val">
-          Are you sure you want to delete this assessement?
+           <input type="hidden"  name="delete_entry_val" id="delete_entry_val">
+           <div class="verification">
+            Are you sure you want to delete this assessement?
+           </div>
+
+           <div class="response"></div>
+         
          </div>
          <div class="modal-footer">
-           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+           <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Close</button>
            <button type="button" class="btn btn-danger yes_delete_assessement">Yes Delete Assessement</button>
          </div>
        </div>
      </div>
    </div>
+
+
         
         <!-- Modal -->
         <div class="modal fade" id="edit_assessement_modal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
@@ -772,7 +779,11 @@
                             @error('number_of_decimal_places')
                             <span class="text-danger">{{$message}}</span>  
                             @enderror
-                        </div> 
+                        </div>
+                        
+                        
+                    
+
                             <div class="form-group">
                               <x-jet-label> Ties </x-jet-label>
                               <select class="form-control" name="tie_type">
@@ -786,8 +797,11 @@
                               @enderror
                           </div>
 
+
+
+
                             <div class="form-group">
-                              <x-jet-label>Position Type </x-jet-label>
+                              <x-jet-label>Term Position Type </x-jet-label>
                               <select class="form-control" name="position_type">
                               <option value="">Select Option</option>
                               <option value="stream_based">Stream Based</option>
@@ -797,6 +811,19 @@
                               <span class="text-danger">{{$message}}</span>  
                               @enderror
                           </div>
+
+                          <div class="form-group">
+                            <x-jet-label>Subject Position Type </x-jet-label>
+                            <select class="form-control" name="subject_position_type">
+                            <option value="">Select Option</option>
+                            <option value="stream_based">Stream Based</option>
+                            <option value="class_based">Class Based</option>
+                            <option value="teacher_based">Teacher Based</option>
+                            </select>
+                            @error('subject_position_type')
+                            <span class="text-danger">{{$message}}</span>  
+                            @enderror
+                        </div>
                            
                   
                       
@@ -805,7 +832,7 @@
                 <!-- /end of card-body -->
       
                 <div class="card-footer">
-                  <x-jet-button>Add Rates</x-jet-button>
+                  <x-jet-button>Add Passing Criteria</x-jet-button>
                 </div>
               </form>
             </div>
@@ -932,7 +959,7 @@
                         <x-jet-label>Stream</x-jet-label>
                         <select class="form-control" name="stream" id="stream">
                         <option value="">Select Stream</option>
-                        <option value="0">All Streams</option>
+                       
                         @foreach ($streams as $stream)
                         <option value="{{$stream->id}}">{{$stream->stream_name}} </option>
                         @endforeach
@@ -1208,7 +1235,7 @@ $('#number_of_decimal_places').val(" ");
             });
 
             
-            $("#yes_delete_assessement").click(function (e) { 
+            $(".yes_delete_assessement").click(function (e) { 
                 e.preventDefault();
 
                 var id= $('#delete_entry_val').val();
@@ -1220,7 +1247,18 @@ $('#number_of_decimal_places').val(" ");
                   dataType: "json",
                 }).done(function(data) {
 
-                  console.log(data.message);
+                  if (data.status==400) {
+                    $(".response").html(data.errors);
+                  } else {
+                    $(".response").html(data.message);
+                    
+                  }
+
+              
+                  $(".verification").hide();
+                  $(".yes_delete_assessement").hide();
+
+                //  $("#delete_assessement_modal").modal('hide');
                     
                   }).fail(function(data) {
                     
@@ -1229,6 +1267,12 @@ $('#number_of_decimal_places').val(" ");
                 
                 
               });
+
+              $("#close").click(function (e) { 
+            e.preventDefault();
+            location.reload();   
+            
+        });
 
 
             $(document).on("click",'.update_assessement', function (e) {

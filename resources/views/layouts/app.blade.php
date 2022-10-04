@@ -838,6 +838,43 @@
             </a>
             <ul class="nav nav-treeview">
 
+
+
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-building"></i>
+                  <p>
+                    Attendance Management
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="/class/student-attendance" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p>Add Attendance</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="/class/student-attendance/manage" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p>Manage Attendance</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="/class/student-attendance/history" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p> Attendance History</p>
+                    </a>
+                  </li>
+
+
+                </ul>
+              </li>
+            
+
               <li class="nav-item">
                 <a href="/class/class-noticeboard" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
@@ -850,12 +887,7 @@
                   <p>Class List</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/class/student-attendance" class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
-                  <p>Class Attendance</p>
-                </a>
-              </li>
+            
 
               <li class="nav-item">
                 <a href="/class/class-performance" class="nav-link">
@@ -1139,6 +1171,14 @@
               
                  
                 </ul>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('assessement_settings.index')}}" class="nav-link">
+                  <i class="fas fa-newspaper nav-icon"></i>
+                  <p>Marks Settings</p>
+              
+                </a>
+                
               </li>
               <li class="nav-item">
                 <a href="{{route('assessement_settings.index')}}" class="nav-link">
@@ -1725,7 +1765,7 @@
            
           {{-- <script  src="/js/app.js" ></script> --}}
         
-          {{-- <script src="{{asset('js/app.js')}}"></script> --}}
+          <script src="{{asset('js/app.js')}}"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
            {{-- <script src="https://code.highcharts.com/highcharts.js"></script> --}}
            {{-- <script src="https://cdn.jsdelivr.net/npm/@wiris/mathtype-tinymce5@7.24.6/plugin.min.js"></script> --}}

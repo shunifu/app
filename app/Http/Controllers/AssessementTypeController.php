@@ -135,18 +135,23 @@ class AssessementTypeController extends Controller
         $isAdmin=Auth::user()->hasRole('admin_teacher');
         if ($isAdmin){
 
+            
+            $type_id=decrypt($id);
+
             //check if assessment is not in use
 
 
          
-            $existsInAssessements=Assessement::where('assessement_type', $id)->exists();
-            $existsInAssessementProgressReport=AssessementProgressReport::where('assessement_type', $id)->exists();
+            $existsInAssessements=Assessement::where('assessement_type', $type_id)->exists();
+
+      
+            $existsInAssessementProgressReport=AssessementProgressReport::where('assessement_type', $type_id)->exists();
 
             if($existsInAssessements OR $existsInAssessementProgressReport ){
-                flash()->overlay('Error. Cannot delete assessement type, as it is already used in assessements settings', 'Delete Assessement Type');
+                flash()->overlay('Error. Cannot delete assessement type, as it is already used in assessements', 'Delete Assessement Type');
                 return redirect()->back(); 
             }else{
-                $delete=AssessementType::find($id)->delete();
+                $delete=AssessementType::find($type_id)->delete();
                  flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have deleted Assessement Type', 'Delete Assessement Type');
             return redirect()->back(); 
             }
