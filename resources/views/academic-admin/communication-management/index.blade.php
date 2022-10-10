@@ -214,9 +214,6 @@ $("#submit").click(function (e) {
 //validations
 
 
-
-
-
             $.ajax({
             type: "POST",
             url: "/communication/send",

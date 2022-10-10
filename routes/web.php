@@ -640,8 +640,10 @@ Route::get('/class/attendance/search/{id}', [ParentController::class,'search'])-
 Route::get('/kids/data/performance/{id}', [ParentController::class,'performance'])->name('kids.performance');
 
 //Beginning of Class Teacher
-Route::get('/class/student-attendance/', [StudentAttendanceController::class,'index']);
+Route::get('/class/student-attendance', [StudentAttendanceController::class,'index']);
 Route::post('/class/student-attendance/mark-attendance', [StudentAttendanceController::class,'store'])->name('attendance.store');
+Route::get('/class/student-attendance/manage', [StudentAttendanceController::class,'show']);
+Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit']);
 
 
 //End of Class Teacher

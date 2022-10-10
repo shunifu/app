@@ -116,7 +116,9 @@ class StudentAttendanceController extends Controller
      */
     public function show(StudentAttendance $studentAttendance)
     {
-        //
+
+        $grades=GradeTeacher::where('');
+        return view('academic-admin.attendance-management.manage');
     }
 
     /**
@@ -125,9 +127,13 @@ class StudentAttendanceController extends Controller
      * @param  \App\Models\StudentAttendance  $studentAttendance
      * @return \Illuminate\Http\Response
      */
-    public function edit(StudentAttendance $studentAttendance)
+    public function edit(StudentAttendance $studentAttendance, Request $request)
     {
-        //
+        $student_attendance=Attendence::where('attendence_date', $request->date )->where('teacher_id',$request->teacher_id)->get();
+
+       
+        return view('academic-admin.attendance-management.view', compact('student_attendance'));
+
     }
 
     /**

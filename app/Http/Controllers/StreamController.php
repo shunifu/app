@@ -56,9 +56,7 @@ class StreamController extends Controller
             'final_stream'  =>  $final_stream, 
         ]);
 
-        flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully added '.$stream_name, 'Add Stream');
-
-        return Redirect::back();
+      
 
     }
 

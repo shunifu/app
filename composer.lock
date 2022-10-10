@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2647e3cf68c3a190d5734be532daeca2",
+    "content-hash": "8b2165629f62f057427dc2c671575484",
     "packages": [
         {
             "name": "africastalking/africastalking",
@@ -2802,6 +2802,58 @@
                 "source": "https://github.com/laracasts/flash/tree/3.2.1"
             },
             "time": "2022-01-31T16:01:37+00:00"
+        },
+        {
+            "name": "laravel-bi/laravel-bi",
+            "version": "v1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-bi/laravel-bi.git",
+                "reference": "43db086d81b39e6181c29740ddc8ad044a0dc99d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-bi/laravel-bi/zipball/43db086d81b39e6181c29740ddc8ad044a0dc99d",
+                "reference": "43db086d81b39e6181c29740ddc8ad044a0dc99d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.0 | ^9.0",
+                "php": ">=7.3.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.8",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelBi\\LaravelBi\\BiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelBi\\LaravelBi\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alberto Bottarini",
+                    "email": "alberto.bottarini@gmail.com"
+                }
+            ],
+            "description": "A beautiful and fully-featured Business Intelligence dashboard manager for Laravel",
+            "support": {
+                "issues": "https://github.com/laravel-bi/laravel-bi/issues",
+                "source": "https://github.com/laravel-bi/laravel-bi/tree/v1.1.3"
+            },
+            "time": "2022-09-23T08:13:24+00:00"
         },
         {
             "name": "laravel/fortify",
