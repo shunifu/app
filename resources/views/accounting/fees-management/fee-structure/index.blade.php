@@ -54,10 +54,10 @@
     
                   <p class="text-gray-700 mb-1 2h-base">
     
-                    Use this section to add marks for students.
+                    Use this section to add fee structure for the different streams
                     <ol>
-                        <li>Select your teaching load </li>
-                        <li>Select the assessement you want to add marks for.</li>
+                        <li>First select  the session </li>
+                        <li>Secondly select the stream</li>
                         </ol> 
     
                   </p>
@@ -79,11 +79,11 @@
     
     </div>
     <li class="nav-item" role="presentation">
-    <a class="nav-link active bg-light" id="pills-mark-tab" href="/marks" role="tab" aria-controls="pills-add-mark" aria-selected="true">Add Fee Structure</a>
+    <a class="nav-link active bg-light" id="pills-mark-tab" href="/accounting/fees-management/fee-structure" role="tab" aria-controls="pills-add-mark" aria-selected="true">Add Fee Structure</a>
     </li>
     
     <li class="nav-item" role="presentation">
-    <a class="nav-link bg-light" id="pills-section_analysis-tab"  href="/marks/manage" role="tab" aria-controls="pills-section_analysis" aria-selected="false">Manage Fee Structure</a>
+    <a class="nav-link bg-light" id="pills-section_analysis-tab"  href="/accounting/fees-management/fee-structure/manage" role="tab" aria-controls="pills-section_analysis" aria-selected="false">Manage Fee Structure</a>
     </li>
     
     
@@ -109,7 +109,7 @@
         <div class="card card-light   elevation-3">
            
             <div class="card-body">
-                <form action="{{}}" method="post">
+                <form >
 
                             @csrf
                             <div class="form-row">
@@ -117,7 +117,7 @@
 
                                 <div class="col-md-6 form-group">
                                     <x-jet-label>Select Session</x-jet-label>
-                                    <select class="form-control" name="session">
+                                    <select class="form-control" name="session_id" id="session_id">
                                         <option value="">Select Session</option>
                                         @foreach($sessions as $session)
                                             <option value="{{ $session->id }}">
@@ -125,20 +125,20 @@
                                              
                                         @endforeach
                                     </select>
-                                    @error('session')
+                                    @error('session_id')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
     
                                 <div class="col-md-6 form-group">
                                     <x-jet-label>Select Stream</x-jet-label>
-                                    <select class="form-control" name="stream[]" id="stream" >
-                                        <option value="">Select Class</option>
+                                    <select class="form-control" name="stream_id" id="stream_id" >
+                                        <option value="">Select Stream</option>
                                         @foreach($streams as $stream)
                                 <option value="{{ $stream->id }}">{{ $stream->stream_name }} </option>
                                         @endforeach
                                     </select>
-                                    @error('stream')
+                                    @error('stream_id')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -155,7 +155,40 @@
 
             </div>
 
+          
+
         </div>
+
+        <div class="card " id="fee_structure_response">
+       
+            <div class="card-body">
+              <h4 class="card-title stream_name">Fee Structure</h4>
+              <p class="card-text">
+
+                <form action="/add/fee-structure" method="post">
+                @csrf
+
+                <table class="table table-sm table-hover mx-auto table-bordered " style="width:100%" id="students_table">
+                    <div class="table_header"></div>
+                      <thead class="thead-light">
+                          <tr>
+                             
+                              <th>Account Name</th>
+                              <th>Amount in SZL</th>
+                            
+                          </tr>
+                      </thead>
+                      <tbody>
+                       
+                        
+                      </tbody>
+                  </table>
+
+                  <button type="submit" name="fee_structure_btn" id="fee_structure_btn" class="btn btn-primary" >Add Fee Structure</button>
+                </form>
+              </p>
+            </div>
+          </div>
     </div>
 
     <div class="mb-4">
@@ -163,10 +196,124 @@
     </div>
  
     <script type="text/javascript">
-        // $('#multiple_loads').multiselect();
-        $('#multiple_loads').multiselect({
-            buttonWidth: '150px'
-        });
+      
+      
+
+
+        $(document).ready(function () {
+
+            $.noConflict();
+         
+          
+         $.ajaxSetup({
+   headers: {
+       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+   }
+});
+       
+      
+ 
+
+         
+
+            $('#students_table').hide();
+
+            $("#btnSelector").click(function (e) { 
+                e.preventDefault();
+                $('#stream_id').change(function() {
+    //Use $option (with the "$") to see that the variable is a jQuery object
+    var stream = $(this).find('option:selected');
+    //Added with the EDIT
+    var stream_id = $stream.val();//to get content of "value" attrib
+    // var text = $option.text();//to get <option>Text</option> content
+});
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{route('fee_structure.create')}}",
+                    data: {stream_id:stream_id, session_id:session_id},
+                    dataType: "JSON",
+                    success: function (response) {
+                        $('#students_table').show();
+                        $("tbody").html(" ");
+                        $('.table_header').append(response.accounts);
+
+                        $.each(response.accounts, function (key, item) { 
+
+                            var account_name=item.account_name;
+                            var amount=item.amount;
+                            var account_id=item.account_id;
+                            var session_id=item.session_id;
+                            var stream_id=item.stream_id;
+                            
+
+                            $('tbody').append('<tr>\
+                    <td>'+account_name+'</td>\
+                  <td><input type="number" name="amount[]" class="form-control" value='+amount+'><input type="hidden" name="account_id[]" class="form-control" value='+account_id+'><input type="hidden" name="session_id[]" class="form-control" value='+session_id+'><input type="hidden" name="stream_id[]" class="form-control" value='+stream_id+'></td>\
+                  </tr>' );  
+ 
+                             
+                        });
+
+                    }
+                });
+
+
+                $.ajax({
+                    type: "GET",
+                    url: "/get/stream/"+stream_id,
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(stream_id);
+                        // $("#stream_name").html(" ");
+                        // $("#stream_name").append(response.stream_name);
+                        
+                    }
+                });
+
+
+            });
+
+
+            
+});
+            
+
+
+//     $.ajax({
+//     type: "POST",
+//     url: "{{route('fee_structure.create')}}",
+//     data: {stream_id:stream_id, session_id:session_id},
+//     dataType: "dataType",
+// }).done(function(data) {
+   
+//     $('#students_table').show();
+
+//     $('.table_header').append(data.accounts);
+
+ 
+//  $.each(data.accounts, function (key, item) { 
+//          var account_name=item.account_name;
+//          var amount=item.amount;
+
+
+//          $('tbody').append('<tr>\
+//                     <td>'+account_name+'</td>\
+//                     <td>'+amount+'</td>\
+//                     </tr>'  );  
+                    
+//  });
+
+   
+        
+//     }).fail(function(data) {
+//         alert('d');
+        
+// })
+                
+         
+
+
     </script>
  
     

@@ -10,12 +10,12 @@
          
          {{-- <link href="/css/app.css" rel="stylesheet"> --}}
       
- {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}">  --}}
+ <link rel="stylesheet" href="{{ mix('css/app.css') }}"> 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-          <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet">
-          <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css' rel="stylesheet">
-          <link href=' https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel="stylesheet">
-          <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
+    <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet">
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css' rel="stylesheet">
+    <link href=' https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
           
        
 
@@ -872,6 +872,13 @@
 
 
                 </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/class/student-management" class="nav-link">
+                  <i class="nav-icon fas fa-check-circle"></i>
+                  <p>Student Management</p>
+                </a>
               </li>
             
 
@@ -1763,7 +1770,7 @@
 
         
            
-          {{-- <script  src="/js/app.js" ></script> --}}
+          <script  src="/js/app.js" ></script>
         
           {{-- <script src="{{asset('js/app.js')}}"></script> --}}
           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 

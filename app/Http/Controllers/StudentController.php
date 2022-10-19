@@ -33,6 +33,7 @@ use App\Exports\StudentsListTemplate;
 use App\Models\StudentSubjectAverage;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\AssessementProgressReport;
+use App\Models\GradeTeacher;
 use App\Models\StudentFees;
 
 // use Validator;
@@ -738,6 +739,23 @@ public function parent_update(Request $request){
         $sessions=AcademicSession::where('active', 1)->get();
 
         return view('users.students.removal-management.index', compact('classes', 'sessions'));
+
+    }
+    
+
+    public function student_issues_classteacher(){
+        //Archive Students
+
+        $classes=DB::table('grades_teachers')
+        ->join('academic_sessions','academic_sessions.id','=','grades_teachers.academic_session')
+        ->join('grades','grades.id','=','grades_teachers.grade_id')
+        ->where('academic_sessions.active', 1)
+        ->where('grades_teachers.teacher_id', Auth::user()->id)
+        ->select('grades.id as id', 'grades.grade_name')->get();
+
+        $sessions=AcademicSession::where('active', 1)->get();
+
+        return view('users.students.removal-management.index_class_teacher', compact('classes', 'sessions'));
 
     }
 

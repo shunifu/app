@@ -210,6 +210,11 @@ Route::post('/permissions/add', [PermissionsManagementController::class,'store']
 
 //End of Lesson Plan //
 
+
+Route::get('/get/stream/{stream_id}', [SchoolFeeController::class,'getStream'])->name('stream.get');
+
+
+
 //Student Data Route
 Route::get('/users/student', [StudentController::class,'create'])->name('student.create');
 Route::post('/users/student/manage/load', [StudentController::class,'load'])->name('student.load');
@@ -243,6 +248,7 @@ Route::get('/users/profile/student/{id}',  [StudentController::class,'profile'])
 Route::get('/users/student/delete/{id}', [StudentController::class,'destroy'])->name('student.destroy');
 Route::get('users/student/manage/password/reset/{id}',[StudentController::class,'password_reset'])->name('student.password_reset');
 Route::get('users/student/manage/removal/',[StudentController::class,'student_removal'])->name('student.removal_index');
+Route::get('/class/student-management',[StudentController::class,'student_issues_classteacher'])->name('student.student_issues_classteacher');
 
 Route::post('users/student/manage/removal/process',[StudentController::class,'removal_loadstudents'])->name('student.removal');
 Route::post('users/student/manage/removal/process/selection',[StudentController::class,'removal'])->name('student.removal_selection');
@@ -459,6 +465,10 @@ Route::post('/accounting/fees-management/accounts/store',[AccountController::cla
 Route::get('accounting/fees-management/accounts/account/delete/{id}',[AccountController::class,'destroy'])->name('accounts.destroy');
 
 Route::get('/accounting/fees-management/fee-structure',[SchoolFeeController::class,'index'])->name('fee_structure.index');
+Route::post('/accounting/fees-management/fee-structure/add',[SchoolFeeController::class,'create'])->name('fee_structure.create');
+
+Route::post('/add/fee-structure',[SchoolFeeController::class,'store'])->name('fee_structure.store');
+
 
 Route::get('/get/student/payment/{id}/{grade_id}',[StudentController::class,'getPayment']);
 
