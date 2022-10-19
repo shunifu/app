@@ -101,11 +101,11 @@
                                             <tr>
                                               <th><input type="checkbox" id="select_all" name="select_all">
                                                 <label for="students">Select All</label></th>
-                                                <th>Student ID</th>
+                                               
                                               <th>Student Surname</th>
                                               <th>Student Names</th>
                                               <th>Student Class</th>
-                                             
+                                             <th>Manage</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -114,10 +114,11 @@
             <input type="hidden" name="session" value="{{$item->academic_session_id}}">
               <tr>
               <td><input type="checkbox" class="students" name="students[]" value="{{$item->user_id}}" ></td>
-              <td>{{$item->user_id}} </td>
+             
               <td>{{$item->lastname}} </td>
               <td>{{$item->name}} {{$item->middlename}}  </td>
               <td>{{$item->grade_name}}</td>
+              <td><a href="/users/profile/student/{{$item->user_id}}">Check Profile</a></td>
               <input type="hidden" name="current_class" value="{{$item->current_class}}">
               </tr>
               @endforeach
