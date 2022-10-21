@@ -880,6 +880,13 @@
                   <p>Student Management</p>
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a href="/class/student-management/link-parents" class="nav-link">
+                  <i class="nav-icon fas fa-check-circle"></i>
+                  <p>Link Parents</p>
+                </a>
+              </li>
             
 
               <li class="nav-item">

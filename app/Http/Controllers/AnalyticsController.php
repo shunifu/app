@@ -996,7 +996,16 @@ $admin=Auth::user()->hasRole('admin_teacher');
 
           $subject=Subject::where('subject_type','passing_subject')->first();
           $passing_subject=$subject->id;
+          $non_value_exists=Subject::where('subject_type','non-value')->exists();
 
+          if($non_value_exists){
+              $subject_non_value=Subject::where('subject_type','non-value')->first();
+              $non_value_subject=$subject_non_value->id;
+              $non_value_subject_name=$subject_non_value->subject_name;
+  
+          }else{
+              $non_value_subject=0;
+          }
 
         //Getting Academic Year
         $get_academic_session = DB::table('terms')
@@ -1108,34 +1117,26 @@ $admin=Auth::user()->hasRole('admin_teacher');
  
          //if the subject average rule is custom, it means that the subject average is calculated  based on the selection of assessements
        
-     $subject_average[]=DB::select(DB::raw("SELECT marks.student_id,
-     GROUP_CONCAT(subjects.subject_name) AS subject_name,
-     subjects.id as subject_id,
-     assessements.term_id as term_id,
-     teaching_loads.class_id as student_class,
-     teaching_loads.id as teaching_load_id,
-     (AVG(CASE WHEN assessements.assessement_type = 1 AND assessements.term_id = ".$term." THEN marks.mark END))AS ca,
-     (AVG( CASE WHEN assessements.assessement_type = 2 AND assessements.term_id = ".$term." THEN marks.mark END))AS exam,
-     (AVG( CASE WHEN assessements.assessement_type = 1 AND assessements.term_id = ".$term." THEN (marks.mark)*".$ca_weight." END)) as ca_weight,
-     (AVG( CASE WHEN assessements.assessement_type = 2 AND assessements.term_id = ".$term." THEN (marks.mark)*".$exam_weight." END)) as exam_weight
-     FROM
-     marks
-     INNER JOIN assessements ON assessements.id = marks.assessement_id
-     INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
-     INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
-     WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1
-     GROUP BY
-     marks.student_id,
-     subjects.id"));
- 
-     // dd($subject_average);
- // foreach($subject_average as $item){
- // foreach ($item as $key) {
- //    if($rt=sizeof($key));
-   
- //     dd($rt);
- // }
- // }
+         $subject_average[]=DB::select(DB::raw("SELECT marks.student_id,
+         GROUP_CONCAT(subjects.subject_name) AS subject_name,
+         subjects.id as subject_id,
+         assessements.term_id as term_id,
+         teaching_loads.class_id as student_class,
+         teaching_loads.id as teaching_load_id,
+         (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN marks.mark END))AS ca,
+         (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN marks.mark END))AS exam,
+         (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN (marks.mark)*".$ca_weight." END))AS ca_weight,
+         (AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN (marks.mark)*".$exam_weight." END)) as exam_weight
+         FROM
+         marks
+         INNER JOIN c_a__exams ON c_a__exams.assessement_id = marks.assessement_id
+         INNER JOIN assessements ON assessements.id = marks.assessement_id
+         INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
+         INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
+         WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1
+         GROUP BY
+         marks.student_id,
+         subjects.id"));
   
  
  }else if($subject_average_rule=="default"){
@@ -1164,42 +1165,43 @@ $admin=Auth::user()->hasRole('admin_teacher');
              
          }
  
-     if($subject_average_rule=="custom"){
-         foreach ($subject_average as $key) {
-          
-     $insert=StudentSubjectAverage::upsert(collect($key)->map(function($item) use($student) {
-             return [
-             'student_id' => $item->student_id,
-             'term_id'  =>$item->term_id,
-             'subject_id' => $item->subject_id,
-             'teaching_load_id' =>$item->teaching_load_id,
-             'ca_average' =>$item->ca,
-             'exam_mark' =>$item->exam,
-             'student_average' =>(round($item->ca_weight)+($item->exam_weight)),
-             'student_class'  =>$item->student_class,
-             'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
-                 ];
-             })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average', 'position']);
-         }
-     
-     }else if($subject_average_rule=="default"){
-         foreach ($subject_average as $key) {
-             $insert=StudentSubjectAverage::upsert(collect($key)->map(function($item) use($student) {
-                 return [
-                 'student_id' => $item->student_id,
-                 'term_id'  => $item->term_id,
-                 'subject_id' => $item->subject_id,
-                 'teaching_load_id' => $item->teaching_load_id,
-                 'ca_average' =>NULL,
-                 'exam_mark' => NULL,
-                 'student_average' =>$item->student_average,
-                 'student_class'  =>$item->student_class,
-                 'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
-                 ];
-                   })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average']);
-         }
- 
-     }
+  
+         if($subject_average_rule=="custom"){
+            foreach ($subject_average as $key) {
+             
+        $insert=StudentSubjectAverage::upsert(collect($key)->map(function($item) use($student) {
+                return [
+                'student_id' => $item->student_id,
+                'term_id'  =>$item->term_id,
+                'subject_id' => $item->subject_id,
+                'teaching_load_id' =>$item->teaching_load_id,
+                'ca_average' =>$item->ca,
+                'exam_mark' =>$item->exam,
+                'student_average' =>(round(($item->ca_weight)+($item->exam_weight))),
+                'student_class'  =>$item->student_class,
+                'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
+                    ];
+                })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average', 'position']);
+            }
+        
+        }else if($subject_average_rule=="default"){
+            foreach ($subject_average as $key) {
+                $insert=StudentSubjectAverage::upsert(collect($key)->map(function($item) use($student) {
+                    return [
+                    'student_id' => $item->student_id,
+                    'term_id'  => $item->term_id,
+                    'subject_id' => $item->subject_id,
+                    'teaching_load_id' => $item->teaching_load_id,
+                    'ca_average' =>NULL,
+                    'exam_mark' => NULL,
+                    'student_average' =>$item->student_average,
+                    'student_class'  =>$item->student_class,
+                    'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
+                    ];
+                      })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average']);
+            }
+    
+        }
  
  
      //Generate Stream subject averages
@@ -1219,165 +1221,177 @@ $admin=Auth::user()->hasRole('admin_teacher');
  
         // $total_subjects=StudentLoad::where('student_id', $student)->count();//Remember to scope to session
  
-         $total_subjects = DB::table('student_loads')
-         ->join('teaching_loads', 'student_loads.teaching_load_id', '=', 'teaching_loads.id')
-         ->join('academic_sessions', 'academic_sessions.id', '=', 'teaching_loads.session_id')
-         ->where('student_id', $student)
-         ->where('academic_sessions.academic_session',$get_academic_session->academic_session )//scoping to current academic session
-         ->count();
- 
+        $total_subjects = DB::table('student_loads')
+        ->join('teaching_loads', 'student_loads.teaching_load_id', '=', 'teaching_loads.id')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'teaching_loads.session_id')
+        ->where('student_id', $student)
+        ->where('student_loads.active', 1)
+        ->where('academic_sessions.academic_session',$get_academic_session->academic_session )//scoping to current academic session
+        ->count();
          
-         if($criteria->average_calculation=="custom" ){
- 
-             if($term_average_type=="decimal"){
-                 $avg_calculation="ROUND(SUM(t.mark) /".$number_of_subjects.", $number_of_decimal_places )";
-     
-               }else{
-                 $avg_calculation="ROUND(SUM(t.mark) /".$number_of_subjects." )";
-               }
-         
-          //if Passing subject rule applies 
-                if($criteria->passing_subject_rule=="1"){
-         
-     //Student AVERAGE
-      $student_average[]=DB::select(DB::raw("SELECT student_id, ".$avg_calculation." AS average_mark ,grade_id,  section_id,stream_id, nps.number_of_passed_subjects,term_id, prm.passing_subject_status from 
-     (select student_subject_averages.student_id,grades.id as grade_id,term_id, grades.stream_id, grades.section_id, ROUND(AVG(student_subject_averages.student_average))  as mark  from student_subject_averages 
-     INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
-     INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
-     INNER JOIN grades ON grades.id=student_subject_averages.student_class
-     where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term."
-     GROUP BY student_subject_averages.subject_id
-     order by (student_subject_averages.subject_id =".$passing_subject.") desc, mark desc
-     LIMIT ".$number_of_subjects.") t, 
-     (SELECT
-             COUNT(student_subject_averages.student_average) AS number_of_passed_subjects
-             FROM
-             student_subject_averages
-             WHERE
-             student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate."
-             ORDER BY
-             student_average
-             DESC
-      ) nps, 
-     (SELECT
- COUNT(student_subject_averages.student_average) AS passing_subject_status
- FROM
- student_subject_averages
- WHERE
- student_subject_averages.student_id = ".$student."  AND student_subject_averages.term_id=".$term."  AND  student_subject_averages.subject_id = ".$passing_subject." AND student_subject_averages.student_average>=".$pass_rate.") prm
-     ORDER BY round((SUM(t.mark))/".$number_of_subjects.") DESC"));
-         
-         
-                 }else if($criteria->passing_subject_rule=="0"){
-                     
-         
-                     $student_average[]=DB::select(DB::raw("SELECT student_id, ".$avg_calculation." AS average_mark ,grade_id,  section_id,stream_id, nps.number_of_passed_subjects,term_id, prm.passing_subject_status from 
-                     (select student_subject_averages.student_id,grades.id as grade_id,term_id, grades.stream_id, grades.section_id, ROUND(AVG(student_subject_averages.student_average))  as mark  from student_subject_averages 
-                     INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
-                     INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
-                     INNER JOIN grades ON grades.id=student_subject_averages.student_class
-                     where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term."
-                     GROUP BY student_subject_averages.subject_id
-                     order by  mark desc
-                     LIMIT ".$number_of_subjects.") t, 
-                     (SELECT
-                             COUNT(student_subject_averages.student_average) AS number_of_passed_subjects
-                             FROM
-                             student_subject_averages
-                             WHERE
-                             student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate."
-                             ORDER BY
-                             student_average
-                             DESC
-                      ) nps, 
-                     (SELECT
-                 COUNT(student_subject_averages.student_average) AS passing_subject_status
-                 FROM
-                 student_subject_averages
-                 WHERE
-                 student_subject_averages.student_id = ".$student."  AND student_subject_averages.term_id=".$term."  AND  student_subject_averages.subject_id = ".$passing_subject." AND student_subject_averages.student_average>=".$pass_rate.") prm
-                     ORDER BY round((SUM(t.mark))/".$number_of_subjects.") DESC"));
-                         
-         
-                 }
-                
+        if($criteria->average_calculation=="custom" ){
+
+            if($term_average_type=="decimal"){
+                $avg_calculation="ROUND(SUM(t.mark) /".$number_of_subjects.", $number_of_decimal_places )";
+    
+              }else{
+                $avg_calculation="ROUND(SUM(t.mark) /".$number_of_subjects." )";
+              }
+        
+         //if Passing subject rule applies 
+               if($criteria->passing_subject_rule=="1"){
+        
+    //Student AVERAGE
+     $student_average[]=DB::select(DB::raw("SELECT student_id, ".$avg_calculation." AS average_mark ,grade_id,  section_id,stream_id, nps.number_of_passed_subjects,term_id, prm.passing_subject_status from 
+    (select student_subject_averages.student_id,grades.id as grade_id,term_id, grades.stream_id, grades.section_id, ROUND(AVG(student_subject_averages.student_average))  as mark  from student_subject_averages 
+    INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
+    INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
+    INNER JOIN grades ON grades.id=student_subject_averages.student_class
+    where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
+    GROUP BY student_subject_averages.subject_id
+    order by (student_subject_averages.subject_id =".$passing_subject.") desc, mark desc
+    LIMIT ".$number_of_subjects.") t, 
+    (SELECT
+            COUNT(student_subject_averages.student_average) AS number_of_passed_subjects
+            FROM
+            student_subject_averages
+            WHERE
+            student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
+            ORDER BY
+            student_average
+            DESC
+     ) nps, 
+    (SELECT
+COUNT(student_subject_averages.student_average) AS passing_subject_status
+FROM
+student_subject_averages
+WHERE
+student_subject_averages.student_id = ".$student."  AND student_subject_averages.term_id=".$term."  AND  student_subject_averages.subject_id = ".$passing_subject." AND student_subject_averages.student_average>=".$pass_rate.") prm
+    ORDER BY round((SUM(t.mark))/".$number_of_subjects.") DESC"));
+        
+        
+                }else if($criteria->passing_subject_rule=="0"){
+                    
+        
+                    $student_average[]=DB::select(DB::raw("SELECT student_id, ".$avg_calculation." AS average_mark ,grade_id,  section_id,stream_id, nps.number_of_passed_subjects,term_id, prm.passing_subject_status from 
+                    (select student_subject_averages.student_id,grades.id as grade_id,term_id, grades.stream_id, grades.section_id, ROUND(AVG(student_subject_averages.student_average))  as mark  from student_subject_averages 
+                    INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
+                    INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
+                    INNER JOIN grades ON grades.id=student_subject_averages.student_class
+                    where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
+                    GROUP BY student_subject_averages.subject_id
+                    order by  mark desc
+                    LIMIT ".$number_of_subjects.") t, 
+                    (SELECT
+                            COUNT(student_subject_averages.student_average) AS number_of_passed_subjects
+                            FROM
+                            student_subject_averages
+                            WHERE
+                            student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
+                            ORDER BY
+                            student_average
+                            DESC
+                     ) nps, 
+                    (SELECT
+                COUNT(student_subject_averages.student_average) AS passing_subject_status
+                FROM
+                student_subject_averages
+                WHERE
+                student_subject_averages.student_id = ".$student."  AND student_subject_averages.term_id=".$term."  AND  student_subject_averages.subject_id = ".$passing_subject." AND student_subject_averages.student_average>=".$pass_rate.") prm
+                    ORDER BY round((SUM(t.mark))/".$number_of_subjects.") DESC"));
+                        
+        
+                }
+               
+          
+        }else if($criteria->average_calculation=="default"){
+
+
+            $total_subjects = DB::table('student_loads')
+            ->join('teaching_loads', 'student_loads.teaching_load_id', '=', 'teaching_loads.id')
+            ->join('academic_sessions', 'academic_sessions.id', '=', 'teaching_loads.session_id')
+            ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+            ->where('teaching_loads.active', 1)
+            ->where('student_loads.student_id', $student)
+            ->where('subjects.subject_type','<>', 'non-value')
+            ->where('academic_sessions.active', 1)//Scoping to active academic year. 
+            ->where('student_loads.active', 1)
+            ->get()->count();
+
+          if($term_average_type=="decimal"){
+            $avg_calculation="ROUND(SUM(t.mark) /".$total_subjects.", $number_of_decimal_places )";
+
+          }else{
+            $avg_calculation="ROUND(SUM(t.mark) /".$total_subjects." )";
+          }
+            $student_average[]=DB::select(DB::raw("SELECT student_id,".$avg_calculation."  AS average_mark, 
+            t.grade_id, 
+            term_id,
+            section_id,
+            stream_id,
+            nps.number_of_passed_subjects,
+            prm.passing_subject_status,
+            lmr.marks_count,
+            total.total,
+            lmr.loads_count
+            FROM( SELECT
+            student_subject_averages.student_id,
+            student_subject_averages.student_class AS grade_id,
+            grades.stream_id,
+            grades.section_id,
+            term_id,
+            student_subject_averages.student_average AS mark
+            FROM
+            student_subject_averages
+            INNER JOIN teaching_loads ON teaching_loads.id = student_subject_averages.teaching_load_id
+            INNER JOIN grades ON grades.id = student_subject_averages.student_class
+            WHERE student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id = ".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
+            GROUP BY
+            student_subject_averages.id
+        ) t,
+        (
+            SELECT
+            COUNT(student_subject_averages.student_average) AS number_of_passed_subjects
+            FROM
+            student_subject_averages
+            WHERE
+            student_subject_averages.student_id =".$student." AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >= ".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
+            ORDER BY
+            student_average
+            DESC
+        ) nps,
+        
+        (
            
-         }else if($criteria->average_calculation=="default"){
-           if($term_average_type=="decimal"){
-             $avg_calculation="ROUND(SUM(t.mark) /".$total_subjects.", $number_of_decimal_places )";
- 
-           }else{
-             $avg_calculation="ROUND(SUM(t.mark) /".$total_subjects." )";
-           }
-             $student_average[]=DB::select(DB::raw("SELECT student_id,".$avg_calculation."  AS average_mark, 
-             t.grade_id, 
-             term_id,
-             section_id,
-             stream_id,
-             nps.number_of_passed_subjects,
-             prm.passing_subject_status,
-             lmr.marks_count,
-             total.total,
-             lmr.loads_count
-             FROM( SELECT
-             student_subject_averages.student_id,
-             student_subject_averages.student_class AS grade_id,
-             grades.stream_id,
-             grades.section_id,
-             term_id,
-             student_subject_averages.student_average AS mark
-             FROM
-             student_subject_averages
-             INNER JOIN teaching_loads ON teaching_loads.id = student_subject_averages.teaching_load_id
-             INNER JOIN grades ON grades.id = student_subject_averages.student_class
-             WHERE student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id = ".$term."
-             GROUP BY
-             student_subject_averages.id
-         ) t,
-         (
-             SELECT
-             COUNT(student_subject_averages.student_average) AS number_of_passed_subjects
-             FROM
-             student_subject_averages
-             WHERE
-             student_subject_averages.student_id =".$student." AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >= ".$pass_rate."
-             ORDER BY
-             student_average
-             DESC
-         ) nps,
-         
-         (
             
-             
-             SELECT
- COUNT(student_subject_averages.student_average) AS passing_subject_status
- FROM
- student_subject_averages
- WHERE
- student_subject_averages.student_id = ".$student."  AND student_subject_averages.term_id=".$term."  AND  subject_id = ".$passing_subject." AND student_subject_averages.student_average>=".$pass_rate."
-             
-             
-         ) prm,
-         (SELECT COUNT(*) as total FROM `grades_students` INNER JOIN grades on grades.id=grades_students.grade_id INNER JOIN streams ON streams.id=grades.stream_id where grades.stream_id=".$stream." AND grades_students.active=1)total,
-         (
-             
-         SELECT(SELECT COUNT(*) 
-          FROM
-             student_subject_averages WHERE
-             student_id = ".$student." AND student_subject_averages.term_id = ".$term."
-             ) AS marks_count,
-             (
-             SELECT COUNT(*)
-             FROM
-             student_loads
-             WHERE
-             student_id = ".$student."
-         ) AS loads_count
-         ) lmr"));
-         
-           
-         }
-         
+            SELECT
+COUNT(student_subject_averages.student_average) AS passing_subject_status
+FROM
+student_subject_averages
+WHERE
+student_subject_averages.student_id = ".$student."  AND student_subject_averages.term_id=".$term."  AND  subject_id = ".$passing_subject." AND student_subject_averages.student_average>=".$pass_rate."
+            
+            
+        ) prm,
+        (SELECT COUNT(*) as total FROM `grades_students` INNER JOIN grades on grades.id=grades_students.grade_id INNER JOIN streams ON streams.id=grades.stream_id where grades.stream_id=".$stream." AND grades_students.active=1)total,
+        (
+            
+        SELECT(SELECT COUNT(*) 
+         FROM
+            student_subject_averages WHERE
+            student_id = ".$student." AND student_subject_averages.term_id = ".$term."
+            ) AS marks_count,
+            (
+            SELECT COUNT(*)
+            FROM
+            student_loads
+            WHERE
+            student_id = ".$student."
+        ) AS loads_count
+        ) lmr"));
+        
+          
+        }
          
          
          
@@ -1439,7 +1453,24 @@ $admin=Auth::user()->hasRole('admin_teacher');
            MAX(CASE WHEN subjects.id=25 THEN student_subject_averages.student_average END) AS 'ICT',
            MAX(CASE WHEN subjects.id=26 THEN student_subject_averages.student_average END) AS 'RE',
            MAX(CASE WHEN subjects.id=27 THEN student_subject_averages.student_average END) AS 'History',
-           MAX(CASE WHEN subjects.id=32 THEN student_subject_averages.student_average END) AS 'design'
+           MAX(CASE WHEN subjects.subject_code=101 THEN mark END) AS 'DesignTechnology',
+           MAX(CASE WHEN subjects.subject_code=102 THEN mark END) AS 'Computer',
+           MAX(CASE WHEN subjects.subject_code=103 THEN mark END) AS 'DS',
+           MAX(CASE WHEN subjects.subject_code=104 THEN mark END) AS 'SocialStudies',
+           MAX(CASE WHEN subjects.subject_code=105 THEN mark END) AS 'PracticalArts',
+           MAX(CASE WHEN subjects.subject_code=106 THEN mark END) AS 'GeneralStudies', 
+           MAX(CASE WHEN subjects.subject_code=108 THEN mark END) AS 'ExpressiveArts',
+           MAX(CASE WHEN subjects.subject_code=110 THEN mark END) AS 'HPE',
+           MAX(CASE WHEN subjects.subject_code=111 THEN mark END) AS 'FineArts',
+           MAX(CASE WHEN subjects.subject_code=112 THEN mark END) AS 'SoapCraft',
+           MAX(CASE WHEN subjects.subject_code=113 THEN mark END) AS 'ShoeCraft',
+           MAX(CASE WHEN subjects.subject_code=114 THEN mark END) AS 'HandCraft',
+           MAX(CASE WHEN subjects.subject_code=115 THEN mark END) AS 'PrevocICT',
+           MAX(CASE WHEN subjects.subject_code=116 THEN mark END) AS 'AgiculturalTechnology',
+           MAX(CASE WHEN subjects.subject_code=117 THEN mark END) AS 'BusinessAccounting',
+           MAX(CASE WHEN subjects.subject_code=118 THEN mark END) AS 'FoodTextileTechnology',
+           MAX(CASE WHEN subjects.subject_code=119 THEN mark END) AS 'TechnicalStudies', 
+           MAX(CASE WHEN subjects.subject_code=121 THEN mark END) AS 'Entreprenuership'
         FROM student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
         INNER JOIN subjects ON teaching_loads.subject_id=subjects.id
         INNER JOIN users ON users.id=student_subject_averages.student_id
@@ -1481,7 +1512,24 @@ $admin=Auth::user()->hasRole('admin_teacher');
            MAX(CASE WHEN subjects.id=25 THEN student_subject_averages.student_average END) AS 'ICT',
            MAX(CASE WHEN subjects.id=26 THEN student_subject_averages.student_average END) AS 'RE',
            MAX(CASE WHEN subjects.id=27 THEN student_subject_averages.student_average END) AS 'History',
-           MAX(CASE WHEN subjects.id=32 THEN student_subject_averages.student_average END) AS 'design'
+           MAX(CASE WHEN subjects.subject_code=101 THEN mark END) AS 'DesignTechnology',
+           MAX(CASE WHEN subjects.subject_code=102 THEN mark END) AS 'Computer',
+           MAX(CASE WHEN subjects.subject_code=103 THEN mark END) AS 'DS',
+           MAX(CASE WHEN subjects.subject_code=104 THEN mark END) AS 'SocialStudies',
+           MAX(CASE WHEN subjects.subject_code=105 THEN mark END) AS 'PracticalArts',
+           MAX(CASE WHEN subjects.subject_code=106 THEN mark END) AS 'GeneralStudies', 
+           MAX(CASE WHEN subjects.subject_code=108 THEN mark END) AS 'ExpressiveArts',
+           MAX(CASE WHEN subjects.subject_code=110 THEN mark END) AS 'HPE',
+           MAX(CASE WHEN subjects.subject_code=111 THEN mark END) AS 'FineArts',
+           MAX(CASE WHEN subjects.subject_code=112 THEN mark END) AS 'SoapCraft',
+           MAX(CASE WHEN subjects.subject_code=113 THEN mark END) AS 'ShoeCraft',
+           MAX(CASE WHEN subjects.subject_code=114 THEN mark END) AS 'HandCraft',
+           MAX(CASE WHEN subjects.subject_code=115 THEN mark END) AS 'PrevocICT',
+           MAX(CASE WHEN subjects.subject_code=116 THEN mark END) AS 'AgiculturalTechnology',
+           MAX(CASE WHEN subjects.subject_code=117 THEN mark END) AS 'BusinessAccounting',
+           MAX(CASE WHEN subjects.subject_code=118 THEN mark END) AS 'FoodTextileTechnology',
+           MAX(CASE WHEN subjects.subject_code=119 THEN mark END) AS 'TechnicalStudies', 
+           MAX(CASE WHEN subjects.subject_code=121 THEN mark END) AS 'Entreprenuership'
         FROM student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
         INNER JOIN subjects ON teaching_loads.subject_id=subjects.id
         INNER JOIN users ON users.id=student_subject_averages.student_id

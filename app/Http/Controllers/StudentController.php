@@ -1010,6 +1010,11 @@ $streams=Stream::all();
 return view('users.students.parent-link.index',compact('streams'));      
 }
 
+public function  parent_link_class_teacher(Request $request){
+    $streams=grad::all();
+    return view('users.students.parent-link.index',compact('streams'));      
+    }
+
 
 public function parent_link_show(Request $request){
 

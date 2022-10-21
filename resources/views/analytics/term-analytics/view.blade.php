@@ -372,12 +372,12 @@ th span {
                         @endif
                     </td>
                     <td class="align-middle p-2">
-                        @if ($student->design>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->design)}} </span>
-                        @elseif(is_null($student->design))
-                        
-                        @elseif($student->design<$pass_rate )
-                        <span class="text-danger">{{ round($student->design)}} </span>
+                        @if ($student->DesignTechnology>=$pass_rate)
+                        <span class="text-secondary">{{ $student->DesignTechnology}}% </span>
+                        @elseif(is_null($student->DesignTechnology))
+                        -
+                        @elseif($student->DesignTechnology<$pass_rate )
+                        <span class="text-danger">{{ $student->DesignTechnology}}% </span>
                         @endif
                     </td>
 
