@@ -22,12 +22,12 @@ left: 50%;
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/r-2.3.0/sb-1.3.3/datatables.min.css"/>
 
 
-        {{-- <!-- ✅ load jQuery ✅ -->
+        <!-- ✅ load jQuery ✅ -->
     <script
     src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
     crossorigin="anonymous"
-  ></script> --}}
+  ></script>
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
@@ -69,11 +69,8 @@ from assessement_progress_reports where assessement_progress_reports.assessement
 where student_id = marks.student_id) as position,
 
         grades.grade_name as 'Grade',
-        users.name,
-        users.middlename,
-        users.lastname,
-        loads_count, 
-     marks_count,
+        GROUP_CONCAT(users.name,users.middlename, users.lastname),
+        GROUP_CONCAT(loads_count, marks_count),
         assessement_progress_reports.student_average,
      
       
@@ -118,9 +115,8 @@ from assessement_progress_reports where assessement_progress_reports.assessement
 where student_id = marks.student_id) as position,
 
         grades.grade_name as Grade,
-        users.name,
-        users.lastname,
-        assessement_progress_reports.student_average,
+         concat( users.name, users.lastname) as name,
+        assessement_progress_reports.student_average as Average,
       
 ', @sql,'
 FROM marks 

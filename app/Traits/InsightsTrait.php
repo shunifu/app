@@ -64,6 +64,7 @@ trait InsightsTrait
       $non_contributing_subject=0;
       }else{
         $non_contributing_subject=$non_contributing->id;
+        $non_value_subject_name=$non_contributing->subject_name;
       }
    
       

@@ -89,7 +89,7 @@ class AllocationController extends Controller
      * @param  \App\Models\Allocation  $allocation
      * @return \Illuminate\Http\Response
      */
-    public function show(Allocation $allocation)
+    public function show(Allocation $allocation, $id)
     {
         //
     }

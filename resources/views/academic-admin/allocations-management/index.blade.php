@@ -127,15 +127,15 @@
                @foreach ($allocations as $allocation)
                <tr>
                    <td>{{$allocation->grade_name}}</td>
-                   <td><a href="/view/alloations/{{$allocation->allocation_id}}">View Allocations</a></td>
+                   <td><a href="/allocation/view/{{$allocation->allocation_id}}">View Allocations</a></td>
                  
                    
                    
                    <td>
                     
-                    <a href="/academic-admin/session/view/{{$allocation->allocation_id}}"><button  class="btn btn-light "><i class="fas fa-eye"> </i> View</button></a> 
-                     <a href="/academic-admin/session/edit/{{$allocation->allocation_id}}"><button class="btn btn-light"><i class="fas fa-edit"> </i> Edit</button></a> 
-                    <a href="/academic-admin/terms/delete/{{$allocation->allocation_id}}"><button  class="btn btn-light"><i class="fas fa-trash"> </i> Delete</button></a> 
+                    <a href="/allocation/session/view/{{$allocation->allocation_id}}"><button  class="btn btn-light "><i class="fas fa-eye"> </i> View</button></a> 
+                     <a href="/allocation/session/edit/{{$allocation->allocation_id}}"><button class="btn btn-light"><i class="fas fa-edit"> </i> Edit</button></a> 
+                    <a href="/allocation/terms/delete/{{$allocation->allocation_id}}"><button  class="btn btn-light"><i class="fas fa-trash"> </i> Delete</button></a> 
                   
                      
                     

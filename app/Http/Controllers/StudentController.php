@@ -1011,8 +1011,13 @@ return view('users.students.parent-link.index',compact('streams'));
 }
 
 public function  parent_link_class_teacher(Request $request){
-    $streams=grad::all();
-    return view('users.students.parent-link.index',compact('streams'));      
+    $streams=DB::table('grades_teachers')
+    ->join('academic_sessions','grades_teachers.academic_session','=','academic_sessions.id')
+    ->where('grades_teachers.teacher_id', Auth::user()->id)
+    ->where('grades_teachers.academic_session', Auth::user()->id)
+    ->select('grades.id as grade_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname','users.profile_photo_path', 'users.salutation', 'academic_sessions.academic_session', 'users.id');
+
+    return view('users.students.parent-link.index_class_teacher',compact('streams'));      
     }
 
 

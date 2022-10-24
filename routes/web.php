@@ -257,7 +257,10 @@ Route::post('users/student/manage/removal/process/selection',[StudentController:
 
 Route::get('/student/my-subjects', [StudentController::class,'my_subjects'])->name('student.subjects');
 //Parent Link
+
+
 Route::get('/link/students-parents/',  [StudentController::class,'parent_link'])->name('parent_link.index');
+Route::get('/class/student-management/link-parents',  [StudentController::class,'parent_link_class_teacher'])->name('parent_link.index_class_teacher');
 Route::post('/link/students-parents/list',  [StudentController::class,'parent_link_show'])->name('parent_link.show');
 Route::post('/link/students-parents/form',  [StudentController::class,'parent_link_store'])->name('parent_link.store');
 
@@ -617,9 +620,9 @@ Route::post('/parent/import/',  [ParentController::class,'import'])->name('paren
 
 
 //Parent Data Route
-Route::get('/allocations', [AllocationController::class,'create'])->name('allocation.create');
-Route::post('/allocations/store', [AllocationController::class,'store'])->name('allocation.store');
-
+Route::get('/allocation', [AllocationController::class,'create'])->name('allocation.create');
+Route::post('/allocation/store', [AllocationController::class,'store'])->name('allocation.store');
+Route::post('/allocation/view/{id}', [AllocationController::class,'view'])->name('allocation.view');
 
 Route::get('/users/parent/discipline', [ParentController::class,'discipline'])->name('parents.discipline');
 

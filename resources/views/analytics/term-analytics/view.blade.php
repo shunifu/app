@@ -380,6 +380,7 @@ th span {
                         <span class="text-danger">{{ $student->DesignTechnology}}% </span>
                         @endif
                     </td>
+                    
 
                     
 
