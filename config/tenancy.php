@@ -70,7 +70,8 @@ return [
         'mkhondvohigh.shunifu.app',
         'saimhigh.shunifu.app',
         'ubomboranchesprimary.shunifu.app',
-        'salesianhigh.shunifu.app'
+        'salesianhigh.shunifu.app',
+        'ncekahigh.shunifu.app'
         
         
     ],
