@@ -433,12 +433,12 @@ WHERE sub.student_id=".$student.""));
 
                         <td>
                             Term: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
+                            {{-- <br> --}}
+                            {{-- Term Opening Date <span class="text-bold">26 October 2022</span> --}}
                             <br>
-                            Term Opening Date <span class="text-bold">05 April 2022</span>
+                            Term Closing Date <span class="text-bold">26 October  2022</span>
                             <br>
-                            Term Closing Date <span class="text-bold">19 August 2022</span>
-                            <br>
-                            Next Term Date: <span class="text-bold">7 September 2022</span>
+                            Next Term Date: <span class="text-bold">1 November 2022</span>
 
                             
                             <br>
