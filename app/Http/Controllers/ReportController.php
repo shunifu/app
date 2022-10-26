@@ -817,7 +817,9 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
     $class_teacher_comments = DB::table('report_comments')->where('section_id',$section_id)->where('user_type', 2)->get();   
     $headteacher_comments = DB::table('report_comments')->where('section_id',$section_id)->where('user_type', 3)->get();          
         
-    $examExists=Assessement::where('term_id', $term)->where('assessement_type', 2)->exists();
+    $examExists=AssessementWeight::where('term_id', $term)->where('exam_percentage', '<>', '0')->where('stream_id',$stream )->exists();
+
+    $noExam=AssessementWeight::where('term_id', $term)->where('exam_percentage', '0')->where('stream_id',$stream )->exists();
     
 
     $calculation_type=$criteria->average_calculation;
