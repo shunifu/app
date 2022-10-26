@@ -433,12 +433,12 @@ WHERE sub.student_id=".$student.""));
 
                         <td>
                             Term: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
-                            {{-- <br> --}}
-                            {{-- Term Opening Date <span class="text-bold">26 October 2022</span> --}}
+                            <br>
+                            Term Opening Date <span class="text-bold">07 September 2022</span>
                             <br>
                             Term Closing Date <span class="text-bold">26 October  2022</span>
                             <br>
-                            Next Term Date: <span class="text-bold">1 November 2022</span>
+                            Next Term Date: <span class="text-bold">01 November 2022</span>
 
                             
                             <br>
@@ -527,7 +527,7 @@ grades.stream_id,
           
            
             @if ($examExists)
-            <th class="background">Mocsk Exam</th>   
+            <th class="background">Mock Exam</th>   
             @endif
 
             <th class="background" id="f">Subject Position</th>   
