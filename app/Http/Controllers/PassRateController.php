@@ -145,21 +145,20 @@ class PassRateController extends Controller
         ]);
 
         // dd($request->all());
-        
-    //   if(isset($request->number_of_decimal_places)){
-    //     $number_of_decimal_places=$request->term_average_type;
-    //   }else{
-    //     $number_of_decimal_places=0;
-    //   }
-        Passrate::where('id', $request->pass_rate_id)->update([
-            'passing_rate'=>$request->passing_rate,
-            'number_of_subjects'=>$request->number_of_subjects,
-            'passing_subject_rule'=>$request->passing_subject_rule,
-            'average_calculation'=>$request->average_calculation,
-            'tie_type'=>$request->tie_type,
-            'term_average_type'=>$request->term_average_type,
-            'number_of_decimal_places'=>$request->number_of_decimal_places,
-        ]);
+        if($request->has('number_of_decimal_places')){
+            $number_of_decimal_places=$request->number_of_decimal_places;
+          }else{
+            $number_of_decimal_places=0;
+          }
+            Passrate::where('id', $request->pass_rate_id)->update([
+                'passing_rate'=>$request->passing_rate,
+                'number_of_subjects'=>$request->number_of_subjects,
+                'passing_subject_rule'=>$request->passing_subject_rule,
+                'average_calculation'=>$request->average_calculation,
+                'tie_type'=>$request->tie_type,
+                'term_average_type'=>$request->term_average_type,
+                'number_of_decimal_places'=>$number_of_decimal_places,
+            ]);
 
         flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have changed pass rates', 'Edit Pass Rate');
         return redirect()->back();
