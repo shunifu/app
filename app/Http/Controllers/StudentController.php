@@ -1039,7 +1039,7 @@ grades.grade_name,
 LEFT JOIN parents_students on parents_students.student_id=users.id
 LEFT JOIN users p ON p.id=parents_students.parent_id
 INNER JOIN grades on grades.id=grades_students.grade_id
-WHERE grades.stream_id=$request->stream_id
+WHERE grades.id=$request->stream_id
 ORDER BY `grades`.`grade_name`,`users`.`lastname`  ASC"));
 return view('users.students.parent-link.list',compact('students'));
 
