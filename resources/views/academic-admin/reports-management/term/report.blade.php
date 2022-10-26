@@ -527,10 +527,9 @@ grades.stream_id,
           
            
             @if ($examExists)
-            <th class="background">Examination</th>   
+            <th class="background">Mocsk Exam</th>   
             @endif
 
-            <th class="background" id="f">Subject Average</th>   
             <th class="background" id="f">Subject Position</th>   
             <th class="background" id="fit">Symbol</th>
             <th class="background">Comment</th>
@@ -578,14 +577,14 @@ grades.stream_id,
         @endif
       
      
-        <td id="f"> 
+        {{-- <td id="f"> 
             @if (($item2->student_average<$pass_rate))
             <span class="text-danger">{{($item2->student_average)}}%</span>
             @else
             {{($item2->student_average)}}%
             @endif
         </td> 
- 
+  --}}
 
              <td>
 
