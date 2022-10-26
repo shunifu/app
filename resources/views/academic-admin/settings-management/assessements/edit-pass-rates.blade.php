@@ -111,6 +111,8 @@
                           <option value="{{$passrates->tie_type}}">Ties Share Position</option>    
                           @elseif ($passrates->tie_type=="sequential")
                           <option value="{{$passrates->average_calculation}}">Ties Do not share position</option>   
+                          @elseif ($passrates->tie_type=="share_n_+_1")
+                          <option value="{{$passrates->average_calculation}}">Ties share position N+1</option>  
                           @endif
                         <option value="">------------------------</option>
                         <option value="sequential">Sequential</option>
