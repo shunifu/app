@@ -37,8 +37,8 @@
                             <x-jet-label>Select Class</x-jet-label>
                             <select class="form-control" name="stream_id" id="stream_id">
                                 <option value="">Select Class</option>
-                                @foreach($class as $item)
-                                    <option value="{{ $item->id }}"> {{ $item->class_name }}</option>
+                                @foreach($streams as $item)
+                                    <option value="{{ $item->grade_id }}"> {{ $item->grade_name }}</option>
                                 @endforeach
                             </select>
                             @error('stream_id')

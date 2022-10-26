@@ -1019,7 +1019,7 @@ public function  parent_link_class_teacher(Request $request){
     ->where('grades_teachers.academic_session', $session->id)
     ->select('grades.id as grade_id', 'grades.grade_name');
 
-    return view('users.students.parent-link.index_class_teacher',compact('streams'));      
+    return view('users.students.parent-link.index_classteacher',compact('streams'));      
     }
 
 
