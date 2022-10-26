@@ -946,7 +946,7 @@
           @endrole
 
          
-          @role('admin_teacher')
+          @role('teacher')
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
