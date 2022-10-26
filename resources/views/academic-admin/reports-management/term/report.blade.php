@@ -520,8 +520,11 @@ grades.stream_id,
             <th class="background">Subject Name</th>
 
             
+            @if ($noExam)
+            <th class="background" id="f">CA</th>     
+            @endif
            
-            <th class="background" id="f">CA</th>    
+          
            
             @if ($examExists)
             <th class="background">Examination</th>   
@@ -543,7 +546,7 @@ grades.stream_id,
     @foreach($student_subject_average as $item2)
       <tr>
         <td>{{ $item2->subject_name }}</td>
-       
+        @if ($noExam)
          <td id="f"> 
             @if (is_null($item2->ca_average))
             N/A
@@ -553,6 +556,7 @@ grades.stream_id,
             {{round(($item2->ca_average),2)}}%
             @endif
         </td>   
+        @endif
         @if ($examExists)
         <td id="f"  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
             @if ($item2->exam_mark<$pass_rate)
