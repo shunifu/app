@@ -342,6 +342,7 @@ Route::get('/users/teacher/loads/delete/{id}', [TeachingLoadController::class,'d
 Route::get('/users/teacher/loads/student/delete/{id}/{student}', [TeachingLoadController::class,'student_destroy'])->name('teaching_loads.student_destroy');
 
 Route::post('/teaching-loads/archive', [TeachingLoadController::class,'archive'])->name('teaching_loads.archive');
+Route::post('/teaching-loads/delete', [TeachingLoadController::class,'delete'])->name('teaching_loads.delete');
 
 //Support Staff Data Route
 Route::get('/users/support', [AdminStaffController::class,'create'])->name('support.create');

@@ -116,25 +116,33 @@
                
                 <td>
 
+                  @if ($check_data->total_loads==0)
+                      NO Students in teaching load
 
-                 
+                      @else
+
+                      @if ((($check_data->total_loads)-($check_data->marks_count))==0)
+                      <i class="fas fa-check-circle text-success"></i> Completed
+                    
+                      @else
+                      <i class="fas fa-exclamation-triangle text-danger"></i> Not Completed
+                      @endif
+                   
+                  </td>
+  
+                  <td>
                     @if ((($check_data->total_loads)-($check_data->marks_count))==0)
-                    <i class="fas fa-check-circle text-success"></i> Completed
+                    <i class="fas fa-check-circle text-success"></i> None
                   
                     @else
-                    <i class="fas fa-exclamation-triangle text-danger"></i> Not Completed
+                    <i class="fas fa-exclamation-triangle text-danger"></i> {{($check_data->total_loads)-($check_data->marks_count)}} missing
                     @endif
-                 
-                </td>
-
-                <td>
-                  @if ((($check_data->total_loads)-($check_data->marks_count))==0)
-                  <i class="fas fa-check-circle text-success"></i> None
-                
-                  @else
-                  <i class="fas fa-exclamation-triangle text-danger"></i> {{($check_data->total_loads)-($check_data->marks_count)}} missing
+                  </td>
                   @endif
-                </td>
+
+
+                 
+                 
 
                 <td>
                   {{$check_data->total_loads}} Leaners

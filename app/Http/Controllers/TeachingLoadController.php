@@ -692,6 +692,40 @@ return redirect('users/teacher/loads/view/'.$load_id)->with('Teaching Load succe
             return Redirect::back();
         }
 
+        if ($request->action=="delete") {
+          for ($i = 0; $i <count($request->students); $i++) {
+            
+              $student_load=StudentLoad::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+    
+              $student_mark=Mark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+    
+              $student_subject_average=StudentSubjectAverage::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+    
+              //archive workflow
+    
+              //delete in teaching load
+              if ($student_subject_average->exists()) {
+                  $student_subject_average->delete();
+            }
+    
+              //1. student_loads.active=0
+              if ($student_load->exists()) {
+                  $student_load->delete();
+              }
+    
+              //2. mark.active=0
+              if ($student_mark->exists()) {
+                  $student_mark->delete();
+                 
+              }
+    
+    
+          }
+         
+          flash()->overlay('<i class="fas fa-check-circle "></i>'.' Success. You have deleted that student', 'Archive Student');
+          return Redirect::back();
+      }
+
         if ($request->action=="unarchive") {
           for ($i = 0; $i <count($request->students); $i++) {
             
@@ -727,6 +761,135 @@ return redirect('users/teacher/loads/view/'.$load_id)->with('Teaching Load succe
       }
 
     }
+}
+
+
+
+public function delete(Request $request){
+
+  // dd($request->all());
+$load=TeachingLoad::find($request->teaching_load_id);
+
+$teacher=$load['0']->teacher_id;
+
+
+$teacherIs=User::find($teacher);
+$teacher_id=$teacherIs->id;
+
+if (Auth::user()->hasRole('admin_teacher') or Auth::user()->id==$teacher_id) {
+    if ($request->action=="archive") {
+        //1. Update settings, make
+        //a) student_loads.active=0;
+        //b) marks.active=0;
+    }
+
+
+    if ($request->action=="archive") {
+        for ($i = 0; $i <count($request->students); $i++) {
+          
+            $student_load=StudentLoad::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+            $student_mark=Mark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+            $student_subject_average=StudentSubjectAverage::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+            //archive workflow
+
+            //delete in teaching load
+            if ($student_subject_average->exists()) {
+              $student_subject_average->delete();
+          }
+
+            //1. student_loads.active=0
+            if ($student_load->exists()) {
+                $student_load->update(['active'=>'0']);
+            }
+
+            //2. mark.active=0
+            if ($student_mark->exists()) {
+                $student_mark->update(['active'=>'0']);
+               
+            }
+
+
+        }
+       
+        flash()->overlay('<i class="fas fa-check-circle "></i>'.' Success. You have archived that student', 'Archive Student');
+        return Redirect::back();
+    }
+
+    if ($request->action=="delete") {
+      for ($i = 0; $i <count($request->students); $i++) {
+        
+          $student_load=StudentLoad::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+          $student_mark=Mark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+          $student_subject_average=StudentSubjectAverage::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+          //archive workflow
+
+          //delete in teaching load
+          if ($student_subject_average->exists()) {
+              $student_subject_average->delete();
+        }
+
+          //1. student_loads.active=0
+          if ($student_load->exists()) {
+              $student_load->delete();
+          }
+
+          //2. mark.active=0
+          if ($student_mark->exists()) {
+              $student_mark->delete();
+             
+          }
+
+
+      }
+     
+      flash()->overlay('<i class="fas fa-check-circle "></i>'.' Success. You have deleted that student', 'Archive Student');
+      return Redirect::back();
+  }
+
+
+    
+
+    if ($request->action=="unarchive") {
+      for ($i = 0; $i <count($request->students); $i++) {
+        
+          $student_load=StudentLoad::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+          $student_mark=Mark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+          $student_subject_average=StudentSubjectAverage::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+          //archive workflow
+
+          //delete in teaching load
+          if ($student_subject_average->exists()) {
+            $student_subject_average->delete();
+        }
+
+          //1. student_loads.active=0
+          if ($student_load->exists()) {
+              $student_load->update(['active'=>'1']);
+          }
+
+          //2. mark.active=0
+          if ($student_mark->exists()) {
+              $student_mark->update(['active'=>'1']);
+             
+          }
+
+
+      }
+     
+      flash()->overlay('<i class="fas fa-check-circle "></i>'.' Success. You have unarchived that student', 'Archive Student');
+      return Redirect::back();
+  }
+
+}
 }
 
     public function view($id){

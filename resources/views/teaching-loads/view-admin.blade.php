@@ -17,7 +17,13 @@
                 <div class="card-body">
                   
                   <p class="card-text">   Hi, this is where you will be able to select students that you either want to archive or remove from this teaching load.</p>
+                  <hr>
+                  <p>Please note that if you choose the delete option then the teaching load for that child will be <span class="text-danger text-bold">permanently deleted including the ALL marks attached to that student in the teaching load.</span>. <br> Please use the delete OPTION if you are sure you know what you are doing.<br>
+                   </p>
+  
+                   if you need to transfer loads please use the transfer option.
                 </div>
+             
               </div>
       
             

@@ -85,7 +85,7 @@
 
                 <p></p>
                 <li>Deletion Method</li>
-                <ul><li>This is used when you want to remove the students from system permanently</li></ul>
+                <ul><li>This is used when you want to remove the student from system permanently</li></ul>
             </ol>
              </p>
               <p class="card-text">

@@ -430,17 +430,19 @@ if($criteria->average_calculation=="custom" ){
         $student_average[]=DB::select(DB::raw("SELECT student_id, ".$avg_calculation." as average_mark ,grade_id, term_id.term, section_id,stream_id,assessement_type, nps.number_of_passed_subjects, prm.passing_subject_status,lmr.marks_count, lmr.loads_count   from 
 
         (select marks.student_id,grades.id as grade_id, grades.stream_id, grades.section_id, ROUND(AVG(mark))  as mark  from marks 
-                        INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id
-                        INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
-                        INNER JOIN grades ON grades.id=teaching_loads.class_id
-                        where marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject."
-                    GROUP BY subject_id
-                    order by (subject_id =".$passing_subject.") desc, mark desc
+        INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id
+        INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id
+        INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
+        INNER JOIN grades ON grades.id=teaching_loads.class_id
+        where marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1 AND marks.active=1 
+        GROUP BY subject_id
+        order by (subject_id =".$passing_subject.") desc, mark desc
                     LIMIT ".$number_of_subjects.") t, 
-                    (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON 				subjects.id=teaching_loads.subject_id WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject." order by  mark desc
+                    (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1 AND marks.active=1  order by  mark desc
                    ) nps, 
                    (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id = ".$student." AND marks.assessement_id = ".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id=".$passing_subject." ) prm,
-                   (SELECT (SELECT COUNT(*) from marks  where marks.student_id=".$student." and marks.assessement_id=".$assessement_id." ) as marks_count, (SELECT COUNT(*) from student_loads  where student_loads.student_id=".$student."  ) as loads_count
+
+                   (SELECT (SELECT COUNT(*) from marks  where marks.student_id=".$student." AND  marks.assessement_id=".$assessement_id." AND marks.active=1  ) as marks_count, (SELECT COUNT(*) from student_loads  where student_loads.student_id=".$student." AND student_loads.active=1  ) as loads_count
                    )lmr,
                    
                    (SELECT DISTINCT(assessements.term_id) as term, assessements.assessement_type from marks INNER JOIN assessements ON assessements.id=marks.assessement_id WHERE assessements.id=".$assessement_id.") term_id
@@ -462,15 +464,16 @@ if($criteria->average_calculation=="custom" ){
                             INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id
                             INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
                             INNER JOIN grades ON grades.id=teaching_loads.class_id
-                            where marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND subject_id <> ".$non_contributing_subject."
+                            INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id
+                            where marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1
                         GROUP BY subject_id
                         order by  mark desc
                         LIMIT ".$number_of_subjects.") t, 
-                        (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON subjects.id=teaching_loads.subject_id WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject." AND marks.mark>=".$pass_rate." order by  mark desc
+                        (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject." AND marks.mark>=".$pass_rate." AND student_loads.active=1 AND marks.active=1  ORDER BY  mark desc
                        ) nps, 
                        (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id = ".$student." AND marks.assessement_id = ".$assessement_id." AND marks.mark>=".$pass_rate." AND subject_id=".$passing_subject." ) prm,
 
-                       (SELECT (SELECT COUNT(*) from marks  where marks.student_id=".$student." and marks.assessement_id=".$assessement_id." ) as marks_count, (SELECT COUNT(*) from student_loads  where student_loads.student_id=".$student."  ) as loads_count
+                       (SELECT (SELECT COUNT(*) from marks where marks.student_id=".$student." AND marks.assessement_id=".$assessement_id."  AND marks.active=1 ) as marks_count, (SELECT COUNT(*) from student_loads  where student_loads.student_id=".$student." AND student_loads.active=1 ) as loads_count
                        )lmr,
                        
                        (SELECT DISTINCT(assessements.term_id) as term, assessements.assessement_type from marks INNER JOIN assessements ON assessements.id=marks.assessement_id WHERE assessements.id=".$assessement_id.") term_id
@@ -496,6 +499,7 @@ if($criteria->average_calculation=="custom" ){
     ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
     ->where('teaching_loads.active', 1)
     ->where('student_loads.student_id', $student)
+    ->where('student_loads.active', 1)
     ->where('subjects.subject_type','<>', 'non-value')
     ->where('academic_sessions.active', 1)//Scoping to active academic year. 
     ->get()->count();
@@ -504,8 +508,10 @@ if($criteria->average_calculation=="custom" ){
     $total_marks = DB::table('marks')
     ->join('teaching_loads', 'marks.teaching_load_id', '=', 'teaching_loads.id')
     ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+    ->join('student_loads', 'student_loads.teaching_load_id', '=', 'teaching_loads.id')
     ->where('marks.student_id', $student)
     ->where('assessement_id', $assessement_id)
+    ->where('student_loads.active', 1)
     ->where('subjects.subject_type','<>', 'non-value')
     ->get()->count();
   
@@ -515,7 +521,7 @@ if($criteria->average_calculation=="custom" ){
         //More marks than teaching loads
         //->Probably deleted loads & left mark
 
-        $loads=DB::select(DB::raw(" SELECT teaching_load_id  FROM marks  WHERE teaching_load_id NOT IN (SELECT student_loads.teaching_load_id FROM student_loads WHERE student_id=".$student.") AND student_id=".$student.""));
+        $loads=DB::select(DB::raw(" SELECT teaching_load_id  FROM marks  WHERE teaching_load_id NOT IN (SELECT student_loads.teaching_load_id FROM student_loads WHERE student_id=".$student." AND student_loads.active=1) AND student_id=".$student.""));
 
         
         if(!is_null($loads)){
@@ -546,16 +552,17 @@ if($criteria->average_calculation=="custom" ){
     $student_average[]=DB::select(DB::raw("SELECT student_id, ".$avg_calculation." as average_mark ,grade_id, term_id.term,assessement_type, section_id,stream_id, nps.number_of_passed_subjects, prm.passing_subject_status,lmr.marks_count, lmr.loads_count  from 
     (select marks.student_id,grades.id as grade_id, grades.stream_id, grades.section_id, marks.mark  as mark  from marks 
 INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id
+INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id
 INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
 INNER JOIN grades ON grades.id=teaching_loads.class_id
-where marks.student_id =".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject."
+where marks.student_id =".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1 AND marks.active=1
           GROUP BY marks.id 
         ) t, 
-              (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON subjects.id=teaching_loads.subject_id WHERE  marks.student_id = ".$student."  AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject."  order by  mark desc
+              (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id WHERE  marks.student_id = ".$student."  AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1  AND marks.active=1 order by  mark desc
              ) nps, 
              (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id =".$student."  AND marks.assessement_id =".$assessement_id." AND marks.mark>=".$pass_rate."  AND subject_id=".$passing_subject.") prm,
 
-             (SELECT (SELECT COUNT(*) from marks  where marks.student_id=".$student." and marks.assessement_id=".$assessement_id." ) as marks_count, (SELECT COUNT(*) from student_loads INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id  where student_loads.student_id=".$student." AND teaching_loads.active=1 and student_loads.active=1 ) as loads_count
+             (SELECT (SELECT COUNT(*) from marks  where marks.student_id=".$student." and marks.assessement_id=".$assessement_id." AND marks.active=1 and student_loads.active=1) as marks_count, (SELECT COUNT(*) from student_loads INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id  where student_loads.student_id=".$student." AND teaching_loads.active=1 and student_loads.active=1 ) as loads_count
              )lmr,
           
              (SELECT DISTINCT(assessements.term_id) as term, assessements.assessement_type from marks INNER JOIN assessements ON assessements.id=marks.assessement_id WHERE assessements.id=".$assessement_id." ) term_id"));
@@ -1569,9 +1576,9 @@ $grades = DB::table('grades_students')
 ->first();//remeber to add acaademic year
 
 
-$loads=DB::select(DB::raw("SELECT users.salutation, users.name, users.lastname, subjects.subject_name from student_loads INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN users ON users.id=teaching_loads.teacher_id  WHERE  student_loads.student_id=".$student_id." AND teaching_loads.active=1 ORDER BY subject_name ASC"));
+$loads=DB::select(DB::raw("SELECT users.salutation, users.name, users.lastname, subjects.subject_name from student_loads INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN users ON users.id=teaching_loads.teacher_id  WHERE  student_loads.student_id=".$student_id." AND teaching_loads.active=1 AND student_loads.active=1 ORDER BY subject_name ASC"));
 
-$marks=DB::select(DB::raw("SELECT users.salutation, users.name, users.lastname, marks.mark, subjects.subject_name from marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  INNER JOIN users ON users.id=marks.teacher_id WHERE marks.assessement_id=".$assessement_id." AND marks.student_id=".$student_id." AND teaching_loads.active=1 ORDER BY subject_name ASC"));
+$marks=DB::select(DB::raw("SELECT users.salutation, users.name, users.lastname, marks.mark, subjects.subject_name from marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  INNER JOIN users ON users.id=marks.teacher_id INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id WHERE marks.assessement_id=".$assessement_id." AND marks.student_id=".$student_id." AND teaching_loads.active=1 AND student_loads.active=1 AND student_loads.student_id=".$student_id." ORDER BY subject_name ASC"));
 
 
     
