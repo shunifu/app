@@ -541,7 +541,7 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
         grades.grade_name,
         subjects.subject_name, 
      	(SELECT COUNT(*) from student_loads  where student_loads.teaching_load_id=teaching_loads.id AND teaching_loads.active=1 AND student_loads.active=1) as total_loads,
-    	(SELECT (SELECT COUNT(*) from marks WHERE marks.assessement_id=".$request->assessement_id." AND marks.teaching_load_id=teaching_loads.id AND marks.active=1)) as marks_count
+    	(SELECT (SELECT COUNT(*) from marks WHERE marks.assessement_id=".$request->assessement_id." AND marks.teaching_load_id=teaching_loads.id AND marks.active=1 AND teaching_loads.active=1)) as marks_count
        	FROM teaching_loads
         INNER JOIN users ON users.id=teaching_loads.teacher_id 
         INNER JOIN subjects ON subjects.id=teaching_loads.subject_id 

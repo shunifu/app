@@ -113,40 +113,46 @@
                 <td>{{$check_data->subject_name}}</td>
                 <td>{{$check_data->salutation}} {{$check_data->name}} {{$check_data->lastname}} </td>
                
-               
+                @if ($check_data->total_loads==0)
                 <td>
-
-                  @if ($check_data->total_loads==0)
-                      NO Students in teaching load
-
-                      @else
-
-                      @if ((($check_data->total_loads)-($check_data->marks_count))==0)
-                      <i class="fas fa-check-circle text-success"></i> Completed
-                    
-                      @else
-                      <i class="fas fa-exclamation-triangle text-danger"></i> Not Completed
-                      @endif
-                   
-                  </td>
-  
-                  <td>
-                    @if ((($check_data->total_loads)-($check_data->marks_count))==0)
-                    <i class="fas fa-check-circle text-success"></i> None
-                  
-                    @else
-                    <i class="fas fa-exclamation-triangle text-danger"></i> {{($check_data->total_loads)-($check_data->marks_count)}} missing
-                    @endif
-                  </td>
-                  @endif
-
-
-                 
-                 
-
-                <td>
-                  {{$check_data->total_loads}} Leaners
+                NO Students in load
                 </td>
+
+                <td>
+                 -
+                  </td>
+                  <td>
+                    {{$check_data->total_loads}} leaners
+                     </td>
+
+                @else
+
+                <td>
+
+       
+                  @if ((($check_data->total_loads)-($check_data->marks_count))==0)
+                  <i class="fas fa-check-circle text-success"></i> Completed
+                
+                  @else
+                  <i class="fas fa-exclamation-triangle text-danger"></i> Not Completed
+                  @endif
+               
+              </td>
+
+              <td>
+                @if ((($check_data->total_loads)-($check_data->marks_count))==0)
+                <i class="fas fa-check-circle text-success"></i> None
+              
+                @else
+                <i class="fas fa-exclamation-triangle text-danger"></i> {{($check_data->total_loads)-($check_data->marks_count)}} missing
+                @endif
+              </td>
+
+              <td>
+                {{$check_data->total_loads}} Leaners
+              </td>
+            @endif
+                
                 
                 {{-- <td>
                  <a href="/academic-admin/class/view/" class="link"><i class="fas fa-eye"></i> View Student(s)</a>
