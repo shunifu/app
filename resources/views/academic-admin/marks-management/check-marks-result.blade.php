@@ -144,7 +144,7 @@
                 <i class="fas fa-check-circle text-success"></i> None
               
                 @else
-                <i class="fas fa-exclamation-triangle text-danger"></i> {{($check_data->total_loads)-($check_data->marks_count)}} missing
+                <i class="fas fa-exclamation-triangle text-danger"></i> {{($check_data->total_loads-$check_data->marks_count)}} missing
                 @endif
               </td>
 
