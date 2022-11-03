@@ -555,7 +555,7 @@ INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id
 INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id
 INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
 INNER JOIN grades ON grades.id=teaching_loads.class_id
-where marks.student_id =".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1 AND marks.active=1
+where marks.student_id =".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject."  AND marks.active=1
           GROUP BY marks.id 
         ) t, 
               (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id WHERE  marks.student_id = ".$student."  AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1  AND marks.active=1 order by  mark desc
@@ -1576,9 +1576,13 @@ $grades = DB::table('grades_students')
 ->first();//remeber to add acaademic year
 
 
-$loads=DB::select(DB::raw("SELECT users.salutation, users.name, users.lastname, subjects.subject_name from student_loads INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN users ON users.id=teaching_loads.teacher_id  WHERE  student_loads.student_id=".$student_id." AND teaching_loads.active=1 AND student_loads.active=1 ORDER BY subject_name ASC"));
+$non_contributing=Subject::where('subject_type', 'non-value')->first();
+$non_value=$non_contributing->id;
 
-$marks=DB::select(DB::raw("SELECT users.salutation, users.name, users.lastname, marks.mark, subjects.subject_name from marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  INNER JOIN users ON users.id=marks.teacher_id INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id WHERE marks.assessement_id=".$assessement_id." AND marks.student_id=".$student_id." AND teaching_loads.active=1 AND student_loads.active=1 AND student_loads.student_id=".$student_id." ORDER BY subject_name ASC"));
+
+$loads=DB::select(DB::raw("SELECT users.salutation, users.name, users.lastname, subjects.subject_name from student_loads INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN users ON users.id=teaching_loads.teacher_id  WHERE  student_loads.student_id=".$student_id." AND teaching_loads.active=1 AND student_loads.active=1 AND subjects.id<> ".$non_value." ORDER BY subject_name ASC"));
+
+$marks=DB::select(DB::raw("SELECT users.salutation, users.name, users.lastname, marks.mark, subjects.subject_name from marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  INNER JOIN users ON users.id=marks.teacher_id INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id WHERE marks.assessement_id=".$assessement_id." AND marks.student_id=".$student_id." AND teaching_loads.active=1 AND student_loads.active=1 AND student_loads.student_id=".$student_id." AND subjects.id<> ".$non_value." ORDER BY subject_name ASC"));
 
 
     
