@@ -365,11 +365,6 @@ $number_of_decimal_places=$criteria->number_of_decimal_places;// number of decim
 $tie_type=$criteria->tie_type;// number of decimal places
 $school=School::first();
 
-// if($school->school_code=="0088"){
-// $designandtechnology=
-// }else{
-
-// }
 
 
 
@@ -793,6 +788,7 @@ if($request->analysis_indicator=='3'){
     ->join('users', 'users.id', '=', 'assessement_progress_reports.student_id')
     ->where('student_stream', $request->stream_name)
     ->where('assessement_id', $request->assessement)
+    ->where('users.active', 1)
    
     ->select('users.id','profile_photo_path','grade_name', 'name', 'lastname', 'middlename', 'number_of_passed_subjects','passing_subject_status','student_average')
     ->orderByDesc('student_average')
@@ -851,6 +847,9 @@ if($request->analysis_indicator=='subject_analysis'){
      ->where('assessements.id', $request->assessement)
      ->where('subjects.id', $request->subject)
      ->where('marks.mark','>=', $pass_rate)
+     ->where('marks.active','=', 1)
+     ->where('users.active','=', 1)
+     ->where('teaching_loads.active','=', 1)
      ->orderByDesc('mark')
      ->get();
 
@@ -866,6 +865,9 @@ if($request->analysis_indicator=='subject_analysis'){
      ->where('assessements.id', $request->assessement)
      ->where('subjects.id', $request->subject)
      ->where('marks.mark','<', $pass_rate)
+     ->where('marks.active','=', 1)
+     ->where('users.active','=', 1)
+     ->where('teaching_loads.active','=', 1)
      ->orderBy('lastname')
      ->get();
 
@@ -878,6 +880,9 @@ if($request->analysis_indicator=='subject_analysis'){
      ->where('grades.stream_id', $request->stream_name)
      ->where('assessements.id', $request->assessement)
      ->where('subjects.id', $request->subject)
+     ->where('marks.active','=', 1)
+     ->where('users.active','=', 1)
+     ->where('teaching_loads.active','=', 1)
      ->orderBy('lastname')
      ->get()->count();
 
@@ -898,6 +903,9 @@ if($request->analysis_indicator=='subject_analysis'){
      ->where('grades.stream_id', $request->stream_name)
      ->where('assessements.id', $request->assessement)
      ->where('subjects.id', $request->subject)
+     ->where('marks.active','=', 1)
+     ->where('users.active','=', 1)
+     ->where('teaching_loads.active','=', 1)
      ->first();
 
      return view('analytics.view-subject-analytics', compact('assessement_data','total','subject_pass_rate','subject_fail_rate','passed','failed', 'total_failed','total_passed'));
@@ -1252,9 +1260,10 @@ $admin=Auth::user()->hasRole('admin_teacher');
      $student_average[]=DB::select(DB::raw("SELECT student_id, ".$avg_calculation." AS average_mark ,grade_id,  section_id,stream_id, nps.number_of_passed_subjects,term_id, prm.passing_subject_status from 
     (select student_subject_averages.student_id,grades.id as grade_id,term_id, grades.stream_id, grades.section_id, ROUND(AVG(student_subject_averages.student_average))  as mark  from student_subject_averages 
     INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
+    INNER JOIN student_loads ON student_loads.teaching_load_id=student_subject_averages.teaching_load_id
     INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
     INNER JOIN grades ON grades.id=student_subject_averages.student_class
-    where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
+    where student_subject_averages.student_id = ".$student." AND student_loads.active=1 AND teaching_loads.active=1 AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
     GROUP BY student_subject_averages.subject_id
     order by (student_subject_averages.subject_id =".$passing_subject.") desc, mark desc
     LIMIT ".$number_of_subjects.") t, 
@@ -1285,7 +1294,8 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
                     INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
                     INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
                     INNER JOIN grades ON grades.id=student_subject_averages.student_class
-                    where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
+                    INNER JOIN student_loads ON student_loads.teaching_load_id=student_subject_averages.teaching_load_id
+                    where student_subject_averages.student_id = ".$student." AND student_loads.active=1 AND teaching_loads.active=1 AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
                     GROUP BY student_subject_averages.subject_id
                     order by  mark desc
                     LIMIT ".$number_of_subjects.") t, 
@@ -1351,8 +1361,9 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
             FROM
             student_subject_averages
             INNER JOIN teaching_loads ON teaching_loads.id = student_subject_averages.teaching_load_id
+            INNER JOIN student_loads ON student_loads.teaching_load_id = student_subject_averages.teaching_load_id
             INNER JOIN grades ON grades.id = student_subject_averages.student_class
-            WHERE student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id = ".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
+            WHERE student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id = ".$term." AND student_subject_averages.subject_id <> ".$non_value_subject." AND student_loads.active=1 AND teaching_loads.active=1
             GROUP BY
             student_subject_averages.id
         ) t,

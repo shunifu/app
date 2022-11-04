@@ -209,7 +209,7 @@
                                     <table class="table table-sm table-hover mx-auto">
 
                                         <thead class="thead-light hidden-md-up">
-                                            <td>No.</td>
+                                          
                                             <th>Student Name</th>
                                             <th>Mark</th>
                                         </thead>
@@ -218,7 +218,7 @@
 
                                             @forelse($passed as $student)
                                                 <tr>
-                                                    <td>{{$loop->iteration}}</td>
+                                                   
                                                     <td class="align-middle p-2">
                                                         {{ $student->lastname }} {{ $student->name }}</td>
                                                     <td class="align-middle">{{ $student->mark }}%</td>

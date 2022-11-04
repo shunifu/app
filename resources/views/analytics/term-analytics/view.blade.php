@@ -34,7 +34,8 @@ th span {
               </div>
               
               <div class="card-header no-print">
-                <h3 class="card-title">Stream Analytics for {{$term_name}}</h3>
+                <h3 class="card-title">{{$stream_title}} Stream Analytics for {{$term_name}}</h3>
+            
               </div>
             
             <div class="card-body">
@@ -477,7 +478,7 @@ echo $key->student_position ;
                 var stream = @json($stream_title);
                 var base64=@json($base64);
                 var dateNow = new Date();
-                // var class=@json($student->grade_name);
+              
  
 
 $('#customers').append('<caption style="margin-bottom:30px;color:red; fontSize:23px;">Shunifu a product of Innovazania. Proudly Made in Eswatini, Africa</caption>');

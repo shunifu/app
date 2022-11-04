@@ -12,13 +12,14 @@
       
  <link rel="stylesheet" href="{{ mix('css/app.css') }}"> 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="jquery\dist\jquery.js"></script>   
     <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css' rel="stylesheet">
     <link href=' https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
-          
+    
        
-
+    
          
 
            <!-- Step 1 - Include the fusioncharts core library -->
@@ -631,28 +632,66 @@
                         <p>Scoresheet</p>
                       </a>
                     </li>  --}}
+                    <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                      <i class="fas fa-chart-bar nav-icon"></i>
+                      <p>
+                       Assessement Insights 
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>
 
-                    <li class="nav-item">
-                      <a href="/analytics/assessement-based" class="nav-link">
-                        <i class="nav-icon fas fa-check-circle"></i>
-                        <p>Assessement Scoresheet</p>
-                      </a>
-                    </li> 
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <a href="/analytics/assessement-based" class="nav-link">
+                          <i class="nav-icon fas fa-check-circle"></i>
+                          <p>Stream Based</p>
+                        </a>
+  
+                      </li>
 
-                    <li class="nav-item">
-                      <a href="/analytics/term-based" class="nav-link">
-                        <i class="nav-icon fas fa-check-circle"></i>
-                        <p>Term  Scoresheet</p>
+                      <li class="nav-item">
+                        <a href="/analytics/assessement-based/class" class="nav-link">
+                          <i class="nav-icon fas fa-check-circle"></i>
+                          <p>Class Based</p>
+                        </a>
+                      </li> 
+
+                    </ul>
+                    </li>
+
+
+                    <li class="nav-item has-treeview">
+                      <a href="#" class="nav-link">
+                        <i class="fas fa-chart-bar nav-icon"></i>
+                        <p>
+                         Term Insights 
+                          <i class="fas fa-angle-left right"></i>
+                        </p>
                       </a>
-                    </li> 
+  
+                      <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                          <a href="/analytics/term-based" class="nav-link">
+                            <i class="nav-icon fas fa-check-circle"></i>
+                            <p>Stream Based</p>
+                          </a>
+    
+                        </li>
+  
+                        <li class="nav-item">
+                          <a href="/analytics/term-based/classs" class="nav-link">
+                            <i class="nav-icon fas fa-check-circle"></i>
+                            <p>Class Based</p>
+                          </a>
+                        </li> 
+  
+                      </ul>
+                      </li>
+
+                  
 
                    
-                    <li class="nav-item">
-                      <a href="/analytics/assessement-based/class" class="nav-link">
-                        <i class="nav-icon fas fa-check-circle"></i>
-                        <p>Class Scoresheet</p>
-                      </a>
-                    </li> 
                     @endif  
 
                     @role('hod')
@@ -1777,7 +1816,8 @@
 
         
            
-          {{-- <script  src="/js/app.js" ></script> --}}
+          <script  src="/js/app.js" ></script>
+          {{-- <script  src="/js/dist/jquery.js" ></script> --}}
         
           {{-- <script src="{{asset('js/app.js')}}"></script> --}}
           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
