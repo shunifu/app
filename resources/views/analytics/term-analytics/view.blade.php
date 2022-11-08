@@ -102,7 +102,16 @@ th span {
 
         @if ($section_id=='2')
         <th><span>Science</span></th> 
+
+
+        @foreach (\App\Models\School::all() as $item)
+
+        @if ($item->school_code=="0083" OR $item->school_code=="1037")
         <th><span>DS</span></th> 
+        @endif
+        @endforeach
+
+     
         <th><span>HE</span></th>
         <th><span>BK</span></th>
         @endif
@@ -122,12 +131,19 @@ th span {
         <th><span>Economics</span></th>
         <th><span>Physical Science</span></th>
         <th><span>Biology</span></th>
+        @foreach (\App\Models\School::all() as $item)
+
+        @if ($item->school_code=="0083" OR $item->school_code=="1037")
+        <th><span>RM</span></th>
+        <th><span>GP</span></th>
+        @endif
+        @endforeach
         @endif
         <th><span>Add Maths</span></th>
         <th><span>D&T</span></th>
-      
-        <th><span>RM</span></th>
-        <th><span>GP</span></th>
+       
+        
+        
         <th><span>Average</span></th>
         <th><span>Position</span></th> 
         <th><span>Comment</span></th>
@@ -381,28 +397,6 @@ th span {
                         <span class="text-danger">{{ round($student->Biology)}} </span>
                         @endif
                     </td>
-                        
-                    @endif
-                    
-                    <td class="align-middle p-2">
-                        @if ($student->AdditionalMathametics>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->AdditionalMathametics)}} </span>
-                        @elseif(is_null($student->AdditionalMathametics))
-                        
-                        @elseif($student->AdditionalMathametics<$pass_rate )
-                        <span class="text-danger">{{ round($student->AdditionalMathametics)}} </span>
-                        @endif
-                    </td>
-                    <td class="align-middle p-2">
-                        @if ($student->DesignTechnology>=$pass_rate)
-                        <span class="text-secondary">{{ $student->DesignTechnology}}% </span>
-                        @elseif(is_null($student->DesignTechnology))
-                        -
-                        @elseif($student->DesignTechnology<$pass_rate )
-                        <span class="text-danger">{{ $student->DesignTechnology}}% </span>
-                        @endif
-                    </td>
-
 
                     @foreach (\App\Models\School::all() as $item)
 
@@ -430,6 +424,30 @@ th span {
                     @endif
                     @endif
                     @endforeach
+                        
+                    @endif
+                    
+                    <td class="align-middle p-2">
+                        @if ($student->AdditionalMathametics>=$pass_rate)
+                        <span class="text-secondary">{{ round($student->AdditionalMathametics)}} </span>
+                        @elseif(is_null($student->AdditionalMathametics))
+                        
+                        @elseif($student->AdditionalMathametics<$pass_rate )
+                        <span class="text-danger">{{ round($student->AdditionalMathametics)}} </span>
+                        @endif
+                    </td>
+                    <td class="align-middle p-2">
+                        @if ($student->DesignTechnology>=$pass_rate)
+                        <span class="text-secondary">{{ $student->DesignTechnology}}% </span>
+                        @elseif(is_null($student->DesignTechnology))
+                        -
+                        @elseif($student->DesignTechnology<$pass_rate )
+                        <span class="text-danger">{{ $student->DesignTechnology}}% </span>
+                        @endif
+                    </td>
+
+
+               
                     
 
                     
