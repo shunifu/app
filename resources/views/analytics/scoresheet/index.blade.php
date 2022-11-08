@@ -117,7 +117,7 @@ th span {
         <th><span>D&T</span></th>
         @foreach (\App\Models\School::all() as $item)
 
-        @if ($item->school_code=="0083")
+        @if ($item->school_code=="0083" OR $item->school_code=="1037")
        
         <th><span>DTS</span></th>
         @endif
@@ -543,7 +543,7 @@ where student_id = ".$student->learner_id.""));
                    
                     @foreach (\App\Models\School::all() as $item)
 
-                    @if ($item->school_code=="0083")
+                    @if ($item->school_code=="0083" OR $item->school_code=="1037")
                    
                     <td class="align-middle p-2">
                         @if ($student->DS>=$pass_rate)
