@@ -124,8 +124,9 @@ th span {
         @endif
         <th><span>Add Maths</span></th>
         <th><span>D&T</span></th>
-        <th><span>GP</span></th>
+      
         <th><span>RM</span></th>
+        <th><span>GP</span></th>
         <th><span>Average</span></th>
         <th><span>Position</span></th> 
         <th><span>Comment</span></th>
@@ -383,6 +384,32 @@ th span {
                         <span class="text-danger">{{ $student->DesignTechnology}}% </span>
                         @endif
                     </td>
+
+
+                    @foreach (\App\Models\School::all() as $item)
+
+                    @if ($item->school_code=="1037")
+                   
+                    <td class="align-middle p-2">
+                        @if ($student->RM>=$pass_rate)
+                        <span class="text-secondary">{{ $student->RM}}% </span>
+                        @elseif(is_null($student->RM))
+                        -
+                        @elseif($student->RM<$pass_rate )
+                        <span class="text-danger">{{ $student->RM}}% </span>
+                        @endif
+                    </td>
+                    <td class="align-middle p-2">
+                        @if ($student->GP>=$pass_rate)
+                        <span class="text-secondary">{{ $student->GP}}% </span>
+                        @elseif(is_null($student->GP))
+                        -
+                        @elseif($student->GP<$pass_rate )
+                        <span class="text-danger">{{ $student->GP}}% </span>
+                        @endif
+                    </td>
+                    @endif
+                    @endforeach
                     
 
                     
