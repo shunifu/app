@@ -124,6 +124,8 @@ th span {
         @endif
         <th><span>Add Maths</span></th>
         <th><span>D&T</span></th>
+        <th><span>GP</span></th>
+        <th><span>RM</span></th>
         <th><span>Average</span></th>
         <th><span>Position</span></th> 
         <th><span>Comment</span></th>

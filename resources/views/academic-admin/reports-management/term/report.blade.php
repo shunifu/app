@@ -872,7 +872,7 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
 
                        <div class="col">
                         <div id="signaturetitle">
-                            Offical School Stamp:
+                            <img class="img-fluid " width="120" height="120" src="{{$school_is->school_stamp}} " alt="">
                           </div>
 
                        </div>
