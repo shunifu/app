@@ -79,7 +79,10 @@
                     <option value="">Select Action</option>
                     <option value="archive">Archive</option>
                     <option value="unarchive">Unarchive</option>
+                    <option value="">-----------------</option>
                     <option value="delete">Delete</option>
+                    <option value="">-----------------</option>
+                    <option value="transfer">Transfer</option>
                 </select>
                 
                 </div>

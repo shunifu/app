@@ -97,4 +97,8 @@ class CheckController extends Controller
      return view('teaching-loads.view-admin', compact('view_loads'));
 
     }
+
+    public function sd (){
+
+    }
 }

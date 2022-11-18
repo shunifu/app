@@ -597,7 +597,23 @@ $insert=AssessementProgressReport::upsert(collect($student_average)->map(functio
     ];
   })->toArray(), ['assessement_report_key'], ['student_average','number_of_passed_subjects', 'passing_subject_status' , 'loads_count', 'marks_count']);
 
-
+  $assessement_id=$request->assessement;
+  // $request->has('class_name')
+  if($request->exists('stream_name')){
+      $streamofstudent=$request->stream_name;
+      $classofstudent="";
+      $key="stream_based";
+  }
+  
+  if($request->exists('class_name')){
+  
+      $classofstudent=$request->class_name;
+      $getstream=Grade::find($classofstudent);
+      $streamofstudent=$getstream->stream_id;
+  
+      $key="class_based";
+  
+  }
 
   if($request->analysis_indicator=='stream_scoresheet'){
 
@@ -746,23 +762,7 @@ $insert=AssessementProgressReport::upsert(collect($student_average)->map(functio
 
 // }
 
-$assessement_id=$request->assessement;
-// $request->has('class_name')
-if($request->exists('stream_name')){
-    $streamofstudent=$request->stream_name;
-    $classofstudent="";
-    $key="stream_based";
-}
 
-if($request->exists('class_name')){
-
-    $classofstudent=$request->class_name;
-    $getstream=Grade::find($classofstudent);
-    $streamofstudent=$getstream->stream_id;
-
-    $key="class_based";
-
-}
 
 
 
@@ -781,33 +781,88 @@ if($school_data->school_type=="primary-school"){
 }
 
 
-if($request->analysis_indicator=='3'){
+if($request->analysis_indicator=='summary'){
 
-    $stream_list= DB::table('assessement_progress_reports')
-    ->join('grades', 'grades.id', '=', 'assessement_progress_reports.student_class')
-    ->join('users', 'users.id', '=', 'assessement_progress_reports.student_id')
-    ->where('student_stream', $request->stream_name)
-    ->where('assessement_id', $request->assessement)
-    ->where('users.active', 1)
+$school=School::all();
+
+
+$assessement_id=$request->assessement;
+$criteria=PassRate::where('section_id', $section_id)->first();
    
-    ->select('users.id','profile_photo_path','grade_name', 'name', 'lastname', 'middlename', 'number_of_passed_subjects','passing_subject_status','student_average')
-    ->orderByDesc('student_average')
-    ->orderByDesc('number_of_passed_subjects')
-    ->orderByDesc('passing_subject_status')
-    ->get();
 
-    $title=DB::table('assessement_progress_reports')
-    ->join('grades', 'grades.id', '=', 'assessement_progress_reports.student_class')
-    ->join('assessements', 'assessements.id', '=', 'assessement_progress_reports.assessement_id')
-    ->where('student_class', $request->stream_name)
-   ->where('assessement_id', $request->assessement)
-   ->select('grade_name','assessement_name')
-    ->first();
+    if($key=="class_based"){
+        $passed= DB::table('assessement_progress_reports')
+        ->join('grades', 'grades.id', '=', 'assessement_progress_reports.student_class')
+        ->join('users', 'users.id', '=', 'assessement_progress_reports.student_id')
+        ->where('student_class', $request->class_name)
+        ->where('assessement_id', $request->assessement)
+        ->where('users.active', 1)
+        ->where('student_average','>=',$pass_rate)
+
+       
+        ->select('users.id as learner_id','profile_photo_path','grade_name', 'name', 'lastname', 'middlename', 'number_of_passed_subjects','passing_subject_status','student_average')
+        ->orderByDesc('student_average')
+        ->get();
+
+        $failed= DB::table('assessement_progress_reports')
+        ->join('grades', 'grades.id', '=', 'assessement_progress_reports.student_class')
+        ->join('users', 'users.id', '=', 'assessement_progress_reports.student_id')
+        ->where('student_class', $request->class_name)
+        ->where('assessement_id', $request->assessement)
+        ->where('users.active', 1)
+        ->where('student_average','<',$pass_rate)
+        ->orderBy('student_average', 'asc')
+        ->select('users.id as learner_id','profile_photo_path','grade_name', 'name', 'lastname', 'middlename', 'number_of_passed_subjects','passing_subject_status','student_average')
+        ->get();
+
+    
+    
+        $title=DB::table('assessement_progress_reports')
+        ->join('grades', 'grades.id', '=', 'assessement_progress_reports.student_class')
+        ->join('assessements', 'assessements.id', '=', 'assessement_progress_reports.assessement_id')
+        ->where('student_class', $request->class_name)
+       ->where('assessement_id', $request->assessement)
+       ->select('grade_name','assessement_name')
+        ->first();
+    }else{
+        $passed= DB::table('assessement_progress_reports')
+        ->join('grades', 'grades.id', '=', 'assessement_progress_reports.student_class')
+        ->join('users', 'users.id', '=', 'assessement_progress_reports.student_id')
+        ->where('student_stream', $streamofstudent)
+        ->where('assessement_id', $request->assessement)
+        ->where('users.active', 1)
+        ->where('student_average','>=',$pass_rate)
+       
+        ->select('users.id as learner_id','profile_photo_path','grade_name', 'name', 'lastname', 'middlename', 'number_of_passed_subjects','passing_subject_status','student_average')
+        ->orderByDesc('student_average')
+        ->get();
+
+        $failed= DB::table('assessement_progress_reports')
+        ->join('grades', 'grades.id', '=', 'assessement_progress_reports.student_class')
+        ->join('users', 'users.id', '=', 'assessement_progress_reports.student_id')
+        ->where('student_stream', $streamofstudent)
+        ->where('assessement_id', $request->assessement)
+        ->where('users.active', 1)
+        ->where('student_average','<',$pass_rate)
+        ->orderBy('student_average', 'asc') 
+        ->select('users.id as learner_id','profile_photo_path','grade_name', 'name', 'lastname', 'middlename', 'number_of_passed_subjects','passing_subject_status','student_average')
+      
+        ->get();
+    
+        $title=DB::table('assessement_progress_reports')
+        ->join('grades', 'grades.id', '=', 'assessement_progress_reports.student_class')
+        ->join('assessements', 'assessements.id', '=', 'assessement_progress_reports.assessement_id')
+        ->where('student_class', $classofstudent)
+       ->where('assessement_id', $request->assessement)
+       ->select('grade_name','assessement_name')
+        ->first();
+    }
+   
     // dd($request->all());
 
  
 
-   return view('analytics.stream_view', compact('stream_list','assessement_data_passed_students','assessement_data_failed_students_average_only','title','assessement_data_passed_students_count', ));
+   return view('analytics.stream_view', compact('passed','title', 'pass_rate','failed', 'school', 'classofstudent','streamofstudent','assessement_id','tie_type','key' ));
 
         
 }
@@ -1545,7 +1600,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
         MAX(CASE WHEN subjects.subject_code=113 THEN student_subject_averages.student_average END) AS 'ShoeCraft',
         MAX(CASE WHEN subjects.subject_code=114 THEN student_subject_averages.student_average END) AS 'HandCraft',
         MAX(CASE WHEN subjects.subject_code=115 THEN student_subject_averages.student_average END) AS 'PrevocICT',
-        MAX(CASE WHEN subjects.subject_code=116 THEN student_subject_averages.student_average END) AS 'AgiculturalTechnology',
+        MAX(CASE WHEN subjects.subject_code=p116 THEN student_subject_averages.student_average END) AS 'AgiculturalTechnology',
         MAX(CASE WHEN subjects.subject_code=117 THEN student_subject_averages.student_average END) AS 'BusinessAccounting',
         MAX(CASE WHEN subjects.subject_code=118 THEN student_subject_averages.student_average END) AS 'FoodTextileTechnology',
         MAX(CASE WHEN subjects.subject_code=119 THEN student_subject_averages.student_average END) AS 'TechnicalStudies', 

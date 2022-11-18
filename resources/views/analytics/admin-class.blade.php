@@ -75,7 +75,7 @@
     <option value="">Select Indicator</option>
     <option value="stream_scoresheet">Class Scoresheet</option>
     <option value="subject_analysis">Subject Performance</option>
-   <option value="stream_summary">Summarized Performance</option> 
+   <option value="summary">Summarized Performance</option> 
   
    {{--  <option value="pass_analysis">Pass Analysis</option><!---1---->
     <option value="failure_analysis">Failure Analysis</option><!---2----> --}}
