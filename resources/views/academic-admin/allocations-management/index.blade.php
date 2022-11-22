@@ -155,14 +155,7 @@
       
     </div>   
     <script>
-
-      
-         
-        $('#subjects').multiselect({
-            includeSelectAllOption: true,
-            enableFiltering: true
-        });
-  
+   
   
       
   
