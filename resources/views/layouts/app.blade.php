@@ -802,13 +802,13 @@
                       {{-- <a href="/report/term-based/" class="nav-link"> --}}
                         {{-- /report/term-based/class --}}
                       <li class="nav-item">
-                        <a href="/reports/parent/term-based/" class="nav-link">
+                        <a href="/report/term-based/" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Stream Report</p>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="/reports/parent/term-based/class" class="nav-link">
+                        <a href="/report/term-based/class" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Class Report</p>
                         </a>
