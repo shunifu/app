@@ -671,15 +671,16 @@
   
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
-                          <a href="/analytics/term-based" class="nav-link">
+                          <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-check-circle"></i>
                             <p>Stream Based</p>
                           </a>
     
                         </li>
+                        {{-- /analytics/term-based --}}
   
                         <li class="nav-item">
-                          <a href="/analytics/term-based/classs" class="nav-link">
+                          <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-check-circle"></i>
                             <p>Class Based</p>
                           </a>
