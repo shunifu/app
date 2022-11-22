@@ -67,7 +67,7 @@
                             
                             <div class="table-responsive">
 
-                                <form action="{{ route('marks.store') }}" method="post">
+                                <form action="{{ route('marks.store') }}" method="post" id="marksform">
                                     @csrf
                                     <table class="table table-sm table-hover mx-auto table-bordered " id="marks_table">
 
@@ -142,7 +142,7 @@
 
 
                                     </table>
-                                    <x-jet-button class="float-right col-sm-2">Add Marks</x-jet-button>
+                                    <x-jet-button class="float-right col-sm-2" id="add_mark_btn">Add Marks</x-jet-button>
                                 </form>
 
                             </div>
@@ -445,6 +445,12 @@ if ( $("#new_mark").val().length ==0 || $("#new_mark").val()==" " || $("#new_mar
         });
 
     });
+
+  
+
+    $('#marksform').submit(function(){
+    $(this).find(':#add_mark_btn').prop('disabled', true);
+});
 
     </script>
 

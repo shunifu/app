@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use App\Models\AcademicSession;
 use CreateDaysTable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Schema;
+use Ramsey\Uuid\Type\Integer;
 
 class AllocationController extends Controller
 {
@@ -33,6 +36,19 @@ class AllocationController extends Controller
         $grades=Grade::all();
         $subjects=Subject::all();
         $sessions=AcademicSession::all();
+
+
+        if (!Schema::hasTable('allocations')) {
+            Schema::create('allocations', function($table){
+                  
+                   $table->id();
+                   $table->integer('subject_id');
+                   $table->integer('grade_id');
+                   $table->integer('academic_year')->nullable();
+                   $table->integer('active')->default('1');
+                   $table->timestamps();
+           });
+       }
 
         $allocations = DB::table('allocations')
         ->join('subjects', 'subjects.id', '=', 'allocations.subject_id')
@@ -65,21 +81,42 @@ class AllocationController extends Controller
         $session=$request->session;
         $subjects=$request->subjects;
         $count=count($subjects);
-     
-        foreach ($subjects as $key => $value) {
 
-            Allocation::create([
+        //check if allocation exists\
 
-                'grade_id'=>$grade,
-                'academic_year'=>$session,
-                'subject_id'=>$value,
-                'active'=>'1',
+        //if allocation exists, then do not add\\
 
-            ]);
-           
+    $allocationExists=Allocation::where('grade_id', $grade)->where('academic_year', $session)->exists();
+
+        if ($allocationExists) {
+
+            flash()->overlay('<i class="fas fa-check-circle text-w"></i>'.' Warning, Allocations already exists . ', 'Response');
+            return Redirect::back();
+        }else{
+
+            foreach ($subjects as $key => $value) {
+
+                Allocation::create([
+    
+                    'grade_id'=>$grade,
+                    'academic_year'=>$session,
+                    'subject_id'=>$value,
+                    'active'=>'1',
+    
+                ]);
+               
+            }
+
+            flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Success, Allocations added . ', 'Response');
+            return Redirect::back();
+
         }
+     
+       
 
    
+
+      
 
     }
 

@@ -37,7 +37,7 @@
                             <div class="form-row">
     
                                 <div class="col-md-6 form-group">
-                                    <x-jet-label>Select Class</x-jet-label>
+                                    <x-jet-label>Select Class</x-jet-label><br>
                                     <select class="form-control" name="teaching_load[]" id="multiple_loads" multiple="multiple">
                                         <option value="">Select Class</option>
                                         @foreach($teaching_loads as $teaching_load_item)
@@ -82,13 +82,21 @@
     <div class="mb-4">
 
     </div>
+
+    
  
     <script type="text/javascript">
         // $('#multiple_loads').multiselect();
+        
         $('#multiple_loads').multiselect({
             buttonWidth: '150px'
         });
+      
     </script>
+    
+
  
+
+
     
 </x-app-layout>

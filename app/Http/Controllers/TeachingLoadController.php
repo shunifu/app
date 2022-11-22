@@ -182,6 +182,7 @@ return view('teaching-loads.index', compact('classes', 'sessions', 'subjects'));
         ->where('teaching_loads.subject_id', $request->subject_id )
         ->where('teaching_loads.class_id', $request->class_id )
         ->where('teaching_loads.session_id',$request->academic_session)
+        ->where('student_loads.active',1)
         ->get()->pluck('student_id')->toArray();
       
       
@@ -417,7 +418,7 @@ return view('teaching-loads.index', compact('classes', 'sessions', 'subjects'));
   $teacher_role=Role::where('name', 'teacher')->first();
   $teacher_role_id=$teacher_role->id;
      
-  $teachers=User::where('role_id', $teacher_role_id)->orderBy('users.lastname', 'ASC')->orderBy('users.name','ASC')->get();
+  $teachers=User::where('role_id', $teacher_role_id)->where('active',1)->orderBy('users.lastname', 'ASC')->orderBy('users.name','ASC')->get();
   //remember to add academic year
   return view('teaching-loads.transfer.index', compact('my_teaching_loads','teachers'));
 
@@ -449,10 +450,6 @@ $validation=$request->validate([
 
     if($request->transfer_type=="all"){
 
-  
-
-
-
 
 //teaching_loads-change teacher_id to to_transfer
 $update_teaching_load=TeachingLoad::where('id',$teaching_load_id)->update(["teacher_id"=>$transfer_to]);
@@ -469,17 +466,22 @@ flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success.Y
 return Redirect::back();
 
 
-    }else{
+    }else if($request->transfer_type=="some"){
   $student_loads=DB::table('student_loads')
   ->join('users','student_loads.student_id','=','users.id')
   ->where('student_loads.teaching_load_id', $teaching_load_id )
+  ->where('users.active', 1)
+  ->where('student_loads.active', 1)
   ->select('student_loads.student_id as id', 'users.name', 'users.lastname', 'users.middlename', 'users.profile_photo_path')
   ->get();
+
+
 
   $teaching_load=DB::table('teaching_loads')
   ->join('subjects','subjects.id','=','teaching_loads.subject_id')
   ->join('grades','grades.id','=','teaching_loads.class_id')
   ->where('teaching_loads.id', $teaching_load_id )
+  ->where('teaching_loads.active',1)
   ->select('teaching_loads.id', 'subjects.id as subject_id', 'subjects.subject_name', 'grades.id as grade_id', 'grades.grade_name')
   ->get();
 
@@ -507,29 +509,72 @@ return Redirect::back();
 
    public function transfer_loads_step2_some(Request $request){
 
+    dd($request->all());
+
 
 $teaching_load_id=$request->teaching_load;
 $transfer_to=$request->teacher_id;
+$students=$request->students;
 
-//Create new teaching load
-//if it is a new teacher same subject same class
+$teaching_load_details=TeachingLoad::where('teaching_load_id')->first();
+$subject_id=$teaching_load_details->subject_id;
+$grade_id=$teaching_load_details->grade_id;
+$transfer_from=$teaching_load_details->teacher_id;
+$academic_session=$teaching_load_details->academic_session;
 
-//Update marks
+//Logic
 
-//Update student loads
+//1. First check if the teaching load exists
+$teachingLoadExists=TeachingLoad::where('teacher_id', $transfer_to)->where('subject_id',$subject_id)->where('active', 1)->where('class_id',$grade_id)->exists();
 
-for($i = 0; $i < count($request->students); $i++) {
-  $student_id=$request->students[$i];
-    $addTeachingLoads=StudentLoad::where()->update([
-      'student_id'=>$student_id,
-      'teaching_load_id'=>$teaching_load_id,       
+if ($teachingLoadExists) {
+  //2. If it exists then do not create teaching load
+  //but attach students to that load
+
+ //teaching_loads-change teacher_id to to_transfer
+$update_student_load=StudentLoad::where('id',$teaching_load_id)->whereIn('student_id',$students)->update(["teacher_id"=>$transfer_to]);
+
+//marks-change teacher_id
+$update_marks=Mark::where('teaching_load_id',$teaching_load_id)->whereIn('student_id',$students)->update(["teacher_id"=>$transfer_to]);
+  
+
+
+}else {
+  //if it does not exist
+  //1. Create teaching Load
+
+  $createTeachingLoad=TeachingLoad::create([
+
+    'teacher_id'=>$transfer_to,
+    'subject_id'=>$subject_id,
+    'class_id'=>$grade_id,
+    'session_id'=>$academic_session,
+    'active'=>1,
+
 ]);
+
+//Attach students to new teaching load
+
+//teaching_loads-change teacher_id to to_transfer
+$update_student_load=StudentLoad::where('id',$createTeachingLoad->id)->whereIn('student_id',$students)->update(["teacher_id"=>$transfer_to]);
+
+//marks-change teacher_id
+$update_marks=Mark::where('teaching_load_id',$createTeachingLoad->id)->whereIn('student_id',$students)->update(["teacher_id"=>$transfer_to]);
+
+
+
 }
 
-flash()->overlay('<i class="fas fa-check-circle success"></i>'.' Congratulations. You have successfully added teaching loads.', 'Add Teaching Load');
 
 
-return redirect('users/teacher/loads/view/'.$load_id)->with('Teaching Load successfully created');
+
+
+
+
+flash()->overlay('<i class="fas fa-check-circle success"></i>'.' Congratulations. You have successfully transfered teaching loads.', 'Transfer Teaching Load');
+
+
+return redirect('users/teacher/loads/view/'.$teaching_load_id)->with('Teaching Load successfully created');
 
    }
 

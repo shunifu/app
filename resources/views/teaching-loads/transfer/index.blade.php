@@ -13,7 +13,7 @@
                 <div class="card-body">
                   <h3 class="lead">Hi, {{Auth::user()->salutation}} {{Auth::user()->name}} {{Auth::user()->lastname}}</h3>
                  <div class="text-muted">
-                    <p class="card-text">  Use this section to transfer teaching loads <br>
+                    <p class="card-text">  Use this section to transfer teaching loads to another teacher <br>
                   
                     </p>
                   
@@ -61,7 +61,7 @@
                          <select class="form-control" name="transfer_type">
                           <option value="">Transfer Type</option>
                           <option value="all">All Students</option>
-                          {{-- <option value="some">Some Students</option> --}}
+                          <option value="some">Some Students</option>
                          </select>
                           @error('transfer_type')
                           <span class="text-danger">{{$message}}</span>  

@@ -50,9 +50,12 @@
                                 <x-jet-label>Data Output</x-jet-label>
                                 <select class="form-control outcome" name="outcome" id="outcome">
                                     <option value="">Select Output</option>
+                                    <option value="checker">Checker</option>
+                                    <option value="summary_performance">Summerized Performance</option>
                                     <option value="scoresheet">Scoresheet</option>
                                     <option value="analysis">Performance Analysis</option>
                                     <option value="report_card">Report Card</option>
+                                   
                                   
                                 </select>
                                 @error('outcome')

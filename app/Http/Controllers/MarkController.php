@@ -267,8 +267,8 @@ $array = implode("','",$string);
          ->join('subjects', 'teaching_loads.subject_id', '=', 'subjects.id')
          ->where('teaching_loads.teacher_id', Auth::user()->id)
          ->join('academic_sessions', 'teaching_loads.session_id', '=', 'academic_sessions.id')
-				->where('teaching_loads.teacher_id', Auth::user()->id)
-                ->where('academic_sessions.active', 1 )
+		 ->where('teaching_loads.teacher_id', Auth::user()->id)
+         ->where('academic_sessions.active', 1 )
                 ->where('teaching_loads.active', 1 )
          ->select('grade_name', 'subject_name', 'teaching_loads.id as teaching_load_id')
          ->get();

@@ -61,7 +61,7 @@
                             </div>
 
                           </div>  
-                          <div class="text-muted">List of Students</div>               
+                          <div class="text-muted">List of Students</div>     <br>Below is a list of students. Please select the ones that you want to transfer to the other teacher.          
                           <hr>
 <div class="student_list">
 

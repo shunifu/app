@@ -12,11 +12,10 @@
       
  <link rel="stylesheet" href="{{ mix('css/app.css') }}"> 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="jquery\dist\jquery.js"></script>   
-    <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet">
+    {{-- <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css' rel="stylesheet">
     <link href=' https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script> --}}
     
        
     
@@ -800,15 +799,16 @@
                     </a>
 
                     <ul class="nav nav-treeview">
-                  
+                      {{-- <a href="/report/term-based/" class="nav-link"> --}}
+                        {{-- /report/term-based/class --}}
                       <li class="nav-item">
-                        <a href="/report/term-based/" class="nav-link">
+                        <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Stream Report</p>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="/report/term-based/class" class="nav-link">
+                        <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Class Report</p>
                         </a>
