@@ -125,7 +125,7 @@ class SchoolController extends Controller
 
         // ]);
 
-		// dd($request->all());
+		dd($request->all());
 
 		// "_token" => "PNWVIGP8P4tncnCqK5VrT6sDxme9uGR4CEm876me"
 		// "school_name" => "Demo School"
@@ -140,17 +140,6 @@ class SchoolController extends Controller
 		// "id" => "1"
 	
 		// dd($request->all());
-
-		$school_name=$request->school_name;
-		$school_slogan=$request->school_slogan;
-		$school_code=$request->school_code;
-		$school_type=$request->school_type;
-		$school_number=$request->school_number;
-		$school_email=$request->school_email;
-		$school_logo=$request->school_logo;
-		$school_letter_head=$request->school_letter_head;
-		$school_background=$request->background_image;
-		$school_domain=$request->school_code.'.shunifu.app';
 		$id=$request->id;
 	
 		$school_code=$request->school_code;
@@ -183,7 +172,6 @@ class SchoolController extends Controller
 		}else{
 			$background_file="";
 		}
-
 			// "_token" => "PNWVIGP8P4tncnCqK5VrT6sDxme9uGR4CEm876me"
 		// "school_name" => "Demo School"
 		// "school_slogan" => "Innovative School"
@@ -196,35 +184,8 @@ class SchoolController extends Controller
 		// "background_image" => null
 		// "id" => "1"
 
-		// 'school_code'=>$school_code,
-		// 'school_name'=>$school_name,
-		// 'school_slogan'=>$school_slogan,
-		// 'school_type'=>$school_type,
-		// 'school_telephone'=>$school_number,
-		// 'school_domain'=>$school_domain,
-		// 'school_email'=>$school_email,
-		// 'school_logo'=>$school_logo_file,
-		// 'school_letter_head'=>$letterhead_file,
-		// 'school_background_image'=>$background_file,
 
-		
-
-
-	$update=$school->update(['school_code'=>$request->school_code,
-	'school_name'=>$school_name,
-	'school_slogan'=>$school_slogan,
-	'school_type'=>$school_type,
-	'school_telephone'=>$school_number,
-	'school_domain'=>$school_domain,
-	'school_email'=>$school_email,
-	'school_logo'=>$school_logo_file,
-	'school_letter_head'=>$letterhead_file,
-	'school_background_image'=>$background_file
-]);
-
-// Flight::where('active', 1)
-//       ->where('destination', 'San Diego')
-//       ->update(['delayed' => 1]);
+	$update=School::where('id',$id)->update(['school_code'=>$request->school_code, 'school_name'=>$request->school_name,'school_slogan'=>$request->school_slogan, 'school_type'=>$request->school_type,'school_email'=>$request->school_email,'school_telephone'=>$request->school_number,'school_telephone'=>$request->school_number,	'school_logo'=>$school_logo_file,'school_letter_head'=>$letterhead_file,'school_background_image'=>$background_file]);
 
 		flash()->overlay('<i class="fas fa-check-circle text-success"></i> Congratulations. You have successfully updated school information', 'Edit School Information');
 
