@@ -8,28 +8,20 @@ padding: 16px;
 }
 
 th span {
-transform-origin: 0 50%;
-transform: rotate(-90deg); 
-
-display: block;
-position: absolute;
-bottom: 0;
-top:5;
+  position: absolute;
+top: 100%;
 left: 50%;
+transform: rotate(-90deg) translateY(-50%);
+transform-origin: 0 0;
 }
+.red {
+background-color: red !important;
+}
+
       </style>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/r-2.3.0/sb-1.3.3/datatables.min.css"/>
-
-
-        <!-- ✅ load jQuery ✅ -->
-    <script
-    src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-    crossorigin="anonymous"
-  ></script>
-
-
+ 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/r-2.3.0/sb-1.3.3/datatables.min.js"></script>
@@ -37,7 +29,28 @@ left: 50%;
 
   </x-slot>
  
-           
+  <table class="table table-sm table-hover mx-auto table-bordered " style="width:100%" id="customers">
+    <div class="col-md-12 mx-auto">
+
+        @foreach (\App\Models\School::all() as $item)
+        <div class="mx-auto text-center">
+
+      
+        <div class="row mx-auto" style="width: 300px; display:block">
+            <div class="col"><img src={{$item->school_letter_head}}  /></div>
+            <div class="col">  <h4 class="text-center  text-bold lead">{{$item->school_name}}</h4></div>
+        </div>
+        <i class="fas fa-envelope mx-2"></i> {{$item->school_email}} | <i class="fas fa-phone-square    "></i> {{$item->school_telephone}}</i>
+                <p>
+                    <h3 class="text-bold">{{$stream}}  {{$assessement_name}} Scoresheet</h3>
+                </p>
+            
+        </div>
+       
+        @endforeach
+      
+        </div>
+  </table>       
 
 @php
 
@@ -45,6 +58,12 @@ $db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_
 
 
 $tie_type=$pass_rate->tie_type;
+
+//check if allocations have  been added//
+
+
+
+
 
 
 if($tie_type=="share"){
@@ -64,7 +83,7 @@ if($tie_type=="share"){
 SET @sql = CONCAT('SELECT 
 (select t.student_position
 from (select assessement_progress_reports.student_id,assessement_progress_reports.student_average, dense_rank() over (order by assessement_progress_reports.student_average desc) as student_position
-from assessement_progress_reports where assessement_progress_reports.assessement_id=2 AND assessement_progress_reports.student_stream=1
+from assessement_progress_reports where assessement_progress_reports.assessement_id=2 AND assessement_progress_reports.student_stream=".$stream."
      ) t
 where student_id = marks.student_id) as position,
 
@@ -105,7 +124,7 @@ if($tie_type=="share_n_+_1"){
       replace(subjects.subject_name, ' ', '')
         )
       ) INTO @sql
-       FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id;
+       FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN allocations ON allocations.subject_id=teaching_loads.subject_id  INNER JOIN grades ON grades.id=allocations.grade_id WHERE grades.stream_id=".$stream.";
 
 SET @sql = CONCAT('SELECT 
 (select t.student_position
@@ -115,7 +134,8 @@ from assessement_progress_reports where assessement_progress_reports.assessement
 where student_id = marks.student_id) as position,
 
         grades.grade_name as Grade,
-         concat( users.name, users.lastname) as name,
+       
+        concat(users.name, users.lastname) as name,
         assessement_progress_reports.student_average as Average,
       
 ', @sql,'
@@ -169,7 +189,7 @@ if ($result) {
   if ($res = $db->store_result()) {
      
 
-    echo "<thead></tr>\n";
+    echo "<thead class='head-light hidden-md-up'></tr>\n";
       for($i=0; $i<mysqli_num_fields($res); $i++)
       
       {

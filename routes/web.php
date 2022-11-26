@@ -677,7 +677,7 @@ Route::post('/report/templates/store', [ReportTemplateController::class,'store']
 
 //Report Variables
 
-Route::get('/report/variable', [ReportTemplateController::class,'variable'])->name('report_template.variable');
+Route::get('/report/variables', [ReportTemplateController::class,'variable'])->name('report_template.variable');
 Route::post('/report/variable/store', [ReportTemplateController::class,'variable_store'])->name('report_template.variable_store');
 
 //End of report templates

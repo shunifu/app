@@ -283,7 +283,7 @@ class AnalyticsController extends Controller
             //2.Assessement Stream-Based outcome- Report Cards
             if ($outcome=="report_card") {
              
-                $data= $this->assessementCalculations($stream, $session, $assessement_id);
+                $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome);
                 dd("assessement based stream report card");
             }
             //2.End of Assessement Stream-Based outcome- Report Cards

@@ -13,14 +13,7 @@
           <h3 class="lead">Hi, {{Auth::user()->name}}</h3>
          <div class="text-muted">
             <p class="card-text"> Use this section to manage report templates. <br>
-                You can choose which template the report card is going to use. Shunifu currently has three report templates.
-                <ul>
-                    <li><span class="text-bold">Default Template</span>-This is the default report template. It shows continious assessment, examination, subject average, symbol, comment, and teacher initials columns.</li>
-                    
-                    <li><span class="text-bold">Lite Template</span>-This is the lite report template. It shows the subject average,  symbol, comment, and teacher initials columns</li>
-
-                    <li><span class="text-bold">Detailed Template</span>-This is the detailed report template. It all assessemets of the term as well as Subject Average,  Symbol, Comment, and Teacher Initials colums</li>
-                </ul>
+                You can choose which template the report card is going to use. 
           
             </p>
           
@@ -44,17 +37,40 @@
             @csrf
           <div class="form-group">
               <x-jet-label>Select Template</x-jet-label>
-              <select class="form-control" name="template_name">
-                <option value="">Choose Template</option>
-                <option  value="default">Default</option>
-                <option value="lite">Lite</option>
-                <option  value="detailed">Detailed</option>
-              </select>
+              <input type="text" class="form-control" name="template_name" placeholder="Enter Template Name"/>
               @error('template_name')
               <span class="text-danger">{{$message}}</span>  
               @enderror
-             
           </div>
+
+          <div class="form-group">
+            <x-jet-label>Select Section</x-jet-label>
+     
+          <select class="form-control" name="class_type" id="class_type">
+            <option value="">Select Class Type</option>
+            <option value="internal_classes">Internal Classes</option>
+            <option value="external_classes">External Classes</option>
+          </select>
+        
+            @error('class_type')
+            <span class="text-danger">{{$message}}</span>  
+            @enderror
+        </div>
+        <div class="form-group">
+          <x-jet-label>Report Columns</x-jet-label>
+        <select class="form-control" name="report_columns" id="report_columns">
+          <option value="">Columns To Show</option>
+          <option value="ca_only">CA Only</option>
+          <option value="exam_only">Exam Only</option>
+          <option value="ca_exam"> CA & Exam</option>
+          <option value="term_assessements">Term Assessements</option>
+          <option value="year_assessements">Year Assessements</option>
+        </select>
+      
+          @error('report_columns')
+          <span class="text-danger">{{$message}}</span>  
+          @enderror
+      </div>
          
           </div>
           <!-- /.card-body -->
