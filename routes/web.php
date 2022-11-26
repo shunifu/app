@@ -535,6 +535,8 @@ Route::get('/assessements/assessement/update/{id}',[AssessementController::class
 
 //Manage CA Exam
 Route::post('/settings/assessements/ca_exam/add',[CAExamController::class,'store'])->name('CA_Exam.store');
+Route::put('/settings/assessements/ca_exam/update',[CAExamController::class,'update'])->name('CA_Exam.update');
+Route::get('/assessements/ca_exam/edit/{id}',[CAExamController::class,'edit'])->name('CA_Exam.edit');
 Route::get('/assessements/ca_exam/delete/{id}',[CAExamController::class,'destroy'])->name('CA_Exam.destroy');
 
 //End of CA Exam

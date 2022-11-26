@@ -59,9 +59,6 @@
 </li>
 
 
-<li class="nav-item" role="presentation">
-  <a class="nav-link" id="pills-weight-tab" data-toggle="tab" href="#pills-weight" role="tab" aria-controls="pills-weight" aria-selected="false">Special Settings</a>
-</li>
 
 <li class="nav-item" role="presentation">
   <a class="nav-link" id="pills-pass-rates-tab" data-toggle="tab" href="#pills-pass-rates" role="tab" aria-controls="pills-pass-rates" aria-selected="false">Passing Criteria</a>
@@ -180,7 +177,7 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-danger">Yes Delete</button>
+      <button type="button" class="btn btn-danger" id="delete_categorization">Yes Delete</button>
     </div>
   </div>
 </div>
@@ -1352,12 +1349,14 @@ $('#number_of_decimal_places').val(" ");
 
             //Assessement Categorization
 
-            $(document).on("click",'.exam_assignment_delete', function (e) {
-              e.preventDefault();
+           
+
+            // $(document).on("click",'.exam_assignment_delete', function (e) {
+            //   e.preventDefault();
           
-              $("#assessement_categorization_delete_modal").modal('show');
+            //   $("#assessement_categorization_delete_modal").modal('show');
               
-            });
+            // });
 
             //End of Assessement Categorization
 
@@ -1367,14 +1366,16 @@ $('#number_of_decimal_places').val(" ");
 
 
             //Delete Confirmation Modal
-          $(document).on("click",'.exam_assignment_delete', function (e) {
-              e.preventDefault();
+          // $(document).on("click",'#delete_categorization', function (e) {
+          //     e.preventDefault();
           
-              $("#assessement_categorization_delete_modal").modal('show');
+             
+
+
             
               
               
-            });
+          //   });
 
 
 

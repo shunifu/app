@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CA_Exam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CAExamController extends Controller
 {
@@ -79,9 +80,28 @@ class CAExamController extends Controller
      * @param  \App\Models\CA_Exam  $cA_Exam
      * @return \Illuminate\Http\Response
      */
-    public function edit(CA_Exam $cA_Exam)
+    public function edit(CA_Exam $cA_Exam, $id)
     {
-        //
+
+
+    $categorization_id= CA_Exam::find(decrypt($id));
+
+    $categorizations=DB::table('c_a__exams')
+    ->join('terms','terms.id','=','c_a__exams.term_id')
+    ->join('assessements','assessements.id','=','c_a__exams.assessement_id')
+    ->where('c_a__exams.id', $categorization_id->id )
+    ->select('c_a__exams.id as catergorization_id','terms.term_name', 'assessements.assessement_name', 'assign_as')
+    ->first();
+
+    //dd($categorization_id->id);
+
+    return view('academic-admin.settings-management.assessements.assessement-categorization.edit', compact('categorization_id','categorizations'));
+
+
+
+
+
+
     }
 
     /**
@@ -93,7 +113,25 @@ class CAExamController extends Controller
      */
     public function update(Request $request, CA_Exam $cA_Exam)
     {
-        //
+   
+
+        //validation
+
+        $validation=$request->validate([
+            'assign_as'=>'required'
+        ]);
+
+        $id=$request->id;
+        $assign_as=$request->assign_as;
+
+        $update=CA_Exam::find($id)->update([
+            'assign_as'=>$assign_as,
+        ]);
+
+        flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have updated categorization', 'Assign Categorization');
+        return redirect()->back();
+
+
     }
 
     /**
@@ -106,7 +144,10 @@ class CAExamController extends Controller
     {
         $isAdmin=Auth::user()->hasRole('admin_teacher');
         if ($isAdmin){
-           $delete= CA_Exam::find($id)->delete();
+
+          
+            
+           $delete= CA_Exam::find(decrypt($id))->delete();
 
         flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have deleted Assignment', 'Delete Assignment');
             return redirect()->back();
