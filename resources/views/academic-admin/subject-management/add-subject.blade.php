@@ -45,8 +45,8 @@
 
                 <div class="form-group">
                   <x-jet-label>ECESWA Code</x-jet-label>
-                  <x-jet-input name="eceswa_code" placeholder="Enter ECESWA code" ></x-jet-input>
-                  @error('eceswa_code')
+                  <x-jet-input name="subject_code" placeholder="Enter ECESWA code" ></x-jet-input>
+                  @error('subject_code')
                   <span class="text-danger">{{$message}}</span>  
                   @enderror
                 </div>
@@ -110,6 +110,7 @@
             <thead class="thead-light">
               <tr>
                 <th>Subject Name</th>
+                <th>ECESWA Code</th>
                 <th>Subject Type</th>
                 <th>Level</th>
                 <th>Manage</th>
@@ -120,8 +121,9 @@
                @foreach ($collection_subject as $subject_item)
                <tr>
                    <td>{{$subject_item->subject_name}}</td>
-                   <td>
-                       {{$subject_item->subject_type}}</td>
+                   <td>{{$subject_item->subject_code}}</td>
+                   <td>{{$subject_item->subject_type}}</td>
+                
                    <td>
                      <?php
                    if($subject_item->section_level==0){

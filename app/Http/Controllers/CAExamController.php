@@ -47,16 +47,38 @@ class CAExamController extends Controller
                 'assign_as'=>'required'
             ]);
 
-       
+            $assessement=$request->assessement_name;
+            $term=$request->assessement_term;
+            $assign_as=$request->assign_as;
 
-            CA_Exam::create([
-                'assessement_id'=>$request->assessement_name,
-                'term_id'=>$request->assessement_term,
-                'assign_as'=>$request->assign_as
-            ]);
-    
-            flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have assigned assessements', 'Assign Assessements');
-            return redirect()->back();
+       
+            //check if same assessement, same term
+
+
+            $categorizationExists=CA_Exam::where('assessement_id', $assessement)->where('term_id',$term)->exists();
+
+            
+
+            if($categorizationExists){
+       
+               
+                flash()->overlay('<i class="fa-regular fa-circle-exclamation"></i> Warning. Already assigned', 'Assign Assessements');
+                return redirect()->back();
+            }else{
+
+                CA_Exam::create([
+                    'assessement_id'=>$request->assessement_name,
+                    'term_id'=>$request->assessement_term,
+                    'assign_as'=>$request->assign_as
+                ]);
+        
+                flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have assigned assessements', 'Assign Assessements');
+                return redirect()->back();
+
+            }
+        
+           
+           
             
         }else{
             return view('errors.unauthorized');

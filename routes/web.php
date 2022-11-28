@@ -250,8 +250,12 @@ Route::get('users/student/manage/password/reset/{id}',[StudentController::class,
 Route::get('users/student/manage/removal/',[StudentController::class,'student_removal'])->name('student.removal_index');
 Route::get('/class/student-management',[StudentController::class,'student_issues_classteacher'])->name('student.student_issues_classteacher');
 
+
+
 Route::post('users/student/manage/removal/process',[StudentController::class,'removal_loadstudents'])->name('student.removal');
 Route::post('users/student/manage/removal/process/selection',[StudentController::class,'removal'])->name('student.removal_selection');
+
+Route::post('student/image/upload',[StudentController::class,'student_image'])->name('student.image');
 
 //Route::post('/users/student/search/list/{search}/', [StudentController::class,'student_search'])->name('student.student_search');
 

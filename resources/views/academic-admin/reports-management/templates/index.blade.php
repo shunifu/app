@@ -43,7 +43,7 @@
               @enderror
           </div>
 
-          <div class="form-group">
+          {{-- <div class="form-group">
             <x-jet-label>Select Section</x-jet-label>
      
           <select class="form-control" name="class_type" id="class_type">
@@ -55,7 +55,7 @@
             @error('class_type')
             <span class="text-danger">{{$message}}</span>  
             @enderror
-        </div>
+        </div> --}}
         <div class="form-group">
           <x-jet-label>Report Columns</x-jet-label>
         <select class="form-control" name="report_columns" id="report_columns">
@@ -88,7 +88,7 @@
   
     <div class="card card-light">
       <div class="card-header">
-        <h3 class="card-title">Current Report Template</h3>
+        <h3 class="card-title"> Report Templates</h3>
       </div>
       <!-- /.card-header -->
       <!-- form start -->
@@ -96,14 +96,28 @@
         <div class="card-body">
         <div class="responsive">
 
-         
-              <ul>
-                @foreach ($template as $item)
-              
-                <li>{{$item->template_name}}</li>
-             
+          <table class="table table-bordered table table-hover table-responsive-md ">
+            <thead class="thead-light">
+              <tr>
+                <th>Template Name</th>
+                <th>Columns</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+              @foreach ($template as $item)
+              <td>{{$item->template_name}}</td>
+              <td>{{$item->report_colums}}</td>
             @endforeach
-              </ul>
+       
+              </tr>
+            
+            </tbody>
+          </table>
+
+         
+           
            
      
           

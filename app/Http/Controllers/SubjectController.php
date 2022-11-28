@@ -33,7 +33,7 @@ class SubjectController extends Controller
        
         $collection_subject=DB::table('subjects')
         ->leftjoin('sections','sections.id','=','subjects.section_level')
-        ->select('subjects.id as id', 'sections.section_name', 'subjects.subject_name','subjects.subject_type','section_level')
+        ->select('subjects.id as id', 'sections.section_name', 'subjects.subject_name','subjects.subject_type','section_level', 'subjects.subject_code')
         ->get();
 
         $sections=Section::all();
@@ -53,23 +53,34 @@ class SubjectController extends Controller
         $validation=$request->validate([
             'subject_name'=>'required',
             'subject_type'=>'required',
-            'subject_section'=>'required'
+            'subject_section'=>'required',
+            'subject_code'=>'required',
         ]);
         
         $subject_name=$request->input('subject_name');
         $subject_type=$request->input('subject_type');
         $subject_code=$request->input('subject_code');
         $subject_section=$request->input('subject_section');
-        Subject::create([
-            'subject_name' => $subject_name,
-            'subject_type' => $subject_type,
-            'subject_section'=>$subject_section,
-            'subject_code'=>$subject_code
-        ]);
 
-        flash()->overlay('<i class="fas fa-check-circle text-success "></i> Congratulations. You have successfully added subject', 'Add Subject');
+$codeExists=Subject::where('subject_code', $subject_code)->exists();
 
-    return redirect()->back();
+if ($codeExists) {
+    flash()->overlay(''.' Warning. ECESWA Code already exists', 'Update Subject');
+            return redirect('academic-admin/subject');
+}else{
+    Subject::create([
+        'subject_name' => $subject_name,
+        'subject_type' => $subject_type,
+        'subject_section'=>$subject_section,
+        'subject_code'=>$subject_code
+    ]);
+
+    flash()->overlay('<i class="fas fa-check-circle text-success "></i> Congratulations. You have successfully added subject', 'Add Subject');
+
+return redirect()->back();
+}
+
+    
 
     }
 
@@ -126,16 +137,33 @@ class SubjectController extends Controller
         //Remember to add security check
 
         $id=$request->subject_id;
-   
-    $subject_data=Subject::find($id);
-    $subject_data->subject_name = $request->subject_name;
-    $subject_data->subject_type = $request->subject_type;
-    $subject_data->section_level = $request->subject_level;
-    $subject_data->subject_code = $request->subject_code;
-    $subject_data->save();
+        $subject_data=Subject::find($id);
+
+        $code=$request->subject_code;
+
+        
+
+        $subjectCodeExists=Subject::where('subject_code', $code)->exists();
+        if($subjectCodeExists){
+
+            flash()->overlay(''.' Warning. ECESWA Code already exists', 'Update Subject');
+            return redirect('academic-admin/subject');
+
+        }else{
+            $subject_data->subject_name = $request->subject_name;
+            $subject_data->subject_type = $request->subject_type;
+            $subject_data->section_level = $request->subject_level;
+            $subject_data->subject_code = $request->subject_code;
+            $subject_data->save();
 
     flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Success. You have updated subject', 'Update Subject');
     return redirect('academic-admin/subject');
+
+        }
+   
+  
+   
+
     }
 
     /**

@@ -1576,4 +1576,29 @@ return redirect('/marks');
 }
 
 
+
+public function student_image(Request $request){
+
+    $student_id=$request->student_id;
+   
+    if($request->hasFile('student_image')){
+			
+				
+        $image = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $student_id);
+        $student_image=$image->getSecurePath();
+
+
+        User::where('id', $student_id)->update([
+
+            'profile_photo_path'=>$student_image,
+        ]);
+
+    }else{
+        $student_image="";
+    }
+    return Redirect::back();
+   
+}
+
+
     }

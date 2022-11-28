@@ -3,6 +3,8 @@
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+
+   
     </x-slot>
     <div class="row">
         <div class="col-md-12">
@@ -12,7 +14,7 @@
                 </div>
 
                 <img class="card-img-top"
-                    src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_220,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_30_style_light_align_center:Students Management,w_0.3,y_0.28/v1613303961/pexels-photo-5212359_ukdzdz.jpg"
+                    src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_220,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_30_style_light_align_center:Student Management,w_0.3,y_0.28/v1613303961/pexels-photo-5212359_ukdzdz.jpg"
                     alt="">
                <div class="card-body">
                    Please use this section to manage studens
@@ -301,8 +303,9 @@
                           <th>Middlename</th>
                           <th>Class</th>
                           <th>Student Cell</th>
-                        
-                          <th>Action</th>
+                          <th>Photo</th>
+                          <th>Manage</th>
+
                       </tr>
                   </thead>
                   <tbody>
@@ -321,6 +324,8 @@
     </div>
 
     <script>
+
+
         $(document).ready(function () {
           $.noConflict();
          
@@ -330,6 +335,8 @@
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
+
          $('#students_table').hide();
          var query= $('#query').val(" ");
 
@@ -469,11 +476,13 @@
                     <td>'+middlename+'</td>\
                     <td>'+item.grade_name+'-'+item.academic_session+'</td>\
                     <td>'+cell+'</td>\
+                    <td> <form action="/student/image/upload" method="POST" enctype="multipart/form-data">@csrf<input id="upload" name="student_image" type="file"/> <input type="hidden" name="student_id" value='+item.id+'><button type="submit" class="btn"><i class="fa fa-check"></i></button></form></td>\
                     <td><a href=/users/profile/student/'+item.id+'>Visit Profile</a></td>\
                     </tr>'  );  
 
 
        @endrole
+      
               
            
            

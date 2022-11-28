@@ -46,6 +46,9 @@
                             <option value="1">Primary School</option>
                             <option value="2">Secondary School</option>
                             <option value="3">High School</option>
+                            <option value="4">Prevocational School</option>
+                            <option value="5">College</option>
+                            <option value="6">University</option>
                             </select>
                             @error('school_type')
                             <span class="text-danger">{{$message}}</span>  
@@ -56,7 +59,7 @@
 
                         <div class="form-group">
                             <x-jet-label>Contact Number</x-jet-label>
-                            <x-jet-input name="school_number"  placeholder="25055454" ></x-jet-input>
+                            <x-jet-input name="school_number"  placeholder="School Line" ></x-jet-input>
                             @error('school_contact_number')
                             <span class="text-danger">{{$message}}</span>  
                             @enderror
@@ -90,6 +93,22 @@
                             <x-jet-label>Background Image</x-jet-label><br>
                             <input name="background_image" type="file" />
                             @error('background_image')
+                            <span class="text-danger">{{$message}}</span>  
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <x-jet-label>Principal Signature</x-jet-label><br>
+                            <input name="principal_signature" type="file" />
+                            @error('principal_signature')
+                            <span class="text-danger">{{$message}}</span>  
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <x-jet-label>School Stamp</x-jet-label><br>
+                            <input name="school_stamp" type="file" />
+                            @error('school_stamp')
                             <span class="text-danger">{{$message}}</span>  
                             @enderror
                         </div>

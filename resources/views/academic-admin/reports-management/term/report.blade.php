@@ -1,10 +1,12 @@
 <x-app-layout>
+    @foreach ($variables as $variable)
     <x-slot name="header">
-        <style type="text/css">
-            i {
-            margin-right: 5px;
-            }
 
+  
+            
+    
+        <style type="text/css">
+          
 
             .table {
   border: 0.5px solid grey;
@@ -20,18 +22,6 @@
 }
 
             
-/* textarea.form-control
-{  
-width: 100%;
-height: 100%;
-border-color: Transparent;     
-text-align: justify;
-background: transparent;
-} */
-
-/* col{
-    vertical-align: middle;
-} */
           input,select{
             color:black;
             }
@@ -40,7 +30,7 @@ background: transparent;
             height:auto;
             }
             th {
-            background-color: {{$column_color}};
+            background-color: {{$variable->column_color}};
             color: rgb(255, 255, 255);
             text-align: center;
             } 
@@ -57,7 +47,7 @@ body { margin: 0px; }
             @media print {
             th.background {
                 font-size: 14px;
-            background-color: {{$column_color}} !important;
+            background-color: {{$variable->column_color}} !important;
             -webkit-print-color-adjust: exact; 
             color: #FFFFFF !important;
 
@@ -97,14 +87,14 @@ body { margin: 0px; }
 #signaturetitle {
   font-weight: bold;
   text-align: center;
-  font-size: 90%;
+  
 }
 
 #signature {
   width: 100%;
   border: 0px;
   border-bottom: 1px solid black;
-  height: 30px;
+  /* height: 30px; */
 }
 
 
@@ -161,13 +151,9 @@ body { margin: 0px; }
               
                 <div class="row mx-auto" >
                     
-                    <img src="{{$item->school_letter_head }}" width="820"  style="display: block;margin: auto;"/>
+                    <img src="{{$item->school_letter_head }}" width="auto"  style="display: block;margin: auto;"/>
                 </div>
               
-   
-                 
-                       
-                        <hr>
                     
                 </div>
                
@@ -177,6 +163,7 @@ body { margin: 0px; }
         users.name,
         users.lastname,
         users.middlename,
+        users.profile_photo_path,
         term_averages.student_average,
         term_averages.number_of_passed_subjects,
         term_averages.passing_subject_status,
@@ -206,12 +193,12 @@ body { margin: 0px; }
                     foreach ($term_average as $student_term_data) {
              
 
-echo '<h2 class="text-center lead text-bold">'.$student_term_data->lastname.' '.$student_term_data->middlename.' '.$student_term_data->name."'s".' Report Card</h2>';     
+echo '<h3 class="text-center lead text-bold">'.$student_term_data->lastname.' '.$student_term_data->middlename.' '.$student_term_data->name."'s".' Report Card</h3>';     
                  
                ?>
                
                           <table class="table table-bordered"> 
-                    <thead class="btn-secondary">
+                    <thead>
                         <tr>
                             <th class="background text-center">Student Details</th>
                             <th class="background text-center">Student Photo</th>
@@ -267,18 +254,7 @@ echo $key->student_position.' out of '.$total_students.' ';
 
 
 }else if ($tie_type=="share") {
-//     $student_position=\DB::select(\DB::raw("select t.*
-// from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
-// from term_averages ".$sql_piece.") t
-// where student_id = ".$student.""));
-// foreach ($student_position as $key) {
-// if ($p_key=="stream_based") {
-// echo $key->student_position.' out of '.$total_students.' ' ;
-// }else{
-// echo $key->student_position.' out of '.$total_students.' ';
-// }
 
-// }
 if ($p_key=="stream_based") {
        $sql_piece="where sc.term_id=".$term." AND sc.student_stream=".$stream."";
  } else {
@@ -320,7 +296,7 @@ WHERE sub.student_id=".$student.""));
                                                             <br>
                                                         
                             
-                            Why {{ $student_term_data->name }} failed this term:<span class="text-bold"></span>
+                            Why {{ $student_term_data->name }} failed:<span class="text-bold"></span>
                             
                             <ul>
                             
@@ -411,20 +387,28 @@ WHERE sub.student_id=".$student.""));
 
                             @endif
 <br>
-{{-- Resolution: <span class=" text-bold">{{$student_term_data->final_term_status}}  </span> --}}
+
+@if ($get_academic_session->final_term==1)
+ Resolution: <span class=" text-bold">{{$student_term_data->final_term_status}}  </span>   
+@endif
+
 
 
 
 
                         </td>
                                                    
-                            
-                            
-                           
+   
             
                         <td>
                             <center>
+
+                                @if (is_null($student_term_data->profile_photo_path))
                                 <img class="user-image img-circle elevation-1" width="200" height="200" src="https://ui-avatars.com/api/?name={{$student_term_data->name}}+&amp;color=7F9CF5&amp;background=EBF4FF" alt={{$student_term_data->name}} />
+                                @else
+                                <img class="user-image img-circle elevation-1" width="200" height="200" src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
+                                @endif
+                               
                                 
                                
                             </center>
@@ -434,9 +418,9 @@ WHERE sub.student_id=".$student.""));
                         <td>
                             Term: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
                             <br>
-                            Term Opening Date <span class="text-bold">07 September 2022</span>
+                            Term Opening Date <span class="text-bold">{{$get_academic_session->start_date}}</span>
                             <br>
-                            Term Closing Date <span class="text-bold">26 October  2022</span>
+                            Term Closing Date <span class="text-bold">{{$get_academic_session->end_date}}</span>
                             <br>
                             Next Term Date: <span class="text-bold">01 November 2022</span>
 
@@ -465,10 +449,11 @@ WHERE sub.student_id=".$student.""));
                        
                     </tbody>
                 </table>
-       
-<p class="py-2 mx-auto">
-    <center><span class="mx-auto">Breakdown of {{$student_term_data->name}}'s   Academic Performance</span> </center>
-</p>
+       <br>
+       <br>
+<span class=" mx-auto">
+    <center><span class="mx-auto">Breakdown of <span class="text-bold">{{$student_term_data->name}}'s </span>  Academic Performance</span> </center>
+</span>
                
 <?php
         
@@ -489,10 +474,7 @@ grades.stream_id,
     users.id as teacher_id,
     users.name,
     users.salutation,
-    users.lastname,
-    
-    (AVG( CASE WHEN assessements.id = 1 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test1,
-    (AVG( CASE WHEN assessements.id = 2 AND assessements.term_id = 2 THEN (marks.mark) END)) as Test2
+    users.lastname
     FROM
     marks
     INNER JOIN assessements ON assessements.id = marks.assessement_id
@@ -510,28 +492,19 @@ grades.stream_id,
 
 {{-- if template is shunifu x --}}
 
-@if ($report_template=="default")
+@if ($report_template->report_colums=="ca_exam")
     
 
 
 <table class="table table-sm table-bordered ">
-    <thead class="btn-secondary">
+    <thead >
         <tr class="hope">
             <th class="background">Subject Name</th>
-
-{{--             
-            @if ($noExam)
-            <th class="background" id="f">CA</th>     
-            @endif --}}
-           
-          
-           
-            @if ($examExists)
-            <th class="background">Mock Exam</th>   
-            @endif
-
-            <th class="background" id="f">Subject Position</th>   
-            <th class="background" id="fit">Symbol</th>
+            <th class="background" >CA</th>     
+            <th class="background">Examination</th>   
+            <th class="background">Subject Average</th>   
+            <th class="background">Subject Position</th>   
+            <th class="background">Symbol</th>
             <th class="background">Comment</th>
             <th class="background">Teacher</th>
 
@@ -545,19 +518,19 @@ grades.stream_id,
     @foreach($student_subject_average as $item2)
       <tr>
         <td>{{ $item2->subject_name }}</td>
-        {{-- @if ($noExam)
-         <td id="f"> 
+      
+         <td> 
             @if (is_null($item2->ca_average))
-            N/A
+            -
             @elseif (($item2->ca_average<$pass_rate))
-            <span class="text-danger">{{round(($item2->ca_average),2)}}%</span>
+            <span class="text-danger">{{round(($item2->ca_average))}}%</span>
             @else
             {{round(($item2->ca_average),2)}}%
             @endif
         </td>   
-        @endif --}}
-        @if ($examExists)
-        <td id="f"  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
+      
+       
+        <td  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
             @if ($item2->exam_mark<$pass_rate)
             @isset($item2->exam_mark)
             <span class="text-danger">{{($item2->exam_mark)}}%</span>
@@ -573,18 +546,15 @@ grades.stream_id,
         </td> 
         
 
-      
-        @endif
-      
-     
-        {{-- <td id="f"> 
+    
+         <td> 
             @if (($item2->student_average<$pass_rate))
             <span class="text-danger">{{($item2->student_average)}}%</span>
             @else
             {{($item2->student_average)}}%
             @endif
         </td> 
-  --}}
+  
 
              <td>
 
@@ -607,15 +577,9 @@ $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total fro
     
       }
 ?>
-
-
-
-
         </td>
          
-       
-
-        <td id="fit">
+        <td>
             @foreach ($comments as $comment_symbol)
               
             @if(in_array(round($item2->student_average), range($comment_symbol->from,$comment_symbol->to, 0.01)) ) 
@@ -628,7 +592,7 @@ $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total fro
               
             </td>
 
-            <td id="ft">
+            <td>
                 @foreach ($comments as $comment)
                 
                 
@@ -654,14 +618,9 @@ $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total fro
 </table> 
 @endif
 
-@if ($report_template=="lite")
-{{-- @if ($lite)
-    
-@endif --}}
-    
-@endif
 
-@if ($report_template=="plus")
+
+@if ($report_template->report_colums=="plus")
 @php
 $db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
 $result = $db->multi_query("SET @sql = NULL;
@@ -750,13 +709,12 @@ $db->close();
     
 @endif
 
-<hr>
 
 {{-- <div id="chart-container">
     FusionCharts XT will load here!
 </div> --}}
               
-                  
+        <hr>          
 
                  <?php
 
@@ -767,10 +725,10 @@ foreach ($term_average as $student_term_data) {
 
        
 <table class="table table-sm table-bordered">
-    <thead class="btn-secondary">
+    <thead >
         <tr class="hope">
-            <th class="background">Class Teacher Comment</th>
-            <th class="background">Head Teacher Comment</th>    
+            <th class="background">Class Teacher's Comment</th>
+            <th class="background">Head Teacher's Comment</th>    
            
         </tr>
     </thead>
@@ -801,36 +759,13 @@ foreach ($term_average as $student_term_data) {
 
                                    
 </table> 
-    
-     {{-- <div class="row"> --}}
-                   {{-- Comments --}}
-                   {{-- <div class="col" >
-                       <label>Class Teacher Comment</label>
-                    {{-- @foreach ($class_teacher_comments as $teacher_comment)
-                   
-                    @if (in_array(number_format($student_term_data->student_average), range($teacher_comment->from,$teacher_comment->to,  0.01)) )
-                    <textarea class="form-control" id="j">{{$teacher_comment->comment}}</textarea>
-                        
-                    @endif
-                    @endforeach 
-                   </div> --}}
 
-                   {{-- <div class="col" >
-                    <label>Headteacher's Comment</label>
-                    @foreach ($headteacher_comments  as $headteacher_comment)
-                    @if (in_array(number_format($student_term_data->student_average), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
-                    <textarea class="form-control">{{$headteacher_comment->comment}}</textarea>
-                        
-                    @endif
-                    @endforeach
-                   </div> --}}
                    <?php
                 }
                                   ?>
                                   
                    {{-- </div> --}}
     
-                   <hr>
                    <div class="row">
                    
 
@@ -862,25 +797,35 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                         <div id="signaturetitle">
                            Headteacher's Signature:
                           </div>
-                         
                           <div class="text-center">
-<img class="img-fluid " width="120" height="120" src="{{$school_is->base64}} " alt="">
-                       </div>
+                          @if ($variable->principal_signature==1)
+                         
+                            <img class="img-fluid " width="120" height="120" src="{{$school_is->base64}} " alt="">
+                               @else       
+                               <img class="img-fluid " width="120" height="120" src="https://www.publicdomainpictures.net/pictures/30000/velka/plain-white-background.jpg" alt="">            
+                          @endif
+                         
+                        </div>
                     </div>
 
                        
 
                        <div class="col">
                         <div id="signaturetitle">
-                            <img class="img-fluid " width="140" height="140" src="{{$school_is->school_stamp}} " alt="">
+
+                            @if ($variable->school_stamp==1)
+                            <img class="img-fluid " width="140" height="140" src="{{$school_is->school_stamp}} " alt="">  
+                            @else
+                            <img class="img-fluid " width="140" height="140" src="https://www.publicdomainpictures.net/pictures/30000/velka/plain-white-background.jpg " alt="">
+                            @endif
+                           
                           </div>
 
                        </div>
                    </div>
-                   <hr>
                        
                    <table class="table table-sm table-bordered">
-                    <thead class="btn-secondary">
+                    <thead>
                         <tr class="hope">
                             <th class="background">Passing Criteria</th>
                             <th class="background">Subject Average Calculation</th>    
@@ -890,7 +835,6 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                         </tr>
                     </thead>
        
-                 
                       <tr>
  
                         <td>
@@ -941,17 +885,10 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                       </tr>
                     
             
-                 
-                       
-                
-                   
                 </table> 
                     
 
-                   
-           
-                   
-                   <center><small>&copy; Report generated by the <strong>Shunifu Intergrated School Management Platform</strong>-Developed by <strong>Innovazania</strong> based at the <strong>Royal Science & Technology Park</strong>  7689 0726 | 2517 9448</small></center>
+                   <center><small>&copy; Report generated by the <strong>Shunifu Platform</strong>-Developed by <strong>Innovazania</strong> based at the <strong>Royal Science & Technology Park</strong>  7689 0726 | 2517 9448</small></center>
                
     
 
@@ -961,6 +898,7 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
 {{-- end of report--}}
         
         
+        @endforeach
         @endforeach
      
    

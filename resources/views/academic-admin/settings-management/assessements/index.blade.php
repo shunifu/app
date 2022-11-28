@@ -59,9 +59,8 @@
 </li>
 
 
-
 <li class="nav-item" role="presentation">
-  <a class="nav-link" id="pills-pass-rates-tab" data-toggle="tab" href="#pills-pass-rates" role="tab" aria-controls="pills-pass-rates" aria-selected="false">Passing Criteria</a>
+  <a class="nav-link" id="pills-pass-rates-tab" data-toggle="tab" href="#pills-pass-rates" role="tab" aria-controls="pills-pass-rates" aria-selected="false"> Criteria</a>
 </li>
 
 
@@ -72,6 +71,7 @@
 <!---Beginning of Assessement Types---->
 <div class="tab-pane fade show active" id="pills-assessement-type" role="tabpanel" aria-labelledby="pills-assessement-type-tab">
   <div class="py-1">
+    <h4 class="text-bold text-muted">Guidelines for Assessement Type Section</h4> 
     This section is where you create an assessement type. There are different types of assessments, i.e Tests, Examinations, Classwork etc.
  
   </div>
@@ -158,6 +158,7 @@
 </div>
 <!---End  of Assessement Types---->
 
+
 <!---Beginning of Assessement Assignment---->
 
 <!-- Button trigger modal -->
@@ -186,13 +187,12 @@
 
 <div class="tab-pane fade" id="pills-ca-exam-assignment" role="tabpanel" aria-labelledby="pills-ca-exam-assignment-tab">
   <div class="py-1">
-    This section is where you categorize assessments into either Continuous Assessement (CA) or Examination <span class="text-bold">for a specific term.</span> You first choose a term and after choosing a term,  catergorize the assessements for that particular term, i.e categorize assessements into either CA or Exam. This will help in the calculation of the student's average, by selecting which assessments to calculate from to get that term's student average.
-    <ol>
-      <li>Select term. </li>
-      <li>Select the assessement.</li>
-      <li>Choose which category the assessement falls under in the selected term.</li>
+    <h4 class="text-bold text-muted">Guidelines for Assessement Categorization Section</h4> 
+    This section is where you categorize or group assessments into either Continuous Assessement (CA) or Examination <span class="text-bold">for a specific term.</span> <br>
+    To group an assessement into a category, You select a term and after selecting the term,  you then select the assessement, after selecting the assessement you then select the category you want to place that  assessement under, then click on Assign Categorization. <br>
     
-    </ol>
+    The categorization will help Shunifu know which assessements are to be considered CA and which ones are to be considered Exam. 
+   
   </div>
   <hr>
   <div class="row">
@@ -208,6 +208,17 @@
               <!-- /beginning of card-body -->
                 <div class="card-body">
                       @csrf
+                      <div class="form-group">
+                        <x-jet-label>Section</x-jet-label>
+                        <select class="form-control" name="section">
+                        <option value="">Select Section</option>
+                        <option value="internal">Internal Classes</option>
+                        <option value="external">External Classes</option>
+                        </select>
+                        @error('assessement_name')
+                        <span class="text-danger">{{$message}}</span>  
+                        @enderror
+                    </div>
 
                       <div class="form-group">
                           <x-jet-label>Assessement Term</x-jet-label>
@@ -235,6 +246,8 @@
                           @enderror
                       </div>
 
+
+                   
                     
 
                       <div class="form-group">
@@ -354,7 +367,8 @@
 <div class="tab-pane fade" id="pills-assessement-management" role="tabpanel" aria-labelledby="pills-assessement-management-tab">
 
 <div class="py-1">
-  This section is where you create an assessement to be written in that  term. For example you can create an assessement called <em>Test 1</em> and assign it to Term 1 etc.;
+  <h4 class="text-bold text-muted">Guidelines for the Assessement Management Section</h4> 
+  This section is where you create an assessement that will be written in a specific term. For example you can create an assessement called <em>Test 1</em> and assign it to Term 1 etc.;
   <ol>
     <li>Select the assessement type</li>
     <li>Select the term you want to attach the assessement to</li>
@@ -667,16 +681,37 @@
 
 <!---Beginning of Pass Rates ---->
 <div class="tab-pane fade" id="pills-pass-rates" role="tabpanel" aria-labelledby="pills-pass-rates-tab">
-<p>Use this section to set rates 
-  <ul><li>The</li></ul>
+  <h4 class="text-bold text-muted">Guidelines for the Criteria Section</h4> 
+<p>This is the section where you tell Shunifu the criteria to use when calculating student marks.  Shunifu will use the criteria you set here to generate student report cards, as well as scoresheets.
+  <br>
+  In the event you want to modify a criteria for a specfic section (e.g Junior) , click on the <span class="text-bold">Change</span> button on row of that section, and to delete a criteria for a specfic section click on the red delete button.
+
+  <h6>Keywords Explaination</h6>
+  <ul>
+    <li><span class="text-bold">Class</span>-
+      A class is grouping of students in a single classroom. For example Form 1A is a class 
+    </li>
+
+    <li>
+      <span class="text-bold">Stream</span>-
+      A stream is a group of classes. For example Form 1 is a stream, it is made of different classes like Form 1A, Form 1B and Form 1C
+    </li>
+
+  
+  </ul>
+ 
+  {{-- <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+    <i class="fa fa-info" title="Do you like my fa-coq icon?"></i>
+  </button> --}}
 </p>
+<hr>
   <div class="row">
   
-      <div class="col-xs-12 col-sm-12 col-md-3">
+      <div class="col-xs-12 col-sm-12 col-md-5">
 
           <div class="card card-light">
               <div class="card-header">
-                <h3 class="card-title">Add Passing Rate</h3>
+                <h3 class="card-title text-bold">Set Criteria</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -700,7 +735,7 @@
 
                       <div class="form-group">
                           <x-jet-label> Number of Subjects</x-jet-label>
-                          <small>The number of subjects a student is supposed to get in order to pass.</small>
+                          <small id="subjectHelp" class="form-text text-muted">The minimum number of subjects a student is supposed to pass in the above selected section.  </small>
                           <input type="text" name="number_of_subjects" class="form-control" aria-label="">
                           @error('number_of_subjects')
                           <span class="text-danger">{{$message}}</span>  
@@ -709,7 +744,7 @@
 
                           <div class="form-group">
                               <x-jet-label> Passing Rate</x-jet-label>
-                              <small>The passing rate of the student.</small>
+                              <small id="PassHelp" class="form-text text-muted">The passing rate of the above selected section </small>
                               <div class="input-group mb-3">
                                   <input type="text" name="passing_rate" class="form-control" aria-label="">
                                   <div class="input-group-append">
@@ -723,11 +758,11 @@
 
                               <div class="form-group">
                                   <x-jet-label>Passing Subject Rule</x-jet-label><br>
-                               <span class = "help-block">Is English a passing subject? Select Applies if it is and Does not Apply if it is not</span>
+                                  <small id="subjectHelp" class="form-text text-muted">Does the passing subject rule apply?  </small>
                                   <select class="form-control" name="passing_subject_rule">
                                   <option value="">Select Option</option>
-                                  <option value="1">Applies</option>
-                                  <option value="0">Does Not Apply</option>
+                                  <option value="1">Yes It Applies</option>
+                                  <option value="0"> No It Does Not Apply</option>
                                   </select>
                                   @error('passing_subject_rule')
                                   <span class="text-danger">{{$message}}</span>  
@@ -736,6 +771,7 @@
 
                               <div class="form-group">
                                 <x-jet-label>Subject Average Calculation</x-jet-label>
+                              
                                 <select class="form-control" name="subject_average_calculation">
                                 <option value="">Select Option</option>
                                 <option value="custom">Based on term assessement assignment</option>
@@ -748,10 +784,12 @@
                     
                               <div class="form-group">
                                 <x-jet-label>Term Average Calculation </x-jet-label>
+                                <small id="subjectHelp" class="form-text text-muted">How is a student term average calculated? 
+                                 </small>
                                 <select class="form-control" name="average_calculation">
                                 <option value="">Select Option</option>
-                                <option value="custom">Best number of subjects</option>
-                                <option value="default">Average of all subjects</option>
+                                <option value="custom">An average of the best number of subjects</option>
+                                <option value="default">An average of all subjects</option>
                                 </select>
                                 @error('average_calculation')
                                 <span class="text-danger">{{$message}}</span>  
@@ -760,10 +798,11 @@
 
                             <div class="form-group">
                               <x-jet-label>Term Average Type</x-jet-label>
+                              <small id="subjectHelp" class="form-text text-muted">The data type of the term average should be? </small>
                               <select class="form-control" name="term_average_type" id="term_average_type">
                               <option value="">Select Option</option>
-                              <option value="decimal">Decimal Number</option>
-                              <option value="whole">Whole Number</option>
+                              <option value="decimal">A decimal number</option>
+                              <option value="whole"> A whole number</option>
                               </select>
                               @error('term_average_type')
                               <span class="text-danger">{{$message}}</span>  
@@ -783,11 +822,12 @@
 
                             <div class="form-group">
                               <x-jet-label> Ties </x-jet-label>
+                              <small id="subjectHelp" class="form-text text-muted">How are ties positioned?  </small>
                               <select class="form-control" name="tie_type">
+                               
                               <option value="">Select Option</option>
-                              <option value="sequential">Sequential</option>
-                              <option value="share_n">Ties Share  Position (N)</option>
-                              <option value="share_n_+_1">Ties Share Position (N+1)</option>
+                              <option value="share_n">Share same position without skiping</option>
+                              <option value="share_n_+_1">Share same position but skip</option>
                               </select>
                               @error('tie_type')
                               <span class="text-danger">{{$message}}</span>  
@@ -799,10 +839,12 @@
 
                             <div class="form-group">
                               <x-jet-label>Term Position Type </x-jet-label>
+                              <small id="typeHelp" class="form-text text-muted">How are students positioned? According to Class or Stream? </small>
                               <select class="form-control" name="position_type">
+
                               <option value="">Select Option</option>
-                              <option value="stream_based">Stream Based</option>
-                              <option value="class_based">Class Based</option>
+                              <option value="stream_based">According to Stream </option>
+                              <option value="class_based">According to Class </option>
                               </select>
                               @error('position_type')
                               <span class="text-danger">{{$message}}</span>  
@@ -811,6 +853,7 @@
 
                           <div class="form-group">
                             <x-jet-label>Subject Position Type </x-jet-label>
+                            <small id="typeHelp" class="form-text text-muted">How are students positioned in a subject? According to Class or Stream or teachers teaching load? </small>
                             <select class="form-control" name="subject_position_type">
                             <option value="">Select Option</option>
                             <option value="stream_based">Stream Based</option>
@@ -829,17 +872,17 @@
                 <!-- /end of card-body -->
       
                 <div class="card-footer">
-                  <x-jet-button>Add Passing Criteria</x-jet-button>
+                  <x-jet-button>Add  Criteria</x-jet-button>
                 </div>
               </form>
             </div>
 
         </div>
       
-   <div class="col-sm-12 col-xs-12 col-md-9 ">
+   <div class="col-sm-12 col-xs-12 col-md-7 ">
       <div class="card card-light">
           <div class="card-header">
-            <h3 class="card-title">Pass Rates</h3>
+            <h3 class="card-title text-bold">Criteria List</h3>
           </div>
           <!-- /.card-header -->
         
@@ -854,12 +897,12 @@
                     <thead class="thead-light" >
                         <tr>
                             <th>Section</th>
-                            <th>Pass Rate</th>
+                            {{-- <th>Pass Rate</th>
                             <th>Subjects</th>
                             <th>Passing Subject Rule</th>
                             <th>Term Average Calculation</th>
                             <th>Subject Average Calculation</th>
-                            <th>Position Type</th>
+                            <th>Position Type</th> --}}
                             <th>Manage</th>
                         </tr>
                     </thead>
@@ -867,19 +910,19 @@
                         @foreach ($pass_rates as $pass_rate)
                         <tr>
                           <td>{{$pass_rate->section_name}}</td>
-                          <td>{{$pass_rate->passing_rate}}%</td>
-                          <td>{{$pass_rate->number_of_subjects}}</td>
-                          <td>
+                          {{-- <td>{{$pass_rate->passing_rate}}%</td>
+                          <td>{{$pass_rate->number_of_subjects}}</td> --}}
+                          {{-- <td>
                               @if ($pass_rate->passing_subject_rule==0)
                                   {{'Does not apply'}}
                               @else
                               {{'Applies'}}
                               @endif
                              
-                          </td>
-                          <td>{{$pass_rate->average_calculation}}</td>
+                          </td> --}}
+                          {{-- <td>{{$pass_rate->average_calculation}}</td>
                           <td>{{$pass_rate->subject_average_calculation}}</td>
-                          <td>{{$pass_rate->position_type}}</td>
+                          <td>{{$pass_rate->position_type}}</td> --}}
   {{-- <td>
     <div class="row">
       <div class="col">
@@ -893,8 +936,9 @@
     </div>
 
   </td> --}}
-  <td class="py-0 align-middle">
+  <td class="py-2 align-middle">
     <div class="btn-group btn-group-sm">
+      <a href="/assessements/pass-rates/edit/{{$pass_rate->pass_rate_id}}" class="btn btn-success"><i class="fas fa-eye"></i>View</a>
       <a href="/assessements/pass-rates/edit/{{$pass_rate->pass_rate_id}}" class="btn btn-info"><i class="fas fa-edit"></i>Change</a>
       <a href="/assessements/pass-rates/delete/{{$pass_rate->pass_rate_id}}" class="btn btn-danger"><i class="fas fa-trash"></i>Delete</a>
     </div>
@@ -928,11 +972,16 @@
 
 <div class="tab-pane fade" id="pills-weight" role="tabpanel" aria-labelledby="pills-weight-tab">
   <div class="py-1">
-    This section is where you add assessement weights, that is where you add the weight for the assessments you have assigned. Since CA & and Exam has been assigned, you now need to attach the percentage weight for each . If for example in Term 2 the CA (continuous assessement) accounts for 40% and the examination accounts for 60%, you will first 
+    <h4 class="text-bold text-muted">Guidelines for the Assessement Weight Section</h4> 
+    This section is where you add CA or Exam weights. This is where you tell Shunifu how much the Continuous Assessement or Examination will weight. For an example you can tell Shunifu that in Term 2 , Form 1 the  Continuous Assesement will weight 40% and Examination will weight 60%. <br>
+    Please make sure that the both weights when added together equal <span class="text-bold">100%</span>
+<p><br>
+  <span class="text-bold text-muted">Steps to adding weights.</span>
     <ol>
+      <li>Select the stream</li>
       <li>Select the term you want</li>
-      <li>Enter the CA weight (40%) for example</li>
-      <li>Enter the Exam weight (60%) for example</li>
+      <li>Enter the CA weight </li>
+      <li>Enter the Exam weight </li>
       <li>Click on Add Assessement-Weight button</li>
     </ol>
   </div>
@@ -1082,8 +1131,8 @@
                         
                         <td class="py-0 align-middle">
                           <div class="btn-group btn-group-sm">
-                            <button class="btn btn-info assessement_weight_edit" value="{{$assessements_weight->assessement_weight_id}}"><i class="fas fa-edit"></i>Change</button>
-                            <button class="btn btn-danger assessement_weight_delete" value="{{$assessements_weight->assessement_weight_id}}"><i class="fas fa-trash"></i>Delete</button>
+            <a href="/assessements/assessement-weight/edit/{{$assessements_weight->assessement_weight_id}}"><button class="btn btn-info assessement_weight_edit" value=""><i class="fas fa-edit"></i>Change</button></a>
+                           <a href="/assessements/assessement-weight/delete/{{$assessements_weight->assessement_weight_id}}"> <button class="btn btn-danger assessement_weight_delete" value="{{$assessements_weight->assessement_weight_id}}"><i class="fas fa-trash"></i>Delete</button></a>
                           </div>
                         </td>
                         </tr>

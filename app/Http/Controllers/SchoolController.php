@@ -28,14 +28,7 @@ class SchoolController extends Controller
 		$isAdmin= Auth::user()->hasRole('school_admin');
         $isAdminTeacher= Auth::user()->hasRole('admin_teacher');
 
-		//Create tenant
-		//add env varibles
-			//-db
-			//google api oauth
-			//sms api
-			//cloudinary
-
-	// /	dd($request->all());
+	
         if($isAdminTeacher OR $isAdmin){
             $school_name=$request->school_name;
             $school_slogan=$request->school_slogan;
@@ -46,11 +39,23 @@ class SchoolController extends Controller
 			$school_logo=$request->school_logo;
 			$school_letter_head=$request->school_letter_head;
 			$school_background=$request->background_image;
-			$school_domain=$request->school_code.'.shunifu.app';
+			$school_domain=$request->school_name.'.shunifu.app';
+
+
+			$validation=$request->validate([
+            'school_name'=>'required',
+            'school_slogan'=>'required',
+            'school_code'=>'required',
+			'school_type'=>'required',
+			'school_number'=>'required|integer',
+			'school_email'=>'required|email',
+		
+
+        ]);
 
 		if($request->hasFile('school_logo')){
 			
-				// $school_logo_file = 'logo_'.$school_code.'.'.$school_code->extension();  
+				
 				$logo_result = $request->file('school_logo')->storeOnCloudinaryAs('shunifu', 'logo_'.$school_code);
 				$school_logo_file=$logo_result->getSecurePath();
 			}else{
@@ -125,32 +130,22 @@ class SchoolController extends Controller
 
         // ]);
 
-		dd($request->all());
-
-		// "_token" => "PNWVIGP8P4tncnCqK5VrT6sDxme9uGR4CEm876me"
-		// "school_name" => "Demo School"
-		// "school_slogan" => "Innovative School"
-		// "school_code" => "555"
-		// "school_type" => "high-school"
-		// "school_number" => "23441012"
-		// "school_email" => "info@shunifu.app"
-		// "school_logo" => null
-		// "school_letter_head" => null
-		// "background_image" => null
-		// "id" => "1"
 	
-		// dd($request->all());
+
+	
 		$id=$request->id;
 	
 		$school_code=$request->school_code;
 		
-		$school=School::find($id);
+		dd($request->all());
 
 		if($request->hasFile('school_logo')){
 			
 			// $school_logo_file = 'logo_'.$school_code.'.'.$school_code->extension();  
 			$logo_result = $request->file('school_logo')->storeOnCloudinaryAs('shunifu', 'logo_'.$school_code);
 			$school_logo_file=$logo_result->getSecurePath();
+
+			
 		}else{
 			$school_logo_file="";
 		}

@@ -54,9 +54,9 @@
                           <span class="text-danger">{{$message}}</span>  
                           @enderror
                           </div>
-                        </div>
+                       
 
-                        <div class="form-row">
+                     
                             <div class="col form-group">
                               <x-jet-label>Term</x-jet-label>
                              <select class="form-control" name="term">
@@ -70,6 +70,26 @@
                               <span class="text-danger">{{$message}}</span>  
                               @enderror
                               </div>
+
+
+
+                              <div class="col form-group">
+                                <x-jet-label>Indicator</x-jet-label>
+                               <select class="form-control" name="indicator">
+                                <option value="">Select Indicator</option>
+                               
+                                <option value="scoresheet">Scoresheet</option>
+                                <option value="manual_promotion">Manual Promotion</option>
+                                <option value="criteria_promotion">Criteria Based Promotion</option>
+            
+                             
+                               </select>
+                                @error('indicator')
+                                <span class="text-danger">{{$message}}</span>  
+                                @enderror
+                                </div>
+
+
                             </div>
   
                         
@@ -83,7 +103,7 @@
                   <!-- /.card-body -->
         
                   <div class="card-footer">
-                    <x-jet-button>Load Term Analytics</x-jet-button>
+                    <x-jet-button>Load Term Data</x-jet-button>
                   </div>
               </form>
               </div>

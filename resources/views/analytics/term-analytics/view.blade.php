@@ -87,12 +87,18 @@ th span {
             <hr>
         
         <thead class="thead-light hidden-md-up">
-        {{-- <th>Action</th>
-        <th>Status</th> --}}
-        
-        <th><span>Student</span></th>
-        <th><span>Class</span></th>
-       
+
+           
+            @if ($indicator=="manual_promotion")
+            <th>Action</th>
+           <th>Status</th> 
+         @endif
+            <th><span>Position</span></th> 
+            <th><span>Student</span></th>
+            <th><span>Average</span></th>
+            <th><span>Comment</span></th>
+            <th><span>Class</span></th>
+          
       
         <th><span>English Language</span> </th>
         <th><span>English Lit</span></th>
@@ -143,22 +149,86 @@ th span {
         <th><span>D&T</span></th>
        
         
-        
-        <th><span>Average</span></th>
-        <th><span>Position</span></th> 
-        <th><span>Comment</span></th>
+    
         </thead>
         <tbody>
            
            
             @forelse($scoresheet as $student)
                 <tr>
+                  
+                    @if ($indicator=="manual_promotion")
+
+            <td><input type="checkbox" class="students" name="students[]" value="{{$student->student_id}}" ></td>
+            <td>  </td>
+
+
+            @endif
+
+
+            <td class="align-middle p-2">
+
+
                     
+                @php
+              
+//    if tie type is share, i.e ties share the same position run the query below
+
+
+// $sql_piece="where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream."";
+
+//  dd($ter);
+
+$student_position=\DB::select(\DB::raw("select t.*
+from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
+from term_averages where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream.") t
+where student_id = ".$student->learner_id.""));
+
+foreach ($student_position as $key) {
+
+
+echo $key->student_position ;
+
+
+
+}
+
+
+
+@endphp
+     
+            
+             
+
+            
+            </td>
+
+        
                    
                     <td class="align-middle p-2">
                         {{ $student->lastname }} {{ $student->name }}
                         {{-- {{ $student->middlename }} --}}
                     </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->student_average>= $pass_rate)
+                        <span class="text-secondary">{{ ($student->student_average)}} </span>
+                        
+                        @else
+                        <span class="text-danger">{{ ($student->student_average)}} </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->remark =="Passed")
+                        <i class="fas fa-check-circle text-success"></i> {{$student->remark}}
+                            @else
+                            <i class="fas fa-times-circle text-danger"></i>  {{$student->remark}}
+                        @endif
+                        
+                    </td> 
+        
+
                     <td class="align-middle p-2">
                         {{ $student->grade_name }}
                     </td>
@@ -452,68 +522,19 @@ th span {
 
                     
 
-                    <td class="align-middle p-2">
-                        @if ($student->student_average>= $pass_rate)
-                        <span class="text-secondary">{{ ($student->student_average)}} </span>
-                        
-                        @else
-                        <span class="text-danger">{{ ($student->student_average)}} </span>
-                        @endif
-                    </td>
+                
 
                    
-                    <td class="align-middle p-2">
+                   
 
-
-                    
-                        @php
-                      
- //    if tie type is share, i.e ties share the same position run the query below
-
-
-      // $sql_piece="where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream."";
-
-//  dd($ter);
-
-$student_position=\DB::select(\DB::raw("select t.*
-from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
-from term_averages where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream.") t
-where student_id = ".$student->learner_id.""));
-
-foreach ($student_position as $key) {
-
-
-echo $key->student_position ;
-
-
-
-}
-
-
-
-@endphp
-             
-                    
-                     
-
-                    
-                    </td>
-
-                    <td class="align-middle p-2">
-                        @if ($student->remark =="Passed")
-                        <i class="fas fa-check-circle text-success"></i> {{$student->remark}}
-                            @else
-                            <i class="fas fa-times-circle text-danger"></i>  {{$student->remark}}
-                        @endif
-                        
-                    </td> 
+                 
             
 
 
                 </tr>
                 
 
-            </form>
+            
 
             @empty
                 No Data
@@ -523,7 +544,8 @@ echo $key->student_position ;
 
     </table>
     <tr>
-
+<td><button type="submit" name="action" id="promote" value="promote" class="btn btn-primary">Promote Students</button></td>
+<td><button type="submit" name="action" id="another_school" value="Try another_school" class="btn btn-danger">Another School</button></td>
     </tr>
     
 </form>

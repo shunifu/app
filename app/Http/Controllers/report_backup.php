@@ -214,6 +214,9 @@ class ReportController extends Controller
 //2. Calculate Term average
 //3. Store Upsert to database
 
+//Retrieve via return and display
+// flash()->overlay(' 63%.  Upgrade in progress...');
+// return redirect()->back();
     
         //Validation of form data
 
@@ -225,14 +228,6 @@ class ReportController extends Controller
             $stream=$getstream->stream_id;
            
             $p_key="class_based";
-
-            $validation=$request->validate([
-                'grade'=>'required',
-                'term'=>'required',
-                'report_template'=>'required',
-             
-    
-            ]);
             
         
         }else{
@@ -248,17 +243,12 @@ class ReportController extends Controller
             ]);
         }
        
-
-     $template_id=$request->report_template;
-     $term=$request->term;
-
-     $report_template=ReportTemplate::where('id',$template_id)->first();
-
-     $variables=ReportVariable::all();
+     dd($request->all())
       
   
+      
 
-    // Getting the section of the selected stream (high school or secondary)
+              // Getting the section of the selected stream (high school or secondary)
               $section=Grade::where('stream_id', $stream)->first();
               $section_id=$section->section_id;
       
@@ -362,6 +352,9 @@ class ReportController extends Controller
             $non_value_subject=0;
         }
     
+       
+
+
         //Getting Academic Year
         $get_academic_session = DB::table('terms')
         ->join('academic_sessions', 'terms.academic_session', '=', 'academic_sessions.id')
@@ -388,8 +381,8 @@ class ReportController extends Controller
         // $number_of_tests_in_term=Assessement::where('term_id',$term)->count();
       
     
-        // $ca_assessements=Assessement::where('term_id', $term)->where('assessement_type', 1)->get();
-        // $exam_assessements=Assessement::where('term_id', $term)->where('assessement_type', 2)->get();
+        $ca_assessements=Assessement::where('term_id', $term)->where('assessement_type', 1)->get();
+        $exam_assessements=Assessement::where('term_id', $term)->where('assessement_type', 2)->get();
         //filter to stream
 
         //calculate subject average based on criteria
@@ -402,7 +395,9 @@ class ReportController extends Controller
             ->join('users', 'grades_students.student_id', '=', 'users.id')
             ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
             ->join('academic_sessions', 'grades_students.academic_session', '=', 'academic_sessions.id')
+            ->join('terms', 'academic_sessions.id', '=', 'terms.academic_session')
             ->where('grades.stream_id', $stream)
+            ->where('terms.id', $term)
             ->where('grades_students.active', 1)
             ->where('users.active', 1)
             ->get()->pluck('student_id');
@@ -410,8 +405,11 @@ class ReportController extends Controller
         if($p_key=="class_based"){
             $students = DB::table('grades_students')
             ->join('users', 'grades_students.student_id', '=', 'users.id')
+            ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
             ->join('academic_sessions', 'grades_students.academic_session', '=', 'academic_sessions.id')
-            ->where('grades_students.grade_id', $classofstudent)
+            ->join('terms', 'academic_sessions.id', '=', 'terms.academic_session')
+            ->where('grades.id', $classofstudent)
+            ->where('terms.id', $term)
             ->where('grades_students.active', 1)
             ->where('users.active', 1)
             ->get()->pluck('student_id');
@@ -443,30 +441,63 @@ class ReportController extends Controller
 
         $total_students = DB::table('grades_students')
         ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
-        ->join('users', 'grades_students.student_id', '=', 'users.id')
         ->join('streams', 'streams.id', '=', 'grades.stream_id')
         ->where('grades.stream_id', $stream)
         ->where('grades_students.active', 1)
-        ->where('users.active', 1)
-        ->get()->count('grades_students.student_id');
+        ->get()->count('grades.students.student_id');
        }else{
         $total_students = DB::table('grades_students')
         ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
-        ->join('users', 'grades_students.student_id', '=', 'users.id')
         ->join('streams', 'streams.id', '=', 'grades.stream_id')
         ->where('grades.id', $classofstudent)
         ->where('grades_students.active', 1)
-        ->where('users.active', 1)
-        ->get()->count('grades_students.student_id');
+        ->get()->count('grades.students.student_id');
        }
 
-  
+     
       
         foreach ($students as $student ) {
 
             //First validate the marks entered
 
 
+
+            $total_subjects = DB::table('student_loads')
+            ->join('teaching_loads', 'student_loads.teaching_load_id', '=', 'teaching_loads.id')
+            ->join('academic_sessions', 'academic_sessions.id', '=', 'teaching_loads.session_id')
+            ->where('student_loads.student_id', $student)
+            ->where('student_loads.active', 1)
+            ->where('academic_sessions.active', 1)//Scoping to active academic year. 
+            ->get()->count();
+            //This ($total_subjects) query will retrieve only the number of student loads for the active session
+
+         
+
+        
+        //     $students=DB::select(DB::raw("SELECT
+        //     student_loads.student_id,
+        //     users.name,
+        //     users.id as student_id,
+
+        //     users.middlename,
+        //     users.lastname,
+        //     student_loads.teaching_load_id,
+        //     subjects.subject_name,
+        //     grades.grade_name,
+        //     (SELECT marks.mark from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement AND student_id=users.id) AS mark,
+        //     (SELECT marks.id from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement AND student_id=users.id) AS mark_id
+        //    FROM
+        //        student_loads
+        //        INNER JOIN users ON users.id=student_loads.student_id
+        //        INNER JOIN grades_students ON grades_students.student_id=student_loads.student_id
+        //        INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id
+        //        INNER JOIN grades ON grades.id=teaching_loads.class_id
+        //        INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  
+            
+        //        WHERE student_loads.teaching_load_id=$request->teaching_load 
+        //    ORDER BY `users`.`lastname` ASC"));
+
+           
         //Generate subject average
         //Comments
         //1.Remember to make dynamize assessment_id
@@ -477,8 +508,6 @@ class ReportController extends Controller
     if($subject_average_rule=="custom"){
 
         //if the subject average rule is custom, it means that the subject average is calculated  based on the selection of assessements
-
-       
       
     $subject_average[]=DB::select(DB::raw("SELECT marks.student_id,
     GROUP_CONCAT(subjects.subject_name) AS subject_name,
@@ -501,7 +530,35 @@ class ReportController extends Controller
     marks.student_id,
     subjects.id"));
 
+    // dd($subject_average);
+// foreach($subject_average as $item){
+// foreach ($item as $key) {
+//    if($rt=sizeof($key));
+  
+//     dd($rt);
+// }
+// }
+ 
 
+}else if($subject_average_rule=="default"){
+
+    dd('default');
+    // $subject_average[]=DB::select(DB::raw("SELECT marks.student_id,
+    // GROUP_CONCAT(subjects.subject_name) AS subject_name,
+    // subjects.id as subject_id,
+    // assessements.term_id as term_id,
+    // teaching_loads.class_id as student_class,
+    // teaching_loads.id as teaching_load_id,
+    // ROUND((CASE WHEN  assessements.term_id = ".$term." THEN SUM(marks.mark)/".$number_of_tests_in_term." END))AS student_average
+    // FROM
+    // marks
+    // INNER JOIN assessements ON assessements.id = marks.assessement_id
+    // INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
+    // INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
+    // WHERE `marks`.`student_id` = ".$student." AND `assessements`.`term_id` = ".$term."
+    // GROUP BY
+    // marks.student_id,
+    // subjects.id"));
 
 }
 
@@ -527,9 +584,24 @@ class ReportController extends Controller
             })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average', 'position']);
         }
     
-    }
+    }else if($subject_average_rule=="default"){
+        foreach ($subject_average as $key) {
+            $insert=StudentSubjectAverage::upsert(collect($key)->map(function($item) use($student) {
+                return [
+                'student_id' => $item->student_id,
+                'term_id'  => $item->term_id,
+                'subject_id' => $item->subject_id,
+                'teaching_load_id' => $item->teaching_load_id,
+                'ca_average' =>NULL,
+                'exam_mark' => NULL,
+                'student_average' =>$item->student_average,
+                'student_class'  =>$item->student_class,
+                'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
+                ];
+                  })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average']);
+        }
 
-    
+    }
 
 
     //Generate Stream subject averages
@@ -549,16 +621,13 @@ class ReportController extends Controller
 
        // $total_subjects=StudentLoad::where('student_id', $student)->count();//Remember to scope to session
 
-
         $total_subjects = DB::table('student_loads')
         ->join('teaching_loads', 'student_loads.teaching_load_id', '=', 'teaching_loads.id')
         ->join('academic_sessions', 'academic_sessions.id', '=', 'teaching_loads.session_id')
-        ->where('student_loads.student_id', $student)
+        ->where('student_id', $student)
         ->where('student_loads.active', 1)
-        ->where('academic_sessions.academic_session',$get_academic_session->academic_session )//scoping to current academic 
-        ->get()->count();
-        //This ($total_subjects) query will retrieve only the number of student loads for the active session
-
+        ->where('academic_sessions.academic_session',$get_academic_session->academic_session )//scoping to current academic session
+        ->count();
 
         
         if($criteria->average_calculation=="custom" ){
@@ -581,7 +650,7 @@ class ReportController extends Controller
     INNER JOIN grades ON grades.id=student_subject_averages.student_class
     where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
     GROUP BY student_subject_averages.subject_id
-    ORDER BY (student_subject_averages.subject_id =".$passing_subject.") desc, mark desc
+    order by (student_subject_averages.subject_id =".$passing_subject.") desc, mark desc
     LIMIT ".$number_of_subjects.") t, 
     (SELECT
             COUNT(student_subject_averages.student_average) AS number_of_passed_subjects
@@ -612,7 +681,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
                     INNER JOIN grades ON grades.id=student_subject_averages.student_class
                     where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
                     GROUP BY student_subject_averages.subject_id
-                    ORDER BY  mark desc
+                    order by  mark desc
                     LIMIT ".$number_of_subjects.") t, 
                     (SELECT
                             COUNT(student_subject_averages.student_average) AS number_of_passed_subjects
@@ -756,17 +825,16 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
     $headteacher_comments = DB::table('report_comments')->where('section_id',$section_id)->where('user_type', 3)->get();          
         
     $examExists=AssessementWeight::where('term_id', $term)->where('exam_percentage', '<>', '0')->where('stream_id',$stream )->exists();
-    $caExists=AssessementWeight::where('term_id', $term)->where('ca_percentage', '<>', '0')->where('stream_id',$stream )->exists();
 
     $noExam=AssessementWeight::where('term_id', $term)->where('exam_percentage', '0')->where('stream_id',$stream )->exists();
-    $noCA=AssessementWeight::where('term_id', $term)->where('ca_percentage', '0')->where('stream_id',$stream )->exists();
     
 
     $calculation_type=$criteria->average_calculation;
 
-
+    $report_template=$request->report_template;
+    $lite_report_template=$request->lite_report_template;
     
-return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight', 'calculation_type', 'non_value_subject_name', 'report_template', 'section_id','variables','get_academic_session'));   
+return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule', 'column_color','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight', 'calculation_type', 'non_value_subject_name', 'report_template', 'lite_report_template', 'section_id'));   
  }
 
 

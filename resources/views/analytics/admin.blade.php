@@ -75,10 +75,10 @@
   <option value="">Select Indicator</option>
   <option value="stream_scoresheet">Stream Scoresheet</option>
   <option value="subject_analysis">Subject Analysis</option>
-  {{-- <option value="stream_summary">Stream Summary</option>
+  <option value="stream_summary">Stream Summary</option>
 
   <option value="pass_analysis">Pass Analysis</option><!---1---->
-  <option value="failure_analysis">Failure Analysis</option><!---2----> --}}
+  <option value="failure_analysis">Failure Analysis</option><!---2---->
   </select>
   @error('analysis_indicator')
   <span class="text-danger">{{$message}}</span>  
