@@ -481,8 +481,8 @@ grades.stream_id,
     INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
     INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
     INNER JOIN users ON users.id = marks.teacher_id
-     INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
-     INNER JOIN grades ON grades.id=student_subject_averages.student_class
+    INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
+    INNER JOIN grades ON grades.id=student_subject_averages.student_class
     WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id
     GROUP BY
     marks.student_id,student_subject_averages.student_id,
@@ -802,7 +802,7 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                          
                             <img class="img-fluid " width="120" height="120" src="{{$school_is->base64}} " alt="">
                                @else       
-                               <img class="img-fluid " width="120" height="120" src="https://www.publicdomainpictures.net/pictures/30000/velka/plain-white-background.jpg" alt="">            
+                               <img class="img-fluid " width="120" height="120" src="" alt="">            
                           @endif
                          
                         </div>
@@ -816,7 +816,7 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                             @if ($variable->school_stamp==1)
                             <img class="img-fluid " width="140" height="140" src="{{$school_is->school_stamp}} " alt="">  
                             @else
-                            <img class="img-fluid " width="140" height="140" src="https://www.publicdomainpictures.net/pictures/30000/velka/plain-white-background.jpg " alt="">
+                            <img class="img-fluid " width="140" height="140" src="" alt="">
                             @endif
                            
                           </div>

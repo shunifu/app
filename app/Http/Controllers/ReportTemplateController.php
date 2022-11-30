@@ -80,10 +80,6 @@ class ReportTemplateController extends Controller
                 $table->string('page_orientation')->nullable()->default('potrait');
                 $table->timestamps();
            });
-       }else{
-        if (!Schema::hasColumn('variable_template_name')){
-            // do something
-          }
        }
 
       
@@ -94,13 +90,7 @@ class ReportTemplateController extends Controller
      
 
         $validation=$request->validate([
-            'column_color'=>'required',
-            'student_image'=>'required',
-            'student_attendance'=>'required',
-            'data_visualization'=>'required',
-            
-            'principal_signature'=>'required',
-            'school_stamp'=>'required',
+       
 
     ]);
 
