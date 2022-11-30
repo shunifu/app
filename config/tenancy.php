@@ -74,7 +74,9 @@ return [
         'ncekahigh.shunifu.app',
         'velebantfuhigh.shunifu.app',
         'mabondvwenihigh.shunifu.app',
-        'gilgalhigh.shunifu.app'
+        'gilgalhigh.shunifu.app',
+        'goodshepardhigh.shunifu.app',
+        'lubombocentralhigh.shunifu.app',
         
         
     ],
