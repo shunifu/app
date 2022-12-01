@@ -589,9 +589,10 @@
    {{-- Logged in Class teacher Performance link --}} 
                  @role('class_teacher')
                   
+                 {{-- analytics/class-based/ --}}
 
                      <li class="nav-item">
-                      <a href="/analytics/class-based/" class="nav-link">
+                      <a href="#" id="upgrade" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Class Insights</p>
                       </a>
@@ -603,7 +604,7 @@
 
                     @if (Auth::user()->hasRole(['admin_teacher', 'school_administrator', 'class_teacher', 'teacher']))
                     <li class="nav-item">
-                      <a href="/insights" class="nav-link">
+                      <a href="#" id="upgrade" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Academic Insights</p>
                       </a>
@@ -640,9 +641,13 @@
                       </p>
                     </a>
 
+
+                    {{-- /analytics/assessement-based --}}
+                    {{-- /analytics/assessement-based/class --}}
+
                     <ul class="nav nav-treeview">
                       <li class="nav-item">
-                        <a href="/analytics/assessement-based" class="nav-link">
+                        <a href="#"  id="upgrade" class="nav-link">
                           <i class="nav-icon fas fa-check-circle"></i>
                           <p>Stream Based</p>
                         </a>
@@ -650,7 +655,7 @@
                       </li>
 
                       <li class="nav-item">
-                        <a href="/analytics/assessement-based/class" class="nav-link">
+                        <a href="#" id="upgrade" class="nav-link">
                           <i class="nav-icon fas fa-check-circle"></i>
                           <p>Class Based</p>
                         </a>
@@ -671,16 +676,17 @@
   
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
-                          <a href="/analytics/term-based" class="nav-link">
+                          <a href="#" id="upgrade" class="nav-link">
                             <i class="nav-icon fas fa-check-circle"></i>
                             <p>Stream Based</p>
                           </a>
     
                         </li>
                         {{-- /analytics/term-based --}}
+                        {{-- /analytics/term/class-based --}}
   
                         <li class="nav-item">
-                          <a href="/analytics/term/class-based" class="nav-link">
+                          <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-check-circle"></i>
                             <p>Class Based</p>
                           </a>
@@ -1805,6 +1811,31 @@
             </footer>
         </div>
 
+
+        <!-- Button trigger modal -->
+     
+        
+        <!-- Modal -->
+        <div class="modal fade" id="upgrade_modal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Update</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+              System undergoing update...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
         @stack('modals')
            <!-- Scripts -->
       
@@ -1829,6 +1860,16 @@
            
            const div = d3.selectAll("div");
            
+           </script>
+
+           <script>
+            $("#upgrade").click(function (e) { 
+              e.preventDefault();
+
+              $('#upgrade_modal').modal('show');
+              
+            });
+
            </script>
           
         
