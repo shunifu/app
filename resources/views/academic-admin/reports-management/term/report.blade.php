@@ -526,6 +526,9 @@ grades.stream_id,
             @endif
         </td>   
       
+
+
+        
         <td  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
             @if ($item2->exam_mark<$pass_rate)
             @isset($item2->exam_mark)
