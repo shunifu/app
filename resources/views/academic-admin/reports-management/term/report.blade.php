@@ -404,9 +404,9 @@ WHERE sub.student_id=".$student.""));
                             <center>
 
                                 @if (is_null($student_term_data->profile_photo_path))
-                                <img class="user-image img-circle elevation-1" width="200" height="200" src="https://ui-avatars.com/api/?name={{$student_term_data->name}}+&amp;color=7F9CF5&amp;background=EBF4FF" alt={{$student_term_data->name}} />
+                                <img class="user-image img-fluid elevation-1 mx-auto d-block" width="200" height="200" src="https://ui-avatars.com/api/?name={{$student_term_data->name}}+&amp;color=7F9CF5&amp;background=EBF4FF" alt={{$student_term_data->name}} />
                                 @else
-                                <img class="user-image img-circle elevation-1" width="200" height="200" src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
+                                <img class="user-image img-fluid elevation-1 mx-auto d-block" width="200" height="200" src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
                                 @endif
                                
                                 
@@ -460,7 +460,6 @@ WHERE sub.student_id=".$student.""));
 }
 ?>      
 
-
 <?php
 
 $student_subject_average=\DB::select(\DB::raw("SELECT
@@ -476,16 +475,14 @@ grades.stream_id,
     users.salutation,
     users.lastname
     FROM
-    marks
-    INNER JOIN assessements ON assessements.id = marks.assessement_id
-    INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
+    student_subject_averages
+    INNER JOIN teaching_loads ON teaching_loads.id = student_subject_averages.teaching_load_id
     INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
-    INNER JOIN users ON users.id = marks.teacher_id
-    INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
+    INNER JOIN users ON users.id = teaching_loads.teacher_id
     INNER JOIN grades ON grades.id=student_subject_averages.student_class
-    WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id
+    WHERE student_subject_averages.student_id = ".$student." AND `student_subject_averages`.`term_id` = ".$term." 
     GROUP BY
-    marks.student_id,student_subject_averages.student_id,
+    student_subject_averages.student_id,
     subjects.id"));
 
 ?>
@@ -620,7 +617,242 @@ $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total fro
 
 
 
-@if ($report_template->report_colums=="plus")
+
+{{-- if selected template is exam only  --}}
+@if ($report_template->report_colums=="exam_only")
+
+
+<table class="table table-sm table-bordered ">
+    <thead >
+        <tr class="hope">
+            <th class="background">Subject Name</th> 
+            <th class="background">Exam Mark</th>   
+            <th class="background">Subject Average</th>   
+            <th class="background">Subject Position</th>   
+            <th class="background">Symbol</th>
+            <th class="background">Comment</th>
+            <th class="background">Teacher</th>
+
+        </tr>
+    </thead>
+
+ 
+
+   
+   
+    @foreach($student_subject_average as $item2)
+      <tr>
+        <td>{{ $item2->subject_name }}</td>
+      
+       
+      
+       
+        <td  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
+            @if ($item2->exam_mark<$pass_rate)
+            @isset($item2->exam_mark)
+            <span class="text-danger">{{($item2->exam_mark)}}%</span>
+            @endisset
+
+            @if(!isset($item2->exam_mark))
+           <span class="small text-black">mark not entered</span> 
+            @endif
+            
+            @else
+            {{round($item2->exam_mark)}}%
+            @endif
+        </td> 
+        
+
+    
+         <td> 
+            @if (($item2->student_average<$pass_rate))
+            <span class="text-danger">{{($item2->student_average)}}%</span>
+            @else
+            {{($item2->student_average)}}%
+            @endif
+        </td> 
+  
+
+             <td>
+
+            <?php
+           
+ $sub_position=\DB::select(\DB::raw("select t.*
+from (select student_subject_averages.student_id,student_subject_averages.student_average, rank() over (order by student_subject_averages.student_average  desc) as student_position
+from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." AND  student_subject_averages.student_class IN(SELECT teaching_loads.class_id  FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id  where teaching_loads.teacher_id=".$item2->teacher_id."  and grades.stream_id=".$item2->stream_id.") ) t
+where student_id =".$student.""));
+
+$total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads WHERE student_loads.teaching_load_id IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id." AND student_loads.active=1)"));
+
+ foreach ($sub_position as $key_position) {
+   
+        foreach($total as $subtotal){
+            echo $key_position->student_position.' / '.$subtotal->total;
+        }
+       
+    
+    
+      }
+?>
+        </td>
+         
+        <td>
+            @foreach ($comments as $comment_symbol)
+              
+            @if(in_array(round($item2->student_average), range($comment_symbol->from,$comment_symbol->to, 0.01)) ) 
+            
+              {{$comment_symbol->symbol }}
+               
+               @endif
+
+               @endforeach
+              
+            </td>
+
+            <td>
+                @foreach ($comments as $comment)
+                
+                
+                @if( in_array(round($item2->student_average), range($comment->from,$comment->to)) ) 
+                {{$comment->comment}}
+                
+                @endif
+                @endforeach
+                </td>
+
+                <td>
+                    {{$item2->salutation}} {{substr($item2->name, 0, 1)}}. {{$item2->lastname}}
+                </td>
+
+      </tr>
+    
+  @endforeach
+ 
+       
+
+    </tr>
+   
+</table> 
+
+@endif
+
+
+
+
+{{-- if selected template is ca only  --}}
+@if ($report_template->report_colums=="ca_only")
+
+
+<table class="table table-sm table-bordered ">
+    <thead >
+        <tr class="hope">
+            <th class="background">Subject Name</th> 
+            <th class="background">Continuous Assessment</th>   
+            <th class="background">Subject Average</th>   
+            <th class="background">Subject Position</th>   
+            <th class="background">Symbol</th>
+            <th class="background">Comment</th>
+            <th class="background">Teacher</th>
+
+        </tr>
+    </thead>
+
+ 
+
+   
+   
+    @foreach($student_subject_average as $item2)
+      <tr>
+        <td>{{ $item2->subject_name }}</td>
+      
+       
+      
+        <td> 
+            @if (is_null($item2->ca_average))
+            -
+            @elseif (($item2->ca_average<$pass_rate))
+            <span class="text-danger">{{round(($item2->ca_average))}}%</span>
+            @else
+            {{round(($item2->ca_average),2)}}%
+            @endif
+        </td>   
+        
+
+    
+         <td> 
+            @if (($item2->student_average<$pass_rate))
+            <span class="text-danger">{{($item2->student_average)}}%</span>
+            @else
+            {{($item2->student_average)}}%
+            @endif
+        </td> 
+  
+
+             <td>
+
+            <?php
+           
+ $sub_position=\DB::select(\DB::raw("select t.*
+from (select student_subject_averages.student_id,student_subject_averages.student_average, rank() over (order by student_subject_averages.student_average  desc) as student_position
+from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." AND  student_subject_averages.student_class IN(SELECT teaching_loads.class_id  FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id  where teaching_loads.teacher_id=".$item2->teacher_id."  and grades.stream_id=".$item2->stream_id.") ) t
+where student_id =".$student.""));
+
+$total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads WHERE student_loads.teaching_load_id IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id." AND student_loads.active=1)"));
+
+ foreach ($sub_position as $key_position) {
+   
+        foreach($total as $subtotal){
+            echo $key_position->student_position.' / '.$subtotal->total;
+        }
+       
+    
+    
+      }
+?>
+        </td>
+         
+        <td>
+            @foreach ($comments as $comment_symbol)
+              
+            @if(in_array(round($item2->student_average), range($comment_symbol->from,$comment_symbol->to, 0.01)) ) 
+            
+              {{$comment_symbol->symbol }}
+               
+               @endif
+
+               @endforeach
+              
+            </td>
+
+            <td>
+                @foreach ($comments as $comment)
+                
+                
+                @if( in_array(round($item2->student_average), range($comment->from,$comment->to)) ) 
+                {{$comment->comment}}
+                
+                @endif
+                @endforeach
+                </td>
+
+                <td>
+                    {{$item2->salutation}} {{substr($item2->name, 0, 1)}}. {{$item2->lastname}}
+                </td>
+
+      </tr>
+    
+  @endforeach
+ 
+       
+
+    </tr>
+   
+</table> 
+
+@endif
+
+
+@if ($report_template->report_colums=="term_assessements")
 @php
 $db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
 $result = $db->multi_query("SET @sql = NULL;
@@ -633,7 +865,7 @@ $result = $db->multi_query("SET @sql = NULL;
       replace(assessement_name, ' ', '')
         )
       ) INTO @sql
-from assessements INNER JOIN marks ON marks.assessement_id=assessements.id WHERE assessements.term_id=2;
+from assessements INNER JOIN marks ON marks.assessement_id=assessements.id WHERE assessements.term_id=".$term.";
 SET @sql = CONCAT('SELECT 
     subjects.subject_name as Subject, 
     ', @sql, ',
@@ -812,7 +1044,9 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
 
                        <div class="col">
                         <div id="signaturetitle">
-
+School Stamp
+                        </div>
+                        <div class="text-center">
                             @if ($variable->school_stamp==1)
                             <img class="img-fluid " width="140" height="140" src="{{$school_is->school_stamp}} " alt="">  
                             @else

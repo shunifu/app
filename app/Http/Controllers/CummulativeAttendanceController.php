@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attendence;
+use App\Models\CummulativeAttendance;
 use Illuminate\Http\Request;
 
-class AttendenceController extends Controller
+class CummulativeAttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AttendenceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Attendence  $attendence
+     * @param  \App\Models\CummulativeAttendance  $cummulativeAttendance
      * @return \Illuminate\Http\Response
      */
-    public function show(Attendence $attendence)
+    public function show(CummulativeAttendance $cummulativeAttendance)
     {
         //
     }
@@ -52,10 +52,10 @@ class AttendenceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Attendence  $attendence
+     * @param  \App\Models\CummulativeAttendance  $cummulativeAttendance
      * @return \Illuminate\Http\Response
      */
-    public function edit(Attendence $attendence)
+    public function edit(CummulativeAttendance $cummulativeAttendance)
     {
         //
     }
@@ -64,10 +64,10 @@ class AttendenceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Attendence  $attendence
+     * @param  \App\Models\CummulativeAttendance  $cummulativeAttendance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Attendence $attendence)
+    public function update(Request $request, CummulativeAttendance $cummulativeAttendance)
     {
         //
     }
@@ -75,11 +75,11 @@ class AttendenceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Attendence  $attendence
+     * @param  \App\Models\CummulativeAttendance  $cummulativeAttendance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Attendence $attendence)
+    public function destroy(CummulativeAttendance $cummulativeAttendance)
     {
-        StudentAttendanceController::
+        //
     }
 }

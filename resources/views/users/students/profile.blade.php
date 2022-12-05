@@ -82,11 +82,16 @@ table{
               <div class="card card-widget widget-user">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-info">
-                  <h3 class="widget-user-username">{{$result_user->lastname}} {{$result_user->name}} {{$result_user->middlename}}</h3>
-                  <h5 class="widget-user-desc"></h5>
+                <h3 class="widget-user-username">{{$result_user->lastname}} {{$result_user->name}} {{$result_user->middlename}}</h3>
+                <h5 class="widget-user-desc"></h5>
                 </div>
                 <div class="widget-user-image">
-                  <img class="img-circle elevation-2" src="https://ui-avatars.com/api/?name={{$result_user->name}}+&color=7F9CF5&background=EBF4FF" alt="{{$result_user->name}}">
+                @if (!is_null($result_user->profile_photo_path))
+                <img class="img-circle elevation-2" src="{{$result_user->profile_photo_path}}" alt="{{$result_user->name}}">   
+                @else
+                <img class="img-circle elevation-2" src="https://ui-avatars.com/api/?name={{$result_user->name}}+&color=7F9CF5&background=EBF4FF" alt="{{$result_user->name}}">   
+                 @endif
+               
                 </div>
                 <div class="card-footer bg-white">
                   <div class="row">

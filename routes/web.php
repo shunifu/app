@@ -660,7 +660,9 @@ Route::get('/class/attendance/search/{id}', [ParentController::class,'search'])-
 Route::get('/kids/data/performance/{id}', [ParentController::class,'performance'])->name('kids.performance');
 
 //Beginning of Class Teacher
-Route::get('/class/student-attendance', [StudentAttendanceController::class,'index']);
+Route::get('/class/student-attendance', [StudentAttendanceController::class,'index']); 
+Route::get('/class/student-attendance/cumulative', [StudentAttendanceController::class,'create']);
+Route::post('/class/student-attendance/cummulative-store', [StudentAttendanceController::class,'cummulative_store'])->name('attendance.cummulative_store');
 Route::post('/class/student-attendance/mark-attendance', [StudentAttendanceController::class,'store'])->name('attendance.store');
 Route::get('/class/student-attendance/manage', [StudentAttendanceController::class,'show']);
 Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit']);
@@ -678,6 +680,10 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
 
 Route::get('/report/templates', [ReportTemplateController::class,'index'])->name('report_template.index');
 Route::post('/report/templates/store', [ReportTemplateController::class,'store'])->name('report_template.store');
+Route::get('/report/templates/edit/{id}', [ReportTemplateController::class,'edit'])->name('report_template.edit');
+Route::post('/report/templates/update', [ReportTemplateController::class,'update'])->name('report_template.update');
+Route::get('/report/templates/delete/{id}', [ReportTemplateController::class,'destroy'])->name('report_template.delete');
+
 
 //End of report templates
 
@@ -685,7 +691,7 @@ Route::post('/report/templates/store', [ReportTemplateController::class,'store']
 
 Route::get('/report/variables', [ReportTemplateController::class,'variable'])->name('report_template.variable');
 Route::post('/report/variable/store', [ReportTemplateController::class,'variable_store'])->name('report_template.variable_store');
-
+Route::post('/report/variable/update', [ReportTemplateController::class,'variable_update'])->name('report_template.variable_update');
 //End of report templates
 
 //Report Variables

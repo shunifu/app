@@ -53,6 +53,8 @@ class SchoolController extends Controller
 
         ]);
 
+	
+
 		if($request->hasFile('school_logo')){
 			
 				
@@ -80,6 +82,21 @@ class SchoolController extends Controller
 				$background_file="";
 			}
 
+			if($request->hasFile('principal_signature')){
+				
+				$principal_signature_result = $request->file('principal_signature')->storeOnCloudinaryAs('shunifu', 'principal_signature'.$school_code);
+				$principal_signature=$principal_signature_result->getSecurePath();
+			}else{
+				$principal_signature="";
+			}
+
+			if($request->hasFile('school_stamp')){
+				
+				$school_stamp_result = $request->file('school_stamp')->storeOnCloudinaryAs('shunifu', 'school_stamp'.$school_code);
+				$school_stamp=$school_stamp_result->getSecurePath();
+			}else{
+				$school_stamp="";
+			}
 			
 		
 				$create=School::create([
@@ -136,18 +153,19 @@ class SchoolController extends Controller
 		$id=$request->id;
 	
 		$school_code=$request->school_code;
+
+		$school=School::find($id);
 		
 		dd($request->all());
 
 		if($request->hasFile('school_logo')){
-			
-			// $school_logo_file = 'logo_'.$school_code.'.'.$school_code->extension();  
+		
 			$logo_result = $request->file('school_logo')->storeOnCloudinaryAs('shunifu', 'logo_'.$school_code);
 			$school_logo_file=$logo_result->getSecurePath();
 
 			
 		}else{
-			$school_logo_file="";
+			$school_logo_file=$school->school_logo;
 		}
 
 		if($request->hasFile('school_letter_head')){
@@ -156,7 +174,7 @@ class SchoolController extends Controller
 			$letterhead_file=$letter_head_result->getSecurePath();
 			
 		}else{
-			$letterhead_file="";
+			$letterhead_file=$school->school_letter_head;
 		}
 
 
@@ -165,7 +183,7 @@ class SchoolController extends Controller
 			$background_image_result = $request->file('background_image')->storeOnCloudinaryAs('shunifu', 'background_image'.$school_code);
 			$background_file=$background_image_result->getSecurePath();
 		}else{
-			$background_file="";
+			$background_file=$school->school_background_image;
 		}
 			// "_token" => "PNWVIGP8P4tncnCqK5VrT6sDxme9uGR4CEm876me"
 		// "school_name" => "Demo School"

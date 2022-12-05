@@ -183,17 +183,11 @@ class ReportController extends Controller
     }
 
 
-    public function test(Request $request){
-
-        return view();
-
-    }
+   
 
     public function stream(Request $request){
 
-      
-
-
+    
       //validation
 
 //Work flow for generating reports
@@ -252,7 +246,17 @@ class ReportController extends Controller
      $template_id=$request->report_template;
      $term=$request->term;
 
+
+   
+     
+
      $report_template=ReportTemplate::where('id',$template_id)->first();
+
+     if(is_null($report_template)){
+        flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Please add create template. To do so, please go to settings , then Report Settings and lastly Report Templates');
+        return redirect()->back();
+
+     }
 
      $variables=ReportVariable::all();
       
@@ -524,7 +528,7 @@ class ReportController extends Controller
             'student_class'  =>$item->student_class,
             'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
                 ];
-            })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average', 'position']);
+            })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average', 'position','student_class']);
         }
     
     }
@@ -745,7 +749,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
             'student_class'  =>$term_avg_item['0']->grade_id,
             'student_key' =>$term_avg_item['0']->student_id.'-'.$term_avg_item['0']->term_id,
             ];
-              })->toArray(), ['student_key'], ['student_average','number_of_passed_subjects', 'passing_subject_status']);
+              })->toArray(), ['student_key'], ['student_average','number_of_passed_subjects', 'passing_subject_status','student_class']);
   
 
       

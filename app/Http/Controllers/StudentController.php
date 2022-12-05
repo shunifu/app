@@ -696,6 +696,7 @@ public function parent_update(Request $request){
 
         $assessement_report=AssessementProgressReport::where('student_id', $id);
         $term_averages=TermAverage::where('student_id', $id);
+        $student_subject_average=StudentSubjectAverage::where('student_id', $id);
         $student_load=StudentLoad::where('student_id', $id);
         $mark=Mark::where('student_id', $id);
         $grade=StudentClass::where('student_id', $id);
@@ -705,6 +706,13 @@ public function parent_update(Request $request){
       
       if($assessement_report->exists()){
         $assessement_report->delete();
+    }
+
+    if($term_averages->exists()){
+        $term_averages->delete();
+    }
+    if($student_subject_average->exists()){
+        $student_subject_average->delete();
     }
 
         if($student_load->exists()){
@@ -1422,7 +1430,7 @@ return Redirect::back();
 
 public function template_export(Excel $excel){
 
-    return $excel->download(new StudentsListTemplate, 'students_template.xlsx');
+    return $excel->download(new StudentListTemplate, 'students_template.xlsx');
 
 }
 

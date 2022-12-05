@@ -23,43 +23,32 @@
     </div> 
   <div class="row">
     
-  <div class="col-sm-4 col-md-4">
+  <div class="col">
   
     <div class="card card-light">
         <div class="card-header">
-          <h3 class="card-title">Choose Report Template</h3>
+          <h3 class="card-title">Update Report Template</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form action="{{route('report_template.store')}}" method="post">
+        <form action="{{route('report_template.update')}}" method="post">
           <div class="card-body">
             
             @csrf
           <div class="form-group">
               <x-jet-label>Select Template</x-jet-label>
-              <input type="text" class="form-control" name="template_name" placeholder="Enter Template Name"/>
+              <input type="text" class="form-control" value="{{$template->template_name}}" name="template_name" placeholder="Enter Template Name"/>
               @error('template_name')
               <span class="text-danger">{{$message}}</span>  
               @enderror
           </div>
 
-          {{-- <div class="form-group">
-            <x-jet-label>Select Section</x-jet-label>
-     
-          <select class="form-control" name="class_type" id="class_type">
-            <option value="">Select Class Type</option>
-            <option value="internal_classes">Internal Classes</option>
-            <option value="external_classes">External Classes</option>
-          </select>
         
-            @error('class_type')
-            <span class="text-danger">{{$message}}</span>  
-            @enderror
-        </div> --}}
         <div class="form-group">
           <x-jet-label>Report Columns</x-jet-label>
         <select class="form-control" name="report_columns" id="report_columns">
-          <option value="">Columns To Show</option>
+          <option value="{{$template->report_colums}}">{{$template->report_colums}}</option>
+          <option value="">---------------------------------------------</option>
           <option value="ca_only">CA Only</option>
           <option value="exam_only">Exam Only</option>
           <option value="ca_exam"> CA & Exam</option>
@@ -72,12 +61,14 @@
           <span class="text-danger">{{$message}}</span>  
           @enderror
       </div>
+
+      <input type="hidden" name="template_id" value="{{$template->id}}" >
          
           </div>
           <!-- /.card-body -->
   
           <div class="card-footer">
-            <x-jet-button>Add Template </x-jet-button>
+            <x-jet-button>Update Template </x-jet-button>
           </div>
        
       </div>
@@ -85,56 +76,7 @@
   
   </div>
   
-  <div class="col-md-8">
-  
-    <div class="card card-light">
-      <div class="card-header">
-        <h3 class="card-title"> Report Templates</h3>
-      </div>
-      <!-- /.card-header -->
-      <!-- form start -->
-      
-        <div class="card-body">
-        <div class="responsive">
 
-          <table class="table table-bordered table table-hover table-responsive-md ">
-            <thead class="thead-light">
-              <tr>
-                <th>Template Name</th>
-                <th>Columns</th>
-                <th>Action</th>
-                
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($template as $item)
-              <tr>
-              
-  <td>{{$item->template_name}}</td>
-  <td>{{$item->report_colums}}</td>
-  <td class="py-0 align-middle">
-  <div class="btn-group btn-group-md">
-  <a href="/report/templates/edit/{{encrypt($item->id)}}" class="btn btn-info"><i class="fas fa-edit mr-1"></i>Edit</a>
-  <a href="/report/templates/delete/{{encrypt($item->id)}}" class="btn btn-danger delete_template"><i class="fas fa-trash mr-1"></i>Delete</a></td>
-  </div>
-
-  </tr>
-  @endforeach
-  </tbody>
-  </table>
-
-         
-           
-           
-     
-          
-       
-        </div>
-         
-        </div>
-  
-     
-    </div>
   
   </div>
       

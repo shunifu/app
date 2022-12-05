@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StudentAttendance extends Model
+class CummulativeAttendance extends Model
 {
     use HasFactory;
 
+    protected $table='cummulative_attendance';
+
     protected $fillable = [
-        'student_id',
-        'class',
-        'number_of_absent_days',
         'term_id',
-     
-        
+        'class',
+        'student_id',
+        'number_of_absent_days',
     ];
 }

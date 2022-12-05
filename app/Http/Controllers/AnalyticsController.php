@@ -339,7 +339,6 @@ $isAdminTeacher= Auth::user()->hasRole('admin_teacher');
                 $getstream=Grade::find($student_class);
                 $student_stream=$getstream->stream_id;
             
-            
             }else{
                 $student_stream=$request->stream_name;
             

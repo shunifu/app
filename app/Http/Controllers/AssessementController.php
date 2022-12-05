@@ -46,7 +46,7 @@ class AssessementController extends Controller
                 'assessement_type'=>'required',
                 'assessement_term'=>'required',
                 'assessement_name'=>'required',
-                // 'assessement_month'=>'r',
+                'assessement_month'=>'required',
                 // 'marks_deadline'=>'required'
             ]);
 

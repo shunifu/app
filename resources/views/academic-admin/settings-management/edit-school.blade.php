@@ -102,6 +102,24 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <x-jet-label>Principal Signature</x-jet-label><br>
+                            <img src={{$item->base64 }} width="36" class=" brand-image img-thumbnail" style="opacity: .8" />
+                            <input name="principal_signature" type="file" />
+                            @error('principal_signature')
+                            <span class="text-danger">{{$message}}</span>  
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <x-jet-label>School Stamp</x-jet-label><br>
+                            <img src={{$item->school_stamp }} width="36" class=" brand-image img-thumbnail" style="opacity: .8" />
+                            <input name="school_stamp" type="file" />
+                            @error('school_stamp')
+                            <span class="text-danger">{{$message}}</span>  
+                            @enderror
+                        </div>
+
                 </div>
                 <input type="hidden" name="id" value="{{$item->id}}"/>
                 
