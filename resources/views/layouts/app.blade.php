@@ -1862,16 +1862,9 @@
  <div class="no-print">
 
 
-{{-- <script type="text/javascript">
-var _smartsupp = _smartsupp || {};
-_smartsupp.key = 'f2cfb373332b59a1133940a68681ffc029d3fba1';
-window.smartsupp||(function(d) {
-  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-  c.type='text/javascript';c.charset='utf-8';c.async=true;
-  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-})(document);
-</script> --}}
+<!-- Start of innovazaniahelp Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=a6e3def3-7f61-499f-8bac-dadabdeddd69"> </script>
+<!-- End of innovazaniahelp Zendesk Widget script -->
 
 </div>
     </body>
