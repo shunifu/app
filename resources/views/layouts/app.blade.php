@@ -1862,9 +1862,17 @@
  <div class="no-print">
 
 
-<!-- Start of innovazaniahelp Zendesk Widget script -->
+{{-- <!-- Start of innovazaniahelp Zendesk Widget script -->
 <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=a6e3def3-7f61-499f-8bac-dadabdeddd69"> </script>
-<!-- End of innovazaniahelp Zendesk Widget script -->
+<!-- End of innovazaniahelp Zendesk Widget script --> --}}
+
+<script>
+	window.fwSettings={
+	'widget_id':151000001568
+	};
+	!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
+</script>
+<script type='text/javascript' src='https://widget.freshworks.com/widgets/151000001568.js' async defer></script>
 
 </div>
     </body>
