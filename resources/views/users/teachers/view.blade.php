@@ -90,7 +90,7 @@
                               <a href="/teacher/login/{{Crypt::encryptString($item->id)}}" class="btn btn-success"><i class="fas fa-sign-in-alt pr-1"></i>Login</a>
                               <a href="/teacher/reset/{{Crypt::encryptString($item->id)}}" class="btn btn-warning"><i class="fas fa-sync-alt pr-1"></i>OTP</a>
                               <a href="/teacher/archive/{{Crypt::encryptString($item->id)}}" class="btn btn-danger"><i class="fas fa-trash pr-1"></i>Remove</a>
-                              
+                              <a href="/teacher/reactivate/{{Crypt::encryptString($item->id)}}" class="btn btn-warning"><i class="fas fa-trash pr-1"></i>Reactivate</a>
                              
                             </div>
                           </td>

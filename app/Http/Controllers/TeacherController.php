@@ -617,6 +617,40 @@ $otp =  mt_rand(1000,9999);
     }
 
 
+    public function reactivate($id){
+
+        //remove from being class teacher
+         //remove from being HOD teacher
+         //deattach
+
+        //make active =0
+        
+
+
+        try {
+            $decrypted = Crypt::decryptString($id);
+            $user=User::find($decrypted);
+
+            $teacher_name=$user->name;
+            $deactivate=$user->active=1;
+            $user->save();
+
+
+            //if classteacher, remove from classs teachers list
+            //if has marks ???
+
+            flash()->overlay($teacher_name."'s has been reactivated from the system. The teacher will now be able to login again into the system. ", 'Reactivate Teacher');
+
+    
+            return Redirect::back();
+            
+        } catch (DecryptException $e) {
+            return view('errors.unauthorized');
+        }
+
+
+    }
+
     public function archive($id){
 
         //remove from being class teacher

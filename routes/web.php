@@ -323,6 +323,7 @@ Route::post('/users/teacher/add', [TeacherController::class,'store'])->name('tea
 Route::post('/users/teacher/add/bulk', [TeacherController::class,'bulk'])->name('teacher.bulk');
 Route::post('/users/teacher/edit', [TeacherController::class,'edit'])->name('teacher.edit');
 Route::get('/teacher/archive/{id}', [TeacherController::class,'archive'])->name('teacher.destroy');
+Route::get('/teacher/reactivate/{id}', [TeacherController::class,'reactivate'])->name('teacher.reactivate');
 Route::get('/users/classteacher/edit/{id}', [TeacherController::class,'classteacher_edit'])->name('classteacher.edit');
 Route::delete('/users/class-teacher/delete/{id}', [TeacherController::class,'classteacher_delete'])->name('classteacher.delete');
 
