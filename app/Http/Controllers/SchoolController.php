@@ -156,7 +156,7 @@ class SchoolController extends Controller
 
 		$school=School::find($id);
 		
-		dd($request->all());
+	
 
 		if($request->hasFile('school_logo')){
 		
@@ -183,6 +183,7 @@ class SchoolController extends Controller
 			$background_image_result = $request->file('background_image')->storeOnCloudinaryAs('shunifu', 'background_image'.$school_code);
 			$background_file=$background_image_result->getSecurePath();
 		}else{
+			
 			$background_file=$school->school_background_image;
 		}
 			// "_token" => "PNWVIGP8P4tncnCqK5VrT6sDxme9uGR4CEm876me"

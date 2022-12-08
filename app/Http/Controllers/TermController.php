@@ -118,7 +118,7 @@ $final_term=1;
 }
 
 
-
+dd($request->all());
 
         $update=Term::find($request->term_id)->update([
             "term_name"=>$request->term_name,

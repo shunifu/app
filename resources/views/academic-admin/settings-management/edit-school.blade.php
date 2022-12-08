@@ -12,7 +12,7 @@
               <!-- /.card-header -->
               <!-- form start -->
            
-              <form action="{{route('school.edit')}}" method="post">
+              <form action="{{route('school.edit')}}" method="post" enctype="multipart/form-data">
                
                 <div class="card-body">
                       @csrf
