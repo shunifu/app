@@ -129,12 +129,14 @@ class ReportTemplateController extends Controller
        }
 
 
+       
        $variables=ReportVariable::all();
+       $variablescount=ReportVariable::count();
 
     //    dd($variables);
 
        
-       if (is_null($variables)) {
+       if (($variablescount==0)) {
        $status=0;
        } else {
         $status=1;

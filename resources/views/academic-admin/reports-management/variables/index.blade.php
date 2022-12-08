@@ -29,19 +29,19 @@
         <h3 class="card-title">
 
           @if ($status==1)
-              Add
+              Update
           @else
-             Edit 
+             Add 
           @endif
           
           Variables</h3>
       </div>
       
-      
+   
         
           <div class="card-body">
 
-            @if ($status==1)
+            @if ($status==0)
             <form action="{{route('report_template.variable_store')}}" method="post"> 
               @csrf
               <div class="form-group">
@@ -152,7 +152,7 @@
      
    
   </form>
-            @else
+            @elseif($status==1)
 
 @foreach ($variables as $variable)
     
