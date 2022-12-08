@@ -135,7 +135,7 @@ class ReportTemplateController extends Controller
     //    dd($variables);
 
        
-       if (IsNull($variables)) {
+       if (isEmpty($variables)) {
        $status=0;
        } else {
         $status=1;
