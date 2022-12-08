@@ -8,10 +8,9 @@ use App\Models\ReportVariable;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Schema;
 use phpseclib3\Crypt\RC2;
+use PHPUnit\Framework\Constraint\IsEmpty;
 use PHPUnit\Framework\Constraint\IsNull;
 
-use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\isNull;
 
 class ReportTemplateController extends Controller
 {
@@ -135,7 +134,7 @@ class ReportTemplateController extends Controller
     //    dd($variables);
 
        
-       if (isEmpty($variables)) {
+       if (is_null($variables)) {
        $status=0;
        } else {
         $status=1;
