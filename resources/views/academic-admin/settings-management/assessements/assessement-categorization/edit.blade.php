@@ -64,7 +64,7 @@
                         <option value="{{$categorizations->catergorization_id}}">{{$categorizations->assign_as}}</option>
                        <option value="">---------------</option>
                        <option value="CA">Continous Assessement </option>
-                       <option value="EXAM">Examination</option>
+                       <option value="Examination">Examination</option>
                      </select>
                    
                     @error('assign_as')
