@@ -867,7 +867,8 @@ $result = $db->multi_query("SET @sql = NULL;
       replace(assessement_name, ' ', '')
         )
       ) INTO @sql
-from assessements INNER JOIN marks ON marks.assessement_id=assessements.id WHERE assessements.term_id=".$term.";
+from c_a__exams  INNER JOIN assessements ON assessements.id=c_a__exams.assessement_id 
+ INNER JOIN marks ON marks.assessement_id=assessements.id WHERE c_a__exams.term_id=".$term.";
 SET @sql = CONCAT('SELECT 
     subjects.subject_name as Subject, 
     ', @sql, ',

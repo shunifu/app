@@ -115,7 +115,11 @@ class ReportController extends Controller
         ->select('assessements.id as assessement_id','terms.term_name', 'assessement_name', 'assessement_type_name')
         ->get();
         
-        return view('academic-admin.reports-management.term.index_class', compact('terms','streams','classes','sections', 'assessements'));
+        $templates=ReportTemplate::all();
+
+        $variables=ReportVariable::all();
+
+        return view('academic-admin.reports-management.term.index_class', compact('terms','streams','classes','sections', 'assessements', 'templates'));
 
     }
 
