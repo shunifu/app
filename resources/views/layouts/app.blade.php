@@ -671,16 +671,17 @@
   
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
-                          <a href="/analytics/term-based" class="nav-link">
+                          <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-check-circle"></i>
                             <p>Stream Based</p>
                           </a>
     
                         </li>
                         {{-- /analytics/term-based --}}
+                        {{-- /analytics/class-based --}}
   
                         <li class="nav-item">
-                          <a href="/analytics/class-based" class="nav-link">
+                          <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-check-circle"></i>
                             <p>Class Based</p>
                           </a>
@@ -809,7 +810,7 @@
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="# class="nav-link">
+                        <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Class Report</p>
                         </a>
@@ -956,7 +957,8 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/report/term-based/class/teacher" class="nav-link">
+                {{-- /report/term-based/class/teacher --}}
+                <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>Class Report</p>
                 </a>
