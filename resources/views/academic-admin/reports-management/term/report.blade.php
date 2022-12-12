@@ -427,7 +427,7 @@ WHERE sub.student_id=".$student.""));
                             <br>
                             Term Closing Date <span class="text-bold">22 December 2022</span>
                             <br>
-                            Next Term Date: <span class="text-bold">17 January 2022</span>
+                            Next Term Date: <span class="text-bold">17 January 2023</span>
 
                             
                             <br>
