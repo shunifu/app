@@ -147,6 +147,7 @@ th span {
         @endif
         <th><span>Add Maths</span></th>
         <th><span>D&T</span></th>
+        <th><span>Comp</span></th>
        
         
     
@@ -513,6 +514,16 @@ echo $key->student_position ;
                         -
                         @elseif($student->DesignTechnology<$pass_rate )
                         <span class="text-danger">{{ $student->DesignTechnology}}% </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->Computer>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Computer}}% </span>
+                        @elseif(is_null($student->Computer))
+                        -
+                        @elseif($student->Computer<$pass_rate )
+                        <span class="text-danger">{{ $student->Computer}}% </span>
                         @endif
                     </td>
 
