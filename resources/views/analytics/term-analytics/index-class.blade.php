@@ -43,10 +43,10 @@
                         <div class="form-row">
                         <div class="col form-group">
                           <x-jet-label>Stream Name</x-jet-label>
-                         <select class="form-control" name="stream_name">
-                          <option value="">Select Stream</option>
-                          @foreach ($streams as $stream)
-                          <option value="{{$stream->id}}">{{$stream->stream_name}}</option>
+                         <select class="form-control" name="grade_id">
+                          <option value="">Select Class</option>
+                          @foreach ($grades as $class)
+                          <option value="{{$class->id}}">{{$class->grade_name}}</option>
       
                           @endforeach
                          </select>
@@ -81,7 +81,7 @@
                                 <option value="scoresheet">Scoresheet</option>
                                 <option value="summary_scoresheet">Summerized Scoresheet</option>
                                 <option value="manual_promotion">Manual Promotion</option>
-                              
+                               
             
                              
                                </select>
@@ -89,6 +89,9 @@
                                 <span class="text-danger">{{$message}}</span>  
                                 @enderror
                                 </div>
+
+
+                                <input type="hidden" name="key" value="class_based ">
 
 
                             </div>

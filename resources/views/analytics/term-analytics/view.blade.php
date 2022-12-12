@@ -160,7 +160,7 @@ th span {
                     @if ($indicator=="manual_promotion")
 
             <td><input type="checkbox" class="students" name="students[]" value="{{$student->student_id}}" ></td>
-            <td>  </td>
+            <td> {{$student->final_term_status}}  </td>
 
 
             @endif
@@ -620,6 +620,17 @@ $('#customers').append('<caption style="margin-bottom:30px;color:red; fontSize:2
     //                 alignment: 'center',
     //                 image: @json($base64)
     //             });
+
+    var objLayout = {};
+						objLayout['hLineWidth'] = function(i) { return 2; };
+						objLayout['vLineWidth'] = function(i) { return 2; };
+						objLayout['hLineColor'] = function(i) { return '#00000'; };
+						objLayout['vLineColor'] = function(i) { return '#00000'; };
+						objLayout['paddingLeft'] = function(i) { return 4; };
+						objLayout['paddingRight'] = function(i) { return 4; };
+						doc.content[0].layout = objLayout;
+                        console.log(objLayout['hLineColor']);
+
             },  
 
             

@@ -671,7 +671,7 @@
   
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
-                          <a href="#" class="nav-link">
+                          <a href="/analytics/term-based" class="nav-link">
                             <i class="nav-icon fas fa-check-circle"></i>
                             <p>Stream Based</p>
                           </a>
@@ -804,19 +804,19 @@
                       {{-- <a href="/report/term-based/" class="nav-link"> --}}
                         {{-- /report/term-based/class --}}
                       <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="report/term-based/" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Stream Report</p>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="/report/term-based/class" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Class Report</p>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="/report/term-based/individual" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Individual Report</p>
                         </a>
@@ -1012,12 +1012,12 @@
                 </a>
               </li>
 
-              {{-- <li class="nav-item">
+              <li class="nav-item">
               <a href="/checker/ratio/index" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>Ratio Checker</p>
                 </a>
-              </li> --}}
+              </li>
 
               <li class="nav-item">
                 <a href="/marks/check" class="nav-link">
@@ -1824,9 +1824,9 @@
            <script src="https://cdn.statically.io/gh/innovazania/assets/9ec219d9/notify.js"></script>
 
         
-           
-          {{-- <script  src="/js/app.js" ></script> --}}
-          {{-- <script  src="/js/dist/jquery.js" ></script> --}}
+{{--            
+          <script  src="/js/app.js" ></script> 
+          <script  src="/js/dist/jquery.js" ></script> --}}
         
           {{-- <script src="{{asset('js/app.js')}}"></script> --}}
           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 

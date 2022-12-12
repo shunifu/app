@@ -118,12 +118,13 @@ $final_term=1;
 }
 
 
-dd($request->all());
 
-        $update=Term::find($request->term_id)->update([
+// UPDATE `terms` SET `start_date` = '2022-12-13 13:41:26' WHERE `terms`.`id` = 2;
+
+        $update=Term::where('id',$request->term_id)->update([
             "term_name"=>$request->term_name,
-            "start_date"=>$request->start_date,
-            "end_date"=>$request->end_date,
+            "start_date"=>$request->opening_date,
+            "end_date"=>$request->closing_date,
             "final_term"=>$final_term,
 
 

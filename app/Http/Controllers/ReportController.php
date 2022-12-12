@@ -491,7 +491,7 @@ class ReportController extends Controller
     $subject_average[]=DB::select(DB::raw("SELECT marks.student_id,
     GROUP_CONCAT(subjects.subject_name) AS subject_name,
     subjects.id as subject_id,
-    assessements.term_id as term_id,
+    c_a__exams.term_id as term_id,
     teaching_loads.class_id as student_class,
     teaching_loads.id as teaching_load_id,
     (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN marks.mark END))AS ca,
@@ -501,10 +501,9 @@ class ReportController extends Controller
     FROM
     marks
     INNER JOIN c_a__exams ON c_a__exams.assessement_id = marks.assessement_id
-    INNER JOIN assessements ON assessements.id = marks.assessement_id
     INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
     INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
-    WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1
+    WHERE marks.student_id = ".$student." AND `c_a__exams`.`term_id` = ".$term." AND marks.active=1
     GROUP BY
     marks.student_id,
     subjects.id"));

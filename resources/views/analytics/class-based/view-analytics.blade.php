@@ -310,7 +310,7 @@
 
       </div>
 
-      {{-- <div class="card text-left">
+      <div class="card text-left">
         <div class="card-body">
         <h2 class="card-title pb-3 text-bold">Class Break Down of Triple Factor Failures</span> </h2>
        
@@ -339,8 +339,8 @@
 </table>
         </div>
 
-      </div> --}}
-{{-- <div class="row">
+      </div> 
+ <div class="row">
   <div class="card col-md-6">
        
     <div class="card-body">
@@ -359,7 +359,7 @@
       </p>
     </div>
   </div>
-</div> --}}
+</div>
    
 
 
@@ -460,7 +460,7 @@
                 <td class="align-middle p-2"> {{ $student->name }}
                     {{ $student->lastname }}</td>
 
-                    {{-- <td class="align-middle">
+                    <td class="align-middle">
                       @if ($student->number_of_passed_subjects>$number_of_subjects)
                       <i class="fas fa-caret-up text-success mr-1"></i>{{$student->number_of_passed_subjects}}    
                       @elseif($student->number_of_passed_subjects=$number_of_subjects)
@@ -468,8 +468,8 @@
                      @else
                       <i class="fas fa-caret-down text-danger mr-1"></i>{{$student->number_of_passed_subjects }}  
                       @endif
-                      {{-- {{ $student->number_of_passed_subjects }} --}}
-                  {{-- </td>  --}}
+                      {{ $student->number_of_passed_subjects }}
+                  </td> 
                   <td class="align-middle">
                       @if ($student->passing_subject_status==0)
                           <span class="text-danger"><i class="fas fa-times-circle mr-1"></i> failed </span>
@@ -539,7 +539,7 @@
     $('#list').DataTable();
 } )
     </script>
-    {{-- <script type="text/javascript">
+    <script type="text/javascript">
       //STEP 2 - Chart Data
 
       var data = {!! json_encode($class_breakdown, JSON_HEX_TAG) !!};
@@ -615,6 +615,6 @@
   demographicsChart.render();
 });
 
-  </script> --}}
+  </script>
 
 </x-app-layout>

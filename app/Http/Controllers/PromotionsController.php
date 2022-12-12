@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Term;
 use App\Models\School;
 use App\Models\TermAverage;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 class PromotionsController extends Controller
 {
     public function promote(Request $request){
 
-       
+     
+
         $student_list=$request->students;
-        $term=$request->term;
+        $term=$request->term_id;
         $number_of_subjects=$request->number_of_subjects;
         $pass_rate=$request->pass_rate;
         $stream=$request->stream;
@@ -50,23 +52,14 @@ class PromotionsController extends Controller
 
         for($i = 0; $i <count($student_list); $i++) {
 
-            $addTeachingLoads=TermAverage::where('student_id', $student_list[$i])->where('term_id', $term)
+            $promote=TermAverage::where('student_id', $student_list[$i])->where('term_id', $term)
             ->update(['final_term_status'=>'Promoted']);
         
          }
-
-         if($passing_subject_rule==1){
-            $getPassed=TermAverage::where('term_id', $term)->where('number_of_passed_subjects','>=', $number_of_subjects)->where('passing_subject_status', 1)->where('student_average','>=',$pass_rate)->where('student_stream',$stream)->update([
-                'final_term_status'=>'Proceed'
-            ]);
-         }else{
-            $getPassed=TermAverage::where('term_id', $term)->where('number_of_passed_subjects','>=', $number_of_subjects)->where('student_average','>=',$pass_rate)->where('student_stream',$stream)->update([
-                'final_term_status'=>'Proceed'
-            ]);
-         }
-       
+         
+     
         
-        $repeat=TermAverage::where('term_id', $term)->where('student_stream',$stream)->WhereNull('final_term_status' )->update([
+        $repeat=TermAverage::where('term_id', $term)->WhereNull('final_term_status' )->update([
             'final_term_status'=>'Repeat'
         ]);
     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have promoted Students', 'Promote Students');
@@ -83,17 +76,9 @@ class PromotionsController extends Controller
         
          }
 
-         if($passing_subject_rule==1){
-            $getPassed=TermAverage::where('term_id', $term)->where('number_of_passed_subjects','>=', $number_of_subjects)->where('passing_subject_status', 1)->where('student_average','>=',$pass_rate)->where('student_stream',$stream)->update([
-                'final_term_status'=>'Proceed'
-            ]);
-         }else{
-            $getPassed=TermAverage::where('term_id', $term)->where('number_of_passed_subjects','>=', $number_of_subjects)->where('student_average','>=',$pass_rate)->where('student_stream',$stream)->update([
-                'final_term_status'=>'Proceed'
-            ]);
-         }
+     
         
-        $repeat=TermAverage::where('term_id', $term)->where('student_stream',$stream)->WhereNull('final_term_status' )->update([
+        $repeat=TermAverage::where('term_id', $term)->WhereNull('final_term_status' )->update([
             'final_term_status'=>'Repeat'
         ]);
         
@@ -105,20 +90,12 @@ class PromotionsController extends Controller
 
         for($i = 0; $i <count($student_list); $i++) {
 
-            $findAnother=TermAverage::where('student_id', $student_list[$i])->where('term_id', $term)
+            $forceRepeat=TermAverage::where('student_id', $student_list[$i])->where('term_id', $term)
             ->update(['final_term_status'=>'Repeat']);
         
          }
 
-         if($passing_subject_rule==1){
-            $getPassed=TermAverage::where('term_id', $term)->where('number_of_passed_subjects','>=', $number_of_subjects)->where('passing_subject_status', 1)->where('student_average','>=',$pass_rate)->where('student_stream',$stream)->update([
-                'final_term_status'=>'Proceed'
-            ]);
-         }else{
-            $getPassed=TermAverage::where('term_id', $term)->where('number_of_passed_subjects','>=', $number_of_subjects)->where('student_average','>=',$pass_rate)->where('student_stream',$stream)->update([
-                'final_term_status'=>'Proceed'
-            ]);
-         }
+   
         
         $repeat=TermAverage::where('term_id', $term)->where('student_stream',$stream)->WhereNull('final_term_status' )->update([
             'final_term_status'=>'Repeat'

@@ -76,7 +76,7 @@ class RatioCheckerController extends Controller
       
     FROM
         student_loads
-    INNER JOIN users ON users.id = student_loads.student_id
+    INNER JOIN users ON users.id =  student_loads.student_id
     INNER JOIN grades_students ON grades_students.student_id = users.id
     INNER JOIN grades ON grades.id=grades_students.grade_id
     WHERE

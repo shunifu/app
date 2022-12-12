@@ -746,6 +746,9 @@ Route::get('/analytics/settings', [AnalyticsController::class,'settings'])->name
 Route::get('/analytics/assessement-based', [AnalyticsController::class,'index'])->name('analytics.index');
 Route::get('/analytics/assessement-based/class', [AnalyticsController::class,'class'])->name('analytics.class');
 Route::get('/analytics/term-based', [AnalyticsController::class,'term_based'])->name('term_analytics.term');
+
+Route::get('/analytics/term-based/class', [AnalyticsController::class,'term_based_class']);
+
 Route::post('/analytics/term-based/show', [AnalyticsController::class,'term_based_show'])->name('term_analytics.show');
 
 Route::post('/analytics/stream', [AnalyticsController::class,'stream'])->name('analytics.stream');
