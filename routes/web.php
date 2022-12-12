@@ -170,8 +170,8 @@ Route::get('/academic-admin/session/delete/{id}', [AcademicSessionController::cl
 Route::get('view/terms/{id}', [TermController::class,'index'])->name('term.index');
 Route::post('terms/add/', [TermController::class,'store'])->name('term.store');
 Route::post('terms/edit/', [TermController::class,'edit'])->name('term.edit');
-Route::post('terms/update', [TermController::class,'update'])->name('term.update');
-Route::post('/terms/delete/', [TermController::class,'destroy'])->name('term.destroy');
+Route::patch('terms/update', [TermController::class,'update'])->name('term.update');
+Route::delete('/terms/delete/', [TermController::class,'destroy'])->name('term.destroy');
 
 //Terms
 // Route::get('/academic-admin/terms', [ShunifuTermController::class,'create'])->name('term.create');

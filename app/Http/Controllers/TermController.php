@@ -104,6 +104,8 @@ return Redirect::back();
 
     public function update(Request $request){
 
+       
+
 if(isset($request->final_term)){
 //remove where is 1
 $remove=Term::where('final_term', 1)->update([

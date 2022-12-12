@@ -35,6 +35,8 @@
         <!-- /.card-header -->
         <!-- form start -->
         <form action="{{ route('term.update') }}" method="POST" >
+
+          @method('PATCH');
             @csrf
             {{-- @method('patch') --}}
         <!-- /beginning of card-body -->

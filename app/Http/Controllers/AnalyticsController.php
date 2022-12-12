@@ -1072,6 +1072,10 @@ $admin=Auth::user()->hasRole('admin_teacher');
 
 
     public function term_based_show(Request $request){
+
+        DB::table('student_subject_averages')->truncate();
+        DB::table('term_averages')->truncate();
+
        $stream=$request->stream_name;
        $term=$request->term;
 
