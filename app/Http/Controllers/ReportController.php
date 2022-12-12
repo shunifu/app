@@ -191,7 +191,8 @@ class ReportController extends Controller
 
     public function stream(Request $request){
 
-    
+        DB::table('student_subject_averages')->delete();
+        DB::table('term_averages')->delete();
       //validation
 
 //Work flow for generating reports
