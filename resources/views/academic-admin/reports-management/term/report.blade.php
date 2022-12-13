@@ -34,14 +34,19 @@
             color: rgb(255, 255, 255);
             text-align: center;
             } 
-            @media print {
-            tr {
-            
-            }}
+           
+
+
 
             @media print{
                 @page { margin: 0px; }
-body { margin: 0px; }
+body { margin: 0px; 
+   
+        transform: scale(85);
+    
+
+
+}
             }
 
             @media print {
