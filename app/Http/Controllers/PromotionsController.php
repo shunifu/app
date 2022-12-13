@@ -13,7 +13,7 @@ class PromotionsController extends Controller
 {
     public function promote(Request $request){
 
-     
+    dd($request->all());
 
         $student_list=$request->students;
         $term=$request->term_id;
