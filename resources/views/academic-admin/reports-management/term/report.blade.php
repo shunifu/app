@@ -156,7 +156,7 @@ body { margin: 0px; }
               
                 <div class="row mx-auto" >
                     
-                    <img src="{{$item->school_letter_head }}" width="auto"  style="display: block;margin: auto;"/>
+                    <img src="{{$item->school_letter_head }}" width="920"  style="display: block;margin: auto;"/>
                 </div>
               
                     
