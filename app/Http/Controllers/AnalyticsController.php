@@ -1074,8 +1074,8 @@ $admin=Auth::user()->hasRole('admin_teacher');
 
     public function term_based_show(Request $request){
 
-        DB::table('student_subject_averages')->delete();
-        DB::table('term_averages')->delete();
+        // DB::table('student_subject_averages')->delete();
+        // DB::table('term_averages')->delete();
 
        $stream=$request->stream_name;
        $term=$request->term;
