@@ -382,7 +382,7 @@ where student_id = ".$student->learner_id.""));
                         <span class="text-danger">{{ $student->ICT}}% </span>
                         @endif
                     </td>
-                    <td class="align-middle p-2">
+                    {{-- <td class="align-middle p-2">
                         @if ($student->Consumer>=$pass_rate)
                         <span class="text-secondary">{{ $student->Consumer}}% </span>
                         @elseif(is_null($student->Consumer))
@@ -390,7 +390,7 @@ where student_id = ".$student->learner_id.""));
                         @elseif($student->Consumer<$pass_rate )
                         <span class="text-danger">{{ $student->Consumer}}% </span>
                         @endif
-                    </td>
+                    </td> --}}
                     
                   
                     <td class="align-middle p-2">

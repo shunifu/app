@@ -1620,7 +1620,7 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
 
     if($criteria->passing_subject_rule=="0"){
         $scoresheet=DB::select(DB::raw("SELECT 
-        student_subject_averages.student_id,
+         student_subject_averages.student_id,
         grades.grade_name,
         users.id as learner_id,
         users.name,
@@ -1632,54 +1632,58 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
         term_averages.final_term_status,
         CASE WHEN term_averages.number_of_passed_subjects>=".$number_of_subjects."  AND term_averages.student_average>=".$pass_rate." THEN 'Passed' ELSE 'Failed' END AS 'remark',
         MAX(CASE WHEN subjects.id=2 THEN student_subject_averages.student_average END) AS 'EnglishLanguage',
-           MAX(CASE WHEN subjects.id=3 THEN student_subject_averages.student_average END) AS 'EnglishInLiterature',
-           MAX(CASE WHEN subjects.id=5 THEN student_subject_averages.student_average END) AS 'Geography',
-           MAX(CASE WHEN subjects.id=6 THEN student_subject_averages.student_average END) AS 'Mathametics',
-           MAX(CASE WHEN subjects.id=10 THEN student_subject_averages.student_average END) AS 'Siswati',
-           MAX(CASE WHEN subjects.id=12 THEN student_subject_averages.student_average END) AS 'PhysicalScience',
-           MAX(CASE WHEN subjects.id=13 THEN student_subject_averages.student_average END) AS 'Biology',
-           MAX(CASE WHEN subjects.id=14 THEN student_subject_averages.student_average END) AS 'Science',
-           MAX(CASE WHEN subjects.id=15 THEN student_subject_averages.student_average END) AS 'French',
-           MAX(CASE WHEN subjects.id=16 THEN student_subject_averages.student_average END) AS 'HomeEconomics',
-           MAX(CASE WHEN subjects.id=17 THEN student_subject_averages.student_average END) AS 'BookKeeping',
-           MAX(CASE WHEN subjects.id=18 THEN student_subject_averages.student_average END) AS 'BusinessStudies',
-           MAX(CASE WHEN subjects.id=19 THEN student_subject_averages.student_average END) AS 'FoodNutrition',
-           MAX(CASE WHEN subjects.id=20 THEN student_subject_averages.student_average END) AS 'FashionFabrics',
-           MAX(CASE WHEN subjects.id=21 THEN student_subject_averages.student_average END) AS 'Accounting',
-           MAX(CASE WHEN subjects.id=22 THEN student_subject_averages.student_average END) AS 'Economics',
-           MAX(CASE WHEN subjects.id=23 THEN student_subject_averages.student_average END) AS 'Agriculture',
-           MAX(CASE WHEN subjects.id=24 THEN student_subject_averages.student_average END) AS 'AdditionalMathametics',
-           MAX(CASE WHEN subjects.id=25 THEN student_subject_averages.student_average END) AS 'ICT',
-           MAX(CASE WHEN subjects.id=26 THEN student_subject_averages.student_average END) AS 'RE',
-           MAX(CASE WHEN subjects.id=27 THEN student_subject_averages.student_average END) AS 'History',
-           MAX(CASE WHEN subjects.subject_code=101 THEN student_subject_averages END) AS 'DesignTechnology',
-           MAX(CASE WHEN subjects.subject_code=102 THEN student_subject_averages END) AS 'Computer',
-           MAX(CASE WHEN subjects.subject_code=103 THEN student_subject_averages END) AS 'DS',
-           MAX(CASE WHEN subjects.subject_code=104 THEN student_subject_averages END) AS 'SocialStudies',
-           MAX(CASE WHEN subjects.subject_code=105 THEN student_subject_averages END) AS 'PracticalArts',
-           MAX(CASE WHEN subjects.subject_code=106 THEN student_subject_averages.student_average END) AS 'GeneralStudies', 
-           MAX(CASE WHEN subjects.subject_code=108 THEN student_subject_averages.student_average END) AS 'ExpressiveArts',
-           MAX(CASE WHEN subjects.subject_code=110 THEN student_subject_averages.student_average END) AS 'HPE',
-           MAX(CASE WHEN subjects.subject_code=111 THEN student_subject_averages.student_average END) AS 'FineArts',
-           MAX(CASE WHEN subjects.subject_code=112 THEN student_subject_averages.student_average END) AS 'SoapCraft',
-           MAX(CASE WHEN subjects.subject_code=113 THEN student_subject_averages.student_average END) AS 'ShoeCraft',
-           MAX(CASE WHEN subjects.subject_code=114 THEN student_subject_averages.student_average END) AS 'HandCraft',
-           MAX(CASE WHEN subjects.subject_code=115 THEN student_subject_averages.student_average END) AS 'PrevocICT',
-           MAX(CASE WHEN subjects.subject_code=116 THEN student_subject_averages.student_average END) AS 'AgiculturalTechnology',
-           MAX(CASE WHEN subjects.subject_code=117 THEN student_subject_averages.student_average END) AS 'BusinessAccounting',
-           MAX(CASE WHEN subjects.subject_code=118 THEN student_subject_averages.student_average END) AS 'FoodTextileTechnology',
-           MAX(CASE WHEN subjects.subject_code=119 THEN student_subject_averages.student_average END) AS 'TechnicalStudies', 
-           MAX(CASE WHEN subjects.subject_code=121 THEN student_subject_averages.student_average END) AS 'Entreprenuership'
-           FROM student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
-           INNER JOIN subjects ON teaching_loads.subject_id=subjects.id
-           INNER JOIN users ON users.id=student_subject_averages.student_id
-           INNER JOIN grades_students ON grades_students.student_id=student_subject_averages.student_id
-           INNER JOIN grades ON grades_students.grade_id=grades.id
-           INNER JOIN term_averages ON term_averages.student_id=student_subject_averages.student_id
-           INNER JOIN student_loads ON student_loads.student_id=term_averages.student_id
-           WHERE grades.stream_id=".$stream." AND student_subject_averages.term_id=".$term." AND term_averages.term_id=".$term." AND users.active=1 AND grades_students.active=1 AND student_loads.active=1
-           GROUP BY student_subject_averages.student_id  
-           ORDER BY term_averages.student_average DESC"));
+        MAX(CASE WHEN subjects.id=3 THEN student_subject_averages.student_average END) AS 'EnglishInLiterature',
+        MAX(CASE WHEN subjects.id=5 THEN student_subject_averages.student_average END) AS 'Geography',
+        MAX(CASE WHEN subjects.id=6 THEN student_subject_averages.student_average END) AS 'Mathametics',
+        MAX(CASE WHEN subjects.id=10 THEN student_subject_averages.student_average END) AS 'Siswati',
+        MAX(CASE WHEN subjects.id=12 THEN student_subject_averages.student_average END) AS 'PhysicalScience',
+        MAX(CASE WHEN subjects.id=13 THEN student_subject_averages.student_average END) AS 'Biology',
+        MAX(CASE WHEN subjects.id=14 THEN student_subject_averages.student_average END) AS 'Science',
+        MAX(CASE WHEN subjects.id=15 THEN student_subject_averages.student_average END) AS 'French',
+        MAX(CASE WHEN subjects.id=16 THEN student_subject_averages.student_average END) AS 'HomeEconomics',
+        MAX(CASE WHEN subjects.id=17 THEN student_subject_averages.student_average END) AS 'BookKeeping',
+        MAX(CASE WHEN subjects.id=18 THEN student_subject_averages.student_average END) AS 'BusinessStudies',
+        MAX(CASE WHEN subjects.id=19 THEN student_subject_averages.student_average END) AS 'FoodNutrition',
+        MAX(CASE WHEN subjects.id=20 THEN student_subject_averages.student_average END) AS 'FashionFabrics',
+        MAX(CASE WHEN subjects.id=21 THEN student_subject_averages.student_average END) AS 'Accounting',
+        MAX(CASE WHEN subjects.id=22 THEN student_subject_averages.student_average END) AS 'Economics',
+        MAX(CASE WHEN subjects.id=23 THEN student_subject_averages.student_average END) AS 'Agriculture',
+        MAX(CASE WHEN subjects.id=24 THEN student_subject_averages.student_average END) AS 'AdditionalMathametics',
+        MAX(CASE WHEN subjects.id=25 THEN student_subject_averages.student_average END) AS 'ICT',
+        MAX(CASE WHEN subjects.id=26 THEN student_subject_averages.student_average END) AS 'RE',
+        MAX(CASE WHEN subjects.id=27 THEN student_subject_averages.student_average END) AS 'History',
+        MAX(CASE WHEN subjects.subject_code=101 THEN student_subject_averages.student_average END) AS 'DesignTechnology',
+        MAX(CASE WHEN subjects.subject_code=102 THEN student_subject_averages.student_average END) AS 'Computer',
+        MAX(CASE WHEN subjects.subject_code=103 THEN student_subject_averages.student_average END) AS 'DS',
+        MAX(CASE WHEN subjects.subject_code=200 THEN student_subject_averages.student_average END) AS 'GP',
+        MAX(CASE WHEN subjects.subject_code=201 THEN student_subject_averages.student_average END) AS 'RM',
+        MAX(CASE WHEN subjects.subject_code=104 THEN student_subject_averages.student_average END) AS 'SocialStudies',
+        MAX(CASE WHEN subjects.subject_code=105 THEN student_subject_averages.student_average END) AS 'PracticalArts',
+        MAX(CASE WHEN subjects.subject_code=106 THEN student_subject_averages.student_average END) AS 'GeneralStudies', 
+        MAX(CASE WHEN subjects.subject_code=108 THEN student_subject_averages.student_average END) AS 'ExpressiveArts',
+        MAX(CASE WHEN subjects.subject_code=110 THEN student_subject_averages.student_average END) AS 'HPE',
+        MAX(CASE WHEN subjects.subject_code=111 THEN student_subject_averages.student_average END) AS 'FineArts',
+        MAX(CASE WHEN subjects.subject_code=112 THEN student_subject_averages.student_average END) AS 'SoapCraft',
+        MAX(CASE WHEN subjects.subject_code=113 THEN student_subject_averages.student_average END) AS 'ShoeCraft',
+        MAX(CASE WHEN subjects.subject_code=114 THEN student_subject_averages.student_average END) AS 'HandCraft',
+        MAX(CASE WHEN subjects.subject_code=115 THEN student_subject_averages.student_average END) AS 'PrevocICT',
+        MAX(CASE WHEN subjects.subject_code=116 THEN student_subject_averages.student_average END) AS 'AgiculturalTechnology',
+        MAX(CASE WHEN subjects.subject_code=117 THEN student_subject_averages.student_average END) AS 'BusinessAccounting',
+        MAX(CASE WHEN subjects.subject_code=118 THEN student_subject_averages.student_average END) AS 'FoodTextileTechnology',
+        MAX(CASE WHEN subjects.subject_code=119 THEN student_subject_averages.student_average END) AS 'TechnicalStudies', 
+        MAX(CASE WHEN subjects.subject_code=121 THEN student_subject_averages.student_average END) AS 'Entreprenuership'
+        FROM student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
+        INNER JOIN subjects ON teaching_loads.subject_id=subjects.id
+        INNER JOIN users ON users.id=student_subject_averages.student_id
+        INNER JOIN grades_students ON grades_students.student_id=student_subject_averages.student_id
+        INNER JOIN grades ON grades_students.grade_id=grades.id
+        INNER JOIN term_averages ON term_averages.student_id=student_subject_averages.student_id
+        INNER JOIN student_loads ON student_loads.student_id=term_averages.student_id
+        WHERE grades.stream_id=".$stream." AND student_subject_averages.term_id=".$term." AND term_averages.term_id=".$term." AND users.active=1 AND grades_students.active=1 AND student_loads.active=1
+        GROUP BY student_subject_averages.student_id  
+        ORDER BY term_averages.student_average DESC"));
+
+
 
     }else{
         $scoresheet=DB::select(DB::raw("SELECT 
