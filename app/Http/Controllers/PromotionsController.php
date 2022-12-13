@@ -38,14 +38,14 @@ class PromotionsController extends Controller
 
         
 
-      
+     
       
      //   $terms=Term::where('final_term', '1')->first();
 
    
      if($request->action=="promote"){
-      dd('Promote');
-
+      
+dd($student_list);
     
         // if(count($student_list)==0){
         //     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have promoted Students', 'Promote Students');
@@ -53,8 +53,7 @@ class PromotionsController extends Controller
 
         for($i = 0; $i <count($student_list); $i++) {
 
-            $promote=TermAverage::where('student_id', $student_list[$i])->where('term_id', $term)
-            ->update(['final_term_status'=>'Promoted']);
+    $promote=TermAverage::where('student_id', $student_list[$i])->where('term_id', $term)->update(['final_term_status'=>'Promoted']);
         
          }
          
