@@ -1788,7 +1788,7 @@ if ($request->indicator=="summary_scoresheet") {
      }
 
         if($school_data->school_type=="primary-school"){
-            return view('analytics.term-analytics.primary-view',compact('scoresheet','stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'base64', 'tie_type', 'passing_subject_rule', 'indicator')); 
+            return view('analytics.term-analytics.view-primary',compact('scoresheet','stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'base64', 'tie_type', 'passing_subject_rule', 'indicator')); 
         }else{
             return view('analytics.term-analytics.view',compact('scoresheet','stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'base64', 'tie_type', 'passing_subject_rule', 'indicator'));  
         }
