@@ -67,14 +67,15 @@ class PromotionsController extends Controller
          
 
      
-    }else if($request->action=="another_school"){
+    }
+    
+    if($request->action=="another_school"){
 
         for($i = 0; $i <count($student_list); $i++) {
 
-            $findAnother=TermAverage::where('student_id', $student_list[$i])->where('term_id', $term)
-            ->update(['final_term_status'=>'Try Another School']);
+            $another=TermAverage::where('student_id', $student_list[$i])->where('term_id', $term)->update(['final_term_status'=>'Try Another School']);
         
-         }
+        }
 
      
         
@@ -86,7 +87,10 @@ class PromotionsController extends Controller
     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You updated resolution', 'Resolution');
     return redirect('/report/term-based/');
 
-    }else if($request->action=="repeat"){
+    }
+    
+    
+    if($request->action=="repeat"){
 
         for($i = 0; $i <count($student_list); $i++) {
 
