@@ -189,7 +189,7 @@ echo $key->student_position;
     <input type="hidden"name="term_id" value="{{$term}}">
     <tr>
 <td><button type="submit" name="action" id="promote" value="promote" class="btn btn-primary">Promote Students</button></td>
-<td><button type="submit" name="action" id="another_school" value="Try another_school" class="btn btn-danger">Another School</button></td>
+<td><button type="submit" name="action" id="another_school" value="another_school" class="btn btn-danger">Another School</button></td>
 <td><button type="submit" name="action" id="force_fail" value="force_repeat" class="btn btn-danger">Force Repeat</button></td>
     </tr>
     

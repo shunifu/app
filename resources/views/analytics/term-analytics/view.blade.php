@@ -556,7 +556,7 @@ echo $key->student_position ;
     </table>
     <tr>
 <td><button type="submit" name="action" id="promote" value="promote" class="btn btn-primary">Promote Students</button></td>
-<td><button type="submit" name="action" id="another_school" value="Try another_school" class="btn btn-danger">Another School</button></td>
+<td><button type="submit" name="action" id="another_school" value="another_school" class="btn btn-danger">Another School</button></td>
     </tr>
     
 </form>
