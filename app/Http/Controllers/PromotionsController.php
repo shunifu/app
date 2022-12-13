@@ -13,7 +13,7 @@ class PromotionsController extends Controller
 {
     public function promote(Request $request){
 
-    dd($request->all());
+    // dd($request->all());
 
         $student_list=$request->students;
         $term=$request->term_id;
@@ -44,6 +44,7 @@ class PromotionsController extends Controller
 
    
      if($request->action=="promote"){
+      dd('Promote');
 
     
         // if(count($student_list)==0){
