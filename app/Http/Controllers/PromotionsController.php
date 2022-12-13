@@ -45,7 +45,7 @@ class PromotionsController extends Controller
    
      if($request->action=="promote"){
       
-dd($student_list);
+
     
         // if(count($student_list)==0){
         //     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have promoted Students', 'Promote Students');
