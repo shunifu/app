@@ -65,7 +65,7 @@ th span {
             </div>
             <i class="fas fa-envelope mx-2"></i> {{$item->school_email}} | <i class="fas fa-phone-square    "></i> {{$item->school_telephone}}</i>
                     <p>
-                        <h3 class="text-bold">{{$stream_title}}  {{$assessement_name}} Scoresheet</h3>
+                        <h3 class="text-bold">{{$stream_title}} Scoresheet</h3>
                     </p>
                 
             </div>
@@ -82,7 +82,6 @@ th span {
         <th><span>Student</span></th>
         <th><span>Class</span></th>
         <th><span>Average</span></th>
-         <th><span>Ratio</span></th>
         <th><span>Comment</span></th>
         <th><span>English Language</span> </th>
         <th><span>Maths</span></th>
@@ -95,7 +94,7 @@ th span {
         <th><span>Agriculture</span></th>
         <th><span>Expressive Arts</span></th>
         <th><span>ICT</span></th>
-        <th><span>Consumer</span></th>
+        {{-- <th><span>Consumer</span></th> --}}
         <th><span>HPE</span></th>
       
    
@@ -239,23 +238,7 @@ where student_id = ".$student->learner_id.""));
                     </td>
 
                    
-                    <td class="align-middle p-2">
-                        @if ($student->loads_count>$student->marks_count)
-                        <a href="/analytics/loads/check/{{$student->student_id}}/{{$assessement_id}}/"><span class="text-warning"> {{$student->loads_count}}:{{$student->marks_count}} </span></a>
-                        @endif
-                        @if ($student->loads_count<$student->marks_count)
-                        
-                        <a href="/analytics/loads/check/{{$student->student_id}}/{{$assessement_id}}/"><span class="text-danger"> {{$student->loads_count}}:{{$student->marks_count}} </span></a>
-                        @endif
-                        @if ($student->loads_count==$student->marks_count)
-                            
-                        <a href="/analytics/loads/check/{{$student->student_id}}/{{$assessement_id}}/"><span class="text-success"> {{$student->loads_count}}:{{$student->marks_count}}</span></a>
-                       @endif
-                       @if ($student->loads_count<7)
-                            
-                        <a href="/analytics/loads/check/{{$student->student_id}}/{{$assessement_id}}/"><span class="bg-danger"> {{$student->loads_count}}:{{$student->marks_count}}</span></a>
-                       @endif
-                    </td>
+                
 
 
                     <td class="align-middle p-2">
@@ -382,7 +365,7 @@ where student_id = ".$student->learner_id.""));
                         <span class="text-danger">{{ $student->ICT}}% </span>
                         @endif
                     </td>
-                    <td class="align-middle p-2">
+                    {{-- <td class="align-middle p-2">
                         @if ($student->Consumer>=$pass_rate)
                         <span class="text-secondary">{{ $student->Consumer}}% </span>
                         @elseif(is_null($student->Consumer))
@@ -391,7 +374,7 @@ where student_id = ".$student->learner_id.""));
                         <span class="text-danger">{{ $student->Consumer}}% </span>
                         @endif
                     </td>
-                    
+                     --}}
                   
                     <td class="align-middle p-2">
                         @if ($student->HPE>=$pass_rate)
@@ -479,7 +462,7 @@ where student_id = ".$student->learner_id.""));
         <script>
             $(document).ready(function () {
                 $.noConflict();
-                var assessement = @json($assessement_name);
+              
                 var stream = @json($stream_title);
                 var base64=@json($base64);
                 var dateNow = new Date();
