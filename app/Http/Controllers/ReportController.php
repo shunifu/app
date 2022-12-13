@@ -193,7 +193,7 @@ class ReportController extends Controller
 
       //  dd($request->all());
 
-        // DB::table('student_subject_averages')->delete();
+        DB::table('student_subject_averages')->delete();
         // DB::table('term_averages')->delete();
       //validation
 
