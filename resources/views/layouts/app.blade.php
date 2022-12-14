@@ -601,7 +601,7 @@
      {{-- end of logged in class-teacher Performance link --}}
 
 
-                    @if (Auth::user()->hasRole(['admin_teacher', 'school_administrator', 'class_teacher', 'teacher']))
+                    @if (Auth::user()->hasRole(['admin_teacher', 'school_administrator', 'class_teacher']))
                     <li class="nav-item">
                       <a href="/insights" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
