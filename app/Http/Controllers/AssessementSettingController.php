@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\AssessementType;
 use App\Models\AssessementSetting;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class AssessementSettingController extends Controller
 {
@@ -22,8 +23,18 @@ class AssessementSettingController extends Controller
         //Assessement Type
         $assessement_types=AssessementType::all();
 
+
+        if (Schema::hasColumn($myTable, $column)) //check the column
+    {
+        Schema::table($myTable, function (Blueprint $table)
+        {
+            $table->dropColumn($column); //drop it
+        });
+    }
+
+
         //Assessement Term
-        $assessement_                                                                                                                   =DB::table('terms')
+        $assessement_=DB::table('terms')
         ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
         ->where('academic_sessions.active', 1)
         ->select('terms.id as term_id','terms.term_name', 'academic_sessions.academic_session')
