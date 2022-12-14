@@ -3,14 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\School;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
 class SchoolController extends Controller
 {
 	public function create()
 	{
+
+		if (!Schema::hasColumn('school_info', 'school_stamp')) //check the column
+		{
+			Schema::table('school_info', function (Blueprint $table)
+			{
+			   
+				$table->longText('school_stamp');
+			});
+		}
+	
 
 		$school_info = School::all();
 	
