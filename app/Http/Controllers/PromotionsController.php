@@ -88,27 +88,24 @@ class PromotionsController extends Controller
     }
     
     
-    if($request->action=="repeat"){
+//     if($request->action=="repeat"){
 
-        for($i = 0; $i <count($student_list); $i++) {
+//         for($i = 0; $i <count($student_list); $i++) {
 
-            $forceRepeat=TermAverage::where('student_id', $student_list[$i])->where('term_id', $term)
-            ->update(['final_term_status'=>'Repeat']);
-        
-         }
+      
 
    
         
-        $repeat=TermAverage::where('term_id', $term)->where('student_stream',$stream)->WhereNull('final_term_status' )->update([
-            'final_term_status'=>'Repeat'
-        ]);
+//         $repeat=TermAverage::where('term_id', $term)->where('student_stream',$stream)->WhereNull('final_term_status' )->update([
+//             'final_term_status'=>'Repeat'
+//         ]);
         
   
-    flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You updated resolution', 'Resolution');
-    return redirect('/report/term-based/');
+//     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You updated resolution', 'Resolution');
+//     return redirect('/report/term-based/');
 
-    }
-}
+//     }
+// }
 
     // public function recind_promotion(Request $request){
 
