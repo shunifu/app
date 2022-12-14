@@ -11,7 +11,7 @@
                 <h3 class="card-title"><a href="#"><i class="fas fa-arrow-circle-left"></i></a> Add Student Images</h3>
               </div>
               <!-- /.card-header -->
-              <form id="multi-file-upload-ajax" method="POST"  action="javascript:void(0)" accept-charset="utf-8" enctype="multipart/form-data">
+              <form  method="POST"  action="/student/image/upload" accept-charset="utf-8" enctype="multipart/form-data">
                 @csrf  
        
                 <div class="card-body">

@@ -1626,6 +1626,8 @@ return redirect('/marks');
 
 public function student_image(Request $request){
 
+    dd($request->all());
+
     $student_id=$request->student_id;
    
     if($request->hasFile('student_image')){
