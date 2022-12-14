@@ -8,6 +8,7 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Models\AssessementType;
 use App\Models\AssessementSetting;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -24,11 +25,12 @@ class AssessementSettingController extends Controller
         $assessement_types=AssessementType::all();
 
 
-        if (Schema::hasColumn($myTable, $column)) //check the column
+        if (!Schema::hasColumn('assessement_weights', 'stream_id')) //check the column
     {
-        Schema::table($myTable, function (Blueprint $table)
+        Schema::table('assessement_weights', function (Blueprint $table)
         {
-            $table->dropColumn($column); //drop it
+           
+            $table->string('stream_id');
         });
     }
 
