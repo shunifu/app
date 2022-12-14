@@ -280,6 +280,8 @@ th span {
             <span class="text-danger text-bold">{{$student->final_term_status}} </span>
             @elseif($student->final_term_status =="Promoted")
             <span class="text-warning text-bold">{{$student->final_term_status}} </span>
+            @elseif($student->final_term_status =="Try Another School")
+            <span class=" text-bold">{{$student->final_term_status}} </span>
             @endif 
             </td> 
         @endif
