@@ -421,27 +421,28 @@ WHERE sub.student_id=".$student.""));
                         </td>
 
                         <td>
-                            Term: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
-                            <br>
-                            Term Opening Date <span class="text-bold">13 September 2022</span>
-                            <br>
-                            Term Closing Date <span class="text-bold">22 December 2022</span>
-                            <br>
-                            Next Term Date: <span class="text-bold">17 January 2023</span>
+                        Term: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
+                        <br>
+                        Term Opening Date <span class="text-bold">13 September 2022</span>
+                        <br>
+                        Term Closing Date <span class="text-bold">22 December 2022</span>
+                        <br>
+                        Next Term Date: <span class="text-bold">17 January 2023</span>
 
                             
-                            <br>
-                            Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
-                            {{-- <br>
-                            Student Stream: <span class="text-bold">{{$student_term_data->stream_name}}</span>
-                            <br>
-                            Student Section: <span class="text-bold">{{$student_term_data->section_name}}</span> --}}
-                            <br>
-                            
-                        
-                            
-                            Report Generated: <span class="text-bold text-italics">{{date('d F Y H:i')}}</span>
-                            <br>
+                        <br>
+                        Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
+                        @if (is_null($variable->student_attendance) OR $variable->student_attendance==0)
+                        @else
+                        Days Absent: <span class="text-bold">--- Days</span>
+                        <br>
+                        Attendance Rate: <span class="text-bold">---</span> 
+                        <br>
+                             
+                        @endif
+      <br>
+                        Report Generated: <span class="text-bold text-italic">{{date('d F Y H:i')}}</span>
+                        <br>
 
 
                         </td>

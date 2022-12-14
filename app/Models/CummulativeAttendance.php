@@ -9,7 +9,7 @@ class CummulativeAttendance extends Model
 {
     use HasFactory;
 
-    protected $table='cummulative_attendance';
+    protected $table='cummulative_attendances';
 
     protected $fillable = [
         'term_id',

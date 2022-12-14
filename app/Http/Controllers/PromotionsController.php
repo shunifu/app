@@ -66,7 +66,6 @@ class PromotionsController extends Controller
     return redirect('/report/term-based/');
          
 
-     
     }
     
     if($request->action=="another_school"){
@@ -77,7 +76,6 @@ class PromotionsController extends Controller
         
         }
 
-     
         
         $repeat=TermAverage::where('term_id', $term)->WhereNull('final_term_status' )->update([
             'final_term_status'=>'Repeat'

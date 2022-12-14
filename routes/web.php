@@ -220,6 +220,8 @@ Route::get('/users/student', [StudentController::class,'create'])->name('student
 Route::post('/users/student/manage/load', [StudentController::class,'load'])->name('student.load');
 Route::post('/users/student/manage/list', [StudentController::class,'list'])->name('student.list');
 Route::get('/users/student/management', [StudentController::class,'students_management'])->name('students.management');
+Route::get('/users/student/images', [StudentController::class,'student_images_index'])->name('student.images');
+Route::post('/users/student/images/save', [StudentController::class,'student_images_store'])->name('student.image_store');
 Route::get('/users/student/get/list', [StudentController::class,'get_list'])->name('student.get_list');
 Route::get('/students/manage', [StudentController::class,'manage'])->name('student.manage');
 Route::get('/students/manage/stream/{stream_id}', [StudentController::class,'student_stream'])->name('student.student_stream');

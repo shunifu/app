@@ -65,6 +65,7 @@ class ReportController extends Controller
         ->where('academic_sessions.active',1)
         ->get();
 
+
         //Scope to current session ....think about it.
 
         //Streams
@@ -193,7 +194,19 @@ class ReportController extends Controller
 
       //  dd($request->all());
 
+
+      Schema::table('student_subject_averages', function ($table) {
+           
+        $table->float('ca_average')->change();
+        $table->float('exam_mark')->change();
+        $table->float('student_average')->change();
+    });
+
+
+
         DB::table('student_subject_averages')->delete();
+
+
         // DB::table('term_averages')->delete();
       //validation
 

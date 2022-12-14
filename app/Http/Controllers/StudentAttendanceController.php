@@ -129,12 +129,12 @@ class StudentAttendanceController extends Controller
    
         for($i = 0; $i <count($students); $i++) {
       
-            $addTeachingLoads=CummulativeAttendance::create([
+            $attendance=CummulativeAttendance::updateOrCreate([
             'student_id'=>$students[$i],
             'term_id'=>$term,
             'class'=>$grade_id,
             'number_of_absent_days'=>$absent_days[$i],
-            ]);
+            ], ['number_of_absent_days'=>$absent_days[$i]]);
         
          }
 

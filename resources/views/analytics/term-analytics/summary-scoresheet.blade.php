@@ -40,16 +40,10 @@ th span {
             
             <div class="card-body">
              
-              <hr>
-              <div class="p-4"></div>
+                
   
          
-              <div class="table-responsive">
- 
-  
-  
-  
-  </div>
+    
   
   <div class="table-responsive">
     <form action="/promote/students" method="POST">
@@ -79,8 +73,183 @@ th span {
             @endforeach
           
             </div>
+            <p class="text-muted">Stream Statistics</p>
+            <div class="row">
+                
+
+
+                    
+                <div class="col-10 col-sm-6 col-md-4">
+                  <div class="info-box mb-3 bg-gray">
+                
+      
+                    <div class="info-box-content ">
+                      <span class="info-box-text">Total Learners</span>
+                      <span class="info-box-number">{{$total_students}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+      
+                <!-- fix for small devices only -->
+                <div class="clearfix hidden-md-up"></div>
+      
+                <div class="col-8 col-sm-4 col-md-2">
+                    <div class="info-box mb-3 bg-success">
+              
+      
+                    <div class="info-box-content">
+                      <span class="info-box-text">Total Passed</span>
+                      <span class="info-box-number">{{$total_passed}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <div class="col-8 col-sm-4 col-md-2">
+                    <div class="info-box mb-3 bg-danger">
+                   
+      
+                    <div class="info-box-content">
+                      <span class="info-box-text">Total Failed</span>
+                      <span class="info-box-number">{{$total_failed}}</span>
+                     
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+
+                <div class="col-8 col-sm-4 col-md-2">
+                    <div class="info-box mb-3 bg-success">
+                 
+        
+                      <div class="info-box-content">
+                        <span class="info-box-text">Pass Rate</span>
+                        <span class="info-box-number">{{round($pass_rate_percentage)}}%</span>
+                       
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                  </div>
+
+
+                
+                  <div class="col-8 col-sm-4 col-md-2">
+                    <div class="info-box mb-3 bg-danger">
+        
+                      <div class="info-box-content">
+                        <span class="info-box-text">Failure Rate</span>
+                        <span class="info-box-number">{{round($fail_rate_percentage)}}%</span>
+                       
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                  </div>
+        
+             
+       
+              </div> 
+
+<hr>
+<p class="text-muted">Progression Statistics</p>
+              <div class="row">
+                
+
+
+                    
+                <div class="col-10 col-sm-6 col-md-4">
+                  <div class="info-box mb-3 bg-success">
+                
+      
+                    <div class="info-box-content ">
+                      <span class="info-box-text">Clean Passes (Proceed)</span>
+                      <span class="info-box-number">{{$total_progression}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+      
+                <!-- fix for small devices only -->
+                <div class="clearfix hidden-md-up"></div>
+      
+                <div class="col-8 col-sm-4 col-md-2">
+                    <div class="info-box mb-3 bg-warning">
+              
+      
+                    <div class="info-box-content">
+                      <span class="info-box-text">Total Promoted</span>
+                      <span class="info-box-number">{{$total_promoted}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <div class="col-8 col-sm-4 col-md-2">
+                    <div class="info-box mb-3 bg-danger">
+                   
+      
+                    <div class="info-box-content">
+                      <span class="info-box-text">Total Repeating</span>
+                      <span class="info-box-number">{{$total_repeat}}</span>
+                     
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+
+                <div class="col-8 col-sm-4 col-md-2">
+                    <div class="info-box mb-3 bg-purple">
+                 
+        
+                      <div class="info-box-content">
+                        <span class="info-box-text">Total Expelled</span>
+                        <span class="info-box-number">{{$total_expelled}}</span>
+                       
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                  </div>
+
+
+                
+                  <div class="col-8 col-sm-4 col-md-2">
+                    <div class="info-box mb-3 bg-danger">
+        
+                      <div class="info-box-content">
+                        <span class="info-box-text">Repeat Rate</span>
+                        <span class="info-box-number">
+                            @if ($total_repeat==0 or is_null($total_repeat))
+                                
+                            @else
+                            {{round(($total_repeat/$total_students)*100)}}%   
+                            @endif
+                           
+                        </span>
+                       
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                  </div>
+        
+             
+       
+              </div> 
+
+              <hr>
+
+              
                          
-            <hr>
+          
         
         <thead class="thead-light hidden-md-up">
 

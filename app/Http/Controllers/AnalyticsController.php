@@ -1684,6 +1684,14 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
         ORDER BY term_averages.student_average DESC"));
 
 
+$total_passed = DB::table('term_averages')
+->join('grades', 'term_averages.student_class', '=', 'grades.id')
+->where('grades.stream_id', $stream)
+->where('term_averages.term_id', $term)
+->where('number_of_passed_subjects','>=', $number_of_subjects)
+->where('student_average','>=',$pass_rate)->count();
+
+
 
     }else{
         $scoresheet=DB::select(DB::raw("SELECT 
@@ -1749,41 +1757,63 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
         WHERE grades.stream_id=".$stream." AND student_subject_averages.term_id=".$term." AND term_averages.term_id=".$term." AND users.active=1 AND grades_students.active=1 AND student_loads.active=1
         GROUP BY student_subject_averages.student_id  
         ORDER BY term_averages.student_average DESC"));
+
+
+$total_passed = DB::table('term_averages')
+->join('grades', 'term_averages.student_class', '=', 'grades.id')
+->where('grades.stream_id', $stream)
+->where('term_averages.term_id', $term)
+->where('passing_subject_status', 1)
+->where('number_of_passed_subjects','>=', $number_of_subjects)
+->where('student_average','>=',$pass_rate)->count();
+
+
     }
 
-   
+    $total_progression= DB::table('term_averages')
+    ->join('grades', 'term_averages.student_class', '=', 'grades.id')
+    ->where('grades.stream_id', $stream)
+    ->where('term_averages.term_id', $term)
+    ->where('final_term_status', 'Proceed')
+    ->count();
+
+    $total_promoted= DB::table('term_averages')
+    ->join('grades', 'term_averages.student_class', '=', 'grades.id')
+    ->where('grades.stream_id', $stream)
+    ->where('term_averages.term_id', $term)
+    ->where('final_term_status', 'Promoted')
+    ->count();
+
+    $total_repeat= DB::table('term_averages')
+    ->join('grades', 'term_averages.student_class', '=', 'grades.id')
+    ->where('grades.stream_id', $stream)
+    ->where('term_averages.term_id', $term)
+    ->where('final_term_status', 'Repeat')
+    ->count();
+
+    $total_expelled= DB::table('term_averages')
+    ->join('grades', 'term_averages.student_class', '=', 'grades.id')
+    ->where('grades.stream_id', $stream)
+    ->where('term_averages.term_id', $term)
+    ->where('final_term_status', 'Try Another School')
+    ->count();
 
 $base64="";
         // return view('analytics.term-analytics.view',compact('scoresheet','stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'base64', 'tie_type', 'passing_subject_rule')); 
-    
+
+
+
+    $total_failed=($total_students-$total_passed);
+    $pass_rate_percentage=($total_passed/$total_students)*100;
+    $fail_rate_percentage=($total_failed/$total_students)*100;
+
+
+
       
 if ($request->indicator=="summary_scoresheet") {
 
-   
-    //     //Add validation
-      
-    //     $stream_id=$request->stream_name;
     
-    //     $student_class=Grade::where('stream_id',$stream_id)->get()->toArray();
-    
-    //    // dd($student_class);
-    
-    
-       
-    
-    //     $list=[];
-    //     $arr=$student_class;// This is the original array
-    //     foreach($arr as $k=>$v ){
-    //         array_push($list,$v['id']);
-    //          }
-      
-    
-    // $data=TermAverage::whereIn('student_class', $list)->get();
-    
-     
-    
-    
-        return view('analytics.term-analytics.summary-scoresheet',compact('scoresheet','stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator'));
+        return view('analytics.term-analytics.summary-scoresheet',compact('scoresheet','stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled','total_repeat'));
      
      }
 

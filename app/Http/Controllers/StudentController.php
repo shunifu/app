@@ -123,6 +123,45 @@ class StudentController extends Controller
         }
     }
 
+
+    public function student_images_index(){
+
+
+        $grades=Grade::all();
+
+        return view('users.students.images.index', compact('grades'));
+
+    }
+
+    public function student_images_store(Request $request){
+
+
+
+        $grade_id=$request->grade_id;
+
+        
+
+        $students = DB::table('users')
+        ->join('grades_students', 'users.id', '=', 'grades_students.student_id')
+        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
+        ->where('grades.id',$grade_id)
+        ->where('grades_students.active', 1)
+        ->where('users.active', 1)
+        ->select('users.*','grades.grade_name', 'academic_sessions.academic_session', 'grades.id as grade_id')
+        ->get();
+
+
+        return view('users.students.images.view', compact('students'));
+
+       // dd($request->all());
+    //     return response()->json([
+    //         'students'=>$students,
+    // ]);
+
+
+    }
+
     public function student_stream(Request $request, $stream_id){
 
         //Security Protect this route.//

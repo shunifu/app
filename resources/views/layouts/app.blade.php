@@ -1416,6 +1416,13 @@
                 </a>
               </li>
 
+              <li class="nav-item">
+                <a href="{{route('student.images')}}" class="nav-link">
+                  <i class="nav-icon fas fa-chevron-circle-right"></i>
+                  <p>Student Images</p>
+                </a>
+              </li>
+
               {{-- <li class="nav-item">
                 <a href="/users/student" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>

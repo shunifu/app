@@ -1,4 +1,4 @@
-<x-app-layout>
+76890726Mnotfo<x-app-layout>
     <x-slot name="header">
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -476,7 +476,7 @@
                     <td>'+middlename+'</td>\
                     <td>'+item.grade_name+'-'+item.academic_session+'</td>\
                     <td>'+cell+'</td>\
-                    <td> <form action="/student/image/upload" method="POST" enctype="multipart/form-data">@csrf<input id="upload" name="student_image" type="file"/> <input type="hidden" name="student_id" value='+item.id+'><button type="submit" class="btn"><i class="fa fa-check"></i></button></form></td>\
+                    <td> <form action="/student/image/upload" method="POST" enctype="multipart/form-data">@csrf<input id="upload" name="student_image" type="file"/> <input type="hidden" name="student_id[]" value='+item.id+'><button type="submit" class="btn"><i class="fa fa-check"></i></button></form></td>\
                     <td><a href=/users/profile/student/'+item.id+'>Visit Profile</a></td>\
                     </tr>'  );  
 

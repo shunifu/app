@@ -8,7 +8,9 @@
         Hi,  {{ Auth::user()->salutation }}  {{ Auth::user()->lastname }} this is the section where you will generate report cards for students in a stream. <hr>
 
 
-       <span class=" text-muted lead" > Please ensure that you have followed the 3 step verification process.</span>
+       <span class=" text-muted lead" > Report Checklist</span><br>
+       Before you print out reports, please ensure the following.
+       <hr>
        <p>
 
         <div class="form-check ">
@@ -16,6 +18,7 @@
                 <input class="form-check-input" type="checkbox" name="ratio_check" id="ratio_check" value="checkedValue"> Ratio's for each assessement are equal. If you are not sure, view ratio's <a href="/ratios/check">here</a>
             </label>
            </div>
+
            
        
        <div class="form-check ">
@@ -24,6 +27,26 @@
         </label>
        </div>
 
+
+       <div class="form-check ">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="promotions" id="promotions" value="checkedValue"> If this is the final term, you have done all neccessary promotions and repetions and processions for students.
+            <a href="/analytics/term-based">For more click here</a>
+        </label>
+       </div>
+
+
+       <div class="form-check ">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="report_templates" id="report_templates" value="checkedValue"> Class Teachers have added term attendance data for students. 
+        </label>
+       </div>
+
+       <div class="form-check ">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="report_templates" id="report_templates" value="checkedValue"> Report Card Template has been created . To check templates click <a href="/report/templates">here</a>
+        </label>
+       </div>
     
        <div class="form-check ">
         <label class="form-check-label">
