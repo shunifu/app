@@ -50,6 +50,7 @@
                             <option value="1">Primary School</option>
                             <option value="2">Secondary School</option>
                             <option value="3">High School</option>
+                            <option value="4">Prevocational School</option>
                             </select>
                             @error('school_type')
                             <span class="text-danger">{{$message}}</span>  
