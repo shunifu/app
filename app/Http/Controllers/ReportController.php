@@ -295,7 +295,7 @@ if(is_null($variables)) {
 
     
      $term_checker=DB::table('terms')
-     ->join('academic_sessions.id','=','terms.academic_session')
+     ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
      ->where('academic_sessions.active', 1)
      ->where('terms.final_term', 1)
      ->exists();
