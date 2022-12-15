@@ -285,7 +285,7 @@ class ReportController extends Controller
 
      }
 
-     $variables=ReportVariable::first();
+     $variables=ReportVariable::all();
 
    
 if(is_null($variables)) {
