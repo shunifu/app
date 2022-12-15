@@ -152,6 +152,7 @@ th span {
         <th><span>FoodTextileTechnology</span></th>
         <th><span>TechnicalStudies</span></th>
         <th><span>Entreprenuership</span></th>
+        <th><span>AgcriculturalTechnology</span></th>
 
         
     
@@ -569,6 +570,16 @@ echo $key->student_position ;
                         -
                         @elseif($student->Entreprenuership<$pass_rate )
                         <span class="text-danger">{{ $student->Entreprenuership}}% </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->AgiculturalTechnology>=$pass_rate)
+                        <span class="text-secondary">{{ $student->AgiculturalTechnology}}% </span>
+                        @elseif(is_null($student->AgiculturalTechnology))
+                        -
+                        @elseif($student->AgiculturalTechnology<$pass_rate )
+                        <span class="text-danger">{{ $student->AgiculturalTechnology}}% </span>
                         @endif
                     </td>
 
