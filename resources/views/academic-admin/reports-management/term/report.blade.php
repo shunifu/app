@@ -1166,21 +1166,7 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                        </div>
 
                     
-                       <div class="col">
-                        <div id="signaturetitle">
-                           Headteacher's Signature:
-                          </div>
-                          <div class="text-center">
-                          @if ($variable->principal_signature==1)
-                         
-                            <img class="img-fluid " width="80" height="80" src="{{$school_is->base64}} " alt="">
-                               @else       
-                               <img class="img-fluid " width="120" height="120" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">            
-                          @endif
-                         
-                        </div>
-                    </div>
-
+                   
                        
 
                        <div class="col">
@@ -1197,6 +1183,23 @@ School Stamp
                           </div>
 
                        </div>
+
+
+                       <div class="col">
+                        <div id="signaturetitle">
+                           Headteacher's Signature:
+                          </div>
+                          <div class="text-center">
+                          @if ($variable->principal_signature==1)
+                         
+                            <img class="img-fluid " width="80" height="80" src="{{$school_is->base64}} " alt="">
+                               @else       
+                               <img class="img-fluid " width="120" height="120" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">            
+                          @endif
+                         
+                        </div>
+                    </div>
+
                    </div>
                        
                    <table class="table table-sm table-bordered">
