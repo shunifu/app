@@ -1198,7 +1198,7 @@ School Stamp
                           @else
                          
                             <img class="img-fluid " width="120" height="120" src="{{$school_is->base64}} " alt="">
-                               @else       
+                               @elseif($variable->principal_signature==0)      
                                <img class="img-fluid " width="120" height="120" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">            
                           @endif
                           @endif
