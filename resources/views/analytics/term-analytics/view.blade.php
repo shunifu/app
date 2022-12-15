@@ -89,7 +89,7 @@ th span {
         <thead class="thead-light hidden-md-up">
 
            
-            @if ($indicator=="manual_promotion")
+            @if ($indicator=="manual_promotion" OR $indicator=="scoresheet")
             <th>Action</th>
            <th>Status</th> 
          @endif
@@ -158,7 +158,7 @@ th span {
             @forelse($scoresheet as $student)
                 <tr>
                   
-                    @if ($indicator=="manual_promotion")
+                    @if ($indicator=="manual_promotion" OR $indicator=="scoresheet")
 
             <td><input type="checkbox" class="students" name="students[]" value="{{$student->student_id}}" ></td>
             <td> {{$student->final_term_status}}  </td>
@@ -555,9 +555,11 @@ echo $key->student_position ;
 
     </table>
     <tr>
-<td><button type="submit" name="action" id="promote" value="promote" class="btn btn-primary">Promote Students</button></td>
-<td><button type="submit" name="action" id="another_school" value="another_school" class="btn btn-danger">Another School</button></td>
-    </tr>
+        <td><button type="submit" name="action" id="promote" value="promote" class="btn btn-primary">Promote Students</button></td>
+        <td><button type="submit" name="action" id="another_school" value="another_school" class="btn btn-black">Another School</button></td>
+        <td><button type="submit" name="action" id="repeat" value="repeat" class="btn btn-danger">Force Repeat</button></td>
+        <td><button type="submit" name="action" id="reset" value="reset" class="btn btn-warning">Reset Statuses</button></td>
+            </tr>
     
 </form>
   </div>
@@ -576,7 +578,7 @@ echo $key->student_position ;
                 $.noConflict();
                 var term = @json($term_name);
                 var stream = @json($stream_title);
-                var base64=@json($base64);
+             
                 var dateNow = new Date();
               
  
@@ -629,7 +631,7 @@ $('#customers').append('<caption style="margin-bottom:30px;color:red; fontSize:2
      
                     
     //                 alignment: 'center',
-    //                 image: @json($base64)
+    //               
     //             });
 
     var objLayout = {};

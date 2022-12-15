@@ -232,6 +232,13 @@ class ReportController extends Controller
         //Validation of form data
 
 
+
+        //Check if template created,
+        //Check if variables created,
+        //Check if final term status set
+        //Check if promotions have been made 
+
+
         if($request->exists('grade')){
 
             $classofstudent=$request->grade;
@@ -278,9 +285,26 @@ class ReportController extends Controller
 
      }
 
-     $variables=ReportVariable::all();
-      
-  
+     $variables=ReportVariable::first();
+
+   
+if(is_null($variables)) {
+    flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Please add Report Card variables. To do so, please go to settings , then Report Settings and lastly Report Variables');
+    return redirect()->back();
+}
+
+    
+     $term_checker=DB::table('terms')
+     ->join('academic_sessions.id','=','terms.academic_session')
+     ->where('academic_sessions.active', 1)
+     ->where('terms.final_term', 1)
+     ->exists();
+     
+     if (!($term_checker)) {
+      //if it does not exist
+      flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Please update term. Make sure that you set TERM 2 to final term & do not forget to delete  Term 3 ');
+      return redirect()->back();
+     }
 
     // Getting the section of the selected stream (high school or secondary)
               $section=Grade::where('stream_id', $stream)->first();
@@ -504,25 +528,28 @@ class ReportController extends Controller
 
        
       
-    $subject_average[]=DB::select(DB::raw("SELECT marks.student_id,
-    GROUP_CONCAT(subjects.subject_name) AS subject_name,
-    subjects.id as subject_id,
-    c_a__exams.term_id as term_id,
-    teaching_loads.class_id as student_class,
-    teaching_loads.id as teaching_load_id,
-    (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN marks.mark END))AS ca,
-    (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN marks.mark END))AS exam,
-    (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN (marks.mark)*".$ca_weight." END))AS ca_weight,
-    (AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN (marks.mark)*".$exam_weight." END)) as exam_weight
-    FROM
-    marks
-    INNER JOIN c_a__exams ON c_a__exams.assessement_id = marks.assessement_id
-    INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
-    INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
-    WHERE marks.student_id = ".$student." AND `c_a__exams`.`term_id` = ".$term." AND marks.active=1
-    GROUP BY
-    marks.student_id,
-    subjects.id"));
+    
+
+$subject_average[]=DB::select(DB::raw("SELECT marks.student_id,
+GROUP_CONCAT(subjects.subject_name) AS subject_name,
+subjects.id as subject_id,
+c_a__exams.term_id as term_id,
+teaching_loads.class_id as student_class,
+teaching_loads.id as teaching_load_id,
+(AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN marks.mark END))AS ca,
+(AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN marks.mark END))AS exam,
+(AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN (marks.mark)*".$ca_weight." END))AS ca_weight,
+(AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN (marks.mark)*".$exam_weight." END)) as exam_weight
+FROM
+marks
+INNER JOIN c_a__exams ON c_a__exams.assessement_id = marks.assessement_id
+INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
+INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
+INNER JOIN users ON users.id=marks.student_id
+WHERE marks.student_id = ".$student." AND `c_a__exams`.`term_id` = ".$term." AND marks.active=1 AND users.active=1 AND teaching_loads.active=1
+GROUP BY
+marks.student_id,
+subjects.id"));
 
 
 

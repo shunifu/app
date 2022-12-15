@@ -34,16 +34,13 @@ th span {
               </div>
               
               <div class="card-header no-print">
-                <h3 class="card-title">{{$stream_title}} Summary Scoresheet  {{$term_name}}</h3>
-            
+                <h3 class="card-title">{{$title}} Summary Scoresheet for {{$term_name}}</h3><br>
+         
               </div>
             
             <div class="card-body">
              
-                
-  
-         
-    
+        
   
   <div class="table-responsive">
     <form action="/promote/students" method="POST">
@@ -65,7 +62,8 @@ th span {
                
         
                     <p>
-                        <h3 class="text-bold">{{$stream_title}} Summerized {{$term_name}} Scoresheet</h3>
+                        <h3 class="text-bold">{{$title}} Summerized {{$term_name}} Scoresheet</h3>
+                        <small>Below is the summary scoresheet for {{$title}}. </small>
                     </p>
                 
             </div>
@@ -73,7 +71,7 @@ th span {
             @endforeach
           
             </div>
-            <p class="text-muted">Stream Statistics</p>
+            <p class="text-muted"> Statistics</p>
             <div class="row">
                 
 
@@ -258,7 +256,8 @@ th span {
         <th><span>Select</span></th>
         <th><span> Status</span></th> 
          @endif
-        <th><span>Position</span></th> 
+        <th><span>Stream Position</span></th> 
+        <th><span>Class Position</span></th> 
         <th><span>Student</span></th>
         <th><span>Class</span></th>
         <th><span>Comment</span></th>
@@ -300,6 +299,19 @@ echo $key->student_position;
 }
 @endphp
 </td>
+<td class="align-middle p-2">
+    @php
+    //    if tie type is share, i.e ties share the same position run the query below
+    $student_position=\DB::select(\DB::raw("select t.*
+    from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
+    from term_averages where term_averages.term_id=".$term." AND term_averages.student_class=".$int.") t
+    where student_id = ".$student->learner_id.""));
+    
+    foreach ($student_position as $key) {
+    echo $key->student_position;
+    }
+    @endphp
+    </td>
 
         
  <td class="align-middle p-2">{{ $student->lastname }} {{ $student->name }} </td>
@@ -360,8 +372,9 @@ echo $key->student_position;
     <input type="hidden"name="term_id" value="{{$term}}">
     <tr>
 <td><button type="submit" name="action" id="promote" value="promote" class="btn btn-primary">Promote Students</button></td>
-<td><button type="submit" name="action" id="another_school" value="another_school" class="btn btn-danger">Another School</button></td>
+<td><button type="submit" name="action" id="another_school" value="another_school" class="btn btn-black">Another School</button></td>
 <td><button type="submit" name="action" id="repeat" value="repeat" class="btn btn-danger">Force Repeat</button></td>
+<td><button type="submit" name="action" id="reset" value="reset" class="btn btn-warning">Reset Statuses</button></td>
     </tr>
     
 </form>
@@ -381,12 +394,12 @@ echo $key->student_position;
                 $.noConflict();
                 var term = @json($term_name);
                 var stream = @json($stream_title);
-            
+                var title = @json($title);
                 var dateNow = new Date();
               
  
 
-$('#customers').append('<caption style="margin-bottom:30px;color:red; fontSize:23px;">Shunifu a product of Innovazania. Proudly Made in Eswatini, Africa</caption>');
+$('#customers').append('<caption style="margin-bottom:30px;color:grey; fontSize:23px;">Shunifu a product of Innovazania. Proudly Made in Eswatini, Africa. </caption>');
    
                 $('#customers').DataTable({
                     // scrollY:auto,
@@ -410,7 +423,7 @@ $('#customers').append('<caption style="margin-bottom:30px;color:red; fontSize:2
                     columns: ':visible',
                      alignment: 'center'
                 },
-            title: @json($stream_title)+' '+ @json($term_name)+' '+'Scoresheet',  
+            title: @json($title)+' '+ @json($term_name)+' '+'Summary Scoresheet',  
             customize: function (doc) {
     //             doc.content[1].table.body[0].forEach(function (h) {
     //     h.fillColor = 'green';

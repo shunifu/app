@@ -93,7 +93,7 @@
 
                             </div>
   
-                        
+                            <input type="hidden" name="key" value="stream_based">
 
                         
                         

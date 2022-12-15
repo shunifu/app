@@ -739,6 +739,7 @@ $insert=AssessementProgressReport::upsert(collect($student_average)->map(functio
        MAX(CASE WHEN subjects.subject_code=117 THEN mark END) AS 'BusinessAccounting',
        MAX(CASE WHEN subjects.subject_code=118 THEN mark END) AS 'FoodTextileTechnology',
        MAX(CASE WHEN subjects.subject_code=119 THEN mark END) AS 'TechnicalStudies', 
+       MAX(CASE WHEN subjects.subject_code=122 THEN mark END) AS 'Consumer',
        MAX(CASE WHEN subjects.subject_code=121 THEN mark END) AS 'Entreprenuership'
        FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id
        INNER JOIN subjects ON teaching_loads.subject_id=subjects.id
@@ -987,12 +988,11 @@ public function term_based(Request $request){
     Schema::table('student_subject_averages', function ($table) {
        
         $table->float('ca_average')->change();
+        $table->float('student_average')->change();
+        $table->float('exam_mark')->change();
     });
 
-    Schema::table('student_subject_averages', function ($table) {
-   
-        $table->float('student_average')->change();
-    });
+ 
  
 $admin=Auth::user()->hasRole('admin_teacher');
         $teacher=Auth::user()->hasRole('teacher');
@@ -1032,14 +1032,12 @@ $admin=Auth::user()->hasRole('admin_teacher');
     public function term_based_class(Request $request){
 
         Schema::table('student_subject_averages', function ($table) {
-           
+       
             $table->float('ca_average')->change();
+            $table->float('student_average')->change();
+            $table->float('exam_mark')->change();
         });
     
-        Schema::table('student_subject_averages', function ($table) {
-       
-            $table->float('student_average')->change();
-        });
      
     $admin=Auth::user()->hasRole('admin_teacher');
             $teacher=Auth::user()->hasRole('teacher');
@@ -1077,28 +1075,53 @@ $admin=Auth::user()->hasRole('admin_teacher');
          DB::table('student_subject_averages')->delete();
         // DB::table('term_averages')->delete();
 
-       $stream=$request->stream_name;
+        $type_key=$request->key;
+
+        if($type_key=="class_based"){
+
+            $classofstudent=$request->grade_id;
+            $getstream=Grade::find($classofstudent);
+            $stream=$getstream->stream_id;
+            $stream_title=$getstream->stream_id;
+           
+            $class_title=$getstream->grade_name;
+           
+
+            $validation=$request->validate([
+                'grade_id'=>'required',
+                'term'=>'required',
+                'indicator'=>'required',
+             
+    
+            ]);
+            
+        
+        }elseif($type_key=="stream_based"){
+            $stream=$request->stream_name;
+          
+
+            $validation=$request->validate([
+                'stream_name'=>'required',
+                'term'=>'required',
+                'indicator'=>'required',
+             
+    
+            ]);
+
+            $stream_data=Stream::where('id', $stream)->first();
+            $stream_title=$stream_data->stream_name;
+        }
+
+      
        $term=$request->term;
 
        $term_data=Term::where('id', $term)->first();
        $term_name=$term_data->term_name;
 
-       $stream_data=Stream::where('id', $stream)->first();
-       $stream_title=$stream_data->stream_name;
-
+    
        $school_data=School::first();
-     //  $base64=$school_data->base64;
 
-
-        $validation=$request->validate([
-            'stream_name'=>'required',
-            'term'=>'required',
-
-        ]);
-
-
-
-        
+   
 
    // Getting the section of the selected stream (high school or secondary)
    $section=Grade::where('stream_id', $stream)->first();
@@ -1151,6 +1174,19 @@ $pass_rates_exist=DB::table('pass_rates')
 if (!($pass_rates_exist)) {
  //if it does not exist
  flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Please add pass rates. To do so, please visit assessement settings section ');
+ return redirect()->back();
+}
+
+
+$term_checker=DB::table('terms')
+->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
+->where('academic_sessions.active', 1)
+->where('terms.final_term', 1)
+->exists();
+
+if (!($term_checker)) {
+ //if it does not exist
+ flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Please update term. Make sure that you set TERM 2 to final term & do not forget to delete  Term 3 ');
  return redirect()->back();
 }
 //end of settinigs validations
@@ -1240,14 +1276,26 @@ $exam_weight=$weight->exam_percentage*(0.01);
 
 //if stream based
 
- $students = DB::table('grades_students')
+
+if ($type_key=="stream_based") {
+    $students = DB::table('grades_students')
+    ->join('users', 'grades_students.student_id', '=', 'users.id')
+    ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
+    ->where('grades.stream_id', $stream)
+    ->where('grades_students.active', 1)
+    ->where('users.active', 1)
+    ->get()->pluck('student_id');
+}elseif($type_key=="class_based"){
+
+$students = DB::table('grades_students')
  ->join('users', 'grades_students.student_id', '=', 'users.id')
- ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
- ->join('academic_sessions', 'grades_students.academic_session', '=', 'academic_sessions.id')
- ->where('grades.stream_id', $stream)
+ ->where('grades_students.grade_id', $classofstudent)
  ->where('grades_students.active', 1)
  ->where('users.active', 1)
  ->get()->pluck('student_id');
+
+}
+ 
 
 
 
@@ -1271,18 +1319,23 @@ $student_average=[];
 $report=[];
 
 
-
-
-
-$total_students = DB::table('grades_students')
-->join('grades', 'grades_students.grade_id', '=', 'grades.id')
-->join('users', 'grades_students.student_id', '=', 'users.id')
-->join('streams', 'streams.id', '=', 'grades.stream_id')
-->where('grades.stream_id', $stream)
-->where('grades_students.active', 1)
-->where('users.active', 1)
-->get()->count('grades_students.student_id');
-
+if ($type_key=="stream_based") {
+    $total_students = DB::table('grades_students')
+    ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
+    ->join('users', 'grades_students.student_id', '=', 'users.id')
+    ->join('streams', 'streams.id', '=', 'grades.stream_id')
+    ->where('grades.stream_id', $stream)
+    ->where('grades_students.active', 1)
+    ->where('users.active', 1)
+    ->get()->count('grades_students.student_id');
+}elseif($type_key=="class_based"){
+    $total_students = DB::table('grades_students')
+    ->join('users', 'grades_students.student_id', '=', 'users.id')
+    ->where('grades_students.grade_id', $classofstudent)
+    ->where('grades_students.active', 1)
+    ->where('users.active', 1)
+    ->get()->count('grades_students.student_id');
+}
 
 
 
@@ -1321,7 +1374,7 @@ INNER JOIN c_a__exams ON c_a__exams.assessement_id = marks.assessement_id
 INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
 INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
 INNER JOIN users ON users.id=marks.student_id
-WHERE marks.student_id = ".$student." AND `c_a__exams`.`term_id` = ".$term." AND marks.active=1 AND users.active=1
+WHERE marks.student_id = ".$student." AND `c_a__exams`.`term_id` = ".$term." AND marks.active=1 AND users.active=1 AND teaching_loads.active=1
 GROUP BY
 marks.student_id,
 subjects.id"));
@@ -1352,7 +1405,7 @@ $insert=StudentSubjectAverage::upsert(collect($key)->map(function($item) use($st
  'student_class'  =>$item->student_class,
  'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
      ];
- })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average', 'position']);
+ })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average']);
 }
 
 }
@@ -1546,7 +1599,7 @@ FROM
  FROM
  student_loads
  WHERE
- student_id = ".$student."
+ student_id = ".$student." AND student_loads.active=1
 ) AS loads_count
 ) lmr"));
 
@@ -1671,6 +1724,7 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
         MAX(CASE WHEN subjects.subject_code=117 THEN student_subject_averages.student_average END) AS 'BusinessAccounting',
         MAX(CASE WHEN subjects.subject_code=118 THEN student_subject_averages.student_average END) AS 'FoodTextileTechnology',
         MAX(CASE WHEN subjects.subject_code=119 THEN student_subject_averages.student_average END) AS 'TechnicalStudies', 
+        MAX(CASE WHEN subjects.subject_code=122 THEN student_subject_averages.student_average END) AS 'Consumer',
         MAX(CASE WHEN subjects.subject_code=121 THEN student_subject_averages.student_average END) AS 'Entreprenuership'
         FROM student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
         INNER JOIN subjects ON teaching_loads.subject_id=subjects.id
@@ -1684,16 +1738,30 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
         ORDER BY term_averages.student_average DESC"));
 
 
-$total_passed = DB::table('term_averages')
-->join('grades', 'term_averages.student_class', '=', 'grades.id')
-->where('grades.stream_id', $stream)
-->where('term_averages.term_id', $term)
-->where('number_of_passed_subjects','>=', $number_of_subjects)
-->where('student_average','>=',$pass_rate)->count();
+
+if($type_key=="stream_based"){
+    $total_passed = DB::table('term_averages')
+    ->join('grades', 'term_averages.student_class', '=', 'grades.id')
+    ->where('grades.stream_id', $stream)
+    ->where('term_averages.term_id', $term)
+    ->where('number_of_passed_subjects','>=', $number_of_subjects)
+    ->where('student_average','>=',$pass_rate)->count();
+}elseif($type_key=="class_based"){
+    $total_passed = DB::table('term_averages')
+    ->where('student_class', $classofstudent)
+    ->where('term_averages.term_id', $term)
+    ->where('number_of_passed_subjects','>=', $number_of_subjects)
+    ->where('student_average','>=',$pass_rate)->count();
+
+}
 
 
 
-    }else{
+
+    }
+    
+    
+    if($criteria->passing_subject_rule=="1"){
         $scoresheet=DB::select(DB::raw("SELECT 
         student_subject_averages.student_id,
         grades.grade_name,
@@ -1746,6 +1814,7 @@ $total_passed = DB::table('term_averages')
         MAX(CASE WHEN subjects.subject_code=117 THEN student_subject_averages.student_average END) AS 'BusinessAccounting',
         MAX(CASE WHEN subjects.subject_code=118 THEN student_subject_averages.student_average END) AS 'FoodTextileTechnology',
         MAX(CASE WHEN subjects.subject_code=119 THEN student_subject_averages.student_average END) AS 'TechnicalStudies', 
+        MAX(CASE WHEN subjects.subject_code=122 THEN student_subject_averages.student_average END) AS 'Consumer',
         MAX(CASE WHEN subjects.subject_code=121 THEN student_subject_averages.student_average END) AS 'Entreprenuership'
         FROM student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
         INNER JOIN subjects ON teaching_loads.subject_id=subjects.id
@@ -1758,77 +1827,129 @@ $total_passed = DB::table('term_averages')
         GROUP BY student_subject_averages.student_id  
         ORDER BY term_averages.student_average DESC"));
 
+if($type_key=="stream_based"){
+    $total_passed = DB::table('term_averages')
+    ->join('grades', 'term_averages.student_class', '=', 'grades.id')
+    ->where('grades.stream_id', $stream)
+    ->where('term_averages.term_id', $term)
+    ->where('number_of_passed_subjects','>=', $number_of_subjects)
+    ->where('passing_subject_status', 1)
+    ->where('student_average','>=',$pass_rate)->count();
+}elseif($type_key=="class_based"){
+    $total_passed = DB::table('term_averages')
+    ->where('student_class', $classofstudent)
+    ->where('term_averages.term_id', $term)
+    ->where('number_of_passed_subjects','>=', $number_of_subjects)
+    ->where('passing_subject_status', 1)
+    ->where('student_average','>=',$pass_rate)->count();
 
-$total_passed = DB::table('term_averages')
-->join('grades', 'term_averages.student_class', '=', 'grades.id')
-->where('grades.stream_id', $stream)
-->where('term_averages.term_id', $term)
-->where('passing_subject_status', 1)
-->where('number_of_passed_subjects','>=', $number_of_subjects)
-->where('student_average','>=',$pass_rate)->count();
+}
+
 
 
     }
 
-    $total_progression= DB::table('term_averages')
-    ->join('grades', 'term_averages.student_class', '=', 'grades.id')
-    ->where('grades.stream_id', $stream)
-    ->where('term_averages.term_id', $term)
-    ->where('final_term_status', 'Proceed')
-    ->count();
 
-    $total_promoted= DB::table('term_averages')
-    ->join('grades', 'term_averages.student_class', '=', 'grades.id')
-    ->where('grades.stream_id', $stream)
-    ->where('term_averages.term_id', $term)
-    ->where('final_term_status', 'Promoted')
-    ->count();
 
-    $total_repeat= DB::table('term_averages')
-    ->join('grades', 'term_averages.student_class', '=', 'grades.id')
-    ->where('grades.stream_id', $stream)
-    ->where('term_averages.term_id', $term)
-    ->where('final_term_status', 'Repeat')
-    ->count();
+    if($type_key=="stream_based"){
+        $total_progression= DB::table('term_averages')
+        ->join('grades', 'term_averages.student_class', '=', 'grades.id')
+        ->where('grades.stream_id', $stream)
+        ->where('term_averages.term_id', $term)
+        ->where('final_term_status', 'Proceed')
+        ->count();
+    
+        $total_promoted= DB::table('term_averages')
+        ->join('grades', 'term_averages.student_class', '=', 'grades.id')
+        ->where('grades.stream_id', $stream)
+        ->where('term_averages.term_id', $term)
+        ->where('final_term_status', 'Promoted')
+        ->count();
+    
+        $total_repeat= DB::table('term_averages')
+        ->join('grades', 'term_averages.student_class', '=', 'grades.id')
+        ->where('grades.stream_id', $stream)
+        ->where('term_averages.term_id', $term)
+        ->where('final_term_status', 'Repeat')
+        ->count();
+    
+        $total_expelled= DB::table('term_averages')
+        ->join('grades', 'term_averages.student_class', '=', 'grades.id')
+        ->where('grades.stream_id', $stream)
+        ->where('term_averages.term_id', $term)
+        ->where('final_term_status', 'Try Another School')
+        ->count();
+        $title=$stream_title;
+        $int=$stream;
+    }elseif($type_key=="class_based"){
 
-    $total_expelled= DB::table('term_averages')
-    ->join('grades', 'term_averages.student_class', '=', 'grades.id')
-    ->where('grades.stream_id', $stream)
-    ->where('term_averages.term_id', $term)
-    ->where('final_term_status', 'Try Another School')
-    ->count();
+        $total_progression= DB::table('term_averages')
+        ->where('student_class', $classofstudent)
+        ->where('term_averages.term_id', $term)
+        ->where('final_term_status', 'Proceed')
+        ->count();
+    
+        $total_promoted= DB::table('term_averages')
+        ->where('student_class', $classofstudent)
+        ->where('term_averages.term_id', $term)
+        ->where('final_term_status', 'Promoted')
+        ->count();
+    
+        $total_repeat= DB::table('term_averages')
+        ->where('student_class', $classofstudent)
+        ->where('term_averages.term_id', $term)
+        ->where('final_term_status', 'Repeat')
+        ->count();
+    
+        $total_expelled= DB::table('term_averages')
+        ->where('student_class', $classofstudent)
+        ->where('term_averages.term_id', $term)
+        ->where('final_term_status', 'Try Another School')
+        ->count();
+
+        $title=$class_title;
+        $int=$classofstudent;
+
+    }
+
+  
 
 $base64="";
-        // return view('analytics.term-analytics.view',compact('scoresheet','stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'base64', 'tie_type', 'passing_subject_rule')); 
+  
 
 
-
-    $total_failed=($total_students-$total_passed);
-    $pass_rate_percentage=($total_passed/$total_students)*100;
-    $fail_rate_percentage=($total_failed/$total_students)*100;
-
+$total_failed=($total_students-$total_passed);
+$pass_rate_percentage=($total_passed/$total_students)*100;
+$fail_rate_percentage=($total_failed/$total_students)*100;
 
 
-      
+   
 if ($request->indicator=="summary_scoresheet") {
 
     
-        return view('analytics.term-analytics.summary-scoresheet',compact('scoresheet','stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled','total_repeat'));
+        return view('analytics.term-analytics.summary-scoresheet',compact('scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat'));
      
      }
 
-        if($school_data->school_type=="primary-school"){
-            return view('analytics.term-analytics.view-primary',compact('scoresheet','stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'base64', 'tie_type', 'passing_subject_rule', 'indicator')); 
-        }else{
-            return view('analytics.term-analytics.view',compact('scoresheet','stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'base64', 'tie_type', 'passing_subject_rule', 'indicator'));  
-        }
+     if ($request->indicator=="scoresheet") {
+
+    
+        return view('analytics.term-analytics.view',compact('scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat'));
+     
+     }
+
+        // if($school_data->school_type=="primary-school"){
+        //     return view('analytics.term-analytics.view-primary',compact('scoresheet','stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'base64', 'tie_type', 'passing_subject_rule', 'indicator')); 
+        // }else{
+        //     return view('analytics.term-analytics.view',compact('scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat'));
+        // }
 
 }
 
-if ($request->indicator=="criteria_promotion") {
-   return view('analytics.term-analytics.criteria_promotion',compact('stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'base64', 'tie_type', 'passing_subject_rule', 'indicator'));
+// if ($request->indicator=="criteria_promotion") {
+//    return view('analytics.term-analytics.criteria_promotion',compact('stream_title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'base64', 'tie_type', 'passing_subject_rule', 'indicator'));
 
-}
+// }
 
 
 

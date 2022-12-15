@@ -4,14 +4,14 @@
     </x-slot>
     <div class="card card-light  ">
       <div class="card-header">
-        <h3 class="card-title">View Analytics</h3>
+        <h3 class="card-title">View  Class Based Term Analytics</h3>
       </div>
   
-        <img class="card-img-top"  src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_230,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_32_style_light_align_center:Term-Based Analytics,w_0.3,y_0.20/v1617555284/carlos-muza-hpjSkU2UYSU-unsplash_l61hlq.jpg" alt="">
+        <img class="card-img-top"  src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_250,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_37_style_light_align_center:Class Based Insights,w_0.5,y_0.18/v1671057434/pexels-tiger-lily-7109274_chdqow.jpg" alt="">
         <div class="card-body">
           <h3 class="lead">Hi, {{Auth::user()->name}}</h3>
          <div class="text-muted">
-            <p class="card-text"> Use this section to view term analytics <br>
+            <p class="card-text"> Use this section to view class based term analytics  <br>
           
             </p>
           
@@ -91,7 +91,7 @@
                                 </div>
 
 
-                                <input type="hidden" name="key" value="class_based ">
+                                <input type="hidden" name="key" value="class_based">
 
 
                             </div>
