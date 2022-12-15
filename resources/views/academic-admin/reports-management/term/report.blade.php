@@ -505,7 +505,6 @@ grades.stream_id,
             <th class="background">Subject Name</th>
             <th class="background" >CA</th>     
             <th class="background">Examination</th>   
-            <th class="background">Subject Average</th>   
             <th class="background">Subject Position</th>   
             <th class="background">Symbol</th>
             <th class="background">Comment</th>
@@ -552,14 +551,6 @@ grades.stream_id,
         
 
     
-         <td> 
-            @if (($item2->student_average<$pass_rate))
-            <span class="text-danger">{{($item2->student_average)}}%</span>
-            @else
-            {{($item2->student_average)}}%
-            @endif
-        </td> 
-  
 
              <td>
 
