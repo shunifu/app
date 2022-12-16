@@ -476,7 +476,7 @@
                     <td>'+middlename+'</td>\
                     <td>'+item.grade_name+'-'+item.academic_session+'</td>\
                     <td>'+cell+'</td>\
-                    <td> <form action="/student/image/upload" method="POST" enctype="multipart/form-data">@csrf<input id="upload" name="student_image" type="file"/> <input type="hidden" name="student_id[]" value='+item.id+'><button type="submit" class="btn"><i class="fa fa-check"></i></button></form></td>\
+                    <td> <form action="/student/image/upload" method="POST" enctype="multipart/form-data">@csrf<input id="upload" name="student_image" type="file"/> <input type="hidden" name="student_id" value='+item.id+'><button type="submit" class="btn"><i class="fa fa-check"></i></button></form></td>\
                     <td><a href=/users/profile/student/'+item.id+'>Visit Profile</a></td>\
                     </tr>'  );  
 
