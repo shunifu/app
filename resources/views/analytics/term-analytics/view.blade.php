@@ -181,42 +181,44 @@ th span {
             @endif
 
 
+
+            @if ($type_key=="class_based")
             <td class="align-middle p-2">
-
-
-                    
                 @php
-              
-//    if tie type is share, i.e ties share the same position run the query below
+                //    if tie type is share, i.e ties share the same position run the query below
+                $student_position=\DB::select(\DB::raw("select t.*
+                from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
+                from term_averages where term_averages.term_id=".$term." AND term_averages.student_class=".$int.") t
+                where student_id = ".$student->learner_id.""));
+                
+                foreach ($student_position as $key) {
+                echo $key->student_position;
+                }
+                @endphp
+                </td>
 
+                @else
 
-// $sql_piece="where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream."";
+                <td class="align-middle p-2">
 
-//  dd($ter);
+                    @php
+                  
+    $student_position=\DB::select(\DB::raw("select t.*
+    from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
+    from term_averages where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream.") t
+    where student_id = ".$student->learner_id.""));
+    
+    foreach ($student_position as $key) {
+    echo $key->student_position ;
 
-$student_position=\DB::select(\DB::raw("select t.*
-from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
-from term_averages where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream.") t
-where student_id = ".$student->learner_id.""));
+    }
+    
+    @endphp
+           
+                </td>
 
-foreach ($student_position as $key) {
+            @endif
 
-
-echo $key->student_position ;
-
-
-
-}
-
-
-
-@endphp
-     
-            
-             
-
-            
-            </td>
 
         
                    
