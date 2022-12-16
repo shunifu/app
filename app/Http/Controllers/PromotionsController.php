@@ -111,7 +111,7 @@ if($request->action=="reset"){
 
     for($i = 0; $i <count($student_list); $i++) {
 
-        $another=TermAverage::where('student_id', $student_list[$i])->where('term_id', $term)->update(['final_term_status'=>NULL]);
+        $another=TermAverage::where('term_id', $term)->update(['final_term_status'=>NULL]);
     
     }
 
