@@ -433,8 +433,6 @@ WHERE sub.student_id=".$student.""));
                         <br>
                         Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
                         @if (is_null($variable->student_attendance) OR $variable->student_attendance==0)
-                        @else
-
 
 
                         <?php
@@ -452,6 +450,10 @@ $attendance=\DB::select(\DB::raw("SELECT number_of_days_absent FROM cummulative_
 
 
                         ?>
+                        @else
+
+
+
 
 
                 
