@@ -139,17 +139,31 @@ th span {
         <th><span>Biology</span></th>
         @foreach (\App\Models\School::all() as $item)
 
-        @if ($item->school_code=="0083" OR $item->school_code=="1037")
+        @if ($item->school_code=="0315" OR $item->school_code=="1037" )
         <th><span>RM</span></th>
         <th><span>GP</span></th>
         @endif
         @endforeach
         @endif
+
+
         <th><span>Add Maths</span></th>
         <th><span>D&T</span></th>
         <th><span>Comp</span></th>
-       
-        
+
+
+        @foreach (\App\Models\School::all() as $item)
+
+        @if ($item->school_type=="Prevoc")
+
+        <th><span>PrevocICT</span></th>
+        <th><span>FT Tech</span></th>
+        <th><span>TechnicalStudies</span></th>
+        <th><span>Entreprenuership</span></th>
+        <th><span>AgcriculturalTech</span></th>
+
+        @endif
+        @endforeach
     
         </thead>
         <tbody>
@@ -471,7 +485,7 @@ echo $key->student_position ;
 
                     @foreach (\App\Models\School::all() as $item)
 
-                    @if ($item->school_code=="1037")
+                  @if ($item->school_code=="0315" OR $item->school_code=="1037" )
                     @if ($section_id=='1')
                    
                     <td class="align-middle p-2">
@@ -528,18 +542,68 @@ echo $key->student_position ;
                     </td>
 
 
-               
-                    
+                    @foreach (\App\Models\School::all() as $item)
 
-                    
+                    @if ($item->school_type=="Prevoc")
+                    <td class="align-middle p-2">
+                        @if ($student->PrevocICT>=$pass_rate)
+                        <span class="text-secondary">{{ $student->PrevocICT}}% </span>
+                        @elseif(is_null($student->PrevocICT))
+                        -
+                        @elseif($student->PrevocICT<$pass_rate )
+                        <span class="text-danger">{{ $student->PrevocICT}}% </span>
+                        @endif
+                    </td>
 
-                
+                    <td class="align-middle p-2">
+                        @if ($student->FoodTextileTechnology>=$pass_rate)
+                        <span class="text-secondary">{{ $student->FoodTextileTechnology}}% </span>
+                        @elseif(is_null($student->PrevocICT))
+                        -
+                        @elseif($student->FoodTextileTechnology<$pass_rate )
+                        <span class="text-danger">{{ $student->FoodTextileTechnology}}% </span>
+                        @endif
+                    </td>
 
-                   
-                   
+                    <td class="align-middle p-2">
+                        @if ($student->TechnicalStudies>=$pass_rate)
+                        <span class="text-secondary">{{ $student->TechnicalStudies}}% </span>
+                        @elseif(is_null($student->TechnicalStudies))
+                        -
+                        @elseif($student->TechnicalStudies<$pass_rate )
+                        <span class="text-danger">{{ $student->TechnicalStudies}}% </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->Entreprenuership>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Entreprenuership}}% </span>
+                        @elseif(is_null($student->Entreprenuership))
+                        -
+                        @elseif($student->Entreprenuership<$pass_rate )
+                        <span class="text-danger">{{ $student->Entreprenuership}}% </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->AgiculturalTechnology>=$pass_rate)
+                        <span class="text-secondary">{{ $student->AgiculturalTechnology}}% </span>
+                        @elseif(is_null($student->AgiculturalTechnology))
+                        -
+                        @elseif($student->AgiculturalTechnology<$pass_rate )
+                        <span class="text-danger">{{ $student->AgiculturalTechnology}}% </span>
+                        @endif
+                    </td>  
+
+                    @endif
+                    @endforeach
+
 
                  
-            
+              
+                    
+
+                   
 
 
                 </tr>
