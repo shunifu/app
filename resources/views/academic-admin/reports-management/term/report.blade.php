@@ -437,14 +437,17 @@ WHERE sub.student_id=".$student.""));
 
                         <?php
 
+if ($school_is->"0070") {
+    $attendance=\DB::select(\DB::raw("SELECT number_of_days_absent FROM cummulative_attendances WHERE student_id=".$student." AND term_id=".$term.""));
 
-// $attendance=\DB::select(\DB::raw("SELECT number_of_days_absent FROM cummulative_attendances WHERE student_id=".$student." AND term_id=".$term.""));
 
+foreach ($attendance as $attendance_key) {
+   echo 'Days Absent: '$attendance_key->number_of_absent_days.' '.'74 Days';
+ 
+     }
 
-//  foreach ($attendance as $attendance_key) {
-//     echo 'Days Absent: '$attendance_key->number_of_absent_days.' '.'74 Days';
-  
-//       }
+}
+
 
 
 
