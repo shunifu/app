@@ -505,7 +505,6 @@ grades.stream_id,
             <th class="background">Subject Name</th>
             <th class="background" >CA</th>     
             <th class="background">Examination</th>   
-            <th class="background">Subject Average</th>   
             <th class="background">Subject Position</th>   
             <th class="background">Symbol</th>
             <th class="background">Comment</th>
@@ -531,8 +530,10 @@ grades.stream_id,
             {{round(($item2->ca_average),2)}}%
             @endif
         </td>   
+      
 
 
+        
         <td  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
             @if ($item2->exam_mark<$pass_rate)
             @isset($item2->exam_mark)
@@ -548,16 +549,8 @@ grades.stream_id,
             @endif
         </td> 
         
-        <td> 
-            @if (is_null($item2->subject_average))
-            -
-            @elseif (($item2->subject_average<$pass_rate))
-            <span class="text-danger">{{round(($item2->subject_average))}}%</span>
-            @else
-            {{round(($item2->subject_average),2)}}%
-            @endif
-        </td>   
-      
+
+    
 
              <td>
 
@@ -1202,7 +1195,7 @@ School Stamp
                                
                           <span class="font-italic font-weight-light">S.G Simelane</span>
                           @else
-                         <img class="img-fluid " width="120" height="120" src="{{$school_is->base64}} " alt="">
+                         <img class="img-fluid " width="120" height="120" src="{{$school_is->base64}} " alt=""
 
                           @endif
                           @else       
