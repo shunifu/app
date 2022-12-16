@@ -445,7 +445,7 @@ WHERE sub.student_id=".$student.""));
     
 if(collect($attendance)->first()) {
     foreach ($attendance as $attendance_key) {
-   echo 'Days Absent: '.$attendance_key->number_of_absent_days.' '.'70 Days';
+   echo 'Days Absent: '.$attendance_key->number_of_absent_days.' '.'out of 70 Days';
  
      }
 } else {
