@@ -288,10 +288,7 @@ class ReportController extends Controller
      $variables=ReportVariable::all();
 
    
-if(is_null($variables)) {
-    flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Please add Report Card variables. To do so, please go to settings , then Report Settings and lastly Report Variables');
-    return redirect()->back();
-}
+ 
 
     
      $term_checker=DB::table('terms')

@@ -456,7 +456,7 @@ WHERE sub.student_id=".$student.""));
                     </tbody>
                 </table>
        <br>
-     
+       <br>
 <span class=" mx-auto">
     <center><span class="mx-auto">Breakdown of <span class="text-bold">{{$student_term_data->name}}'s </span>  Academic Performance</span> </center>
 </span>
@@ -505,6 +505,7 @@ grades.stream_id,
             <th class="background">Subject Name</th>
             <th class="background" >CA</th>     
             <th class="background">Examination</th>   
+            <th class="background">Subject Average</th>   
             <th class="background">Subject Position</th>   
             <th class="background">Symbol</th>
             <th class="background">Comment</th>
@@ -551,6 +552,14 @@ grades.stream_id,
         
 
     
+         <td> 
+            @if (($item2->student_average<$pass_rate))
+            <span class="text-danger">{{($item2->student_average)}}%</span>
+            @else
+            {{($item2->student_average)}}%
+            @endif
+        </td> 
+  
 
              <td>
 
@@ -1166,7 +1175,21 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                        </div>
 
                     
-                   
+                       <div class="col">
+                        <div id="signaturetitle">
+                           Headteacher's Signature:
+                          </div>
+                          <div class="text-center">
+                          @if ($variable->principal_signature==1)
+                         
+                            <img class="img-fluid " width="80" height="80" src="{{$school_is->base64}} " alt="">
+                               @else       
+                               <img class="img-fluid " width="120" height="120" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">            
+                          @endif
+                         
+                        </div>
+                    </div>
+
                        
 
                        <div class="col">
@@ -1175,7 +1198,7 @@ School Stamp
                         </div>
                         <div class="text-center">
                             @if ($variable->school_stamp==1)
-                            <img class="img-fluid " width="100" height="100" src="{{$school_is->school_stamp}} " alt="">  
+                            <img class="img-fluid " width="140" height="140" src="{{$school_is->school_stamp}} " alt="">  
                             @else
                             <img class="img-fluid " width="140" height="140" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">
                             @endif
@@ -1183,29 +1206,6 @@ School Stamp
                           </div>
 
                        </div>
-
-
-                       <div class="col">
-                        <div id="signaturetitle">
-                           Headteacher's Signature:
-                          </div>
-                          <div class="text-center">
-                          @if ($variable->principal_signature==1)
-                           @if ($school_is->school_code=='106')
-                               
-                          <span class="font-italic font-weight-light">S.G Simelane</span>
-                          @else
-                         <img class="img-fluid " width="120" height="120" src="{{$school_is->base64}} " alt=""
-
-                          @endif
-                          @else       
-                          <img class="img-fluid " width="120" height="120" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">      
-
-                         
-                          @endif
-                        </div>
-                    </div>
-
                    </div>
                        
                    <table class="table table-sm table-bordered">
