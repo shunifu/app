@@ -100,14 +100,14 @@ th span {
             <th><span>Class</span></th>
           
       
-        <th><span>English Language</span> </th>
-        <th><span>English Lit</span></th>
+        <th><span>Eng Lan</span> </th>
+        <th><span>Eng Lit</span></th>
         <th><span>Maths</span></th>
         <th><span>Siswati</span></th>
         <th><span>French</span></th>
 
         @if ($section_id=='2')
-        <th><span>Science</span></th> 
+        <th><span>Sci</span></th> 
 
 
         @foreach (\App\Models\School::all() as $item)
@@ -126,17 +126,17 @@ th span {
         <th><span>Agri</span></th>
         <th><span>ICT</span></th>
         <th><span>R.E</span></th>
-        <th><span>History</span></th>
+        <th><span>His</span></th>
         <th><span>Geo</span></th>
 
         @if ($section_id=='1')
         <th><span>FN</span></th>
         <th><span>FF</span></th>
        
-        <th><span>Accounting</span></th>
-        <th><span>Economics</span></th>
-        <th><span>Physical Science</span></th>
-        <th><span>Biology</span></th>
+        <th><span>ACC</span></th>
+        <th><span>ECON</span></th>
+        <th><span>Phy-Science</span></th>
+        <th><span>Bio</span></th>
         @foreach (\App\Models\School::all() as $item)
 
         @if ($item->school_code=="0315" OR $item->school_code=="1037" )
@@ -158,9 +158,9 @@ th span {
 
         <th><span>PrevocICT</span></th>
         <th><span>FT Tech</span></th>
-        <th><span>TechnicalStudies</span></th>
-        <th><span>Entreprenuership</span></th>
-        <th><span>AgcriculturalTech</span></th>
+        <th><span>TechStudies</span></th>
+        <th><span>Entrep</span></th>
+        <th><span>AgcriTech</span></th>
         <th><span>AS</span></th>
         @endif
         @endforeach

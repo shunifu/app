@@ -85,26 +85,26 @@ th span {
         @foreach (\App\Models\School::all() as $item)
 
         @if ($item->school_type=="high-school")
-        <th><span>English Language</span> </th>
-        <th><span>English Lit</span></th>
+        <th><span>Eng Lang</span> </th>
+        <th><span>Eng Lit</span></th>
         <th><span>Maths</span></th>
         <th><span>Siswati</span></th>
         <th><span>French</span></th>
 
         @if ($section_id=='2')
         <th><span>Science</span></th> 
-        <th><span>Home Economics</span></th>
-        <th><span>BookKeeping</span></th>
+        <th><span>HE</span></th>
+        <th><span>BK</span></th>
         <th><span>Computer</span></th>
        
         @endif
 
-        <th><span>Business Studies</span></th>  
-        <th><span>Agriculture</span></th>
+        <th><span>BS</span></th>  
+        <th><span>Agri</span></th>
         <th><span>ICT</span></th>
         <th><span>R.E</span></th>
         <th><span>History</span></th>
-        <th><span>Geography</span></th>
+        <th><span>Geo</span></th>
 
         @if ($section_id=='1')
         <th><span>FN</span></th>
