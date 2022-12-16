@@ -451,7 +451,7 @@ if(collect($attendance)->first()) {
                
 }
 
-   dd($attendance);
+
 
 
 
