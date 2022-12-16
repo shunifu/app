@@ -432,6 +432,7 @@ WHERE sub.student_id=".$student.""));
                             
                         <br>
                         Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
+                        <br>
                         @if (is_null($variable->student_attendance) OR $variable->student_attendance==0)
 
 
