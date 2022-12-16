@@ -437,7 +437,7 @@ WHERE sub.student_id=".$student.""));
 
                         <?php
 
-if ($school_is->school_code="0070") {
+
     $attendance=\DB::select(\DB::raw("SELECT number_of_absent_days FROM cummulative_attendances WHERE student_id=".$student." AND term_id=".$term.""));
 
 
@@ -456,7 +456,7 @@ if(collect($attendance)->first()) {
 
 
 
-}
+
 
 
 
