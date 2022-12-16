@@ -10,10 +10,15 @@
               <div class="card-header">
                 <h3 class="card-title"><a href="#"><i class="fas fa-arrow-circle-left"></i></a> Add Student Images</h3>
               </div>
+
+
+
+              {{-- <form action="/student/image/upload" method="POST" enctype="multipart/form-data">
+                @csrf<input id="upload" name="student_image" type="file"/> <input type="hidden" name="student_id[]" value='+item.id+'><button type="submit" class="btn"><i class="fa fa-check"></i></button></form> --}}
+
+
               <!-- /.card-header -->
-              <form  method="POST"  action="/student/image/upload" accept-charset="utf-8" enctype="multipart/form-data">
-                @csrf  
-       
+         
                 <div class="card-body">
                   
 <div class="table-responsive">
@@ -40,10 +45,19 @@
                             </td>
                             <td>{{$item->lastname}}  </td>
                             <td>{{$item->name}} {{$item->middlename}}</td>
-                        <td> <input id="upload" name="student_image[]"  placeholder="Choose files" type="file"/> </td>
-    
+                        <td>
+                            <form action="/student/image/upload" method="POST" enctype="multipart/form-data">
+                                @csrf
+                            <input id="upload" name="student_image"  placeholder="Choose files" type="file"/> 
+                            <input type="hidden" name="student_id" value="{{$item->id}}">
+                            <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                        </form>
+                        </td>
+                      
+
+
                             </tr>
-                            <input type="hidden" name="student_id[]" value={{$item->id}}>
+                           
                           
                             @endforeach
                              
@@ -66,7 +80,7 @@
                 </div>
                 <!-- /.card-body -->
 
-            </form>
+           
       
             </div>
       
