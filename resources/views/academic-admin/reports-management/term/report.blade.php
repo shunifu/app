@@ -456,7 +456,7 @@ WHERE sub.student_id=".$student.""));
                     </tbody>
                 </table>
        <br>
-       <br>
+     
 <span class=" mx-auto">
     <center><span class="mx-auto">Breakdown of <span class="text-bold">{{$student_term_data->name}}'s </span>  Academic Performance</span> </center>
 </span>
@@ -1194,6 +1194,8 @@ School Stamp
                            @if ($school_is->school_code=='106')
                                
                           <span class="font-italic font-weight-light">S.G Simelane</span>
+
+                          
                           @endif
                          
                             {{-- <img class="img-fluid " width="120" height="120" src="{{$school_is->base64}} " alt="">
