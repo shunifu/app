@@ -650,7 +650,7 @@ echo $key->student_position ;
             $(document).ready(function () {
                 $.noConflict();
                 var term = @json($term_name);
-                var stream = @json($stream_title);
+                var stream = @json($title);
              
                 var dateNow = new Date();
               
