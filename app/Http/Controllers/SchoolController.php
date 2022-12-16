@@ -198,6 +198,16 @@ class SchoolController extends Controller
 			
 			$background_file=$school->school_background_image;
 		}
+
+
+		if($request->hasFile('school_stamp')){
+				
+			$school_stamp_result = $request->file('school_stamp')->storeOnCloudinaryAs('shunifu', 'school_stamp'.$school_code);
+			$school_stamp=$school_stamp_result->getSecurePath();
+		}else{
+			$school_stamp_file=$school->school_stamp;
+		}
+		
 			// "_token" => "PNWVIGP8P4tncnCqK5VrT6sDxme9uGR4CEm876me"
 		// "school_name" => "Demo School"
 		// "school_slogan" => "Innovative School"
