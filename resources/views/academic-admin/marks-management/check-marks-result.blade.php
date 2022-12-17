@@ -104,7 +104,12 @@
 
              @foreach ($item as $check_data)
                  
-            
+            <?php
+
+           
+
+
+            ?>
 
                
                <tr>

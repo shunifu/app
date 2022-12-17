@@ -548,8 +548,13 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
         INNER JOIN grades ON grades.id=teaching_loads.class_id 
        
         where teaching_loads.active=1 AND users.active=1
+      
         ORDER BY grades.grade_name
 "));
+
+
+
+
 
       
       return view('academic-admin.marks-management.check-marks-result', compact('check','assessements'));
