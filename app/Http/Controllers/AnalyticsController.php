@@ -1655,7 +1655,7 @@ $getPassed = DB::table('term_averages')
 
 
 
-     }else{
+     }else
         $getPassed = DB::table('term_averages')
         ->join('grades', 'term_averages.student_class', '=', 'grades.id')
         ->where('grades.stream_id', $stream)

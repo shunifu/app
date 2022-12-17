@@ -213,8 +213,8 @@ $array = implode("','",$string);
             subjects.subject_name,
             grades.grade_name,
             grades.id as grade_id,
-            (SELECT marks.mark from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id) AS mark,
-            (SELECT marks.id from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id) AS mark_id
+            (SELECT marks.mark from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1)  AS mark,
+            (SELECT marks.id from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1) AS mark_id
            FROM
                student_loads
                INNER JOIN users ON users.id=student_loads.student_id
@@ -222,7 +222,7 @@ $array = implode("','",$string);
                INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id
                INNER JOIN grades ON grades.id=teaching_loads.class_id
                INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  
-               WHERE student_loads.teaching_load_id IN ('".$array."') AND grades_students.active=1 AND teaching_loads.active=1
+               WHERE student_loads.teaching_load_id IN ('".$array."') AND grades_students.active=1 AND teaching_loads.active=1 AND users.active=1
            ORDER BY `users`.`lastname`, `users`.`name` ASC"));
     //   }
 
@@ -527,7 +527,7 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
     $current_academic_year=$current_session->id;
       
 
-        $teachingLoad=TeachingLoad::where('session_id', $current_academic_year)->get()->pluck('id')->toArray();
+        $teachingLoad=TeachingLoad::where('session_id', $current_academic_year)->where('active', 1)->get()->pluck('id')->toArray();
 
     //   dd($teachingLoad);
 
@@ -541,12 +541,13 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
         grades.grade_name,
         subjects.subject_name, 
      	(SELECT COUNT(*) from student_loads WHERE  student_loads.teaching_load_id=teaching_loads.id AND teaching_loads.active=1 AND student_loads.active=1) as total_loads,
-    	(SELECT COUNT(*) from marks  WHERE marks.assessement_id=".$request->assessement_id." AND marks.teaching_load_id=teaching_loads.id AND marks.active=1 AND teaching_loads.active=1) as marks_count
+    	(SELECT COUNT(*) from marks  WHERE marks.assessement_id=".$request->assessement_id." AND marks.teaching_load_id=teaching_loads.id AND marks.active=1 AND teaching_loads.active=1 ) as marks_count
        	FROM teaching_loads
         INNER JOIN users ON users.id=teaching_loads.teacher_id 
         INNER JOIN subjects ON subjects.id=teaching_loads.subject_id 
         INNER JOIN grades ON grades.id=teaching_loads.class_id 
-        where teaching_loads.active=1
+       
+        where teaching_loads.active=1 AND users.active=1
         ORDER BY grades.grade_name
 "));
 

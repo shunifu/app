@@ -433,42 +433,35 @@ WHERE sub.student_id=".$student.""));
                         <br>
                         Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
                         <br>
+
+
+
                         @if (is_null($variable->student_attendance) OR $variable->student_attendance==0)
+
+
+                   
+                        @else
+
 
 
                         <?php
 
 
-    $attendance=\DB::select(\DB::raw("SELECT number_of_absent_days FROM cummulative_attendances WHERE student_id=".$student." AND term_id=".$term.""));
-
-
-    
-if(collect($attendance)->first()) {
-    foreach ($attendance as $attendance_key) {
-   echo 'Days Absent: '.$attendance_key->number_of_absent_days.' '.'out of 70 Days';
- 
-     }
-} else {
-               
-}
-
-
-
-
-
-
-
-
-
-
-
-
-                        ?>
-                        @else
-
-
-
-
+                        $attendance=\DB::select(\DB::raw("SELECT number_of_absent_days FROM cummulative_attendances WHERE student_id=".$student." AND term_id=".$term.""));
+                    
+                    
+                        
+                    if(collect($attendance)->first()) {
+                        foreach ($attendance as $attendance_key) {
+                       echo 'Days Absent: '.$attendance_key->number_of_absent_days.' '.'out of 70 Days';
+                     
+                         }
+                    } else {
+                                   
+                    }
+                    
+                    
+                                            ?>
 
                 
                              

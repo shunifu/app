@@ -204,6 +204,20 @@ class ReportController extends Controller
 
 
 
+    if (!Schema::hasTable('cummulative_attendances')) {
+        Schema::create('cummulative_attendances', function($table){
+              
+               $table->id();
+               $table->integer('student_id');
+               $table->integer('term_id');
+               $table->integer('class');
+               $table->integer('number_of_absent_days')->default(0);
+               $table->timestamps();
+       });
+   }
+
+
+
         DB::table('student_subject_averages')->delete();
 
 

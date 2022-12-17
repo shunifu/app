@@ -109,11 +109,11 @@ class PromotionsController extends Controller
 
 if($request->action=="reset"){
 
-    for($i = 0; $i <count($student_list); $i++) {
+  
 
         $another=TermAverage::where('term_id', $term)->update(['final_term_status'=>NULL]);
     
-    }
+    
 
     
 
