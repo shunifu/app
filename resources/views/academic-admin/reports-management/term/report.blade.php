@@ -78,7 +78,9 @@ body { margin: 0px; }
     text-align: center;
 } */
    
-        
+@page {
+    size: A4 landscape;
+}
         }
 
             @media all {
