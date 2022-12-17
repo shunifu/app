@@ -1629,6 +1629,8 @@ public function student_image(Request $request){
     // dd($request->all());
 
     $student_id=$request->student_id;
+
+ 
     
    
     if($request->hasFile('student_image')){
@@ -1637,6 +1639,8 @@ public function student_image(Request $request){
         $image = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $student_id);
         $student_image=$image->getSecurePath();
 
+
+        // dd($student_image);
 
         User::where('id', $student_id)->update([
 

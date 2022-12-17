@@ -2,7 +2,7 @@
     <x-slot name="header">
       <link rel="stylesheet" type="text/css"
             href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/cr-1.5.3/r-2.2.7/datatables.min.css" />
-      
+            @cloudinaryJS
     </x-slot>
     <div class="row">
         <div class="col-md-12">
@@ -46,6 +46,10 @@
                             <td>{{$item->lastname}}  </td>
                             <td>{{$item->name}} {{$item->middlename}}</td>
                         <td>
+
+                            {{-- <x-cld-upload-button>
+                                Upload Files
+                            </x-cld-upload-button> --}}
                             <form action="/student/image/upload" method="POST" enctype="multipart/form-data">
                                 @csrf
                             <input id="upload" name="student_image"  placeholder="Choose files" type="file"/> 
