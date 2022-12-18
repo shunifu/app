@@ -81,10 +81,10 @@ th span {
         <thead class="thead-light hidden-md-up">
 
            
-            {{-- @if ($indicator=="manual_promotion" OR $indicator=="scoresheet")
+            @if ($indicator=="manual_promotion" OR $indicator=="scoresheet")
             
            <th>Status</th> 
-         @endif --}}
+         @endif
             <th><span>Position</span></th> 
             <th><span>Student</span></th>
             <th><span>Average</span></th>
@@ -94,7 +94,7 @@ th span {
             <th><span>English Language</span> </th>
             <th><span>Maths</span></th>
             <th><span>Siswati</span></th>
-            <th><span>French</span><th>
+            {{-- <th><span>French</span><th> --}}
             <th><span>Religious Education</span></th>
             <th><span>Science</span></th>
             <th><span>Social Studies</span></th>
@@ -106,6 +106,25 @@ th span {
             <th><span>Consumer</span></th>
             <th><span>HPE</span></th>
             <th><span>Computer</span></th>
+
+     
+      
+        {{-- <th><span>English Language</span> </th>
+        <th><span>Maths</span></th>
+        <th><span>Siswati</span></th>
+        <th><span>R.E</span></th>
+        <th><span>Science</span></th> 
+        <th><span>Social Studies</span></th> 
+        <th><span>Practical Arts</span></th> 
+        <th><span>General Studies</span></th> 
+        <th><span>Agriculture</span></th>
+        <th><span>Expressive Arts</span></th>
+        <th><span>Consumer Science</span></th>
+        <th><span>HPE</span></th>
+        <th><span>FineArts</span></th>
+        <th><span>Soap Craft</span></th>
+        <th><span>Shoe Craft</span></th>
+        <th><span>HandCraft</span></th> --}}
 
             @foreach (\App\Models\School::all() as $item)
 
@@ -125,9 +144,9 @@ th span {
            
             @forelse($scoresheet as $student)
                 <tr>
-            {{-- @if ($indicator=="manual_promotion" OR $indicator=="scoresheet")
+            @if ($indicator=="manual_promotion" OR $indicator=="scoresheet")
             <td> {{$student->final_term_status}}  </td>
-            @endif --}}
+            @endif
 
 
 
@@ -235,10 +254,9 @@ th span {
                     </td>
                     
                   
-      
+{{--       
                     <td class="align-middle p-2">
-                        
-                      
+
                         @if ($student->French>=$pass_rate)
                         <span class="text-secondary">{{ round($student->French)}} </span>
                         @elseif(is_null($student->French))
@@ -246,7 +264,7 @@ th span {
                         @elseif($student->French<$pass_rate )
                         <span class="text-danger">{{ round($student->French)}} </span>
                         @endif
-                    </td>
+                    </td> --}}
 
                 
                     <td class="align-middle p-2">
