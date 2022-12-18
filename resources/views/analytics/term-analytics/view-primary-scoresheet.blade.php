@@ -107,25 +107,6 @@ th span {
             <th><span>HPE</span></th>
             <th><span>Computer</span></th>
 
-     
-      
-        {{-- <th><span>English Language</span> </th>
-        <th><span>Maths</span></th>
-        <th><span>Siswati</span></th>
-        <th><span>R.E</span></th>
-        <th><span>Science</span></th> 
-        <th><span>Social Studies</span></th> 
-        <th><span>Practical Arts</span></th> 
-        <th><span>General Studies</span></th> 
-        <th><span>Agriculture</span></th>
-        <th><span>Expressive Arts</span></th>
-        <th><span>Consumer Science</span></th>
-        <th><span>HPE</span></th>
-        <th><span>FineArts</span></th>
-        <th><span>Soap Craft</span></th>
-        <th><span>Shoe Craft</span></th>
-        <th><span>HandCraft</span></th> --}}
-
             @foreach (\App\Models\School::all() as $item)
 
             @if ($item->school_code=="0563")
@@ -189,7 +170,7 @@ th span {
 
 
         
-         
+                   
                     <td class="align-middle p-2">
                         {{ $student->lastname }} {{ $student->name }}
                         {{-- {{ $student->middlename }} --}}
@@ -222,6 +203,8 @@ th span {
                     <td class="align-middle p-2">
                         @if ($student->EnglishLanguage>=$pass_rate)
                         <span class="text-secondary">{{ round($student->EnglishLanguage)}} </span>
+                       
+                   
                         @elseif(is_null($student->EnglishLanguage))
                         -
                         @elseif($student->EnglishLanguage<$pass_rate )
@@ -230,6 +213,11 @@ th span {
                         
                     </td>
 
+                
+                
+             
+               
+         
                
                     <td class="align-middle p-2">
                        
@@ -254,9 +242,10 @@ th span {
                     </td>
                     
                   
-{{--       
-                    <td class="align-middle p-2">
-
+      
+                    {{-- <td class="align-middle p-2">
+                        
+                      
                         @if ($student->French>=$pass_rate)
                         <span class="text-secondary">{{ round($student->French)}} </span>
                         @elseif(is_null($student->French))
