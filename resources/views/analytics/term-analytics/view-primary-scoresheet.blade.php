@@ -85,27 +85,8 @@ th span {
             
            <th>Status</th> 
          @endif
-            <th><span>Position</span></th> 
-            <th><span>Student</span></th>
-            <th><span>Average</span></th>
-            <th><span>Comment</span></th>
-            <th><span>Class</span></th>
+        
 
-            <th><span>English Language</span> </th>
-            <th><span>Maths</span></th>
-            <th><span>Siswati</span></th>
-            <th><span>French</span><th>
-            <th><span>Religious Education</span></th>
-            <th><span>Science</span></th>
-            <th><span>Social Studies</span></th>
-            <th><span>Practical Arts</span></th>
-            <th><span>General Studies</span></th>
-            <th><span>Agriculture</span></th>
-            <th><span>Expressive Arts</span></th>
-            <th><span>ICT</span></th>
-            <th><span>Consumer</span></th>
-            <th><span>HPE</span></th>
-  
 
             @foreach (\App\Models\School::all() as $item)
 
@@ -351,7 +332,16 @@ th span {
                     </td>
 
 
-                 
+                    <td class="align-middle p-2">
+                        @if ($student->Computer>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Computer}}% </span>
+                        @elseif(is_null($student->Computer))
+                        -
+                        @elseif($student->Computer<$pass_rate )
+                        <span class="text-danger">{{ $student->Computer}}% </span>
+                        @endif
+                    </td>
+
 
                     @foreach (\App\Models\School::all() as $item)
 
