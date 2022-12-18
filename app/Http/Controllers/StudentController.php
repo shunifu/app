@@ -1626,7 +1626,7 @@ return redirect('/marks');
 
 public function student_image(Request $request){
 
-    // dd($request->all());
+    //dd($request->all());
 
     $student_id=$request->student_id;
 
@@ -1634,10 +1634,18 @@ public function student_image(Request $request){
     
    
     if($request->hasFile('student_image')){
+
+
+        $cloudinary->uploadApi()->upload("dog_couch.jpg", [
+            "public_id" => "dog_couch",
+            "background_removal" => "cloudinary_ai",
+            "notification_url" => "https://mysite.example.com/hooks"]);
 			
 				
         $image = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $student_id);
         $student_image=$image->getSecurePath();
+
+        dd($student_image);
 
 
         // dd($student_image);

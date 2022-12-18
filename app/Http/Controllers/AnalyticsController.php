@@ -729,7 +729,7 @@ $insert=AssessementProgressReport::upsert(collect($student_average)->map(functio
        MAX(CASE WHEN subjects.subject_code=105 THEN mark END) AS 'PracticalArts',
        MAX(CASE WHEN subjects.subject_code=106 THEN mark END) AS 'GeneralStudies',
        MAX(CASE WHEN subjects.subject_code=108 THEN mark END) AS 'ExpressiveArts', 
-       MAX(CASE WHEN subjects.subject_code=110 THEN mark END) AS 'HPE',
+       MAX(CASE WHEN subjects.subject_code=110 THEN mark END) AS 'ExpressiveArts',
        MAX(CASE WHEN subjects.subject_code=111 THEN mark END) AS 'FineArts',
        MAX(CASE WHEN subjects.subject_code=112 THEN mark END) AS 'SoapCraft',
        MAX(CASE WHEN subjects.subject_code=113 THEN mark END) AS 'ShoeCraft',
@@ -1933,10 +1933,20 @@ if ($request->indicator=="summary_scoresheet") {
      
      }
 
+
+   
      if ($request->indicator=="scoresheet") {
 
+      if($school_data->school_type=="primary-school"){
+        return view('analytics.term-analytics.view-primary-scoresheet',compact('scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat','type_key'));
+         }else{
+
+            return view('analytics.term-analytics.view',compact('scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat','type_key'));
+
+         }
     
-        return view('analytics.term-analytics.view',compact('scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat','type_key'));
+
+     
      
      }
 
