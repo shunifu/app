@@ -81,10 +81,10 @@ th span {
         <thead class="thead-light hidden-md-up">
 
            
-            @if ($indicator=="manual_promotion" OR $indicator=="scoresheet")
+            {{-- @if ($indicator=="manual_promotion" OR $indicator=="scoresheet")
             
            <th>Status</th> 
-         @endif
+         @endif --}}
             <th><span>Position</span></th> 
             <th><span>Student</span></th>
             <th><span>Average</span></th>
@@ -125,9 +125,9 @@ th span {
            
             @forelse($scoresheet as $student)
                 <tr>
-            @if ($indicator=="manual_promotion" OR $indicator=="scoresheet")
+            {{-- @if ($indicator=="manual_promotion" OR $indicator=="scoresheet")
             <td> {{$student->final_term_status}}  </td>
-            @endif
+            @endif --}}
 
 
 
