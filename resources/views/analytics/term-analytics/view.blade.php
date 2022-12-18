@@ -206,7 +206,7 @@ th span {
                   
     $student_position=\DB::select(\DB::raw("select t.*
     from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
-    from term_averages where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream.") t
+    from term_averages INNER JOIN users ON users.id=term_averages.student_id where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream.") t
     where student_id = ".$student->learner_id.""));
     
     foreach ($student_position as $key) {

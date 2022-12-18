@@ -507,7 +507,7 @@ class ReportController extends Controller
         ->where('grades.stream_id', $stream)
         ->where('grades_students.active', 1)
         ->where('users.active', 1)
-        ->get()->count('grades_students.student_id');
+        ->get()->count();
        }else{
         $total_students = DB::table('grades_students')
         ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
