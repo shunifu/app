@@ -886,8 +886,8 @@ public function parent_update(Request $request){
 
             
                 // $assessement_report=AssessementProgressReport::where('student_id', $student_list[$i]);
-                // $student_average=StudentSubjectAverage::where('student_id', $student_list[$i]);
-                // $term_averages=TermAverage::where('student_id', $student_list[$i]);
+            $student_average=StudentSubjectAverage::where('student_id', $student_list[$i]);
+            $term_averages=TermAverage::where('student_id', $student_list[$i]);
             $student_load=StudentLoad::where('student_id', $student_list[$i]);
             $mark=Mark::where('student_id', $student_list[$i]);
             $grade=StudentClass::where('student_id', $student_list[$i])->where('academic_session',$session);
@@ -927,8 +927,69 @@ public function parent_update(Request $request){
                     $mark->update(['active'=>'0']);
                 }
 
+                if ($term_averages->exists()) {
+                    $term_averages->delete();
+                }
+
+                if ($student_average->exists()) {
+                    $student_average->delete();
+                }
+
             }
         }
+
+
+
+
+        if($request->btn=="unarchive") {
+            for ($i = 0; $i <count($student_list); $i++) {
+
+            
+                // $assessement_report=AssessementProgressReport::where('student_id', $student_list[$i]);
+                // $student_average=StudentSubjectAverage::where('student_id', $student_list[$i]);
+                // $term_averages=TermAverage::where('student_id', $student_list[$i]);
+            $student_load=StudentLoad::where('student_id', $student_list[$i]);
+            $mark=Mark::where('student_id', $student_list[$i]);
+            $grade=StudentClass::where('student_id', $student_list[$i])->where('academic_session',$session);
+            $user=User::where('id', $student_list[$i]);
+                // $parent=ParentStudent::where('student_id', $student_list[$i]);
+            $user=User::where('id', $student_list[$i]);
+            
+
+             
+          
+
+        
+
+                //archive workflow
+                //1. users.active=0
+                if ($user->exists()) {
+                    $user->update(['active'=>'1']);
+                }
+
+                //2. student_loads.active=0
+                if ($student_load->exists()) {
+                    $student_load->update(['active'=>'1']);
+                  //  $student_load->delete();
+                }
+
+                //3. grade_students.active=0
+                if ($grade->exists()) {
+                    $grade->update(['active'=>'1']);
+               
+                   
+
+                }
+
+
+                //3. Marks
+                if ($mark->exists()) {
+                    $mark->update(['active'=>'1']);
+                }
+
+            }
+        }
+
 
         if ($request->btn=="transfer") {
 
