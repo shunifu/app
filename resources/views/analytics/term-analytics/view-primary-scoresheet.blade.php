@@ -95,7 +95,7 @@ th span {
             <th><span>Maths</span></th>
             <th><span>Siswati</span></th>
             <th><span>French</span><th>
-            <th><span>Religious Education</span></th>
+            <th><span>RE</span></th>
             <th><span>Science</span></th>
             <th><span>Social Studies</span></th>
             <th><span>Practical Arts</span></th>
@@ -296,15 +296,7 @@ th span {
                         @endif
                     </td>
 
-                    <td class="align-middle p-2">
-                        @if ($student->GeneralStudies>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->GeneralStudies)}} </span>
-                        @elseif(is_null($student->GeneralStudies))
-                        -
-                        @elseif($student->GeneralStudies<$pass_rate )
-                        <span class="text-danger">{{ round($student->GeneralStudies)}} </span>
-                        @endif
-                    </td>
+                  
 
                     <td class="align-middle p-2">
                         @if ($student->Agriculture>=$pass_rate)

@@ -1714,7 +1714,7 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
        MAX(CASE WHEN subjects.subject_code=201 THEN student_subject_averages.student_average END) AS 'RM',
        MAX(CASE WHEN subjects.subject_code=104 THEN student_subject_averages.student_average END) AS 'SocialStudies',
        MAX(CASE WHEN subjects.subject_code=105 THEN student_subject_averages.student_average END) AS 'PracticalArts',
-       MAX(CASE WHEN subjects.subject_code=106 THEN student_subject_averages.student_average END) AS 'GeneralStudies', 
+ 
        MAX(CASE WHEN subjects.subject_code=108 THEN student_subject_averages.student_average END) AS 'ExpressiveArts',
        MAX(CASE WHEN subjects.subject_code=110 THEN student_subject_averages.student_average END) AS 'HPE',
        MAX(CASE WHEN subjects.subject_code=111 THEN student_subject_averages.student_average END) AS 'FineArts',
@@ -1786,7 +1786,7 @@ if($type_key=="stream_based"){
        MAX(CASE WHEN subjects.id=12 THEN student_subject_averages.student_average END) AS 'PhysicalScience',
        MAX(CASE WHEN subjects.id=13 THEN student_subject_averages.student_average END) AS 'Biology',
        MAX(CASE WHEN subjects.id=14 THEN student_subject_averages.student_average END) AS 'Science',
-       MAX(CASE WHEN subjects.subject_code=150 THEN student_subject_averages.student_average END) AS 'French',
+       MAX(CASE WHEN subjects.subject_code=150 THEN student_subject_averages.student_average END) AS 'French', 
        MAX(CASE WHEN subjects.id=16 THEN student_subject_averages.student_average END) AS 'HomeEconomics',
        MAX(CASE WHEN subjects.id=17 THEN student_subject_averages.student_average END) AS 'BookKeeping',
        MAX(CASE WHEN subjects.id=18 THEN student_subject_averages.student_average END) AS 'BusinessStudies',
@@ -1806,7 +1806,7 @@ if($type_key=="stream_based"){
        MAX(CASE WHEN subjects.subject_code=201 THEN student_subject_averages.student_average END) AS 'RM',
        MAX(CASE WHEN subjects.subject_code=104 THEN student_subject_averages.student_average END) AS 'SocialStudies',
        MAX(CASE WHEN subjects.subject_code=105 THEN student_subject_averages.student_average END) AS 'PracticalArts',
-       MAX(CASE WHEN subjects.subject_code=106 THEN student_subject_averages.student_average END) AS 'GeneralStudies', 
+
        MAX(CASE WHEN subjects.subject_code=108 THEN student_subject_averages.student_average END) AS 'ExpressiveArts',
        MAX(CASE WHEN subjects.subject_code=110 THEN student_subject_averages.student_average END) AS 'HPE',
        MAX(CASE WHEN subjects.subject_code=111 THEN student_subject_averages.student_average END) AS 'FineArts',
