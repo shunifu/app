@@ -99,6 +99,7 @@ th span {
             <th><span>RE</span></th>
             <th><span>Agriculture</span></th>
             <th><span>French</span></th>
+            <th><span>ICT</span></th>
             <th><span>Consumer</span></th>
             <th><span>PA</span></th>
 
