@@ -99,7 +99,7 @@ th span {
             <th><span>Science</span></th>
             <th><span>Social Studies</span></th>
             <th><span>Practical Arts</span></th>
-            <th><span>General Studies</span></th>
+       
             <th><span>Agriculture</span></th>
             <th><span>Expressive Arts</span></th>
             <th><span>ICT</span></th>
