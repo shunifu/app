@@ -1043,6 +1043,7 @@ $admin=Auth::user()->hasRole('admin_teacher');
             $teacher=Auth::user()->hasRole('teacher');
             $student=Auth::user()->hasRole('student');
             $parent=Auth::user()->hasRole('parent');
+            $class_teacher=Auth::user()->hasRole('class_teacher');
     
             $grades=Grade::all();
             $sections=Section::all();
@@ -1062,7 +1063,7 @@ $admin=Auth::user()->hasRole('admin_teacher');
     
             //Scope to current session
     
-            if($admin){
+            if($admin OR $class_teacher){
             return view('analytics.term-analytics.index-class', compact('grades', 'sections', 'streams','subjects', 'terms'));
             }else if($teacher){
                 return view('analytics.class_index', compact('grades', 'sections', 'streams','subjects'));

@@ -590,12 +590,12 @@
                  @role('class_teacher')
                   
 
-                     <li class="nav-item">
+                     {{-- <li class="nav-item">
                       <a href="/analytics/class-based/" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Class Insights</p>
                       </a>
-                    </li>
+                    </li> --}}
 
                     @endrole
      {{-- end of logged in class-teacher Performance link --}}
