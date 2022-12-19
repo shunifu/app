@@ -644,7 +644,7 @@
                     {{-- /analytics/assessement-based/class --}}
                     <ul class="nav nav-treeview">
                       <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="/analytics/assessement-based" class="nav-link">
                           <i class="nav-icon fas fa-check-circle"></i>
                           <p>Stream Based</p>
                         </a>
@@ -652,7 +652,7 @@
                       </li>
 
                       <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="/analytics/assessement-based/class" class="nav-link">
                           <i class="nav-icon fas fa-check-circle"></i>
                           <p>Class Based</p>
                         </a>

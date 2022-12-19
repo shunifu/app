@@ -741,6 +741,7 @@ $insert=AssessementProgressReport::upsert(collect($student_average)->map(functio
        MAX(CASE WHEN subjects.subject_code=119 THEN mark END) AS 'TechnicalStudies', 
        MAX(CASE WHEN subjects.subject_code=122 THEN mark END) AS 'Consumer',
        MAX(CASE WHEN subjects.subject_code=130 THEN mark END) AS 'ICT-P',
+       MAX(CASE WHEN subjects.subject_code=131 THEN mark END) AS 'Agriculture-P',
        MAX(CASE WHEN subjects.subject_code=121 THEN mark END) AS 'Entreprenuership'
        FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id
        INNER JOIN subjects ON teaching_loads.subject_id=subjects.id

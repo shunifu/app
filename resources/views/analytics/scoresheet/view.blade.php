@@ -81,7 +81,7 @@ th span {
         <th><span>Class</span></th>
         <th><span>Average</span></th>
          <th><span>Ratio</span></th>
-        <th><span>Comment</span></th>
+        {{-- <th><span>Comment</span></th> --}}
         @foreach (\App\Models\School::all() as $item)
 
         @if ($item->school_type=="high-school")
@@ -261,7 +261,7 @@ where student_id = ".$student->learner_id.""));
                        @endif
                     </td>
 
-
+{{-- 
                     <td class="align-middle p-2">
                         @if ($student->remark =="Passed")
                         <i class="fas fa-check-circle text-success"></i> {{$student->remark}}
@@ -270,7 +270,7 @@ where student_id = ".$student->learner_id.""));
                         @endif
                         
                     </td>
-                    
+                     --}}
 
 
                     @foreach (\App\Models\School::all() as $item)
