@@ -105,7 +105,7 @@ th span {
             <th><span>ICT</span></th>
             <th><span>Consumer</span></th>
             <th><span>HPE</span></th>
-            <th><span>Computer</span></th>
+         
 
             @foreach (\App\Models\School::all() as $item)
 
@@ -358,16 +358,7 @@ th span {
                     </td>
 
 
-                    <td class="align-middle p-2">
-                        @if ($student->Computer>=$pass_rate)
-                        <span class="text-secondary">{{ $student->Computer}}% </span>
-                        @elseif(is_null($student->Computer))
-                        -
-                        @elseif($student->Computer<$pass_rate )
-                        <span class="text-danger">{{ $student->Computer}}% </span>
-                        @endif
-                    </td>
-
+                
 
                     @foreach (\App\Models\School::all() as $item)
 
