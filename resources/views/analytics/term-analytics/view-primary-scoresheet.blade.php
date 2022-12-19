@@ -34,7 +34,7 @@ th span {
               </div>
               
               <div class="card-header no-print">
-                <h3 class="card-title">{{$stream_title}} Stream Analytics for {{$term_name}}</h3>
+                <h3 class="card-title">{{$title}} Stream Analytics for {{$term_name}}</h3>
             
               </div>
             
