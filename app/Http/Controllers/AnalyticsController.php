@@ -1702,7 +1702,7 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
        MAX(CASE WHEN subjects.id=20 THEN student_subject_averages.student_average END) AS 'FashionFabrics',
        MAX(CASE WHEN subjects.id=21 THEN student_subject_averages.student_average END) AS 'Accounting',
        MAX(CASE WHEN subjects.id=22 THEN student_subject_averages.student_average END) AS 'Economics',
-     
+       MAX(CASE WHEN subjects.id=31 THEN student_subject_averages.student_average END) AS 'Agriculture',
        MAX(CASE WHEN subjects.id=24 THEN student_subject_averages.student_average END) AS 'AdditionalMathametics',
        MAX(CASE WHEN subjects.id=25 THEN student_subject_averages.student_average END) AS 'ICT',
        MAX(CASE WHEN subjects.id=26 THEN student_subject_averages.student_average END) AS 'RE',
@@ -1729,7 +1729,8 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
        MAX(CASE WHEN subjects.subject_code=122 THEN student_subject_averages.student_average END) AS 'Consumer',
        MAX(CASE WHEN subjects.subject_code=121 THEN student_subject_averages.student_average END) AS 'Entreprenuership',
        MAX(CASE WHEN subjects.subject_code=123 THEN student_subject_averages.student_average END) AS 'Agriculture',
-       MAX(CASE WHEN subjects.subject_code=130 THEN student_subject_averages.student_average END) AS 'ICT'
+       MAX(CASE WHEN subjects.subject_code=123 THEN student_subject_averages.student_average END) AS 'Agriculture',
+       MAX(CASE WHEN subjects.subject_code=150 THEN student_subject_averages.student_average END) AS 'French',
         FROM student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
         INNER JOIN subjects ON teaching_loads.subject_id=subjects.id
         INNER JOIN users ON users.id=student_subject_averages.student_id
