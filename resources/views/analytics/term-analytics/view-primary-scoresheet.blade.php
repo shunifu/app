@@ -94,7 +94,7 @@ th span {
             <th><span>English Language</span> </th>
             <th><span>Maths</span></th>
             <th><span>Siswati</span></th>
-            {{-- <th><span>French</span><th> --}}
+            <th><span>French</span><th>
             <th><span>Religious Education</span></th>
             <th><span>Science</span></th>
             <th><span>Social Studies</span></th>
@@ -243,7 +243,7 @@ th span {
                     
                   
       
-                    {{-- <td class="align-middle p-2">
+                    <td class="align-middle p-2">
                         
                       
                         @if ($student->French>=$pass_rate)
@@ -253,7 +253,7 @@ th span {
                         @elseif($student->French<$pass_rate )
                         <span class="text-danger">{{ round($student->French)}} </span>
                         @endif
-                    </td> --}}
+                    </td>
 
                 
                     <td class="align-middle p-2">
