@@ -1631,7 +1631,7 @@ public function student_image(Request $request){
     $student_id=$request->student_id;
 
  
-    
+    // dd($request->all());
    
     if($request->hasFile('student_image')){
 
@@ -1643,9 +1643,10 @@ public function student_image(Request $request){
 			
 				
         $image = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $student_id);
+
         $student_image=$image->getSecurePath();
 
-        // dd($student_image);
+     //   dd($student_image);
 
 
         // dd($student_image);

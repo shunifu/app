@@ -3,6 +3,7 @@
       <link rel="stylesheet" type="text/css"
             href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/cr-1.5.3/r-2.2.7/datatables.min.css" />
             @cloudinaryJS
+
     </x-slot>
     <div class="row">
         <div class="col-md-12">
@@ -22,7 +23,7 @@
                 <div class="card-body">
                   
 <div class="table-responsive">
-    <form action="/student/image/upload" method="POST" enctype="multipart/form-data">
+
                 <table class="table table-hover table-bordered " id="customers">
 
    
@@ -50,12 +51,12 @@
                             {{-- <x-cld-upload-button>
                                 Upload Files
                             </x-cld-upload-button> --}}
-                     
+                            <form action="/student/image/upload" method="POST" enctype="multipart/form-data">
                                 @csrf
                             <input id="upload" name="student_image"  placeholder="Choose files" type="file"/> 
                             <input type="hidden" name="student_id" value="{{$item->id}}">
                             <button type="submit" class="btn btn-primary" id="submit">Submit</button>
-                       
+                        </form>
                         </td>
                       
 
@@ -64,14 +65,20 @@
                            
                           
                             @endforeach
+                             
+                           
+                         
 
                     
                     </tbody>
                <tr>
                  <td><button type="submit" class="btn btn-primary" id="submit">Submit</button></td>
                </tr>
+                     
+                                  
+                      
+             
                 </table>
-            </form>
             
 </div>
                   
