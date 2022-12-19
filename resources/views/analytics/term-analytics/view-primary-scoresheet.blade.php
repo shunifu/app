@@ -91,19 +91,18 @@ th span {
             <th><span>Comment</span></th>
             <th><span>Class</span></th>
 
-            <th><span>English Language</span> </th>
+            <th><span>English Language</span></th>
             <th><span>Maths</span></th>
             <th><span>Siswati</span></th>
-            <th><span>French</span><th>
-            <th><span>RE</span></th>
             <th><span>Science</span></th>
             <th><span>Social Studies</span></th>
-            <th><span>Practical Arts</span></th>
-       
+            <th><span>RE</span></th>
             <th><span>Agriculture</span></th>
-      
-            <th><span>ICT</span></th>
+            <th><span>French</span></th>
             <th><span>Consumer</span></th>
+            <th><span>PA</span></th>
+
+         
   
          
 
@@ -215,18 +214,17 @@ th span {
 
                 
                 
-             
-               
+            
          
                
                     <td class="align-middle p-2">
                        
-                        @if ($student->Mathametics>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->Mathametics)}} </span>
-                        @elseif(is_null($student->Mathametics))
+                        @if ($student->Maths>=$pass_rate)
+                        <span class="text-secondary">{{ round($student->Maths)}} </span>
+                        @elseif(is_null($student->Maths))
                         -
-                        @elseif($student->Mathametics<$pass_rate )
-                        <span class="text-danger">{{ round($student->Mathametics)}} </span>
+                        @elseif($student->Maths<$pass_rate )
+                        <span class="text-danger">{{ round($student->Maths)}} </span>
                         @endif
                         
                     </td>
@@ -246,23 +244,23 @@ th span {
                     <td class="align-middle p-2">
                         
                       
-                        @if ($student->French>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->French)}} </span>
-                        @elseif(is_null($student->French))
+                        @if ($student->Science>=$pass_rate)
+                        <span class="text-secondary">{{ round($student->Science)}} </span>
+                        @elseif(is_null($student->Science))
                         -
-                        @elseif($student->French<$pass_rate )
-                        <span class="text-danger">{{ round($student->French)}} </span>
+                        @elseif($student->Science<$pass_rate )
+                        <span class="text-danger">{{ round($student->Science)}} </span>
                         @endif
                     </td>
 
                 
                     <td class="align-middle p-2">
-                        @if ($student->RE>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->RE)}} </span>
-                        @elseif(is_null($student->RE))
+                        @if ($student->SocialStudies>=$pass_rate)
+                        <span class="text-secondary">{{ round($student->SocialStudies)}} </span>
+                        @elseif(is_null($student->SocialStudies))
                         -
-                        @elseif($student->RE<$pass_rate )
-                        <span class="text-danger">{{ round($student->RE)}} </span>
+                        @elseif($student->SocialStudies<$pass_rate )
+                        <span class="text-danger">{{ round($student->SocialStudies)}} </span>
                         @endif
                     </td>
                     <td class="align-middle p-2">
@@ -287,12 +285,12 @@ th span {
 
 
                     <td class="align-middle p-2">
-                        @if ($student->PracticalArts>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->PracticalArts)}} </span>
-                        @elseif(is_null($student->PracticalArts))
+                        @if ($student->RE>=$pass_rate)
+                        <span class="text-secondary">{{ round($student->RE)}} </span>
+                        @elseif(is_null($student->RE))
                         -
-                        @elseif($student->SocialStudies<$pass_rate )
-                        <span class="text-danger">{{ round($student->PracticalArts)}} </span>
+                        @elseif($student->RE<$pass_rate )
+                        <span class="text-danger">{{ round($student->RE)}} </span>
                         @endif
                     </td>
 
@@ -309,6 +307,16 @@ th span {
                     </td>
 
 
+
+                    <td class="align-middle p-2">
+                        @if ($student->French>=$pass_rate)
+                        <span class="text-secondary">{{ round($student->French)}} </span>
+                        @elseif(is_null($student->French))
+                        -
+                        @elseif($student->French<$pass_rate )
+                        <span class="text-danger">{{ round($student->French)}} </span>
+                        @endif
+                    </td>
 
                     <td class="align-middle p-2">
                         @if ($student->ICT>=$pass_rate)
@@ -330,6 +338,15 @@ th span {
                         @endif
                     </td>
 
+                    <td class="align-middle p-2">
+                        @if ($student->PracticalArts>=$pass_rate)
+                        <span class="text-secondary">{{ round($student->PracticalArts)}} </span>
+                        @elseif(is_null($student->PracticalArts))
+                        -
+                        @elseif($student->PracticalArts<$pass_rate )
+                        <span class="text-danger">{{ round($student->PracticalArts)}} </span>
+                        @endif
+                    </td>
                    
 
 
