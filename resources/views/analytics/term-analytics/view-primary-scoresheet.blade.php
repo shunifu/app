@@ -101,10 +101,10 @@ th span {
             <th><span>Practical Arts</span></th>
        
             <th><span>Agriculture</span></th>
-            <th><span>Expressive Arts</span></th>
+      
             <th><span>ICT</span></th>
             <th><span>Consumer</span></th>
-            <th><span>HPE</span></th>
+  
          
 
             @foreach (\App\Models\School::all() as $item)
@@ -308,15 +308,6 @@ th span {
                         @endif
                     </td>
 
-                    <td class="align-middle p-2">
-                        @if ($student->ExpressiveArts>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->ExpressiveArts)}} </span>
-                        @elseif(is_null($student->ExpressiveArts))
-                        -
-                        @elseif($student->ExpressiveArts<$pass_rate )
-                        <span class="text-danger">{{ round($student->ExpressiveArts)}} </span>
-                        @endif
-                    </td>
 
 
                     <td class="align-middle p-2">
@@ -339,18 +330,8 @@ th span {
                         @endif
                     </td>
 
-                    <td class="align-middle p-2">
-                        @if ($student->HPE>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->HPE)}} </span>
-                        @elseif(is_null($student->HPE))
-                        -
-                        @elseif($student->HPE<$pass_rate )
-                        <span class="text-danger">{{ round($student->HPE)}} </span>
-                        @endif
-                    </td>
+                   
 
-
-                
 
                     @foreach (\App\Models\School::all() as $item)
 
