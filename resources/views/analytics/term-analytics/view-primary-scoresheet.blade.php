@@ -103,8 +103,7 @@ th span {
             <th><span>Consumer</span></th>
             <th><span>PA</span></th>
 
-         
-  
+        
          
 
             @foreach (\App\Models\School::all() as $item)
