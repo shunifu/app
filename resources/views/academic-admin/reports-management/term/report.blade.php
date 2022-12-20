@@ -102,6 +102,10 @@ body { margin: 0px; }
   /* height: 30px; */
 }
 
+table tbody tr td {
+  font-size: 14px;
+}
+
 
 </style>
 
@@ -596,7 +600,7 @@ from (select student_subject_averages.student_id,student_subject_averages.studen
 from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." AND  student_subject_averages.student_class IN(SELECT teaching_loads.class_id  FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id  where teaching_loads.teacher_id=".$item2->teacher_id."  and grades.stream_id=".$item2->stream_id.") ) t
 where student_id =".$student.""));
 
-$total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads WHERE student_loads.teaching_load_id IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id." AND student_loads.active=1)"));
+$total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads INNER JOIN users ON users.id=student_loads.student_id WHERE users.active=1 student_loads.teaching_load_id IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id." AND student_loads.active=1)"));
 
  foreach ($sub_position as $key_position) {
    
