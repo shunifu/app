@@ -218,7 +218,7 @@ class ReportController extends Controller
 
 
 
-        DB::table('student_subject_averages')->delete();
+    //    DB::table('student_subject_averages')->delete();
 
 
         // DB::table('term_averages')->delete();
