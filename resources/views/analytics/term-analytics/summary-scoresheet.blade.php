@@ -43,7 +43,7 @@ th span {
         
   
   <div class="table-responsive">
-    <form action="/promote/students" method="POST">
+    <form action="/promote/students" method="GET">
         @csrf
     <table class="table table-sm table-hover mx-auto table-bordered " style="width:100%" id="customers">
         <div class="col-md-12 mx-auto">

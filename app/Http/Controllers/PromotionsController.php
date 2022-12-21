@@ -63,7 +63,8 @@ class PromotionsController extends Controller
         //     'final_term_status'=>'Repeat'
         // ]);
     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have promoted Students', 'Promote Students');
-    return redirect('/report/term-based/');
+    return Redirect::back()
+    ->withMessage("Africa");
          
 
     }
@@ -83,7 +84,7 @@ class PromotionsController extends Controller
         
   
     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You updated resolution', 'Resolution');
-    return redirect('/report/term-based/');
+    return redirect('/analytics/term-based/class');
 
     }
     
@@ -101,7 +102,8 @@ class PromotionsController extends Controller
         
   
     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You updated resolution', 'Resolution');
-    return redirect('/report/term-based/');
+    return redirect('/analytics/term-based/class');
+
 
     
 }
@@ -117,7 +119,7 @@ if($request->action=="reset"){
 
 
 flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You updated resolution', 'Resolution');
-return redirect('/report/term-based/');
+return redirect('/analytics/term-based/class');
 
 
 }
