@@ -1292,6 +1292,8 @@ $exam_weight=$weight->exam_percentage*(0.01);
 //if stream based
 
 
+
+
 if ($type_key=="stream_based") {
     $students = DB::table('grades_students')
     ->join('users', 'grades_students.student_id', '=', 'users.id')
@@ -1310,6 +1312,8 @@ $students = DB::table('grades_students')
  ->get()->pluck('student_id');
 
 }
+
+
  
 
 
@@ -1688,6 +1692,14 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
              
    $indicator=$request->indicator;
 
+   if(){
+    $where_clause="WHERE grades.stream_id=".$stream." AND student_subject_averages.term_id=".$term." AND term_averages.term_id=".$term." AND users.active=1 AND grades_students.active=1 AND student_loads.active=1
+    GROUP BY student_subject_averages.student_id  
+    ORDER BY term_averages.student_average DESC";
+   }
+
+   
+
     if($criteria->passing_subject_rule=="0"){
         $scoresheet=DB::select(DB::raw("SELECT 
          student_subject_averages.student_id,
@@ -1751,9 +1763,7 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
         INNER JOIN grades ON grades_students.grade_id=grades.id
         INNER JOIN term_averages ON term_averages.student_id=student_subject_averages.student_id
         INNER JOIN student_loads ON student_loads.student_id=term_averages.student_id
-        WHERE grades.stream_id=".$stream." AND student_subject_averages.term_id=".$term." AND term_averages.term_id=".$term." AND users.active=1 AND grades_students.active=1 AND student_loads.active=1
-        GROUP BY student_subject_averages.student_id  
-        ORDER BY term_averages.student_average DESC"));
+        ".$where_clause.""));
 
 
 

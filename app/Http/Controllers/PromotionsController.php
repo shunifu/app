@@ -59,9 +59,9 @@ class PromotionsController extends Controller
          
      
         
-        $repeat=TermAverage::where('term_id', $term)->WhereNull('final_term_status' )->update([
-            'final_term_status'=>'Repeat'
-        ]);
+        // $repeat=TermAverage::where('term_id', $term)->WhereNull('final_term_status' )->update([
+        //     'final_term_status'=>'Repeat'
+        // ]);
     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have promoted Students', 'Promote Students');
     return redirect('/report/term-based/');
          
@@ -77,9 +77,9 @@ class PromotionsController extends Controller
         }
 
         
-        $repeat=TermAverage::where('term_id', $term)->WhereNull('final_term_status' )->update([
-            'final_term_status'=>'Repeat'
-        ]);
+        // $repeat=TermAverage::where('term_id', $term)->WhereNull('final_term_status' )->update([
+        //     'final_term_status'=>'Repeat'
+        // ]);
         
   
     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You updated resolution', 'Resolution');
