@@ -1692,8 +1692,12 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
              
    $indicator=$request->indicator;
 
-   if(){
+   if($type_key=="stream_based"){
     $where_clause="WHERE grades.stream_id=".$stream." AND student_subject_averages.term_id=".$term." AND term_averages.term_id=".$term." AND users.active=1 AND grades_students.active=1 AND student_loads.active=1
+    GROUP BY student_subject_averages.student_id  
+    ORDER BY term_averages.student_average DESC";
+   }elseif ($type_key=="class_based") {
+    $where_clause="WHERE grades.id=".$classofstudent." AND student_subject_averages.term_id=".$term." AND term_averages.term_id=".$term." AND users.active=1 AND grades_students.active=1 AND student_loads.active=1
     GROUP BY student_subject_averages.student_id  
     ORDER BY term_averages.student_average DESC";
    }
@@ -1853,9 +1857,8 @@ if($type_key=="stream_based"){
         INNER JOIN grades ON grades_students.grade_id=grades.id
         INNER JOIN term_averages ON term_averages.student_id=student_subject_averages.student_id
         INNER JOIN student_loads ON student_loads.student_id=term_averages.student_id
-        WHERE grades.stream_id=".$stream." AND student_subject_averages.term_id=".$term." AND term_averages.term_id=".$term." AND users.active=1 AND grades_students.active=1 AND student_loads.active=1
-        GROUP BY student_subject_averages.student_id  
-        ORDER BY term_averages.student_average DESC"));
+        ".$where_clause.""));
+        
 
 if($type_key=="stream_based"){
     $total_passed = DB::table('term_averages')
