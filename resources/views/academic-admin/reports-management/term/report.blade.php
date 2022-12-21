@@ -1126,6 +1126,228 @@ $db->close();
 
 
 
+{{-- Begining of Vulamasango template --}}
+
+@if ($report_template->report_colums=="vulamasango_template")
+@php
+
+$db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
+$result = $db->multi_query("SET @sql = NULL;
+SET SESSION group_concat_max_len = 1000000;
+    SELECT
+      GROUP_CONCAT(DISTINCT
+        CONCAT(
+          'MAX(IF(assessements.id = ''',
+      assessements.id,
+      ''', marks.mark, NULL)) AS ',
+      replace(assessement_name, ' ', '')
+        )
+      ) INTO @sql
+from c_a__exams  INNER JOIN assessements ON assessements.id=c_a__exams.assessement_id 
+ INNER JOIN marks ON marks.assessement_id=c_a__exams.assessement_id WHERE c_a__exams.term_id=".$term.";
+SET @sql = CONCAT('SELECT 
+    subjects.subject_name as Subject, 
+    ', @sql, ',
+   
+    ROUND(student_subject_averages.ca_average) as CA,
+    ROUND(student_subject_averages.student_average) as Average,
+    
+    (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
+     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
+  
+     concat(salutation,lastname) Teacher
+     from marks 
+    INNER JOIN assessements ON assessements.id = marks.assessement_id
+    INNER JOIN c_a__exams ON c_a__exams.assessement_id=assessements.id
+    INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
+    INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
+    INNER JOIN users ON users.id = marks.teacher_id
+     INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
+                  INNER JOIN report_comments 
+                   WHERE marks.student_id = ".$student." AND `c_a__exams`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id AND report_comments.user_type=1 and report_comments.section_id=".$section_id." AND student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to
+    GROUP BY
+    marks.student_id,student_subject_averages.student_id,
+    subjects.id');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;");
+
+if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
+if ($result) {
+  do {
+  if ($res = $db->store_result()) {
+      echo "<table class='table table-sm table-bordered' width=100% border=0><tr>";
+
+        
+      // printing table headers
+      for($i=0; $i<mysqli_num_fields($res); $i++)
+      {
+          $field = mysqli_fetch_field($res);
+
+        
+          echo "<th class='background' id='assessement'>{$field->name}</th>";
+      }
+      echo "</tr>\n";
+
+
+//       foreach ($data as $row) {
+//     // Check the value of the mark and determine the CSS class
+//     if ($row['mark'] < 50) {
+//       $class = 'mark-red';
+//     } else {
+//       $class = 'mark-green';
+//     }
+
+//     // Generate the HTML for the table row
+//     echo '<tr>';
+//     echo '<td>' . htmlspecialchars($row['student_name']) . '</td>';
+//     echo '<td class="mark ' . $class . '">' . $row['mark'] . '%</td>';
+//     echo '...';
+//     echo '</tr>';
+//   }
+
+
+      // printing table rows
+      while($row = $res->fetch_assoc())
+      {
+
+       
+     
+   
+    echo "<tr>";
+          foreach($row as $cell=>$value) {
+        //   foreach ($cell as $key => $value) {
+        
+        //   }
+
+     
+  
+        if (htmlspecialchars($value) < $pass_rate) {
+        $class = 'class=text-danger';
+     
+    } else {
+        $class = 'class=text-black';
+    }
+        
+            if ($value === NULL) { $value = '-'; }
+
+            if(is_numeric($value)){$percentage="%";}else{$percentage=" ";}
+            
+         
+            echo "<td $class>$value"."$percentage</td>";
+          }
+          echo "</tr>\n";
+      }
+      $res->free();
+      echo "</table>";
+
+    }
+  } while ($db->more_results() && $db->next_result());
+}
+$db->close();
+
+@endphp
+    
+@endif
+
+@if ($report_template->report_colums=="year_assessements")
+@php
+$db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
+$result = $db->multi_query("SET @sql = NULL;
+    SELECT
+      GROUP_CONCAT(DISTINCT
+        CONCAT(
+          'MAX(IF(assessements.id = ''',
+      assessements.id,
+      ''', marks.mark, NULL)) AS ',
+      replace(assessement_name, ' ', '')
+        )
+      ) INTO @sql
+from assessements  
+ INNER JOIN marks ON marks.assessement_id=assessements.id 
+ INNER JOIN terms ON terms.id=assessements.term_id
+ INNER JOIN academic_sessions ON academic_sessions.id = terms.academic_session
+ WHERE  academic_sessions.active=1;
+SET @sql = CONCAT('SELECT 
+    subjects.subject_name as Subject, 
+    ', @sql, ',
+   
+    ROUND(student_subject_averages.ca_average) as CA,
+    ROUND(student_subject_averages.student_average) as Average,
+    
+    (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
+     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
+     
+     CONCAT(lastname,' ',name) AS Teacher
+    
+   
+     from marks 
+    INNER JOIN assessements ON assessements.id = marks.assessement_id
+    INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
+    INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
+    INNER JOIN users ON users.id = marks.teacher_id
+     INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
+                  INNER JOIN report_comments 
+                   WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id AND report_comments.user_type=1 and report_comments.section_id=".$section_id." AND student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to
+    GROUP BY
+    marks.student_id,student_subject_averages.student_id,
+    subjects.id');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;");
+
+if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
+
+if ($result) {
+  do {
+  if ($res = $db->store_result()) {
+      echo "<table class='table table-sm table-bordered' width=100% border=0><tr>";
+
+      // printing table headers
+      for($i=0; $i<mysqli_num_fields($res); $i++)
+      {
+          $field = mysqli_fetch_field($res);
+          echo "<th class='background'>{$field->name}</th>";
+      }
+      echo "</tr>\n";
+
+      // printing table rows
+      while($row = $res->fetch_row())
+      {
+     //   dd($row[5]);
+        if ($row['5'] <= 40) {
+        $class = 'class=text-danger';
+     
+    } else {
+        $class = 'class=text-info';
+    }
+    echo "<tr>";
+          foreach($row as $cell) {
+        //   foreach ($scell as $key => $value) {
+        //     # code...
+        //   }
+            if ($cell === NULL) { $cell = '-'; }
+         
+            echo "<td $class>$cell</td>";
+          }
+          echo "</tr>\n";
+      }
+      $res->free();
+      echo "</table>";
+
+    }
+  } while ($db->more_results() && $db->next_result());
+}
+$db->close();
+
+@endphp
+    
+@endif
+{{-- endofif --}}
+
+
         <hr>          
 
                  <?php
