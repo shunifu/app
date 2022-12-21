@@ -1038,6 +1038,18 @@ $admin=Auth::user()->hasRole('admin_teacher');
             $table->float('student_average')->change();
             $table->float('exam_mark')->change();
         });
+
+
+        if (!Schema::hasColumn('student_subject_averages', 'ca_piece')) //check the column
+		{
+			Schema::table('student_subject_averages', function (Blueprint $table)
+			{
+			   
+				$table->double('ca_piece')->nullable();
+                $table->double('exam_piece')->nullable();
+			});
+		}
+
     
      
     $admin=Auth::user()->hasRole('admin_teacher');
@@ -1403,6 +1415,8 @@ $insert=StudentSubjectAverage::upsert(collect($key)->map(function($item) use($st
  'teaching_load_id' =>$item->teaching_load_id,
  'ca_average' =>$item->ca,
  'exam_mark' =>$item->exam,
+ 'ca_piece' =>$item->ca_weight,
+ 'exam_piece' =>$item->exam_weight,
  'student_average' =>(round(($item->ca_weight)+($item->exam_weight))),
  'student_class'  =>$item->student_class,
  'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
