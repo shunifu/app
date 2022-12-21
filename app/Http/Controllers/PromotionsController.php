@@ -117,7 +117,7 @@ if($request->action=="reset"){
 
 
 flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You updated resolution', 'Resolution');
-return redirect()->back()->withInput();
+return redirect('/report/term-based/');
 
 
 }
