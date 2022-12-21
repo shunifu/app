@@ -31,6 +31,7 @@ use App\Models\AssessementProgressReport;
 use function GuzzleHttp\Psr7\build_query;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\InsightsTrait;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class AnalyticsController extends Controller
