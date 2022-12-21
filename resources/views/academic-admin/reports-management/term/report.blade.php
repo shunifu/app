@@ -1148,9 +1148,13 @@ from c_a__exams  INNER JOIN assessements ON assessements.id=c_a__exams.assesseme
 SET @sql = CONCAT('SELECT 
     subjects.subject_name as Subject, 
     ', @sql, ',
-   
+    
     ROUND(student_subject_averages.ca_average) as CA,
+    ROUND(student_subject_averages.ca_piece) as CA_Weight,
+    ROUND(student_subject_averages.exam_piece) as Exam_Weight,
     ROUND(student_subject_averages.student_average) as Average,
+    
+   
     
     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
      (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,

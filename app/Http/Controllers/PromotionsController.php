@@ -111,13 +111,13 @@ if($request->action=="reset"){
 
     for($i = 0; $i <count($student_list); $i++) {
 
-        $another=TermAverage::where('term_id', $term)->update(['final_term_status'=>NULL]);
+        $another=TermAverage::where('student_id', $student_list[$i])->where('term_id', $term)->update(['final_term_status'=>NULL]);
     
     }
 
 
 flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You updated resolution', 'Resolution');
-return redirect('/report/term-based/');
+return redirect()->back()->withInput();
 
 
 }

@@ -29,6 +29,7 @@ use App\Models\CA_Exam;
 use App\Models\ReportTemplate;
 use App\Models\ReportVariable;
 use Google\Service\CloudAsset\Asset;
+use Illuminate\Database\Schema\Blueprint;
 use Maatwebsite\Excel\Concerns\ToArray;
 
 use function PHPUnit\Framework\isFalse;
@@ -216,6 +217,15 @@ class ReportController extends Controller
        });
    }
 
+   if (!Schema::hasColumn('student_subject_averages', 'ca_piece')) //check the column
+		{
+			Schema::table('student_subject_averages', function (Blueprint $table)
+			{
+			   
+				$table->double('ca_piece')->nullable();
+                $table->double('exam_piece')->nullable();
+			});
+		}
 
 
     //    DB::table('student_subject_averages')->delete();
@@ -581,6 +591,8 @@ subjects.id"));
             'teaching_load_id' =>$item->teaching_load_id,
             'ca_average' =>$item->ca,
             'exam_mark' =>$item->exam,
+            'ca_piece' =>$item->ca_weight,
+            'exam_piece' =>$item->exam_weight,
             'student_average' =>(round(($item->ca_weight)+($item->exam_weight))),
             'student_class'  =>$item->student_class,
             'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
