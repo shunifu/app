@@ -63,8 +63,7 @@ class PromotionsController extends Controller
         //     'final_term_status'=>'Repeat'
         // ]);
     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have promoted Students', 'Promote Students');
-    return Redirect::back()
-    ->withMessage("Africa");
+    return redirect('/analytics/term-based/class');
          
 
     }
