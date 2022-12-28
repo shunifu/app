@@ -1,5 +1,7 @@
-@import '~overlayscrollbars/css/OverlayScrollbars.min.css';
-@import '~admin-lte/dist/css/adminlte.min.css';
+// @use 'overlayscrollbars/css/OverlayScrollbars.min.css';
+@use 'admin-lte/dist/css/adminlte.min.css';
+
+// @use "~leaflet/dist/leaflet.css";
 
 .navbar-nav>.user-menu>.dropdown-menu {
   width: 210px;

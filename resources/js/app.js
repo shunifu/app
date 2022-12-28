@@ -1,4 +1,4 @@
-require('./bootstrap');
+// require('./bootstrap');
 
 import $ from 'jquery';
 window.$ = window.jQuery = $;
@@ -24,24 +24,7 @@ Sentry.init({
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
 });
-//Don't forgot to put code also same as below otherwise it will not working
-
-// Datepicket Code
 
 
-//Datatable
-$("#example1").DataTable({
-    "responsive": true,
-    "autoWidth": false,
-  });
 
-//Initialize Select2 Elements
-$('.select2').select2()
 
-//Initialize Select2 Elements
-$('.select2bs4').select2({
-    theme: 'bootstrap4'
-})
-
-var promote = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
-// ..........similarly other scripts comes
