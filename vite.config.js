@@ -1,4 +1,3 @@
-
 import laravel from 'laravel-vite-plugin'
 import {defineConfig} from 'vite'
 
@@ -11,8 +10,7 @@ export default defineConfig({
         ]),
     ],
     server: {
-        https: false,
-        host: env('APP_URL'),
+        https: false
     },
 });
 
