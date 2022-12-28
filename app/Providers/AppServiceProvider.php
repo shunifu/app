@@ -27,11 +27,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        JetstrapFacade::bootstrap4();
-        JetstrapFacade::useAdminLte3();
+        // JetstrapFacade::bootstrap4();
+        // JetstrapFacade::useAdminLte3();
 
         if($this->app->environment('production')) {
-            \URL::forceScheme('https');
+            URL::forceScheme('https');
         }
 
         //dd(env('APP_ENV'));
