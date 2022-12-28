@@ -12,9 +12,11 @@ use Laravel\Sanctum\HasApiTokens;
 use Laratrust\Traits\LaratrustUserTrait;
 
 
+
 class User extends Authenticatable
 {
     use LaratrustUserTrait;
+    // use Authenticatable2;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
