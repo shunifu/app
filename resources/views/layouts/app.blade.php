@@ -140,8 +140,8 @@
                                     {{ __('Manage Account') }}
                                 </h6>
 
-                                {{-- <x-jet-dropdown-link href="{{ route('profile.show') }}"> --}}
-                                  <x-jet-dropdown-link href="/teacher/view/{{Crypt::encryptString(Auth::user()->id)}}">
+                                <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                                  {{-- <x-jet-dropdown-link href="/teacher/view/{{Crypt::encryptString(Auth::user()->id)}}"> --}}
                                   
                                     {{ __('Profile') }}
                                 </x-jet-dropdown-link>
@@ -1082,7 +1082,7 @@
               </li>
 
               <li class="nav-item">
-                <a href="{{route('grade.index')}}"  class="nav-link">
+                <a href="{{route('grade.class_lists_index')}}"  class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>Class-Lists</p>
                 </a>
@@ -1139,12 +1139,21 @@
     </a>
    
     <ul class="nav nav-treeview">
+     
+
       <li class="nav-item">
-      <a href="{{route('transition.index')}}" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Session Migration</p>
-        </a>
-      </li>
+        <a href="{{route('transition.index')}}" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Student Migration</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{route('transition.index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>System Migration</p>
+            </a>
+          </li>
       <li class="nav-item">
         <a href="{{route('sequence.index')}}" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
@@ -1156,7 +1165,7 @@
  
   </li>
 
-  {{-- <li class="nav-item has-treeview">
+  <li class="nav-item has-treeview">
     <a href="#" class="nav-link">
       <i class="nav-icon fas fa-book-reader"></i>
       <p>
@@ -1181,7 +1190,7 @@
     </ul>
   
  
-  </li> --}}
+  </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cogs"></i>
@@ -1398,7 +1407,7 @@
               <li class="nav-item">
                 <a href="/users/student" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
-                  <p>Student Registration</p>
+                  <p>Student Admissions</p>
                 </a>
               </li>
 
@@ -1431,34 +1440,27 @@
                 </a>
               </li>
 
-              {{-- <li class="nav-item">
-                <a href="/users/student" class="nav-link">
+              <li class="nav-item">
+                <a href="/students/online-registrations" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Online Registration</p>
                 </a>
-              </li> --}}
-{{-- 
-              <li class="nav-item">
-                <a href="{{ route('students.transfer')}}" class="nav-link">
-                  <i class="nav-icon fas fa-chevron-circle-right"></i>
-                  <p>Transfer Students</p>
-                </a>
-              </li>
-              --}}
+              </li> 
+            
              
-              {{-- <li class="nav-item">
+              <li class="nav-item">
                 <a href="{{ route('student.manage')}}" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Class List</p>
                 </a>
-              </li> --}}
+              </li> 
 
-              {{-- <li class="nav-item">
+              <li class="nav-item">
                 <a href="/testimonial/create" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Testimonial</p>
                 </a>
-              </li> --}}
+              </li> 
               <li class="nav-item">
                 <a href="/link/students-parents/" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
@@ -1812,7 +1814,7 @@
             </div>
             <!-- /.content-wrapper -->
   
-            <footer class="main-footer">
+            {{-- <footer class="main-footer">
                 <div class="float-right d-none d-sm-block">
                   @if(empty(\App\Models\School::all()))
   
@@ -1825,7 +1827,7 @@
                   @endif
                 </div>
                 
-            </footer>
+            </footer> --}}
         </div>
 
         @stack('modals')

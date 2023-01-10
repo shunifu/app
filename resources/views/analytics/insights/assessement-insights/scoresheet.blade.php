@@ -42,7 +42,7 @@ background-color: red !important;
         </div>
         <i class="fas fa-envelope mx-2"></i> {{$item->school_email}} | <i class="fas fa-phone-square    "></i> {{$item->school_telephone}}</i>
                 <p>
-                    <h3 class="text-bold">{{$stream}}  {{$assessement_name}} Scoresheet</h3>
+                    <h3 class="text-bold">{{$stream}}  Scoresheet</h3>
                 </p>
             
         </div>
@@ -57,63 +57,17 @@ background-color: red !important;
 $db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
 
 
-$tie_type=$pass_rate->tie_type;
+// $tie_type=$pass_rate->tie_type;
 
 //check if allocations have  been added//
 
 
 
+//If it is English Language is passing subject then ...<-Khumbula to add this 
 
-
-
-if($tie_type=="share"){
   $result = $db->multi_query("SET @sql = NULL;
-    SELECT
-      GROUP_CONCAT(DISTINCT
-        CONCAT(
-            
-          'MAX(IF(subjects.subject_name = ''',
-      subject_name,
-      ''', marks.mark, NULL)) AS ',
-      replace(subjects.subject_name, ' ', '')
-        )
-      ) INTO @sql
-       FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id;
+SET SESSION group_concat_max_len = 1000000;
 
-SET @sql = CONCAT('SELECT 
-(select t.student_position
-from (select assessement_progress_reports.student_id,assessement_progress_reports.student_average, dense_rank() over (order by assessement_progress_reports.student_average desc) as student_position
-from assessement_progress_reports where assessement_progress_reports.assessement_id=2 AND assessement_progress_reports.student_stream=".$stream."
-     ) t
-where student_id = marks.student_id) as position,
-
-        grades.grade_name as 'Grade',
-        GROUP_CONCAT(users.name,users.middlename, users.lastname),
-        GROUP_CONCAT(loads_count, marks_count),
-        assessement_progress_reports.student_average,
-     
-      
-', @sql,'
-FROM marks 
-INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id 
-INNER JOIN subjects ON teaching_loads.subject_id=subjects.id 
-INNER JOIN users ON users.id=marks.student_id  
-INNER JOIN grades_students ON grades_students.student_id=marks.student_id
-INNER JOIN assessement_progress_reports ON assessement_progress_reports.student_id=marks.student_id
-INNER JOIN grades ON assessement_progress_reports.student_stream=grades.stream_id 
-WHERE assessement_progress_reports.student_stream=1 AND marks.assessement_id=2 AND assessement_progress_reports.assessement_id=2 AND teaching_loads.active=1 AND grades.stream_id=assessement_progress_reports.student_stream AND grades.id=assessement_progress_reports.student_class AND grades_students.active=1 
-GROUP BY marks.student_id  
-ORDER BY assessement_progress_reports.student_average DESC');
-
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-
-DEALLOCATE PREPARE stmt;
-");
-}
-
-if($tie_type=="share_n_+_1"){
-  $result = $db->multi_query("SET @sql = NULL;
     SELECT
       GROUP_CONCAT(DISTINCT
         CONCAT(
@@ -135,7 +89,8 @@ where student_id = marks.student_id) as position,
 
         grades.grade_name as Grade,
        
-        concat(users.name, users.lastname) as name,
+        CONCAT(users.lastname,users.name) as Name,
+      
         assessement_progress_reports.student_average as Average,
       
 ', @sql,'
@@ -155,7 +110,7 @@ EXECUTE stmt;
 
 DEALLOCATE PREPARE stmt;
 ");
-}
+
 
 
 @endphp

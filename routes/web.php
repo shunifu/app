@@ -125,6 +125,8 @@ Route::get('/academic-admin/stream/delete/{stream}', [StreamController::class,'d
 
 //Class Routes
 Route::get('/academic-admin/class', [GradeController::class,'index'])->name('grade.index');
+Route::get('/academic-admin/class-lists', [GradeController::class,'class_lists_index'])->name('grade.class_lists_index');
+Route::post('/academic-admin/class-lists/view', [GradeController::class,'class_lists_view'])->name('grade.class_lists_view');
 Route::get('/academic-admin/class/view/{id}', [GradeController::class,'show'])->name('grade.show');
 Route::get('/academic-admin/class/pdf/{id}', [GradeController::class, 'createPDF']);
 Route::post('/academic-admin/class/add', [GradeController::class,'store'])->name('grade.store');

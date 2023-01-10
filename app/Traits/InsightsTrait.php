@@ -27,19 +27,31 @@ trait InsightsTrait
 {
 
   
-        public function termCalculations(Request $request){
+        public function termCalculations(){
+
+          dd('term_calculatopns');
      
     }
 
 
 
-    public function assessementCalculations($stream, $session, $assessement_id, $outcome){
+  public function assessementCalculations($stream, $session, $assessement_id, $outcome, $baseline,$group){
 
-     
+
+
+    //get the baselines first
+if ($baseline=="assessement") {
+
+  //get the outcome
+
+  if($outcome=="scoresheet"){
+
+   
+   
+    if($group=="stream"){
 
       $section=Grade::where('stream_id', $stream)->first();
 
-      $assessement_id=$assessement_id;
       $section_id=$section->section_id;
       
       //Get pass_rate
@@ -55,7 +67,6 @@ trait InsightsTrait
       $number_of_decimal_places=$criteria->number_of_decimal_places;// number of decimal places
       $tie_type=$criteria->tie_type;// number of decimal places
       $school=School::first();
-      
       
       
       
@@ -76,16 +87,14 @@ trait InsightsTrait
       
       $stream_is=Stream::where('id',$stream)->first();
       $stream_title=$stream_is->stream_name;
-
-
-     
       
       $getAssessement=Assessement::find($assessement_id);
+      // dd($assessement_id);
+      
       $assessement_name=$getAssessement->assessement_name;
-
-       //Stream Based Scoresheet
-
-
+      
+         
+        // dd($criteria->passing_subject_rule);
       
         
         //get students
@@ -95,19 +104,15 @@ trait InsightsTrait
         ->where('grades.stream_id', $stream)
         ->where('grades_students.active', 1)
         ->get()->pluck('student_id');
-        if($term_average_type=="decimal"){
-          $avg_calculation="ROUND(SUM(t.mark) /".$number_of_subjects.", $number_of_decimal_places )";
-
-        }else{
-          $avg_calculation="ROUND(SUM(t.mark) /".$number_of_subjects." )";
-        }
+      
       
       $student_average = [];
       foreach ($students as $student ) {
-     
-        if($criteria->average_calculation=="custom" ){
-
-
+      //Generate Assessement Values
+      
+      if($criteria->average_calculation=="custom" ){
+      
+      
           if($term_average_type=="decimal"){
               $avg_calculation="ROUND(SUM(t.mark) /".$number_of_subjects.", $number_of_decimal_places )";
       
@@ -146,8 +151,6 @@ trait InsightsTrait
                   
       
               }else if($criteria->passing_subject_rule=="0"){
-
-                
                   
       
       
@@ -181,12 +184,7 @@ trait InsightsTrait
         
       }else if($criteria->average_calculation=="default"){
       
-        //  $total_subjects=StudentLoad::where('student_id', $student)->count();
-          // $total_subjects = DB::table('student_loads')
-          // ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
-          // ->where('student_id', $student)
-          // ->where('teaching_loads.active', 1)
-          // ->count();
+     
       
           $total_subjects = DB::table('student_loads')
           ->join('teaching_loads', 'student_loads.teaching_load_id', '=', 'teaching_loads.id')
@@ -262,10 +260,7 @@ trait InsightsTrait
                 
                    (SELECT DISTINCT(assessements.term_id) as term, assessements.assessement_type from marks INNER JOIN assessements ON assessements.id=marks.assessement_id WHERE assessements.id=".$assessement_id." ) term_id"));
       
-        
       }
-      
-   
       
       
       
@@ -273,7 +268,10 @@ trait InsightsTrait
         //End of foreach loop
       
       
-      //upserting data into database
+      //use upsert  
+      
+      
+      
       $insert=AssessementProgressReport::upsert(collect($student_average)->map(function($item) use($assessement_id) {
       
           
@@ -294,22 +292,26 @@ trait InsightsTrait
               'assessement_report_key'=>$item['0']->student_id.'-'.$item['0']->term.'-'.$assessement_id,
           ];
         })->toArray(), ['assessement_report_key'], ['student_average','number_of_passed_subjects', 'passing_subject_status' , 'loads_count', 'marks_count']);
+
+
+
+
+    }
+
+
+    if($group=="class"){
+
       
-return $report=["pass_rate"=>$pass_rate,  "students"=>$students, 'loads_count'=>$total_subjects, 'assessement'=>$assessement_name, 'term_average_type'=>$term_average_type, 'number_of_decimal_places'=>$number_of_decimal_places, 'tie_type'=>$tie_type,'passing_subject_rule'=>$passing_subject_rule, 'number_of_subjects'=>$number_of_subjects, 'assessement_id'=>$assessement_id, 'assessement_name'=>$assessement_name,
-];
+
+    }
 
 
+  }
 
-
-if($outcome=="scoresheet"){
-//if scoresheet 
-
-//1. Check if it is an assessement based scoresheet or it is a term based scoresheet
-
-//if it is a assessement based scoresheet
- 
 
 }
+  
+
 
 if($outcome=="report_card"){
   dd('report card blade');

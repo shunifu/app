@@ -98,9 +98,26 @@ class AcademicSessionController extends Controller
                 $reset=AcademicSession::where('active',1)->update([
                     'active'=>0      
               ]);
+
+              
+
               $update=AcademicSession::find($request->session_id)->update([
                 'active'=>1       
           ]);
+
+
+
+            //1. Get academic year which is active //2023
+
+            //2. update schemas, and make active=0 where the academic year is not the active one
+
+            //3. Make active=0 in the following tables
+                 //a) grades_students
+                 //Teaching Loads
+                 //b)
+
+
+
             
             }
     

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     </x-slot>
     <div class="row">
         <div class="col-md-12">
@@ -31,33 +31,28 @@
 
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="#" method="post">
+                <form action="/migration/process" method="post">
                     <div class="card-body">
                         @csrf
                         <div class="form-row">
-                            <div class="col-md-3 form-group">
-                                <x-jet-label> Class Type</x-jet-label>
-                                <select class="form-control"  id="class_type" name="class_type">
-                                    <option value="">Select Class Type</option>
-                                    <option value="internal">Internal Classes</option>
-                                    <option value="external">External Classes</option>
-                                </select>
-                                @error('class_type')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                        
 
-                            <div class="col-md-3  form-group">
+                            <div class="col-md-4  form-group">
                                 <x-jet-label> Stream Name</x-jet-label>
-                                <select class="form-control" name="stream_id" id="stream_id">
-                                    <option value="">Select Stream</option>
+                                <select class="form-control" name="class_id" id="class_id">
+                                    <option value="">Select Class</option>
+                                    @foreach ($grades as $class)
+
+                                    <option value="{{$class->id}}">{{$class->grade_name}}</option>
+                                        
+                                    @endforeach
                                 </select>
-                                @error('stream_id')
+                                @error('class_id')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <div class="col-md-3 form-group">
+                            <div class="col-md-4 form-group">
                                 <x-jet-label>From Year</x-jet-label>
                                 <select class="form-control" name="from_academic_session" id="from_academic_session">
                                     <option value="">Select From Academic Year</option>
@@ -69,7 +64,7 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="col-md-3  form-group">
+                            <div class="col-md-4  form-group">
                                 <x-jet-label>To Year</x-jet-label>
                                 <select class="form-control" name="to_academic_session" id="to_academic_session">
                                     <option value="">Select New Academic Year</option>
@@ -90,50 +85,7 @@
                     </div>
                 </form>
             </div>
-            <form action="{{route('transition.store')}}" method="post" name="migration" id="migration_form">
-                @csrf
-            <div class="card text-left">
-              
-              <div class="card-body">
-
-                <div class="new_class"></div>
-
-                <div class="next_class_message"></div>
-             
-                
-             <table class="table table-hover table-centered align-middle table-nowrap mb-0 table-responsive-md table-bordered" >
-                    <thead class="thead-light">
-                        <tr>
-                            <th class="transfer_th">Transfer</th>
-                            <th>Last Name</th>
-                            <th>Name</th>
-                            <th>Middlename</th>
-                            <th>Current Class</th>
-                             <th>Result</th>
-                            {{-- <th>Left School? <i class="fas fa-info-circle " data-toggle="tooltip" data-placement="top" title="Select only those students that have left school.">
-                            </th> --}}
-                            
-                        </tr>
-                    </thead>
-                   
-                    <tbody class="response_data">
-                       
-                    </tbody>
-                   {{-- <div class="form-check form-check-inline">
-                       <label class="form-check-label">
-                          
-                       </label>
-                   </div> --}}
-                
-                </table>
-
-              </div>
-              <div class="card-footer">
-                <x-jet-button>Migrate Students </x-jet-button>
-              </div>
-            </div>
-        </form>
-
+           
 
         </div>
 
@@ -145,7 +97,7 @@
  
 })
     </script> --}}
-    <script>
+    {{-- <script>
 
         $(document).ready(function () {
             $("#external_checkbox_td").hide();
@@ -338,6 +290,6 @@ if(type_of_class=="internal"){
             });
         });
         
-    </script>
+    </script> --}}
 
 </x-app-layout>

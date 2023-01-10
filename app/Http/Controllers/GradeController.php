@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AcademicSession;
 use App\Models\Grade;
 use App\Models\Stream;
 use App\Models\Section;
 use Barryvdh\DomPDF\PDF;
 use App\Models\GradeTeacher;
+use App\Models\School;
+use App\Models\Session;
 use App\Models\StudentClass;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +30,7 @@ class GradeController extends Controller
         $master_collection=DB::table('grades')
         ->join('streams','grades.stream_id','=','streams.id')
         ->join('sections','grades.section_id','=','sections.id') 
-        ->select('grades.id as grade_id','grades.grade_name','stream_name', 'section_name', 'grades.section_id','grades.stream_id')->orderBy('grades.id')
+        ->select('grades.id as grade_id','grades.grade_name','stream_name', 'section_name', 'grades.section_id','grades.stream_id')->orderBy('grades.grade_name')
         ->get();
         
      
@@ -90,8 +94,12 @@ class GradeController extends Controller
         $students= DB::table('grades_students')
         ->join('users', 'users.id', '=', 'grades_students.student_id')
         ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        ->join('academic_sessions','academic_sessions.id','=','grades_students.academic_session')
         ->select('grades.id as grade_id','users.id as id', 'name', 'lastname', 'middlename', 'gender', 'date_of_birth',   'profile_photo_path')
-        ->where('grades_students.grade_id', $id)->orderBy('lastname')->get();
+        ->where('grades_students.grade_id', $id)
+        ->where('academic_sessions.active',1 )
+        ->where('grades_students.active',1 )
+        ->orderBy('lastname')->orderBy('name')->get();
 
         $total=StudentClass::where('grade_id', $id)->count();
         
@@ -108,18 +116,27 @@ class GradeController extends Controller
 
     public function createPDF($id){
          // retreive all records from db
-      $data =  DB::table('grades_students')
-      ->join('users', 'users.id', '=', 'grades_students.student_id')
-      ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-      ->select('grades.id as grade_id','users.id as id', 'name', 'lastname', 'middlename', 'gender', 'date_of_birth',   'profile_photo_path')
-      ->where('grades_students.grade_id', $id)->orderBy('lastname')->get();
+         $data= DB::table('grades_students')
+         ->join('users', 'users.id', '=', 'grades_students.student_id')
+         ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+         ->join('academic_sessions','academic_sessions.id','=','grades_students.academic_session')
+         ->select('grades.id as grade_id','users.id as id', 'name', 'lastname', 'middlename', 'gender', 'date_of_birth',   'profile_photo_path')
+         ->where('grades_students.grade_id', $id)
+         ->where('academic_sessions.active',1 )
+         ->where('grades_students.active',1 )
+         ->orderBy('lastname')->orderBy('name')->get();
 
       // share data to view
-      view()->share('id',$data);
-      $pdf = PDF::loadView('pdf_view', $data);
+   //   view()->share('id',$data);
+      $pdf = FacadePdf::loadHTML('academic-admin.class-lists.view', $data);
+
+
+    //   dd($pdf);
 
       // download PDF file with download method
       return $pdf->download('pdf_file.pdf');
+
+   
     }
     /**
      * Show the form for editing the specified resource.
@@ -214,5 +231,57 @@ public function view ($id){
 
 
         }
+    }
+
+    public function  class_lists_index(){
+
+
+        $grades=Grade::all();
+        $sessions=AcademicSession::all();
+
+        return view('academic-admin.class-lists.index', compact('grades', 'sessions'));
+
+    }
+
+
+    public function  class_lists_view(Request $request){
+
+
+        //validation
+
+        $validation=$request->validate([
+            'session'=>'required',
+            'grade'=>'required',
+        ]);
+
+        $session_id=$request->session;
+        $grade_id=$request->grade;
+
+
+
+        $data= DB::table('grades_students')
+        ->join('users', 'users.id', '=', 'grades_students.student_id')
+        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        ->join('academic_sessions','academic_sessions.id','=','grades_students.academic_session')
+        ->select('grades.grade_name as grade_name','grades.id as grade_id','users.id as id', 'name', 'lastname', 'middlename', 'gender', 'date_of_birth',   'profile_photo_path')
+        ->where('grades_students.grade_id', $grade_id)
+        ->where('grades_students.academic_session', $session_id)
+        ->where('academic_sessions.id',$session_id )
+        ->where('grades_students.active',1 )
+        ->orderBy('lastname')->orderBy('name')->get();
+
+      
+
+        $grade=Grade::where('id', $grade_id)->first();
+        $session=AcademicSession::where('id', $session_id)->first();
+
+        // dd($data);
+
+
+        $school_info=School::all();
+
+        return view('academic-admin.class-lists.view', compact('data', 'school_info', 'grade', 'session'));
+
+
     }
 }

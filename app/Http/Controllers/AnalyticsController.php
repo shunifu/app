@@ -129,8 +129,7 @@ class AnalyticsController extends Controller
         // page that will display all schools insights form
 
         $sessions=AcademicSession::orderBy('academic_session', 'desc')->get();
-       // $results = Project::orderBy('name', 'desc')->get();
-        // $results = Project::all()->sortBy("name");
+     
 
         return view('analytics.insights.index', compact('sessions'));
     }
@@ -234,9 +233,10 @@ class AnalyticsController extends Controller
     $category=$request->category;
     $outcome=$request->outcome;
     $session=$request->session;
+    $baseline=$request->baseline;
 
 
-   /// dd($request->all());
+  
 
     //Beginning of Assessement Based Reporting 
 
@@ -247,37 +247,27 @@ class AnalyticsController extends Controller
         //chosen assessement_id
         $assessement_id=$request->baseline_group;
 
-      
-
+    
 
         //Beginning of Assessement Stream-Based outcomes
         if ($request->category=="stream") {
+            
 
             //chosen stream
             $stream=$request->category_result;
+            $group="stream";
 
             //1.Assessement Stream-Based outcome- Scoresheet
         
             if ($outcome=="scoresheet") {
-                
-                $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome);
 
-                $section = DB::table('grades')
-                ->join('streams', 'streams.id', '=', 'grades.stream_id')
-                ->join('sections', 'sections.id', '=', 'grades.section_id')
-                ->where('grades.stream_id', $stream)
-                ->select('sections.id as section_id')
-                ->first();
-              
-                $section_id=$section->section_id;
+                //this is an assessment based scoresheet
                 
-                $subjects=Subject::all();
-                $streams=Stream::where('id', $stream)->first();
+                $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome, $baseline,$group);
 
-               
-                $pass_rate=PassRate::where('section_id', $section_id)->first();
-                
-                  return view('analytics.insights.assessement-insights.scoresheet', compact('data', 'subjects', 'pass_rate', 'assessement_id', 'stream'));
+             
+
+                return view('analytics.insights.assessement-insights.scoresheet', compact('data', 'assessement_id', 'stream'));
               
             }
 
@@ -285,7 +275,7 @@ class AnalyticsController extends Controller
             //2.Assessement Stream-Based outcome- Report Cards
             if ($outcome=="report_card") {
              
-                $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome);
+                $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome, $baseline, $group);
                 dd("assessement based stream report card");
             }
             //2.End of Assessement Stream-Based outcome- Report Cards
@@ -306,6 +296,19 @@ class AnalyticsController extends Controller
 
         if ($request->category=="class") {
         //1.Assessement Class-Based outcome- Scoresheet 
+
+         //chosen class
+          $class=$request->category_result;
+
+          $group="class";
+
+          $data= $this->assessementCalculations($class, $session, $assessement_id, $outcome, $baseline,$group);
+
+          return view('analytics.insights.assessement-insights.scoresheet', compact('data', 'pass_rate', 'assessement_id', 'class'));
+
+
+
+
         //2.Assessement Class-Based outcome- Report Card 
         //3.Assessement Class-Based outcome- Performance Analysis 
         }  
@@ -388,6 +391,8 @@ $stream_is=Stream::where('id',$student_stream)->first();
 $stream_title=$stream_is->stream_name;
 
 $getAssessement=Assessement::find($assessement_id);
+
+// dd($assessement_id);
 
 $assessement_name=$getAssessement->assessement_name;
 

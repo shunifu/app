@@ -1530,7 +1530,8 @@ return Redirect::back();
 
 public function template_export(Excel $excel){
 
-    return $excel->download(new StudentListTemplate, 'students_template.xlsx');
+    // return $excel->download(new StudentsListTemplate, 'students_template.xlsx');
+    return Excel::download(new StudentsListTemplate, 'students_template.xlsx');
 
 }
 
@@ -1539,6 +1540,8 @@ public function spreadsheet_pathway_index(){
 }
 
 public function spreadsheet_pathway_store(Request $request){
+
+    //multiple sheet upload
 
 }
 

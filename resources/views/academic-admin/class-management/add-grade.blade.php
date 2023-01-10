@@ -91,7 +91,7 @@
       
         <div class="card-body">
           
-          <table class="table table-sm table-hover mx-auto table-bordered">
+          <table class="table table-hover mx-auto table-bordered">
             <thead class="thead-light">
               <tr>
                 <th>Class Name</th>
@@ -109,11 +109,19 @@
                    <td>{{$grade_item->section_name}}</td>
 
                    <td class="text-left py-0 align-middle">
-                    <div class="btn-group btn-group-md">
-                      <a href="/academic-admin/class/view/{{$grade_item->grade_id}}" class="btn btn-success"><i class="fas fa-eye"></i></a>
-                      <a href="/academic-admin/class/edit/{{$grade_item->grade_id}}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                      <a href="/academic-admin/class/delete/{{$grade_item->grade_id}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+
+
+                    <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        Action
+                      </button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/academic-admin/class/view/{{$grade_item->grade_id}}">View {{$grade_item->grade_name}}  Class</a>
+                        <a class="dropdown-item" href="/academic-admin/class/edit/{{$grade_item->grade_id}}">Edit {{$grade_item->grade_name}} Class</a>
+                        <a class="dropdown-item" href="/academic-admin/class/delete/{{$grade_item->grade_id}}">Delete {{$grade_item->grade_name}} Class</a>
+                      </div>
                     </div>
+                   
                   </td>
                  
                    
