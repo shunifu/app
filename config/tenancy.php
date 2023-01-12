@@ -49,6 +49,7 @@ return [
         'sigcawenihigh.shunifu.app', 
         'phonjwanehigh.shunifu.app',
         'mkhwelihigh.shunifu.app', 
+        'mkhuzwenihigh.shunifu.app', 
         'maphilingohigh.shunifu.app',
         'phocweniprimary.shunifu.app', 
         'stmarksprimary.shunifu.app',

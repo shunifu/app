@@ -190,15 +190,15 @@ class TransitionController extends Controller
 
               
   
-    //    Schema::table('grades_students', function (Blueprint $table)
-    //    {
-
-
-    // //     $table->dropForeign(['grades_students_grade_id_foreign']);
-    // //     $table->dropUnique('grades_students_student_id_unique');
-    // //    });
+      
+       Schema::table('persons', function (Blueprint $table) {
+        $index_exists = collect(DB::select("SHOW INDEXES FROM grades_students"))->pluck('Key_name')->contains('grades_students_student_id_unique');
+        if ($index_exists) {
+            $table->dropUnique("grades_students_student_id_unique");
+        }
+    });
    
-    //    })
+    
 
             $combined = [];
 
@@ -252,6 +252,8 @@ class TransitionController extends Controller
                    
                 }
 
+                flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success. . Migration Successful ', 'Migration Process Notice');
+                return redirect('/migration');
 
             }else{
 
