@@ -427,12 +427,25 @@ WHERE sub.student_id=".$student.""));
                         <td>
                         Term: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
                         <br>
+
+                            @if ($student_term_data->term_name=="Term 1")
+
+                            Term Opening Date <span class="text-bold">05 April 2022</span>
+                            <br>
+                            Term Closing Date <span class="text-bold">19 August 2022</span>
+                            <br>
+                            Next Term Date: <span class="text-bold">7 September 2022</span>
+                                
+                            @else
+
+                        <br>
                         Term Opening Date <span class="text-bold">13 September 2022</span>
                         <br>
                         Term Closing Date <span class="text-bold">22 December 2022</span>
                         <br>
                         Next Term Date: <span class="text-bold">17 January 2023</span>
 
+                        @endif
                             
                         <br>
                         Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
@@ -471,7 +484,7 @@ WHERE sub.student_id=".$student.""));
                              
                         @endif
       <br>
-                        Report Generated: <span class="text-bold text-italic">{{date('d F Y H:i')}}</span>
+                        Report regenerated: <span class="text-bold text-italic">{{date('d F Y H:i')}}</span>
                         <br>
 
 
@@ -519,7 +532,7 @@ grades.stream_id,
     WHERE student_subject_averages.student_id = ".$student." AND `student_subject_averages`.`term_id` = ".$term." 
     GROUP BY
     student_subject_averages.student_id,
-    subjects.id"));
+    subjects.id ORDER BY student_average DESC"));
 
 ?>
 
