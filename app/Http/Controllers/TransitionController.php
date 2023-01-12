@@ -198,7 +198,7 @@ class TransitionController extends Controller
     // //     $table->dropUnique('grades_students_student_id_unique');
     // //    });
    
-    //    }
+    //    })
 
             $combined = [];
 

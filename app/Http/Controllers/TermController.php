@@ -27,11 +27,7 @@ class TermController extends Controller
         ->select('terms.id as term_id', 'terms.term_name', 'terms.start_date','terms.end_date','terms.borders_return_date','terms.academic_session','terms.final_term','terms.next_term_date','academic_sessions.*')
         ->get();
 
-        // $next_term=DB::table('terms')
-        // ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
-        // ->where('academic_sessions.id', $id )
-        // ->where('academic_sessions.id', $id )
-        // ->get();
+        
         return view('academic-admin.academic-session-management.terms.index', compact('academic_session', 'terms'));
 
     }

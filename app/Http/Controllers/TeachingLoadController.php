@@ -367,7 +367,7 @@ return view('teaching-loads.index', compact('classes', 'sessions', 'subjects'));
 
 
 
-      if(!is_null($authorizedTeacher=TeachingLoad::where('teacher_id', Auth::user()->id)->first('teacher_id'))){
+      if(!is_null($authorizedTeacher=TeachingLoad::where('teacher_id', Auth::user()->id)->first('teacher_id'))){ 
         if($authorizedTeacher=TeachingLoad::where('teacher_id', Auth::user()->id)->first('teacher_id')->toArray());
         $teacher_id=$authorizedTeacher['teacher_id'];
         if ($teacher_id==Auth::user()->id ) {

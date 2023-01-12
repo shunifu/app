@@ -197,7 +197,7 @@ table tbody tr td {
        WHERE
            term_averages.student_id =".$student." AND term_averages.term_id =".$term.""));
 
-    
+
             
                     foreach ($term_average as $student_term_data) {
              
@@ -1413,7 +1413,10 @@ foreach ($term_average as $student_term_data) {
                           Class Teacher Signature
                           </div>
                           <div class="text-center">
+
+                         
                             <?php
+                        
 
 $class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id where grade_id=".$classofstudent.""));
 foreach ($class_t as $key_t) {

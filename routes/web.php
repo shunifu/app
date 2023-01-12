@@ -169,7 +169,7 @@ Route::get('/academic-admin/session/edit/{id}', [AcademicSessionController::clas
 Route::post('/academic-admin/session/update', [AcademicSessionController::class,'update'])->name('session.update');
 Route::get('/academic-admin/session/delete/{id}', [AcademicSessionController::class,'destroy'])->name('sesson.destroy');
 
-Route::get('view/terms/{id}', [TermController::class,'index'])->name('term.index');
+Route::get('/view/terms/{id}', [TermController::class,'index'])->name('term.index');
 Route::post('terms/add/', [TermController::class,'store'])->name('term.store');
 Route::post('terms/edit/', [TermController::class,'edit'])->name('term.edit');
 Route::patch('terms/update', [TermController::class,'update'])->name('term.update');
@@ -901,7 +901,3 @@ Route::get('/cache', function() {
 
 
 
-//end of registration
-// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-//     \UniSharp\LaravelFilemanager\Lfm::routes();
-// });

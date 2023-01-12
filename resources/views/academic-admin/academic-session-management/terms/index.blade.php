@@ -165,7 +165,11 @@
                    
 
                   <td class="text-left py-0 align-middle">
-                    <div class="btn-group btn-group-sm ">
+
+
+                  
+
+                    {{-- <div class="btn-group btn-group-sm ">
                     <form action="/terms/edit/" method="POST">
                         @csrf
                         @method('post')
@@ -174,7 +178,7 @@
                         <button type="submit" class="btn btn-primary ">Edit</button>
                     </form>
 
-                      <form action="/terms/delete/" method="POST">
+                      <form action="terms/delete/" method="POST">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="id" value="{{$term->term_id}}" />
@@ -182,8 +186,10 @@
                         <button type="submit" class="btn  btn-danger">Delete</button>
                     </form>
 
-                  </div>
+                  </div> --}}
                 <td>
+
+
                  
                
                @endforeach

@@ -193,7 +193,7 @@ class ReportController extends Controller
 
     public function stream(Request $request){
 
-      //  dd($request->all());
+      
 
 
       Schema::table('student_subject_averages', function ($table) {
@@ -532,6 +532,7 @@ class ReportController extends Controller
   
       
         foreach ($students as $student ) {
+          
 
             //First validate the marks entered
 
@@ -576,7 +577,7 @@ subjects.id"));
 
 }
 
-//  dd($subject_average);
+
             
         }
 
