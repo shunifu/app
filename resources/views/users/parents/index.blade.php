@@ -10,7 +10,7 @@
                 </div>
 
                 <img class="card-img-top"
-                    src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_350,w_970/b_rgb:000000,e_gradient_fade,y_-0.80/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_32_style_light_align_center:Manage Parents,w_0.2,y_0.30/v1616512061/pexels-photo-4260475_alskcw.jpg"
+                    src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1673577116/Manage_Parents_1_ofbifm.png"
                     alt="">
 
                 <div class="card-body">

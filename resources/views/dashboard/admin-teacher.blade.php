@@ -6,7 +6,7 @@
     }
     
     .cover {
-        background-image: url(https://res.cloudinary.com/innovazaniacloud/image/upload/v1613303961/pexels-photo-5212359_ukdzdz.jpg);
+        background-image: url(https://res.cloudinary.com/innovazaniacloud/image/upload/v1673586667/Manage_Teachers_3_h53dex.png);
       background-size: cover;
         background-repeat: no-repeat
     }
@@ -23,7 +23,7 @@
     @include('partials.dashboard-header')
              
     
-    <div class="mt-10 mb-25">
+    <div class="mt-10 mb-20">
     <hr>
     
     </div>
