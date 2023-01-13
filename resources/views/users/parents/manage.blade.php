@@ -11,7 +11,7 @@
                 </div>
 
                 <img class="card-img-top"
-                    src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_280,w_970/b_rgb:000000,e_gradient_fade,y_-0.80/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_32_style_light_align_center:Manage Parents,w_0.2,y_0.30/v1616512061/pexels-photo-4260475_alskcw.jpg"
+                    src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1673575215/Manage_Parents_ydbwmk.png"
                     alt="">
 
                 <div class="card-body">
@@ -50,13 +50,13 @@
                         </lottie-player>
                     @else
                         <div class="table-responsive">
-                            <table class="table table-sm table-hover mx-auto">
+                            <table class="table table-sm table-hover table-bordered">
                                 <thead class="thead-light ">
                                     <tr>
-                                        <th class="d-none d-sm-block">Profile</th>
+                                        <th>Profile</th>
                                         <th>Name</th>
-                                        <th class="d-none d-sm-block">Email</th>
-                                        
+                                        <th >Email</th>
+                                        <th>Cell Number</th>
                                         <th>Manage</th>
 
                                     </tr>
@@ -65,7 +65,7 @@
 
                                     @foreach($getParent as $item)
                                         <tr>
-                                            <td class="d-none d-sm-block">
+                                            <td >
                                                 @if(empty($item->profile_photo_path))
 
                                                     <img class="user-image img-circle " width="32" height="32"
@@ -74,16 +74,27 @@
 
                                                 @else
                                                     <img class="user-image img-circle " width="32" height="32"
-                                                        src="/storage/{{ $item->profile_photo_path }}"
+                                                        src="{{ $item->profile_photo_path }}"
                                                         alt="{{ $item->name }}" />
 
                                                 @endif
                                             </td>
-                                            <td class="vertical-middle">{{ $item->name }} {{ $item->middlename }}
+                                            <td class="vertical-middle">{{ $item->salutation }} {{ $item->name }} {{ $item->middlename }}
                                                 {{ $item->lastname }}</td>
-                                            <td class="vertical-middle d-none d-sm-block">{{ $item->email }}</td>
-                                            <td><a href="/parent/view/{{ $item->id }}" class="link"><i
-                                                        class="fas fa-eye 2x mr-2"></i>View</a></td>
+                                            <td class="vertical-middle">{{ $item->email }}</td>
+                                            <td class="vertical-middle">{{ $item->cell_number }}</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                      Action
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                      <a class="dropdown-item" href="/parent/view/{{ $item->id }}">View Parent</a>
+                                                      <a class="dropdown-item" href="/teacher/reset/{{Crypt::encryptString($item->id)}}"> Reset Password</a>
+                                                      
+                                                    </div>
+                                                  </div>
+                                                </td>
                                         </tr>
                                     @endforeach
                                    

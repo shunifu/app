@@ -1148,12 +1148,7 @@
           </a>
         </li>
 
-        <li class="nav-item">
-          <a href="{{route('transition.index')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>System Migration</p>
-            </a>
-          </li>
+    
       <li class="nav-item">
         <a href="{{route('sequence.index')}}" class="nav-link">
             <i class="far fa-circle nav-icon"></i>

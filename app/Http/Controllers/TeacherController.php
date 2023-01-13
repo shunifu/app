@@ -566,6 +566,9 @@ $otp =  mt_rand(1000,9999);
     $result=User::where('role_id', $teacher_id)->orderBy('active', 'DESC')->get();
     $result_total=User::where('role_id', $teacher_id)->where('active', 1)->count();
 
+
+    
+
       
         return view('users.teachers.view', compact('result'));
     }else{

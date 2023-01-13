@@ -115,42 +115,12 @@
                                     </div>
         
                                     
-                                <div class="col-md-4 form-group">
-                                    <x-jet-label>National ID</x-jet-label>
-                                    <x-jet-input name="national_id" type="number"
-                                        value="{{ $result_user->national_id }}"></x-jet-input>
-                                    @error('national_id')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                    
-                                <div class="col-md-4 form-group">
-                                    <x-jet-label>Date of Birth</x-jet-label>
-                                    <x-jet-input name="date_of_birth"
-                                        value="{{ $result_user->date_of_birth }}" type="date">
-                                    </x-jet-input>
-                                    @error('date_of_birth')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                    
-                                <div class="col-md-4 form-group">
-                                    <x-jet-label>Gender</x-jet-label>
-                                    <select class="form-control" name="gender">
-                    
-                                        <option>{{ $result_user->gender }} </option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                    </select>
-                                    @error('gender')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                
         
                                 <div class="col-md-6 form-group">
                                     <x-jet-label>Email</x-jet-label>
                                     <x-jet-input name="email"
-                                    value="{{ $result_user->email }}" type="email" required>
+                                    value="{{ $result_user->email }}" type="email" >
                                 </x-jet-input>
                                     @error('email')
                                         <span class="text-danger">{{ $message }}</span>

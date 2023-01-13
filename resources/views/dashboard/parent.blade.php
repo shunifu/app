@@ -6,7 +6,7 @@
     }
     
     .cover {
-        background-image: url(https://res.cloudinary.com/innovazaniacloud/image/upload/v1616623367/103-1038595_m2-1440p-material-backgrounds_lzqf5c.png);
+        background-image: url(https://res.cloudinary.com/innovazaniacloud/image/upload/v1673577116/Manage_Parents_1_ofbifm.png);
       background-size: cover;
         background-repeat: no-repeat
     }

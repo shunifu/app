@@ -9,7 +9,7 @@
         <h3 class="card-title">Manage Teachers</h3>
       </div>
       
-        <img class="card-img-top" src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_250,w_970/b_rgb:000000,e_gradient_fade,y_-0.90/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_35_style_light_align_center:Manage Teachers,w_0.2,y_0.10/v1615298483/pexels-photo-3862130_jwg7oz.jpg" alt="">
+        <img class="card-img-top" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1673574541/Manage_Teachers_tmwzjt.png">
     
                         <div class="card-body">
                           <h3 class="lead"> Hi,  {{Auth::user()->name}}</h3>
@@ -42,7 +42,8 @@
                       <th>Cell </th>
                       <th>Email</th>
                       <th>Status</th>
-                      <th>OTP </th>
+                      <th>Login Status </th>
+                      <th>Last Seen </th>
                       <th>Manage</th>
                       
                   </tr>
@@ -84,15 +85,52 @@
                             </div>
                           </td>
 
+                          <td>
+                          
+                            @if(Cache::has('user-is-online-' . $item->id))
+                            <span class="text-success">{{Carbon::parse($item->last_seen)->diffForHumans()}}</span>
+                        @else
+                        <span class="text-success">
+                          {{-- {{ \Carbon\Carbon::parse($item->last_seen)->diffForHumans() }} --}}
+                          {{-- {{ \Carbon\Carbon::parse($item->last_seen)->diffForHumans() }} --}}
+                          <span class="text-secondary">-</span>
+
+
+                          
+                          </span>
+                        @endif
+
+{{-- if (Cache::has('user-is-online-' . $item->id)){
+                echo $item->name . " is online. Last seen: " . \Carbon::parse($user->last_seen)->diffForHumans() . " <br>";
+            
+        } --}}
+    
+
+
+
+                          
+                          </td>
+
                           <td class="text-left py-0 align-middle">
-                            <div class="btn-group btn-group-sm">
-                              <a href="/teacher/view/{{Crypt::encryptString($item->id)}}" class="btn btn-info"><i class="fas fa-eye pr-1"></i>View</a>
-                              <a href="/teacher/login/{{Crypt::encryptString($item->id)}}" class="btn btn-success"><i class="fas fa-sign-in-alt pr-1"></i>Login</a>
-                              <a href="/teacher/reset/{{Crypt::encryptString($item->id)}}" class="btn btn-warning"><i class="fas fa-sync-alt pr-1"></i>OTP</a>
-                              <a href="/teacher/archive/{{Crypt::encryptString($item->id)}}" class="btn btn-danger"><i class="fas fa-trash pr-1"></i>Remove</a>
-                              <a href="/teacher/reactivate/{{Crypt::encryptString($item->id)}}" class="btn btn-warning"><i class="fas fa-trash pr-1"></i>Reactivate</a>
-                             
+
+
+                            <div class="dropdown">
+                              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                Action
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/teacher/view/{{Crypt::encryptString($item->id)}}">View</a>
+                                <a class="dropdown-item" href="/teacher/login/{{Crypt::encryptString($item->id)}}">Login</a>
+
+                                <a class="dropdown-item" href="/teacher/reset/{{Crypt::encryptString($item->id)}}"> Reset Password</a>
+
+                                <a class="dropdown-item" href="/teacher/archive/{{Crypt::encryptString($item->id)}}">Remove</a>
+                                <a class="dropdown-item" href="/teacher/reactivate/{{Crypt::encryptString($item->id)}}">Reactivate</a>
+
+                                
+                              </div>
                             </div>
+                          
                           </td>
                           {{-- <td>
 

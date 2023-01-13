@@ -82,26 +82,28 @@
                     @csrf
                 <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                        <b>Old Password</b> <x-jet-input  type="password" name="old_password" 
+                        <b>Old Password <small>or OTP</small></b> <x-jet-input  type="password" name="old_password" 
                             placeholder="Old Password"></x-jet-input>
                         @error('old_password')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                       </li>
-                  <li class="list-group-item">
-                    <b>New Password</b>  <x-jet-input type="password" name="new_password" 
-                        placeholder="New Password"></x-jet-input>
-                    @error('new_password')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                  </li>
-                  <li class="list-group-item">
-                    <b>Confirm Password</b>  <x-jet-input type="password" name="confirm_password" 
-                        placeholder="Confirm Password"></x-jet-input>
-                    @error('confirm_password')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                  </li>
+                      <li class="list-group-item">
+                        <b>New Password</b>  <x-jet-input type="password" name="new_password" 
+                            placeholder="New Password"></x-jet-input>
+                        @error('new_password')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                      </li>
+                      <li class="list-group-item">
+                        <b>Confirm Password</b>  <x-jet-input type="password" name="confirm_password" 
+                            placeholder="Confirm Password"></x-jet-input>
+                        @error('confirm_password')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                      </li>
+                
+                
                   <li class="list-group-item">
                     <button type="submit" class="btn btn-primary btn-block">Update Password</button>
                     {{-- <a href="#" class="btn btn-primary btn-block"><b>Update Password</b></a> --}}

@@ -60,13 +60,11 @@ class ParentController extends Controller
 
             $this->validate($request,[
                 'salutation'=>'required',
-                'middle_name'=>'required',
+               
                 'first_name'=>'required',
                 'last_name'=>'required',
-                'national_id'=>'required|min:13|max:13',
-                // 'date_of_birth'=>'date|before:today',
                 'cell_number'=>'required|min:8|max:8',
-                'email_address'=>'required|email',
+                'email_address'=>'email',
                ]);
             $parent_role=Role::where('name', 'parent')->first();
             $otp=Str::random(24);
@@ -75,9 +73,7 @@ class ParentController extends Controller
                 'salutation'=>$request->salutation,
                 'middlename'=>$request->middle_name,
                 'lastname'=>$request->last_name,
-                'national_id'=>$request->national_id,
-                'date_of_birth'=>$request->date_of_birth,
-                'gender'=>$request->gender,
+                
                 'cell_number'=>$request->cell_number,
                 'email'=>$request->email_address,
                 'password'=>Hash::make($otp),
@@ -162,6 +158,8 @@ class ParentController extends Controller
 
     public function child_performance(Request $request){
 
+     //  dd($request->all());
+
       
         $assessement_id=$request->assessement_id;
         $student_id=$request->student_id;
@@ -170,16 +168,18 @@ class ParentController extends Controller
         $kid= DB::table('assessement_progress_reports')
         ->join('grades', 'grades.id', '=', 'assessement_progress_reports.student_class')
         ->join('users', 'users.id', '=', 'assessement_progress_reports.student_id')
-		->where('student_id', $student_id)
+		->where('assessement_progress_reports.student_id', $student_id)
+        ->where('users.id', $student_id)
         ->where('assessement_id', $assessement_id)
         ->select('profile_photo_path','grade_name', 'name', 'lastname', 'middlename', 'number_of_passed_subjects','passing_subject_status','student_average')
 	    ->first();
+
+    //    dd($kid);
 
       
         
 
         $marks= DB::table('marks')
-        
         ->join('teaching_loads', 'teaching_loads.id', '=', 'marks.teaching_load_id')
         ->join('assessements', 'assessements.id', '=', 'marks.assessement_id')
         ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
@@ -231,9 +231,6 @@ class ParentController extends Controller
 
        $mychildren = DB::table('parents_students')
        ->join('users', 'users.id', '=', 'parents_students.student_id')
-       ->join('grades_students', 'users.id', '=', 'grades_students.student_id')
-       ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-       ->select('users.id as student_id', 'users.profile_photo_path','users.name','users.lastname','users.middlename','users.date_of_birth','grades.grade_name')
        ->where('parents_students.parent_id', Auth::user()->id)
        ->get();
 
@@ -250,7 +247,7 @@ class ParentController extends Controller
 
     }
 
-    public function
+ 
 
     /**
      * Update the specified resource in storage.
@@ -275,5 +272,83 @@ class ParentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+
+      public function reset($id){
+
+        //generate otp
+
+        if (Auth::user()->hasRole('admin_teacher')) {
+            try {
+                $decrypted = Crypt::decryptString($id);
+                $user_data=User::find($decrypted);
+                $teacher_name=$user_data->name;
+                $teacher_surname=$user_data->lastname;
+                $teacher_id=$user_data->id;
+                $teacher_cell=$user_data->cell_number;
+                $salutation=$user_data->salutation;
+
+
+                if ($user_data->active==1) {
+
+                    //generate OTP
+                    $otp =  Otp::generate($teacher_id);
+
+                   // dd($otp);
+
+//https://
+
+                 $url=substr( URL::to('/'),7);
+                
+
+                   //we $uniqid = mt_rand(1000, 9999);
+                    $password=$user_data->password = Hash::make($otp->token);
+                   $status= $user_data->status = 0;
+                    $user_data->save();
+
+                     //Send OTP via SMS
+
+                    //check id cell_number is added
+
+                    if(empty($teacher_cell)){
+                        flash()->overlay($teacher_name."Does not have a cell number registered ", 'Send SMS');
+                    }else{
+
+
+                        $username = config('app.sms_username');// use 'sandbox' for development in the test environment
+                     $apiKey   = config('app.sms_password'); // use your sandbox app API key for development in the test environment
+                     $AT = new AfricasTalking($username, $apiKey);
+                     
+                        // Get one of the services
+                        $sms      = $AT->sms();
+                     
+                        // Use the service
+                        $result   = $sms->send([
+                         'to'      => '+268'.$teacher_cell,
+                         'message' => 'Hi '.$teacher_name.' Shunifu OTP is '.$otp->token.'. Go to '.URL::to('/').' .Need assistance? WhatsApp on 76890726. Thanks '.$salutation.' '.$teacher_surname.' ',
+                         'from'=>'Shunifu'
+                     ]);
+                     
+                        
+                    }
+    
+                    flash()->overlay('OTP is '.$otp->token.' ', 'Generate One Time Password');
+                } else {
+                    flash()->overlay($teacher_name."'s OTP cannot be generated because that teacher is no longer active on the platform ", 'Generate One Time Password');
+                }
+
+                return Redirect::back();
+            } catch (DecryptException $e) {
+                return view('errors.unauthorized');
+            }
+
+       
+       
+
+        }else{
+            return view('errors.unauthorized');
+        }
     }
 }

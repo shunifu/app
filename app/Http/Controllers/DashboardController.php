@@ -16,8 +16,10 @@ use Illuminate\Http\Request;
 use App\Models\CalendarEvent;
 use App\Models\StudentLesson;
 use App\Models\AssessementOnline;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 
 class DashboardController extends Controller
 {
@@ -38,6 +40,18 @@ if ($hour >= 20) {
     $greetings = "  Imini Lenhle";
 } elseif ($hour < 12) {
    $greetings = "Kusile";
+}
+
+
+
+if (!Schema::hasColumn('users', 'last_seen')) //check the column
+{
+    Schema::table('users', function (Blueprint $table)
+    {
+       
+        $table->timestamp('last_seen')->nullable();
+  
+    });
 }
 
 // $calender=CalendarEvent::find(1);
@@ -167,16 +181,10 @@ if ($hour >= 20) {
             //3 mESSAGES
 
             //Children
-            $children = DB::table('parents_students')
-            ->join('users', 'users.id', '=', 'parents_students.student_id')
-            ->where('parents_students.parent_id', Auth::user()->id)
-            ->get()->count();
+            $children = 
 
             $mychildren = DB::table('parents_students')
             ->join('users', 'users.id', '=', 'parents_students.student_id')
-            ->join('grades_students', 'users.id', '=', 'grades_students.student_id')
-            ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-            ->select('users.id as student_id', 'users.profile_photo_path','users.name','users.lastname','users.middlename','users.date_of_birth','grades.grade_name')
             ->where('parents_students.parent_id', Auth::user()->id)
             ->get();
 

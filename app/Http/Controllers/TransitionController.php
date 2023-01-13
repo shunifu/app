@@ -150,52 +150,37 @@ class TransitionController extends Controller
             $destination_class=$request->destination_class;
 
 
-            //STEPS...
-            //The goal is to transition to a new academic year
-            //1. Make current year active=0 --model=AcademicSession
-
-            // $resetAcademicYear=AcademicSession::where('active', 1) ->update(['active' => 0]);
-
-            // $activateNewYear=AcademicSession::where('id', $to_session) ->update(['active' => 1]);
-
-
-            //2. Make active=0
-            //models;
-
-            //1. marks
-
-            //deactivate old teaching loads
-            // $deactivateTeachingLoads=TeachingLoad::where('active', 1)->where('session_id', $from_session)->update([
-            // 'active'=>'0' ]);
-
-            //student_loads
-            // $deactivateTeachingLoads=StudentLoad::where('active', 1)->where('session_id', $from_session)->update([
-            // 'active'=>'0'  ]);
-    
-            //marks
-            // $deactivateMarks=Mark::where('active', 1)->where('session_id', $from_session)->update([ 'active'=>'0']);
-
-         
-
-            //Deactivate current class
-            // $deactivateStudentGrade=StudentClass::where('active', 1)->where('academic_session', $from_session)->update([
-            //     'active'=>'0'  ]);
-
-
-            //Create new entries in grades_students
-
-            //1. Before creating new entry check if there is a student with that session, in class and is active
-
-  
-
-              
-  
+          //  DB::statement('SET FOREIGN_KEY_CHECKS=0;');
       
-       Schema::table('persons', function (Blueprint $table) {
+       Schema::table('grades_students', function (Blueprint $table) {
+
+        $index_exists_session_FK= collect(DB::select("SHOW INDEXES FROM grades_students"))->pluck('Key_name')->contains('grades_students_academic_session_foreign');
+
+        $index_exists_grade_FK = collect(DB::select("SHOW INDEXES FROM grades_students"))->pluck('Key_name')->contains('grades_students_grade_id_foreign');
+
         $index_exists = collect(DB::select("SHOW INDEXES FROM grades_students"))->pluck('Key_name')->contains('grades_students_student_id_unique');
+
+       
+
+        if ($index_exists_session_FK) {
+         
+           // $table->dropForeign(['academic_session']);
+           }
+
+           if ($index_exists_grade_FK) {
+         //   $table->dropForeign(['grade_id']);
+           }
+        
         if ($index_exists) {
-            $table->dropUnique("grades_students_student_id_unique");
+         $table->dropForeign(['student_id']);
+         $table->dropUnique(['student_id']);
+        //  grades_students_grades_students_student_id_unique_unique
         }
+
+      
+
+
+        
     });
    
     

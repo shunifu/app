@@ -66,7 +66,7 @@
                             </div>
 
                             <div class="col-md-3  form-group">
-                                <x-jet-label>Middle Name</x-jet-label>
+                                <x-jet-label>Middle Name <small>optional</small></x-jet-label>
                                 <x-jet-input name="middle_name" required value="{{old('middle_name')}}" placeholder="Middle Name"></x-jet-input>
                                 @error('middle_name')
                                     <span class="text-danger">{{ $message }}</span>
@@ -83,33 +83,6 @@
 
 
 
-                            <div class="col-md-4 form-group">
-                                <x-jet-label>Date of Birth</x-jet-label>
-                                <x-jet-input name="date_of_birth" type="date" value="{{old('date_of_birth')}}" required></x-jet-input>
-                                @error('date_of_birth')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-4 form-group">
-                                <x-jet-label>Gender</x-jet-label>
-                                <select class="form-control" name="gender">
-                                    <option value="0">Select Gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                                @error('gender')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-4 form-group">
-                                <x-jet-label>National ID</x-jet-label>
-                                <x-jet-input name="national_id" type="number" value="{{old('national_id')}}"  placeholder="National ID"></x-jet-input>
-                                @error('national_id')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
 
                             <!--contacts--->
                             <div class="col-md-6 form-group">
@@ -122,7 +95,7 @@
                             </div>
 
                             <div class="col-md-6 form-group">
-                                <x-jet-label>Parent Email Address</x-jet-label>
+                                <x-jet-label>Parent Email Address <small>optional</small></x-jet-label>
                                 <x-jet-input name="email_address" value="{{old('email_address')}}"  type="email" placeholder="Email Address">
                                 </x-jet-input>
                                 @error('email_address')
