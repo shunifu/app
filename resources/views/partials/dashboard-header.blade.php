@@ -39,7 +39,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <div class="container">
-<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+{{-- <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
        <div class="col">
 		 <div class="card radius-10 border-start border-0 border-3 border-info">
 			<div class="card-body">
@@ -101,4 +101,4 @@
 		</div>
 	  </div> 
 	</div>
-</div>
+</div> --}}
