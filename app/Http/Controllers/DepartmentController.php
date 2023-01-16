@@ -24,11 +24,14 @@ class DepartmentController extends Controller
             $teachers=User::where('role_id', $teacher_role, $admin_teacher_role)->get();
 
     
-            $department_collection=DB::table('department_heads')
-            ->join('users','department_heads.teacher_id','=','users.id')
-            ->join('departments','department_heads.department_id','=','departments.id') 
+            $department_collection=DB::table('departments')
+            ->leftjoin('department_heads','department_heads.department_id','=','departments.id')
+            ->leftjoin('users','users.id','=','department_heads.teacher_id')
+        
             ->select('departments.id as department_id','department_heads.id as department_head_id', 'department_name', 'name', 'salutation', 'middlename', 'lastname')
             ->get();
+
+           
            
             return view('academic-admin.department-management.add', compact('collection_department', 'teachers', 'department_collection'));
             
@@ -68,12 +71,7 @@ class DepartmentController extends Controller
             'teacher'=>'required',
         ]);
 
-    //     if($request->teacher=='0'){
-
-    //          flash()->overlay('<i class="fas fa-check-circle text-danger "></i>'.' Error .Please check if you selected an HOD', 'Add Department');
-    
-    //  return Redirect::back();
-    //     }else{
+   
 
             $department_name=$request->input('department_name');
             $department_exists=Department::where('department_name', $department_name)->exists();
@@ -97,12 +95,12 @@ class DepartmentController extends Controller
             ]);
     
             $department_id=$add_department->id;
+            $hod_role=Role::where('name', 'hod_teacher')->first();
+            $hod_name=$hod_role->name;
 
-            if( DepartmentHead::create([
-                'department_id'=>$department_id,
-                'teacher_id'=>$request->teacher,
-            ])){
-   
+            if( $hod=DepartmentHead::create([ 'department_id'=>$department_id,  'teacher_id'=>$request->teacher ])){
+             $hod->syncRoles([$hod_name]);
+
             flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success. Department successfully added.', 'Add Department');
         
             return redirect('academic-admin/department');
@@ -121,10 +119,76 @@ class DepartmentController extends Controller
 
     }
 
- public function edit($department, $id){
+ public function edit($id){
     $department_data=Department::where('id', $id)->first();
-    $department_head_data=Department::where('id', $department)->first();
-    return view('academic-admin.department-management.edit', compact('department_data', 'department_head_data'));
+
+    $department_head=DepartmentHead::where('department_id', $id)->first();
+
+    $teacher_role=Role::where('name', 'teacher')->first()->id;
+   
+    $teachers=User::where('role_id', $teacher_role )->get();
+
+    $hod=DB::table('department_heads')
+    ->join('users','users.id','=','department_heads.teacher_id')
+    ->where('department_heads.department_id',$id )
+    ->select('department_heads.id as department_head_id','users.id as id', 'name', 'salutation', 'middlename', 'lastname')
+    ->first();
+   
+
+   if ((!$hod>0)) {
+    $teacher_id=0;
+
+    $dept=DB::table('departments')
+    ->where('departments.id',$id )
+    ->first();
+    $int=0;
+    $department_id=$dept->id;
+   }else{
+    $int=1;
+    $teacher_id=$hod->id;
+    $department_id=$hod->department_head_id;
+   }
+  
+ 
+
+    return view('academic-admin.department-management.edit', compact('department_data', 'department_head', 'teachers', 'hod', 'department_id', 'teacher_id', 'int'));
+ }
+
+
+
+ public function update(Request $request){
+  
+    $hod_role=Role::where('name', 'hod_teacher')->first();
+    $hod_name=$hod_role->name;
+
+    $current_teacher=$request->current_teacher_id;
+    $department_id=$request->current_department_id;
+    $department_name=$request->department;
+    $new_teacher=$request->new_teacher;
+
+   
+
+
+$updateDepartment=Department::where('id', $department_id)->update([
+    "department_name"=>$department_name,
+]);
+
+$updateDepartmentHead=DepartmentHead::where('teacher_id', $current_teacher)->update([
+    "teacher_id"=>$new_teacher,
+]);
+
+//remove role in current teacher
+User::where('id',$current_teacher)->first()->detachRole($hod_name); 
+
+
+//add role in new teacher
+
+User::where('id',$new_teacher)->first()->attachRole($hod_name); 
+
+flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success. Department successfully updated.', 'Update Department');
+        
+return redirect('academic-admin/department');
+
  }
 
     public function destroy($id, $department){

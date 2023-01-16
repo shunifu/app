@@ -67,12 +67,12 @@ if (!Schema::hasColumn('users', 'last_seen')) //check the column
 
         $student_id=$student_role->id;
         $total_students=StudentClass::where('active', 1)->count();
-        $students=User::where('role_id', $student_id)->get();
+        $students=User::where('role_id', $student_id)->where('active', 1)->get();
       
 
         $teacher_id=$teacher_role->id;
         $total_teachers=User::where('role_id', $teacher_id)->where('active', 1)->count();
-        $teachers=User::where('role_id', $teacher_id)->get();
+        $teachers=User::where('role_id', $teacher_id)->where('active', 1)->get();
 
         $parent_id=$parent_role->id;
         $total_parents=User::where('role_id', $parent_id)->where('active', 1)->count();

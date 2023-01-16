@@ -60,7 +60,7 @@
                 <select name="student_image" id="student_image" class="form-control">
                   <option value="">Select Option</option>
                   <option value="1">Show Image</option>
-                  <option value="0">No Student Image</option>
+                  <option value="0">Default Image</option>
                 </select>
                 @error('student_image')
                 <span class="text-danger">{{$message}}</span>  
@@ -73,12 +73,51 @@
                   <select name="attendance_data" id="attendance_data" class="form-control">
                     <option value="">Select Option</option>
                     <option value="1">Show Attendance</option>
-                    <option value="0">Remove Student Attendance</option>
+                    <option value="0">Hide Student Attendance</option>
                   </select>
-                  @error('student_image')
+                  @error('attendance_data')
                   <span class="text-danger">{{$message}}</span>  
                   @enderror
                 </div>
+
+                <div class="form-group">
+                  <x-jet-label>Term Position</x-jet-label>
+                 <select class="form-control" name="term_position">
+                  <option value="">Select Option</option>
+                  <option value="1">Show</option>
+                  <option value="0">Hide</option>
+              
+                 </select>
+                  @error('term_position')
+                  <span class="text-danger">{{$message}}</span>  
+                  @enderror
+              </div>
+
+                <div class="form-group">
+                  <x-jet-label>Subject Position</x-jet-label>
+                 <select class="form-control" name="subject_position">
+                  <option value="">Select Option</option>
+                  <option value="1">Show</option>
+                  <option value="0">Hide</option>
+              
+                 </select>
+                  @error('subject_position')
+                  <span class="text-danger">{{$message}}</span>  
+                  @enderror
+              </div>
+
+              <div class="form-group">
+                <x-jet-label>Subject Average</x-jet-label>
+               <select class="form-control" name="subject_average">
+                <option value="">Select Option</option>
+                <option value="1">Show</option>
+                <option value="0">Hide</option>
+            
+               </select>
+                @error('subject_average')
+                <span class="text-danger">{{$message}}</span>  
+                @enderror
+            </div>
 
               <div class="form-group">
                   <x-jet-label>Data Visualization</x-jet-label>
@@ -139,6 +178,8 @@
                   <span class="text-danger">{{$message}}</span>  
                   @enderror
               </div>
+
+            
 
        
 

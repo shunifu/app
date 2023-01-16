@@ -28,8 +28,6 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\AssessementProgressReport;
-use App\Models\ReportTemplate;
-
 use function GuzzleHttp\Psr7\build_query;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\InsightsTrait;
@@ -130,13 +128,10 @@ class AnalyticsController extends Controller
     {
         // page that will display all schools insights form
 
-
-        $templates=ReportTemplate::all();
-
         $sessions=AcademicSession::orderBy('academic_session', 'desc')->get();
      
 
-        return view('analytics.insights.index', compact('sessions', 'templates'));
+        return view('analytics.insights.index', compact('sessions'));
     }
 
 
@@ -256,23 +251,17 @@ class AnalyticsController extends Controller
 
         //Beginning of Assessement Stream-Based outcomes
         if ($request->category=="stream") {
-            
 
             //chosen stream
             $stream=$request->category_result;
-            $group="stream";
 
             //1.Assessement Stream-Based outcome- Scoresheet
         
             if ($outcome=="scoresheet") {
-
-                //this is an assessment based scoresheet
                 
-                $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome, $baseline,$group);
+            $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome, $baseline);
 
-             
-
-                return view('analytics.insights.assessement-insights.scoresheet', compact('data', 'assessement_id', 'stream'));
+             return view('analytics.insights.assessement-insights.scoresheet', compact('data', 'subjects', 'pass_rate', 'assessement_id', 'stream'));
               
             }
 
@@ -280,7 +269,7 @@ class AnalyticsController extends Controller
             //2.Assessement Stream-Based outcome- Report Cards
             if ($outcome=="report_card") {
              
-                $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome, $baseline, $group);
+                $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome, $baseline);
                 dd("assessement based stream report card");
             }
             //2.End of Assessement Stream-Based outcome- Report Cards
@@ -301,143 +290,12 @@ class AnalyticsController extends Controller
 
         if ($request->category=="class") {
         //1.Assessement Class-Based outcome- Scoresheet 
-
-         //chosen class
-          $class=$request->category_result;
-
-          $group="class";
-
-   
-          $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome, $baseline,$group);
-
-          if ($outcome=="scoresheet") {
-
-            //this is an assessment based scoresheet
-        
-
-            return view('analytics.insights.assessement-insights.scoresheet', compact('data', 'assessement_id', 'stream'));
-          
-        }
-
-
-        if ($outcome=="report_card") {
-
-            //this is an assessment based scoresheet
-        
-
-            return view('analytics.insights.assessement-insights.report_card', compact('data', 'assessement_id', 'stream'));
-          
-        }
-
-
-        if ($outcome=="performance_analysis") {
-
-            //this is an assessment based scoresheet
-        
-
-            return view('analytics.insights.assessement-insights.report_card', compact('data', 'assessement_id', 'stream'));
-          
-        }
-
-
-          $data= $this->assessementCalculations($class, $session, $assessement_id, $outcome, $baseline,$group);
-
-          return view('analytics.insights.assessement-insights.scoresheet', compact('data', 'pass_rate', 'assessement_id', 'class'));
-
-
-
-
         //2.Assessement Class-Based outcome- Report Card 
         //3.Assessement Class-Based outcome- Performance Analysis 
         }  
 
 
     }
-
-//End of Assessement Based Reporting
-
-
-
-
-
-
-
-
-
-    //Beginning of Term Based Reporting 
-
-    if ($request->baseline=="term") {
-     
-
-
- 
-
-     //Beginning of Assessement Stream-Based outcomes
-     if ($request->category=="stream") {
-         
-
-         //chosen stream
-         $stream=$request->category_result;
-         $group="stream";
-
-         //1.Assessement Stream-Based outcome- Scoresheet
-     
-         if ($outcome=="scoresheet") {
-
-             //this is an assessment based scoresheet
-             
-             $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome, $baseline,$group);
-
-          
-
-             return view('analytics.insights.assessement-insights.scoresheet', compact('data', 'assessement_id', 'stream'));
-           
-         }
-
-
-         //2.Assessement Stream-Based outcome- Report Cards
-         if ($outcome=="report_card") {
-          
-             $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome, $baseline, $group);
-             dd("assessement based stream report card");
-         }
-         //2.End of Assessement Stream-Based outcome- Report Cards
-
-
-         //3.Assessement Stream-Based outcome- Performance Analysis
-         if ($outcome=="performance_analysis") {
-             dd("assessement based stream performance analysis");
-         }
-         //3.End of assessement Stream-Based outcome- Performance Analysis
-     }
-
-      //End  of Assessement Stream-Based outcomes
-
-
-  
-     //Beginning of Assessement Class-Based outcomes
-
-     if ($request->category=="class") {
-     //1.Assessement Class-Based outcome- Scoresheet 
-
-      //chosen class
-       $class=$request->category_result;
-
-       $group="class";
-
-       $data= $this->assessementCalculations($class, $session, $assessement_id, $outcome, $baseline,$group);
-
-       return view('analytics.insights.assessement-insights.scoresheet', compact('data', 'pass_rate', 'assessement_id', 'class'));
-
-
-
-
-     //2.Report Class-Based outcome- Report Card 
-     //3.Report Class-Based outcome- Performance Analysis 
-     }  
-
-
- }
 
 //End of Assessement Based Reporting
 
@@ -515,8 +373,6 @@ $stream_title=$stream_is->stream_name;
 
 $getAssessement=Assessement::find($assessement_id);
 
-// dd($assessement_id);
-
 $assessement_name=$getAssessement->assessement_name;
 
    
@@ -562,7 +418,7 @@ if($criteria->average_calculation=="custom" ){
         GROUP BY subject_id
         order by (subject_id =".$passing_subject.") desc, mark desc
                     LIMIT ".$number_of_subjects.") t, 
-                    (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id   WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject."  AND marks.active=1  order by  mark desc
+                    (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1 AND marks.active=1  order by  mark desc
                    ) nps, 
                    (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id = ".$student." AND marks.assessement_id = ".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id=".$passing_subject." ) prm,
 
@@ -593,8 +449,8 @@ if($criteria->average_calculation=="custom" ){
                         GROUP BY subject_id
                         order by  mark desc
                         LIMIT ".$number_of_subjects.") t, 
-                         (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id   WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject."  AND marks.active=1  order by  mark desc
-                         ) nps, 
+                        (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject." AND marks.mark>=".$pass_rate." AND student_loads.active=1 AND marks.active=1  ORDER BY  mark desc
+                       ) nps, 
                        (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id = ".$student." AND marks.assessement_id = ".$assessement_id." AND marks.mark>=".$pass_rate." AND subject_id=".$passing_subject." ) prm,
 
                        (SELECT (SELECT COUNT(*) from marks where marks.student_id=".$student." AND marks.assessement_id=".$assessement_id."  AND marks.active=1 ) as marks_count, (SELECT COUNT(*) from student_loads  where student_loads.student_id=".$student." AND student_loads.active=1 ) as loads_count
@@ -682,8 +538,8 @@ INNER JOIN grades ON grades.id=teaching_loads.class_id
 where marks.student_id =".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1 AND marks.active=1
           GROUP BY marks.id 
         ) t, 
-        (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id   WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject."  AND marks.active=1  order by  mark desc
-                   ) nps, 
+              (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id  INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id WHERE  marks.student_id = ".$student."  AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1  AND marks.active=1 order by  mark desc
+             ) nps, 
              (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id =".$student."  AND marks.assessement_id =".$assessement_id." AND marks.mark>=".$pass_rate."  AND subject_id=".$passing_subject.") prm,
 
              (SELECT (SELECT COUNT(*) from marks  where marks.student_id=".$student." and marks.assessement_id=".$assessement_id." AND marks.active=1) as marks_count, (SELECT COUNT(*) from student_loads INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id  where student_loads.student_id=".$student." AND teaching_loads.active=1 and student_loads.active=1 ) as loads_count

@@ -6,17 +6,17 @@
         <div class="col-md-12">
             <div class="card card-light  ">
                 <div class="card-header">
-                    <h3 class="card-title">Add Teaching Loads</h3>
+                  
                 </div>
 
                 <img class="card-img-top"
-                    src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_220,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_30_style_light_align_center:Add Teaching Loads,w_0.3,y_0.28/v1613303961/pexels-photo-5212359_ukdzdz.jpg"
+                src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1673693197/Manage_Teachers_5_ubwtrg.png"
                     alt="">
                 <div class="card-body">
                     <h3 class="lead">Hi, {{ Auth::user()->name }}</h3>
                     <div class="text-muted">
-                        <p class="card-text"> Use this section to add your teaching loads. <br>
-                            <span class="text-italic">A teaching load is the subject you teach in the class/grade that you teach it in.</span> 
+                        <p class="card-text"> Use this section to tell <span class="text-bold">Shunifu</span>, which subjects you teach and in which classes you teach those subjects.
+                            <span class="text-italic">You will do it one class at a time.</span> 
 
                         </p>
 

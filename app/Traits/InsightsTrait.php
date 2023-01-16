@@ -301,6 +301,7 @@ if ($baseline=="assessement") {
 
     if($group=="class"){
 
+      //Class Based Scoresheet
       
 
     }
@@ -314,7 +315,18 @@ if ($baseline=="assessement") {
 
 
 if($outcome=="report_card"){
-  dd('report card blade');
+ 
+//Assessement Based Report Card
+
+
+
+
+//End of Assessement Based Report Card
+
+
+
+
+
   }
 
   if($outcome=="performance_analysis"){

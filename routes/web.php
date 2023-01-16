@@ -145,9 +145,9 @@ Route::get('/academic-admin/subject/delete/{id}', [SubjectController::class,'des
 Route::get('/academic-admin/department', [DepartmentController::class,'create'])->name('department.create');
 Route::get('/academic-admin/department/teacher', [DepartmentController::class,'add_teacher'])->name('department.teacher');
 Route::post('/academic-admin/department/add', [DepartmentController::class,'store'])->name('department.store');
-Route::get('/academic-admin/department/edit/{department}/{id}', [DepartmentController::class,'edit'])->name('department.edit');
-Route::get('/academic-admin/department/update/', [DepartmentController::class,'update'])->name('department.update');
-Route::get('/academic-admin/department/delete/{department}/{id}', [DepartmentController::class,'destroy'])->name('department.destroy');
+Route::get('/academic-admin/department/edit/{id}', [DepartmentController::class,'edit'])->name('department.edit');
+Route::post('/academic-admin/department/update/', [DepartmentController::class,'update'])->name('department.update');
+Route::delete('/academic-admin/department/delete/{id}', [DepartmentController::class,'destroy'])->name('department.destroy');
 
 Route::get('/users/student/class/get/students/{id} ', [StudentController::class,'search'])->name('students.search');
 Route::get('/students/transfer/',[StudentController::class,'transfer'])->name('students.transfer');

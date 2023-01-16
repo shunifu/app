@@ -13,7 +13,7 @@
         </div>
     </div>
     
-    <div class="bg-white p-4 mb-5 mt-5 d-flex justify-content-start ">
+    <div class="bg-white p-4 mb-5 mt-5 d-flex justify-content-start rt">
         <div class="col-12 col-sm-6 col-lg-8">
             <h3 class="mb-1">{{Auth::user()->name}} {{Auth::user()->middlename}} {{Auth::user()->lastname}}<svg class="ml-1"  xmlns="http://www.w3.org/2000/svg"
                     width="26" height="25.19" viewBox="0 0 24 23.25">
@@ -25,83 +25,80 @@
                 </svg>
             </h3>
             <hr>
-           
-            <p class="text-gray-700 mb-1 2h-base">{{$greetings}} {{\Spatie\Emoji\Emoji::grinningFace()}} {{Auth::user()->salutation}}. {{Auth::user()->name}}<p>
-              </p>
+            <p class="text-gray-700 mb-1 2h-base">{{$greetings}} {{\Spatie\Emoji\Emoji::grinningFace()}} {{Auth::user()->salutation}}. {{Auth::user()->name}}<p> 
 
-          
-             
-            
-              </p>
-             
-              
-     
         </div>
+     
     </div>
+  
 
 </div>
 <div class="mb-4">
 
 </div>
-    <div class="row">
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-info">
-            <div class="inner">
-              <h3>{{$total_teachers}}</h3>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-              <p>Teachers</p>
-            </div>
-            <div class="icon">
-              <i class="ion-ios-people"></i>
-            </div>
-            <a href="/users/teachers/manage" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-success">
-            <div class="inner">
-              <h3>{{$total_students}}</h3>
-
-              <p>Students</p>
-            </div>
-            <div class="icon">
-              <i class="ion-android-people"></i>
-            </div>
-            <a href="/users/student/management" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-warning">
-            <div class="inner">
-              <h3>{{$total_parents}}</h3>
-
-              <p>Parents</p>
-            </div>
-            <div class="icon">
-              <i class="ion-person-stalker"></i>
-            </div>
-            <a href="/users/student/manage" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-danger">
-            <div class="inner">
-              <h3>{{$total_classes}}</h3>
-
-              <p>Classes</p>
-            </div>
-            <div class="icon">
-              <i class="ion-navicon-round"></i>
-            </div>
-            <a href="/academic-admin/class" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-      </div>
+<div class="container">
+<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+       <div class="col">
+		 <div class="card radius-10 border-start border-0 border-3 border-info">
+			<div class="card-body">
+				<div class="d-flex align-items-center">
+					<div>
+						<p class="mb-0 text-secondary">Total Orders</p>
+						<h4 class="my-1 text-info">4805</h4>
+						<p class="mb-0 font-13">+2.5% from last week</p>
+					</div>
+					<div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa fa-shopping-cart"></i>
+					</div>
+				</div>
+			</div>
+		 </div>
+	   </div>
+	   <div class="col">
+		<div class="card radius-10 border-start border-0 border-3 border-danger">
+		   <div class="card-body">
+			   <div class="d-flex align-items-center">
+				   <div>
+					   <p class="mb-0 text-secondary">Total Revenue</p>
+					   <h4 class="my-1 text-danger">$84,245</h4>
+					   <p class="mb-0 font-13">+5.4% from last week</p>
+				   </div>
+				   <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i class="fa fa-dollar"></i>
+				   </div>
+			   </div>
+		   </div>
+		</div>
+	  </div>
+	  <div class="col">
+		<div class="card radius-10 border-start border-0 border-3 border-success">
+		   <div class="card-body">
+			   <div class="d-flex align-items-center">
+				   <div>
+					   <p class="mb-0 text-secondary">Bounce Rate</p>
+					   <h4 class="my-1 text-success">34.6%</h4>
+					   <p class="mb-0 font-13">-4.5% from last week</p>
+				   </div>
+				   <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class="fa fa-bar-chart"></i>
+				   </div>
+			   </div>
+		   </div>
+		</div>
+	  </div>
+	  <div class="col">
+		<div class="card radius-10 border-start border-0 border-3 border-warning">
+		   <div class="card-body">
+			   <div class="d-flex align-items-center">
+				   <div>
+					   <p class="mb-0 text-secondary">Total Customers</p>
+					   <h4 class="my-1 text-warning">8.4K</h4>
+					   <p class="mb-0 font-13">+8.4% from last week</p>
+				   </div>
+				   <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto"><i class="fa fa-users"></i>
+				   </div>
+			   </div>
+		   </div>
+		</div>
+	  </div> 
+	</div>
+</div>

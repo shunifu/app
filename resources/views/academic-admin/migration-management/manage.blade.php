@@ -52,17 +52,29 @@ Please note that if you want to change a students status, please go back to Insi
                             <th>Name</th>
                             <th>Middlename</th>
                             <th>Current Class</th>
-                            <th>Next Class <i class="fas fa-info-circle " data-toggle="tooltip" data-placement="top" title="The class the student will migrate to when you click on Migrate Students"></th>
-                            <th>Result  <i class="fas fa-info-circle " data-toggle="tooltip" data-placement="top" title="If you want to change the result of the student, go to Insights Dashboard, then go Term Insights"></th>
+
+                          
+                                
                            
+                            <th>Next Class <i class="fas fa-info-circle " data-toggle="tooltip" data-placement="top" title="The class the student will migrate to when you click on Migrate Students"></th>
+
+                                @if ($scope=="internal")
+                            <th>Result  <i class="fas fa-info-circle " data-toggle="tooltip" data-placement="top" title="If you want to change the result of the student, go to Insights Dashboard, then go Term Insights"></th>
+                             @endif
                             
                         </tr>
                     </thead>
+
+
+                    @if ($scope=="internal")
+                        
+                   
                    
                     <tbody class="response_data">
 
                         @foreach ($students as $item)
                      
+                      
                         <tr>
                          
                      
@@ -74,7 +86,12 @@ Please note that if you want to change a students status, please go back to Insi
                             <?php
                             $next_class_qry=\DB::select(\DB::raw("SELECT grades.id as origin_id, grades.grade_name as origin, b.grade_name as destination_class, b.id as destination_id FROM class_sequences INNER JOIN grades ON grades.id=class_sequences.origin INNER JOIN grades b ON b.id=class_sequences.destination where class_sequences.origin=".$item->grade_id.""));
 
+                           
+
                             foreach ($next_class_qry as $key) {
+                          
+                           
+                               
 
                                 if($item->result=="Repeat"){
                                     echo $key->origin;
@@ -108,6 +125,7 @@ Please note that if you want to change a students status, please go back to Insi
                             }
                             ?>
                             </td>
+                            
 
                             <td>
 
@@ -140,7 +158,48 @@ Please note that if you want to change a students status, please go back to Insi
                         </tr>
                         @endforeach
                     </tbody>
-               
+               @elseif($scope=="external")
+
+              
+                   
+               <tbody class="response_data">
+
+                   @foreach ($students as $item)
+                
+                 
+                   <tr>
+                    
+                
+                       <td>{{$item->lastname}}</td>
+                       <td>{{$item->name}}</td>
+                       <td>{{$item->middlename}}</td>
+                       <td>{{$item->grade_name}}</td>
+                       <td>
+                       
+                       </td>
+                       
+
+                       <td>
+
+                        
+                           
+                     </td>
+                     
+                       <input type="hidden" name="student_id[]" value="{{$item->student_id}}"> 
+                       <input type="hidden" name="student_name[]" value="{{$item->name}}"> 
+                       
+                       <input type="hidden" name="from_session[]" value="{{$from_session}}"> 
+                       <input type="hidden" name="to_session[]" value="{{$to_session}}"> 
+                       <input type="hidden" name="current_class[]" value="{{$current_class}}"> 
+                      
+                     
+                   </tr>
+                   @endforeach
+               </tbody>
+
+
+
+               @endif
                 
                 </table>
 

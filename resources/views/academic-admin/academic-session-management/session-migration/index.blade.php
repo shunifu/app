@@ -15,16 +15,47 @@
                 <div class="card-body">
                     <h3 class="lead">Hi, {{ Auth::user()->name }}</h3>
                     <div class="text-muted">
-                        <p class="card-text"> Use this section to migrate to new academic session/year.<br>
-                            Students will be migrated to thier respective classes based on thier performance. Those that failed in the previous academic year will remain in that class. 
-                            {{-- <p>If a student has left school , that is, did not return to school for the new academic year,  please click on the checkbox which is under the <span class="text-bold"> School Column header on the row of that particular student. </span>The system will then archive those students. </p>
-                            If the student did comeback, <span class="text-danger text-bold">please do not click on the checkbox of that student</span> under the Left school column header.<br> 
-                            Please make sure that you <span class="text-danger text-bold">CHECK those WHO HAVE NOT RETURNED!</span> --}}
+                      
+                       
+                 
 
-                        </p>
-                        <hr>
 
-                    </div>
+
+        <span class=" text-muted text-bold lead" > Migration Guidelines</span><br>
+        This section is where you will migrate students from one class to another. The system will migrate them based on thier performance in the previous academic year. But before you begin the migration process, you will need to first do the following;
+        <hr>
+        
+            <span class="h5 text-bold">Migration Checklist</span> <br>
+        
+            <div class="form-check ">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="academic_year_check" id="academic_year_check" value="checkedValue"> Create a new academic year & <span class="text-bold">activate it.</span> You can do it <a href="/academic-admin/session"> here</a>
+                </label>
+               </div>
+
+               <div class="form-check ">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="academic_year_check" id="academic_year_check" value="checkedValue"> Create Class Sequences </span> You can do it <a href="/class-sequencing"> here</a>
+                </label>
+               </div>
+
+      <p>
+      </p>
+        
+        
+        Once you have created the new academic year, you can now migrate the students.  
+        Below are the steps you need to follow in order to migrate the students to the next academic year.
+        <p></p>
+       <span class="h5 text-bold">Migration Steps.</span> 
+<ol>
+    <li>Choose the Class you want to migrate</li>
+    <li>Choose the academic year  you want to migrate from</li>
+    <li>Choose the academic year  you want to migrate to</li>
+</ol>
+       
+        <p>
+
+        </div>
 
                 </div>
 
@@ -38,7 +69,7 @@
                         
 
                             <div class="col-md-4  form-group">
-                                <x-jet-label> Stream Name</x-jet-label>
+                                <x-jet-label> Class Name</x-jet-label>
                                 <select class="form-control" name="class_id" id="class_id">
                                     <option value="">Select Class</option>
                                     @foreach ($grades as $class)

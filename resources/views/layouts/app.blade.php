@@ -11,6 +11,12 @@
          {{-- <link href="/css/app.css" rel="stylesheet"> --}}
 
          {{-- {{ @vite('resources/js/app.js') }} --}}
+
+         <style>
+          .main-sidebar, .sidebar-dark-warning { background-color: rgb(49, 49, 49) !important }
+
+          /* .sidebar-dark-warning{background-color: rgb(49, 49, 49) !important} */
+         </style>
       
          @vite(['resources/sass/app.scss', 'resources/js/app.js'])
          {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
@@ -208,7 +214,7 @@
             <!-- /.navbar -->
 
             <!-- Main Sidebar Container -->
-            <aside class="main-sidebar sidebar-dark-warning elevation-2">
+            <aside class="main-sidebar sidebar-dark-primary elevation-2">
                 <!-- Brand Logo -->
                 <a href="/" class="brand-link">
                  
@@ -236,7 +242,7 @@
                     <!-- Sidebar Menu -->
                 <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
@@ -605,16 +611,16 @@
 
 
                     @if (Auth::user()->hasRole(['admin_teacher', 'school_administrator', 'class_teacher']))
-                    {{-- <li class="nav-item">
+                    <li class="nav-item">
                       <a href="/insights" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Academic Insights</p>
                       </a>
-                    </li> --}}
+                    </li>
 
                     
 
-                    {{-- <li class="nav-item">
+                     <li class="nav-item">
                       <a href="/insights/subject" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Subject Insights</p>
@@ -626,7 +632,7 @@
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Teacher Insights</p>
                       </a>
-                    </li> --}}
+                    </li> 
 
                      {{-- <li class="nav-item">
                       <a href="/analytics/assessement-based" class="nav-link">
@@ -643,8 +649,7 @@
                       </p>
                     </a>
 
-                    {{-- /analytics/assessement-based --}}
-                    {{-- /analytics/assessement-based/class --}}
+                 
                     <ul class="nav nav-treeview">
                       <li class="nav-item">
                         <a href="/analytics/assessement-based" class="nav-link">
@@ -665,16 +670,16 @@
                     </li>
 
 
-                    <li class="nav-item has-treeview">
+                    {{-- <li class="nav-item has-treeview">
                       <a href="#" class="nav-link">
                         <i class="fas fa-chart-bar nav-icon"></i>
                         <p>
                          Term Insights 
                           <i class="fas fa-angle-left right"></i>
                         </p>
-                      </a>
+                      </a> --}}
   
-                      <ul class="nav nav-treeview">
+                      {{-- <ul class="nav nav-treeview">
                         <li class="nav-item">
                           <a href="/analytics/term-based" class="nav-link">
                             <i class="nav-icon fas fa-check-circle"></i>
@@ -682,8 +687,7 @@
                           </a>
     
                         </li>
-                        {{-- /analytics/term-based --}}
-                        {{-- /analytics/class-based --}}
+                 
   
                         <li class="nav-item">
                           <a href="/analytics/term-based/class" class="nav-link">
@@ -692,7 +696,7 @@
                           </a>
                         </li> 
   
-                      </ul>
+                      </ul> --}}
                       </li>
 
                   
@@ -711,14 +715,14 @@
 
          
       
-                    {{-- @role('teacher')
+                    @role('teacher')
                     <li class="nav-item">
                       <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>My Insights</p>
                       </a>
                     </li>
-                    @endrole --}}
+                    @endrole
                     
 
                   </ul>

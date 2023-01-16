@@ -91,6 +91,7 @@
                                                     <div class="dropdown-menu">
                                                       <a class="dropdown-item" href="/parent/view/{{ $item->id }}">View Parent</a>
                                                       <a class="dropdown-item" href="/teacher/reset/{{Crypt::encryptString($item->id)}}"> Reset Password</a>
+                                                      <a class="dropdown-item" href="/teacher/archive/{{Crypt::encryptString($item->id)}}">Remove</a>
                                                       
                                                     </div>
                                                   </div>

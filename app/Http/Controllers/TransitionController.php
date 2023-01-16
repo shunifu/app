@@ -77,16 +77,33 @@ class TransitionController extends Controller
     public function process(Request $request){
 
      
-        // dd(($request->all()));
+  
 
     $from_session=$request->from_academic_session;
     $to_session=$request->to_academic_session;
     $current_class=$request->class_id;
+    $stream_of_class=$request->stream_id;
+   
 
 
-        
+    $streams=Grade::find($current_class);
+    $stream_id=$streams->stream_id;
+  
+    $streams=DB::table('streams')
+    ->join('grades','grades.stream_id','=','streams.id')
+    ->where('grades.id', $request->class_id)
+    ->select( 'grades.id as grade_id', 'grades.grade_name', 'streams.id', 'streams.stream_type')
+    ->first();
 
-        $validator=Validator::make($request->all(),[
+
+    $final_stream_checker=DB::table('streams')
+    ->where('final_stream', 1)
+    ->exists();
+
+    $stream_type=$streams->stream_type;
+
+   
+    $validator=Validator::make($request->all(),[
            
             'class_id'=>'required',
             'from_academic_session'=>'required',
@@ -102,12 +119,32 @@ class TransitionController extends Controller
 
         }else{
 
+            if (empty($stream_type) OR (!$final_stream_checker)) {
+                flash()->overlay('<i class="fas fa-check-circle text-warning "></i>'.' Error. . Stream type not set. Please set stream type ', 'Migration  Notice');
+                return redirect('/academic-admin/stream');
+            }else{
+    
 
             //Query to get students currently in the selected stream
 
-         
-      
+         if ($stream_type=="external") {
+           
+            $students=DB::table('users')
+            ->join('grades_students','grades_students.student_id','=','users.id')
+            ->join('grades','grades.id','=','grades_students.grade_id')
+            ->where('grades.id', $request->class_id)
+            ->where('grades_students.academic_session', $from_session)
+          
 
+            ->select('users.id as student_id', 'users.name', 'users.lastname', 'users.middlename', 'grades.id as grade_id', 'grades.grade_name',  'users.active as users_active', 'grades_students.active as grades_student_active')
+            ->get();
+
+       $scope="external";
+
+
+       
+
+         }else{
 
             $students=DB::table('users')
             ->join('grades_students','grades_students.student_id','=','users.id')
@@ -124,14 +161,36 @@ class TransitionController extends Controller
             ->select('users.id as student_id', 'term_averages.final_term_status as result','users.name', 'users.lastname', 'users.middlename', 'grades.id as grade_id', 'grades.grade_name', 'terms.academic_session', 'users.active as users_active', 'grades_students.active as grades_student_active')
             ->get();
 
+            $scope="internal";
+
+            $class_map_exists=ClassSequence::where('origin', $request->class_id)->exists();
+
+            if(!$class_map_exists){
+
+
+                flash()->overlay('<i class="fas fa-check-circle text-warning "></i>'.' Sorry. Class Mapping does not exist. Please map classes first, to do so, please click '.'<a href=/class-sequencing> here</a>', 'Migration Process Notice');
+              
+                return Redirect::back();
+            }
+
+
+         }
+      
+
+        
+            return view('academic-admin.migration-management.manage', compact('students', 'from_session', 'to_session', 'current_class', 'scope'));
+         
+
+
+
     
 
 // dd($students);
 
-            return view('academic-admin.migration-management.manage', compact('students', 'from_session', 'to_session', 'current_class'));
+         
 
 
-
+        }
 
         }
     }

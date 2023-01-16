@@ -36,7 +36,7 @@
         "messagebird/php-rest-api": "^1.19",
         "php-flasher/flasher": "^1.7",
         "pusher/pusher-php-server": "^5.0",
-        "santigarcor/laratrust": "^7.0",
+        "santigarcor/laratrust": "^7.1",
         "seshac/otp-generator": "^0.0.6",
         "silviolleite/laravelpwa": "^2.0",
         "socialiteproviders/yahoo": "^4.1",
