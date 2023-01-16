@@ -67,6 +67,7 @@
                            @foreach ($classes as $to)
                            <option value="{{$to->id}}">{{$to->grade_name}}</option>
                            @endforeach
+                           <option value="0">End of School</option>
                            </select>
                             @error('to')
                             <span class="text-danger">{{$message}}</span>  

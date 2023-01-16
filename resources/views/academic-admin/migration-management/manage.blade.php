@@ -153,6 +153,7 @@ Please note that if you want to change a students status, please go back to Insi
                             <input type="hidden" name="from_session[]" value="{{$from_session}}"> 
                             <input type="hidden" name="to_session[]" value="{{$to_session}}"> 
                             <input type="hidden" name="current_class[]" value="{{$current_class}}"> 
+                            <input type="hidden"  name="final_stream_status" value="{{$final_stream_status}}"
                            
                           
                         </tr>
@@ -161,7 +162,8 @@ Please note that if you want to change a students status, please go back to Insi
                @elseif($scope=="external")
 
               
-                   
+             
+
                <tbody class="response_data">
 
                    @foreach ($students as $item)
@@ -191,6 +193,7 @@ Please note that if you want to change a students status, please go back to Insi
                        <input type="hidden" name="from_session[]" value="{{$from_session}}"> 
                        <input type="hidden" name="to_session[]" value="{{$to_session}}"> 
                        <input type="hidden" name="current_class[]" value="{{$current_class}}"> 
+                       <input type="hidden"  name="final_stream_status" value="{{$final_stream_status}}"
                       
                      
                    </tr>

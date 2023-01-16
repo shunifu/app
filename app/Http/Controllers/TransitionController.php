@@ -92,15 +92,20 @@ class TransitionController extends Controller
     $streams=DB::table('streams')
     ->join('grades','grades.stream_id','=','streams.id')
     ->where('grades.id', $request->class_id)
-    ->select( 'grades.id as grade_id', 'grades.grade_name', 'streams.id', 'streams.stream_type')
+    ->select( 'grades.id as grade_id', 'grades.grade_name', 'streams.id', 'streams.stream_type', 'final_stream')
     ->first();
+
+  
 
 
     $final_stream_checker=DB::table('streams')
     ->where('final_stream', 1)
     ->exists();
 
+
+
     $stream_type=$streams->stream_type;
+    $final_stream_status=$streams->final_stream;
 
    
     $validator=Validator::make($request->all(),[
@@ -146,6 +151,8 @@ class TransitionController extends Controller
 
          }else{
 
+            
+
             $students=DB::table('users')
             ->join('grades_students','grades_students.student_id','=','users.id')
             ->join('grades','grades.id','=','grades_students.grade_id')
@@ -165,20 +172,27 @@ class TransitionController extends Controller
 
             $class_map_exists=ClassSequence::where('origin', $request->class_id)->exists();
 
-            if(!$class_map_exists){
+
+            if($final_stream_status==1){
+
+            }else{
+                if(!$class_map_exists){
 
 
-                flash()->overlay('<i class="fas fa-check-circle text-warning "></i>'.' Sorry. Class Mapping does not exist. Please map classes first, to do so, please click '.'<a href=/class-sequencing> here</a>', 'Migration Process Notice');
-              
-                return Redirect::back();
+                    flash()->overlay('<i class="fas fa-check-circle text-warning "></i>'.' Sorry. Class Mapping does not exist. Please map classes first, to do so, please click '.'<a href=/class-sequencing> here</a>', 'Migration Process Notice');
+                  
+                    return Redirect::back();
+                }
             }
+
+          
 
 
          }
       
 
         
-            return view('academic-admin.migration-management.manage', compact('students', 'from_session', 'to_session', 'current_class', 'scope'));
+            return view('academic-admin.migration-management.manage', compact('students', 'from_session', 'to_session', 'current_class', 'scope', 'final_stream_status'));
          
 
 
@@ -208,8 +222,9 @@ class TransitionController extends Controller
             $result=$request->student_result;
             $destination_class=$request->destination_class;
 
+            $final_stream_status=$request->final_stream_status;
 
-          //  DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+           DB::statement('SET FOREIGN_KEY_CHECKS=0;');
       
        Schema::table('grades_students', function (Blueprint $table) {
 
@@ -242,13 +257,37 @@ class TransitionController extends Controller
         
     });
    
-    
+    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
             $combined = [];
 
-         
+            if($final_stream_status==1){
+                //archive all students in form 5
+
+        
+
+                foreach ($students as $key => $val) {
+
+                    $combined[] = ['student_id'=>$val, 'present_class'=>$present_class[$key]];
+
+                    $student=$combined[$key]['student_id'];
+                    $current_class=$combined[$key]['present_class'];
+                  
+                   
+
+                    User::where('id', $student)->update([ 'active'=> 0]);
+                }
+
+                flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success. . Migration Successful ', 'Migration Process Notice');
+                return redirect('/migration');
+                
+            }
       
             $class_map_exists=ClassSequence::where('origin', $present_class)->exists();
+
+
+
+          
 
             if($class_map_exists){
 
@@ -289,7 +328,7 @@ class TransitionController extends Controller
 
                     if ($final_status=='Try Another School') {
                       
-                        User::find($student)->update(['active', 0]);
+                        User::find($student)->update([ 'active'=> 0]);
                     }
 
 
