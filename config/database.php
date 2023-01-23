@@ -50,7 +50,7 @@ return [
             'url' => ENV('DATABASE_URL'),
             'host' => config('app.DB_HOST', '127.0.0.1'),
             'port' => config('app.DB_PORT', '3306'),
-            'database' => config('app.DB_DATABASE', 'fox'),
+            'database' => env('DB_DATABASE'),
             'username' => config('app.DB_USERNAME', 'forge'),
             'password' => config('app.DB_PASSWORD', ''),
             'unix_socket' => config('app.DB_SOCKET', ''),

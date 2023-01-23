@@ -145,7 +145,7 @@ return [
     'DB_CONNECTION' => 'mysql',
     'DB_HOST' => "ypc8xu1divj9z5cj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     'DB_PORT' => '3306',
-    'DB_DATABASE' => env('DB_NAME'),
+    'DB_DATABASE' => env('DB_DATABASE'),
     'DB_USERNAME' => 'r9xoialesfxre2fb',
     'DB_PASSWORD'=>'hdy7q3v7xcubgglt',
 
