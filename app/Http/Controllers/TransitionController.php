@@ -326,6 +326,13 @@ class TransitionController extends Controller
                         );
                     }
 
+                    if ($final_status==' ') {
+                        $create_new_entry=StudentClass::updateOrCreate(
+                            ['student_id' => $student, 'grade_id' => $current_class, 'academic_session' => $to_session_is, 'active'=>1],
+                            ['student_id' => $student, 'grade_id' => $current_class, 'academic_session' => $to_session_is, 'active'=>1]
+                        );
+                    }
+
                     if ($final_status=='Try Another School') {
                       
                         User::find($student)->update([ 'active'=> 0]);

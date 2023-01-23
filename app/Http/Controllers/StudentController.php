@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\StudentsListTemplate;
+use App\Imports\StudentMultiSheetImport;
 use App\Models\StudentSubjectAverage;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\AssessementProgressReport;
@@ -1725,6 +1726,17 @@ public function student_image(Request $request){
     }
     // return Redirect::back();
    
+}
+
+
+public function import_multiple_single_format(Request $request){
+
+    $collection=Excel::import(new StudentMultiSheetImport, $request->file('import'));
+
+    // Excel::import(
+    //     new MultiSheetSingleFormatImport, 'MOCK_DATA.xlsx'
+    // );
+
 }
 
 

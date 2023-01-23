@@ -1,7 +1,7 @@
 <?php
+ use Illuminate\Support\Str;
 
-use Illuminate\Support\Str;
-
+ 
 return [
 
     /*
@@ -47,13 +47,13 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'unix_socket' => env('DB_SOCKET', ''),
+            'url' => ENV('DATABASE_URL'),
+            'host' => config('app.DB_HOST', '127.0.0.1'),
+            'port' => config('app.DB_PORT', '3306'),
+            'database' => config('app.DB_DATABASE', 'fox'),
+            'username' => config('app.DB_USERNAME', 'forge'),
+            'password' => config('app.DB_PASSWORD', ''),
+            'unix_socket' => config('app.DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

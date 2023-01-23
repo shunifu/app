@@ -1,5 +1,13 @@
 <?php
 
+
+
+
+   // $db_name="boyce";
+
+
+
+
 return [
 
     /*
@@ -118,7 +126,7 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
-
+    
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
@@ -129,6 +137,18 @@ return [
     'sms_username' => 'shunifu-sms',
     'sms_password' => '142c0016b4509263bc833bb83816a5e993be7a1cba74531567ac39700f5461ec',
     'sms_from'=>'Shunifu',
+
+
+ 
+ 
+
+    'DB_CONNECTION' => 'mysql',
+    'DB_HOST' => "ypc8xu1divj9z5cj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    'DB_PORT' => '3306',
+    'DB_DATABASE' => env('DB_NAME'),
+    'DB_USERNAME' => 'r9xoialesfxre2fb',
+    'DB_PASSWORD'=>'hdy7q3v7xcubgglt',
+
 
     /*
     |--------------------------------------------------------------------------

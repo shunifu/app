@@ -262,8 +262,12 @@ a[target='_blank']{
             <div class="panel border">
                 <div class="panel-heading">
                     <h3 class="text-muted pt-3 font-weight-bold">{{$item->school_name}}</h3>
-                  
-                    <div class="text-muted">{{$item->school_slogan}}</div>
+          <?php
+// echo url()->current();
+
+
+?>
+                 <div class="text-muted">{{$item->school_slogan}}</div>
                 </div>
                 @endforeach
                 <hr>
@@ -336,7 +340,7 @@ a[target='_blank']{
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     // Initialize the service worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/serviceworker.js', {
@@ -349,6 +353,6 @@ a[target='_blank']{
             console.log('Laravel PWA: ServiceWorker registration failed: ', err);
         });
     }
-</script> --}}
+</script>
 </html>
 
