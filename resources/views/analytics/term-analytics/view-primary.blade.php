@@ -94,7 +94,7 @@ th span {
         <th><span>Agriculture</span></th>
         <th><span>Expressive Arts</span></th>
         <th><span>ICT</span></th>
-        {{-- <th><span>Consumer</span></th> --}}
+        <th><span>Consumer</span></th>
         <th><span>HPE</span></th>
       
    

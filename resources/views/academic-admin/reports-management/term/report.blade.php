@@ -922,7 +922,7 @@ $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total fro
 @if ($report_template->report_colums=="term_assessements")
 @php
 
-$db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
+$db=mysqli_connect(config("app.DB_HOST"),config("app.DB_USERNAME"),config("app.DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
 $result = $db->multi_query("SET @sql = NULL;
 SET SESSION group_concat_max_len = 1000000;
     SELECT
