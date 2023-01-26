@@ -80,7 +80,7 @@
                                
                                 <option value="scoresheet">Scoresheet</option>
                                 <option value="summary_scoresheet">Summerized Scoresheet</option>
-                                <option value="manual_promotion">Manual Promotion</option>
+                                {{-- <option value="manual_promotion">Manual Promotion</option> --}}
                               
             
                              

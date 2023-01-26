@@ -50,20 +50,28 @@
         
           </div>
     </table>       
+    @forelse($scoresheet as $student)
   
   @php
   
   $db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
   
   
-  $tie_type=$pass_rate->tie_type;
+  // $tie_type=$pass_rate->tie_type;
+
+
+
   
   //check if allocations have  been added//
   
-  if ($p_key=="stream_based") {
-       $sql_piece="where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream."";
+  if ($type_key=="stream_based") {
+
+$sql_piece="AND term_averages.student_stream=".$stream."";
+$sql_piece2="grades.stream_id IN (".$stream.")";
+
  } else {
-     $sql_piece="where term_averages.term_id=".$term." AND term_averages.student_class=".$classofstudent."";
+    $sql_piece="AND term_averages.student_class=".$int."";
+    $sql_piece2="student_subject_averages.student_class = ".$int."";
  }
   
 
@@ -73,57 +81,54 @@
       SELECT
         GROUP_CONCAT(DISTINCT
           CONCAT(
-              
             'MAX(IF(subjects.subject_name = ''',
         subject_name,
-        ''', marks.mark, NULL)) AS ',
+        ''', student_subject_averages.student_average, NULL)) AS ',
         replace(subjects.subject_name, ' ', '')
           )
         ) INTO @sql
-         FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN allocations ON allocations.subject_id=teaching_loads.subject_id  INNER JOIN grades ON grades.id=allocations.grade_id WHERE grades.stream_id=".$stream.";
-  
-  SET @sql = CONCAT('select t.*
+         FROM student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id INNER JOIN subjects ON subjects.id=teaching_loads.subject_id INNER JOIN allocations ON allocations.subject_id=teaching_loads.subject_id  INNER JOIN grades ON grades.id=allocations.grade_id WHERE grades.stream_id=".$stream.";
+         
+         SET @sql = CONCAT('SELECT 
+(select t.student_position
 from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
-from term_averages ".$sql_piece.") t
-where student_id = ".$student.") as position,
+from term_averages INNER JOIN term_averages a ON a.student_id=term_averages.student_id where term_averages.term_id=".$term." ".$sql_piece."
+     ) t
+where t.student_id = term_averages.student_id) as Position,
+
+
+         
   
           grades.grade_name as Grade,
          
           concat(users.name, users.lastname) as name,
-          assessement_progress_reports.student_average as Average,
+          term_averages.final_term_status as Status,
+          term_averages.student_average as Average,
+
+          
         
   ', @sql,'
-  FROM marks 
-  INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id 
+  FROM student_subject_averages 
+  INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id 
+  INNER JOIN term_averages ON term_averages.student_id=student_subject_averages.student_id 
   INNER JOIN subjects ON teaching_loads.subject_id=subjects.id 
-  INNER JOIN users ON users.id=marks.student_id  
-  INNER JOIN grades_students ON grades_students.student_id=marks.student_id
-  INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
+  INNER JOIN users ON users.id=student_subject_averages.student_id  
+  INNER JOIN grades_students ON grades_students.student_id=student_subject_averages.student_id
   INNER JOIN grades ON student_subject_averages.student_class=grades.id 
-  WHERE student_subject_averages.student_class IN (".$stream.") AND student_subject_averages.term_id=".$term." AND student_subject_averages.teaching_load_id=marks.teaching_load_id AND teaching_loads.active=1  AND grades.id=student_subject_averages.student_class AND grades_students.active=1  AND users.active=1 
-  GROUP BY marks.student_id  
-  ORDER BY student_subject_averages.student_average DESC');
+  INNER JOIN streams ON grades.stream_id=streams.id 
+  WHERE ".$sql_piece2." AND student_subject_averages.term_id=".$term."  AND teaching_loads.active=1  AND grades.id=student_subject_averages.student_class AND grades_students.active=1  AND users.active=1 
+  GROUP BY term_averages.student_id  
+  ORDER BY term_averages.student_average DESC');
   
   PREPARE stmt FROM @sql;
   EXECUTE stmt;
   
-  DEALLOCATE PREPARE stmt;
-  ");
+  DEALLOCATE PREPARE stmt");
   }
-//   from marks 
-//     INNER JOIN assessements ON assessements.id = marks.assessement_id
-//     INNER JOIN c_a__exams ON c_a__exams.assessement_id=assessements.id
-//     INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
-//     INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
-//     INNER JOIN users ON users.id = marks.teacher_id
-//     INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
-//     INNER JOIN report_comments 
-//                    WHERE marks.student_id = ".$student." AND `c_a__exams`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id AND report_comments.user_type=1 and report_comments.section_id=".$section_id." AND student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to
-//     GROUP BY
-//     marks.student_id,student_subject_averages.student_id,
-//     subjects.id
+
   
   @endphp
+  @endforeach
   
   <div class="row">
     <div class="col-md-12">
@@ -332,7 +337,7 @@ where student_id = ".$student.") as position,
   
         });
         {
-  //    extend: 'pdfHtml5',
+    extend: 'pdfHtml5',
   //    orientation: 'landscape',
   //    pageSize: 'TABLOID', // TABLOID OR LEGAL
   //    footer: true,

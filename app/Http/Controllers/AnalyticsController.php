@@ -2084,6 +2084,7 @@ $pass_rate_percentage=($total_passed/$total_students)*100;
 $fail_rate_percentage=($total_failed/$total_students)*100;
 
 
+
    
 if ($request->indicator=="summary_scoresheet") {
 
@@ -2096,11 +2097,14 @@ if ($request->indicator=="summary_scoresheet") {
    
      if ($request->indicator=="scoresheet") {
 
+
+        // dd($tie_type);
+
       if($school_data->school_type=="primary-school"){
-        return view('analytics.term-analytics.view-primary-scoresheet',compact('scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat','type_key'));
+        return view('analytics.term-analytics.scoresheet-primary',compact('scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat','type_key'));
          }else{
 
-            return view('analytics.term-analytics.view',compact('scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat','type_key'));
+            return view('analytics.term-analytics.scoresheet-primary',compact('scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat','type_key'));
 
          }
     

@@ -80,7 +80,8 @@ return [
         'lubombocentralhigh.shunifu.app',
         'langahigh.shunifu.app',
         'stjosephshigh.shunifu.app',
-        'sifundzanihigh.shunifu.app'
+        'sifundzanihigh.shunifu.app', 
+        'manzininazareneprimary.shunifu.app'
         
         
     ],
