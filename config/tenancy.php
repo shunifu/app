@@ -81,7 +81,10 @@ return [
         'langahigh.shunifu.app',
         'stjosephshigh.shunifu.app',
         'sifundzanihigh.shunifu.app', 
-        'manzininazareneprimary.shunifu.app'
+        'manzininazareneprimary.shunifu.app', 
+        'mzimpofuhigh.shunifu.app',
+        'egebenihigh.shunifu.app',
+
         
         
     ],
