@@ -84,6 +84,13 @@ return [
         'manzininazareneprimary.shunifu.app', 
         'mzimpofuhigh.shunifu.app',
         'egebenihigh.shunifu.app',
+        'elangenihigh.shunifu.app',
+        'woodlandshigh.shunifu.app',
+        'herefordshigh.shunifu.app',
+        'florenceacademyhigh.shunifu.app',
+        'joppahigh.shunifu.app',
+        'mshenguhigh.shunifu.app',
+        'lomahashacentralhigh.shunifu.app'
 
         
         
