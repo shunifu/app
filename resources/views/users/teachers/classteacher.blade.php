@@ -80,7 +80,7 @@
                            <select class="form-control" name="teacher_id">
                             <option value="">Select Class Teacher</option>
                             @foreach ($getTeacher as $teacher_item)
-                            <option value="{{$teacher_item->id}}">{{$teacher_item->salutation }} {{$teacher_item->name }} {{$teacher_item->middlename }} {{$teacher_item->lastname }}</option>
+                            <option value="{{$teacher_item->id}}"> {{$teacher_item->name }} {{$teacher_item->middlename }} {{$teacher_item->lastname }}</option>
                             @endforeach
                            </select>
                             @error('teacher_id')

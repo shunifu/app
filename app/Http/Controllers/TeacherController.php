@@ -21,8 +21,11 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use AfricasTalking\SDK\AfricasTalking;
+use App\Models\RoleUser;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class TeacherController extends Controller
 {
@@ -693,16 +696,18 @@ $otp =  mt_rand(1000,9999);
         //Get current session
         $getRole=Role::where('name', 'teacher')->first();
         $teacher_role_id=$getRole->id;
-        $getTeacher=User::where('role_id', $teacher_role_id)->get();
+        $getTeacher=User::where('role_id', $teacher_role_id)->orderBy('name')->get();
 
         $classes=Grade::all();
         $session=AcademicSession::where('active', 1)->get();
+       $session_id=$session[0]->id;
 
         $result=DB::table('grades_teachers')
             ->join('grades','grades_teachers.grade_id','=','grades.id')
             ->join('users','grades_teachers.teacher_id','=','users.id')
             ->join('academic_sessions','grades_teachers.academic_session','=','academic_sessions.id')
             ->select('grades.grade_name', 'users.name','users.lastname', 'users.salutation', 'academic_sessions.academic_session', 'grades_teachers.id')
+            ->where('grades_teachers.academic_session', $session_id)
             ->orderBy('grades.grade_name','asc')
             ->get();
 
@@ -720,9 +725,42 @@ return view('users.teachers.classteacher', compact('getTeacher', 'classes', 'ses
              
                ]);
 
+
+        Schema::table('grades_teachers', function (Blueprint $table) {
+
+        $index_exists = collect(DB::select("SHOW INDEXES FROM grades_teachers"))->pluck('Key_name')->contains('grades_teachers_teacher_id_unique');
+        
+        if ($index_exists) {
+        $table->dropForeign(['teacher_id']);
+        $table->dropUnique(['teacher_id']);
+        
+        }
+   
+    });
+
     $class_teacher_role=Role::where('name', 'class_teacher')->first();
+
+    
     $class_teacher_name=$class_teacher_role->id;
 
+
+    //Check if teacher is already assigned in same class, same year
+
+    $teacherExists=GradeTeacher::where('teacher_id', $request->teacher_id)->where('academic_session', $request->academic_session)->exists();
+
+    if($teacherExists){
+
+        flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Teacher already assigned for the year', 'Add Class Teacher');
+
+    
+        return Redirect::back();
+
+    }else{
+
+ 
+
+
+    //end of check
 
         $classteacher = GradeTeacher::create([ 
             'teacher_id'=>$request->teacher_id,
@@ -731,7 +769,16 @@ return view('users.teachers.classteacher', compact('getTeacher', 'classes', 'ses
        ]);
       
        $user=User::find($request->teacher_id);
-       $user->attachRole($class_teacher_role);
+       $user->detachRole($class_teacher_role);
+      $user->attachRole($class_teacher_role);
+    
+
+//        $classteacher = RoleUser::create([ 
+//         'role_id'=>$class_teacher_role->id,
+//         'user_id'=>$request->teacher_id,
+//         'academic_session'=>$request->academic_session,
+//       //  'user_type'=>"App\Models\User",
+//    ]);
 
 
        flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have added a class teacher', 'Add Class Teacher');
@@ -740,6 +787,7 @@ return view('users.teachers.classteacher', compact('getTeacher', 'classes', 'ses
       
 
     }
+}
 
     public function classteacher_delete($id){
         $getRole=Role::where('name', 'class_teacher')->first();

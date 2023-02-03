@@ -187,77 +187,7 @@ background-color: #f7f7ff;
     <div class="mb-2">
       <hr>
       <div class="row">
-        {{-- <div class="col">
-          <div class="card text-left">
-            <img class="card-img-top" src="holder.js/100px180/" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Teachers</h4>
-              <p class="card-text"> --}}
-                
-                  
-                   
-                  
-                  {{-- <div class="col">
-                   <table class="table">
-                     <thead>
-                       <tr>
-                         <th>Teacher</th>
-                         <th>Last Seen</th>
-                         <th>View</th>
-                       </tr>
-                     </thead>
-                     <tbody>
-                       @foreach ($students as $item)
-      
-                       <tr>
-                         <td>{{$item->name}} {{$item->lastname}}</td>
-                         
-                       </tr>
-                       @endforeach
-                     </tbody>
-                   </table>
-                  </div> --}}
-                 
-              {{-- </p>
-            </div>
-          </div>
-        </div> --}}
-
-        {{-- <div class="col">
-          <div class="card text-left">
-            <img class="card-img-top" src="holder.js/100px180/" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Teachers</h4>
-              <p class="card-text">
-                
-               
-                  
-                  <div class="col">
-                   <table class="table">
-                     <thead>
-                       <tr>
-                         <th>Students</th>
-                         <th>Last Seen</th>
-                         <th>View</th>
-                       </tr>
-                     </thead>
-                     <tbody>
-                       @foreach ($teachers as $item)
-      
-                       <tr>
-                         <td>{{$item->name}} {{$item->lastname}}</td>
-                         <td>3 hours ago</td>
-                         <td>View</td>
-                       </tr>
-                       @endforeach
-                     </tbody>
-                   </table>
-                  </div>
-                 
-              </p>
-            </div>
-          </div>
-        </div> --}}
+ 
       </div>
      
      

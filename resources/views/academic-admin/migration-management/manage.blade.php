@@ -177,7 +177,21 @@ Please note that if you want to change a students status, please go back to Insi
                        <td>{{$item->middlename}}</td>
                        <td>{{$item->grade_name}}</td>
                        <td>
+
+                 
+                   
                        
+                        <select class="form-control" name="to" id="">
+                            <option value="">Choose Class</option>
+                        
+                            @foreach ($stream_sequence as $new_class)
+                          <option value="{{$new_class->id}}">{{$new_class->grade_name}}</option>
+                          @endforeach
+                          <option value="0">Did not return</option>
+                        </select>
+                     
+                     
+                      
                        </td>
                        
 

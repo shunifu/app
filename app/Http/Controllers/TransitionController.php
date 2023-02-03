@@ -144,6 +144,23 @@ class TransitionController extends Controller
             ->select('users.id as student_id', 'users.name', 'users.lastname', 'users.middlename', 'grades.id as grade_id', 'grades.grade_name',  'users.active as users_active', 'grades_students.active as grades_student_active')
             ->get();
 
+         
+           
+           
+                $next_class=DB::table('streams')
+                ->join('grades','grades.stream_id','=','streams.id')
+                ->where('streams.stream_name', "Form 3")
+                ->first();
+    
+               // dd($next_class->sequence);
+    
+                $stream_sequence=Grade::where('stream_id', $next_class->sequence)->get();
+    
+
+
+
+
+
        $scope="external";
 
 
@@ -172,6 +189,8 @@ class TransitionController extends Controller
 
             $class_map_exists=ClassSequence::where('origin', $request->class_id)->exists();
 
+            $stream_sequence="0";
+
 
             if($final_stream_status==1){
 
@@ -192,7 +211,7 @@ class TransitionController extends Controller
       
 
         
-            return view('academic-admin.migration-management.manage', compact('students', 'from_session', 'to_session', 'current_class', 'scope', 'final_stream_status'));
+            return view('academic-admin.migration-management.manage', compact('students', 'from_session', 'to_session', 'current_class', 'scope', 'final_stream_status', 'stream_sequence'));
          
 
 

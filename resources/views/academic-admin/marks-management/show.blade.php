@@ -55,10 +55,10 @@
                     Please ensure that the data you are entering reflects the data in your official scheme book. 
                     Siyabonga  {{\Spatie\Emoji\Emoji::hugging_face()}}
                 </li>  
-{{-- <p></p> --}}
-                {{-- <li>
+<p></p> 
+                <li>
                     If you want to <span class="text-bold">CHANGE or edit a mark </span> , click on the green button. After clicking on the green button a pop up will show where you will be able to change/edit the mark of the student.
-                </li> --}}
+                </li>
                 </ul>
              
                                     <hr>
