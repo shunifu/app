@@ -297,6 +297,13 @@ Route::get('/class-sequencing/delete/{id}', [ClassSequenceController::class,'des
 //end of class_sequence
 
 
+//Stream Sequence
+Route::get('/stream-sequencing/', [ClassSequenceController::class,'index'])->name('sequence.index');
+
+
+//End of Class Sequence
+
+
 //Migration Management
 
 Route::get('/migration/', [TransitionController::class,'index'])->name('transition.index');
@@ -318,11 +325,15 @@ Route::get('/testimonial/create', [TransitionController::class,'index'])->name('
 //Class Teacher Management//
 
 Route::get('/class/class-list', [TeacherController::class,'class_list'])->name('class_teacher.class_list');
-
-//End of Class Teacher Management
-
 Route::get('/users/teacher/assign/classteacher', [TeacherController::class,'class_teacher'])->name('teacher.class_teacher');
 Route::post('/users/teacher/assign/assign_classteacher', [TeacherController::class,'assign_classteacher'])->name('teacher.assign_classteacher');
+
+Route::get('/users/teacher/class-teacher/edit/{id}', [TeacherController::class,'class_teacher_edit'])->name('teacher.class_teacher');
+Route::post('/users/teacher/class-teacher/update', [TeacherController::class,'class_teacher_update'])->name('teacher.update_class_teacher');
+//End of Class Teacher Management
+
+
+
 Route::post('/users/teacher/add', [TeacherController::class,'store'])->name('teacher.store');
 Route::post('/users/teacher/add/bulk', [TeacherController::class,'bulk'])->name('teacher.bulk');
 Route::post('/users/teacher/edit', [TeacherController::class,'edit'])->name('teacher.edit');
@@ -532,6 +543,12 @@ Route::get('/assessement/type/edit/{id}',[AssessementTypeController::class,'edit
 Route::put('/settings/assessements/type/update',[AssessementTypeController::class,'update'])->name('assessement-type.update');
 
 Route::get('/assessement/type/delete/{id}',[AssessementTypeController::class,'destroy'])->name('assessement-type.destroy');
+
+
+//Mark Settings
+
+
+
 
 
 //Manage Assessement

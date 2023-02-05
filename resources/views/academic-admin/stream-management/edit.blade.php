@@ -46,8 +46,8 @@
                     @error('stream_name')
                     <span class="text-danger">{{$message}}</span>  
                     @enderror
+               
                 </div>
-
                 <div class="form-group">
                     <x-jet-label> Stream Type</x-jet-label>
                   <div class="form-group">
@@ -74,12 +74,12 @@
                         Final Stream
                     @else
                     
-                        
+                       Progressive Stream 
                     @endif
                     
                     </option>
                     <option value="">-------------------</option>
-                    <option value="0">NOT Final Stream</option>
+                    <option value="0">Progressive Stream</option>
                     <option value="1">Final Stream</option>
                   </select>
                 </div>
@@ -87,6 +87,21 @@
                   <span class="text-danger">{{$message}}</span>  
                   @enderror
               </div>
+
+              <div class="form-group">
+                <x-jet-label> Next Stream Sequence</x-jet-label>
+              <div class="form-group">
+                <label for="next_stream"></label>
+                <select class="form-control" name="next_stream" id="next_stream">
+                  @foreach ($streams as $item)
+                  <option value="{{$item->id}}">{{$item->stream_name}}</option>  
+                  @endforeach
+                </select>
+              </div>
+                @error('next_stream')
+                <span class="text-danger">{{$message}}</span>  
+                @enderror
+            </div>
 
                 <input type="hidden" name="id" value="{{$stream->id}}">
 

@@ -145,11 +145,13 @@
             <td>{{$result_item->academic_session}}</td>
             <td class="text-left py-0 align-middle">
               <div class="btn-group btn-group-sm">
-                <button type="button" value="{{$result_item->id}}" class="btn btn-primary edit"><i class="fas fa-edit mr-1"></i>Edit</button>
+                <a href="/users/teacher/class-teacher/edit/{{encrypt($result_item->id)}}"><button type="button" value="{{$result_item->id}}" class="btn btn-primary edit"><i class="fas fa-edit mr-1"></i>Edit</button></a>
                 <button type="button" value="{{$result_item->id}}" class="btn btn-danger delete"><i class="fas fa-trash mr-1"></i>Delete</button>
               </div>
             </td>
           </tr>
+
+    
                 @endforeach
                     </tr>
                     
@@ -180,8 +182,24 @@
                 e.preventDefault();
                 var id=$(this).val();
                 $('#delete_entry_val').val(id);
-                $("#deleteModal").modal('show');
-                
+             if(confirm("Are you sure you want to delete this class teacher?"))
+             $.ajax({
+                 type: "DELETE",
+                 url: "/users/class-teacher/delete/"+id,
+                 dataType: "json",
+               }).done(function(data) {
+
+               // alert(data.message);
+                // $("#deleteModal").modal('hide');
+                // $("#responseModal").modal('show');
+                // $(".response").text(data.message);
+                alert('Data Deleted');
+                location.reload();   
+
+                   
+                 }).fail(function(data) {
+                   
+               });
                 
               });
 

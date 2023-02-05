@@ -164,7 +164,9 @@ class ClassSequenceController extends Controller
         ]);
 
     }
-}
+    
+
+  
 }
 
        

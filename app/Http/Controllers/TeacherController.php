@@ -667,26 +667,6 @@ $otp =  mt_rand(1000,9999);
         
 
 
-        try {
-            $decrypted = Crypt::decryptString($id);
-            $user=User::find($decrypted);
-
-            $teacher_name=$user->name;
-            $deactivate=$user->active=0;
-            $user->save();
-
-
-            //if classteacher, remove from classs teachers list
-            //if has marks ???
-
-            flash()->overlay($teacher_name."'s has been deactivated from the system. The teacher won't be able to login again into the system. To undo deactivation click", 'Deactivate Teacher');
-
-    
-            return Redirect::back();
-            
-        } catch (DecryptException $e) {
-            return view('errors.unauthorized');
-        }
 
 
     }
@@ -781,12 +761,85 @@ return view('users.teachers.classteacher', compact('getTeacher', 'classes', 'ses
 //    ]);
 
 
-       flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have added a class teacher', 'Add Class Teacher');
+       flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully added a class teacher', 'Add Class Teacher');
 
        return Redirect::back();
       
 
     }
+}
+
+
+public function class_teacher_edit($id){
+
+
+    try {
+        $decrypted = Crypt::decrypt($id);
+      //  $decrypted_id=GradeTeacher::find($decrypted);
+
+
+
+        $class_data=DB::table('grades_teachers')
+        ->join('grades','grades_teachers.grade_id','=','grades.id')
+        ->join('users','grades_teachers.teacher_id','=','users.id')
+        ->select('grades_teachers.id as id','grades.grade_name','users.id as teacher_id',  'users.name','users.lastname', 'users.salutation', 'grades.id as grade_id')
+        ->where('grades_teachers.id', $decrypted)
+        ->first();
+
+  
+
+        $teacher_role=Role::where('name', 'teacher')->first();
+        $teacher_role_id=$teacher_role->id;
+
+        $teachers=User::where('role_id', $teacher_role_id)->where('active', 1)->orderBy('lastname')->get();
+
+        return view('users.teachers.class-teacher.edit', compact('class_data', 'teachers'));
+
+        
+    } catch (DecryptException $e) {
+        dd($e);
+    }
+
+}
+public function class_teacher_update(Request $request){
+
+
+    $this->validate($request, [
+        'class_teacher' => 'required'
+     ]);
+
+     $activeSession=AcademicSession::where('active', 1)->first();
+     $activeSessionID=$activeSession->id;
+
+
+     //Check if class teacher has already been added into class
+
+     $teacherExists=GradeTeacher::where('teacher_id', $request->class_teacher)->where('academic_session',$activeSessionID )->exists();
+
+     
+     if ($teacherExists) {
+        flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Teacher has already been assigned to a class for the current academic year', 'Update Class Teacher');
+
+        return Redirect::back();
+     }else{
+
+
+      GradeTeacher::where('id', $request->id)->update([
+        'teacher_id'=>$request->class_teacher
+      ]);
+      
+    
+        
+        flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully updated  class teacher', 'Update Class Teacher');
+    
+         return redirect('/users/teacher/assign/classteacher');
+         
+
+     }
+
+  
+
+
 }
 
     public function classteacher_delete($id){

@@ -19,15 +19,15 @@ class GradeTeacher extends Model
 
     ];
 
-    public function teacher(){
-   return $this->hasOne(User::class, 'teacher_id');
-    }
+//     public function teacher(){
+//    return $this->hasOne(User::class, 'teacher_id');
+//     }
 
-    public function grade(){
-        return $this->hasOne(User::class, 'teacher_id');
-    }
+//     public function grade(){
+//         return $this->hasOne(User::class, 'teacher_id');
+//     }
 
-    public function session(){
+//     public function session(){
 
-    }
+//     }
 }

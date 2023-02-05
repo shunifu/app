@@ -86,9 +86,11 @@ class StreamController extends Controller
     
         $stream=Stream::find($stream_id);
 
+        $streams=Stream::where('id','<>', $stream)->get();
+
        
        
-        return view('academic-admin.stream-management.edit', compact('stream'));
+        return view('academic-admin.stream-management.edit', compact('stream', 'streams'));
 
 
     }
