@@ -62,7 +62,7 @@ class StudentsImport implements ToCollection, WithHeadingRow
                         'name'=>$row['name'],
                         'lastname'=>$row['lastname'],
                         'middlename'=>$row['middlename'],
-                      //  'national_id'=>$row['pin'],
+                        'national_id'=>$row['pin'],
                      //   'cell_number'=>$row['student_cell'],
                        'gender'=>$row['gender'],
                         'role_id'=>$student_role->id,
