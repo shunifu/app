@@ -38,7 +38,7 @@
 </div>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<div class="container">
+{{-- <div class="container">
 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
        <div class="col">
 		 <div class="card radius-10 border-start border-0 border-3 border-info">
@@ -47,7 +47,7 @@
 					<div>
 						<p class="mb-0 text-secondary">Total Students</p>
 						<h4 class="my-1 text-info">4805</h4>
-						<p class="mb-0 font-13">+2.5% from last week</p>
+						{{-- <p class="mb-0 font-13">+2.5% from last week</p> --}}
 					</div>
 					<div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa-solid fa-users-between-lines"></i>
 					</div>
@@ -150,4 +150,4 @@
 		</div>
 	  </div> 
 	</div>
-</div>
+</div> --}}
