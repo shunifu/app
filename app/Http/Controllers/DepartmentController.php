@@ -17,6 +17,15 @@ class DepartmentController extends Controller
 
         if(Auth::user()->hasRole('admin_teacher')){
 
+
+            $defaultExists=Department::whereIn('id',['22,','23', '24', '25', '26','27','28'])->exists();
+
+            if($defaultExists){
+                $departments=Department::whereIn('id',['22,','23', '24', '25', '26','27','28'])->delete();
+            }
+
+         
+
             $collection_department=Department::all();
             $teacher_role=Role::where('name', 'teacher')->first()->id;
             $admin_teacher_role=Role::where('name', 'admin_teacher')->first()->id;
@@ -96,7 +105,7 @@ class DepartmentController extends Controller
     
             $department_id=$add_department->id;
             $hod_role=Role::where('name', 'hod_teacher')->first();
-            $hod_name=$hod_role->name;
+            $hod_name=$hod_role->id;
 
             if( $hod=DepartmentHead::create([ 'department_id'=>$department_id,  'teacher_id'=>$request->teacher ])){
              $hod->syncRoles([$hod_name]);

@@ -50,14 +50,14 @@
                 </div>
                 <div class="form-group">
                     <x-jet-label> Stream Type</x-jet-label>
-                  <div class="form-group">
+                 
                     <label for="stream_type"></label>
                     <select class="form-control" name="stream_type" id="stream_type">
                       <option value="{{$stream->stream_type}}">{{$stream->stream_type}}</option>
                       <option value="internal">Internal</option>
                       <option value="external">External</option>
                     </select>
-                  </div>
+                 
                     @error('stream_type')
                     <span class="text-danger">{{$message}}</span>  
                     @enderror
@@ -66,7 +66,7 @@
                 
                 <div class="form-group">
                   <x-jet-label>Final Stream Status </x-jet-label>
-                <div class="form-group">
+               
                   <label for="final_stream"></label>
                   <select class="form-control" name="final_stream" id="final_stream">
                     <option value="{{$stream->final_stream}}">
@@ -82,7 +82,7 @@
                     <option value="0">Progressive Stream</option>
                     <option value="1">Final Stream</option>
                   </select>
-                </div>
+             
                   @error('final_stream')
                   <span class="text-danger">{{$message}}</span>  
                   @enderror
@@ -90,14 +90,23 @@
 
               <div class="form-group">
                 <x-jet-label> Next Stream Sequence</x-jet-label>
-              <div class="form-group">
+             
                 <label for="next_stream"></label>
                 <select class="form-control" name="next_stream" id="next_stream">
+                  @if ($stream->sequence==0)
+                  <option value="">----Not Set---</option>  
+                    @else
+                   
+                   
+                    @endif
+                    <option value="">Select Below</option>  
+                
                   @foreach ($streams as $item)
                   <option value="{{$item->id}}">{{$item->stream_name}}</option>  
                   @endforeach
+                  <option value="0">End of School </option>    
                 </select>
-              </div>
+      
                 @error('next_stream')
                 <span class="text-danger">{{$message}}</span>  
                 @enderror

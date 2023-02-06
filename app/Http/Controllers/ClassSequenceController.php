@@ -166,7 +166,7 @@ class ClassSequenceController extends Controller
     }
     
 
-  
+}
 }
 
        

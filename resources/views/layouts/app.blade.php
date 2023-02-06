@@ -316,7 +316,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ route('teacher.teaching_loads')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Add Teaching Loads</p>
                 </a>
               </li>
@@ -324,7 +324,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ route('teaching_loads.show')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Manage Loads</p>
                 </a>
               </li>
@@ -335,7 +335,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ route('admin_check.loads') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Manage Loads (Admin)</p>
                 </a>
               </li>
@@ -345,7 +345,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/teaching-loads/transfer/" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Transfer Loads</p>
                 </a>
               </li>
@@ -399,7 +399,7 @@
         
 
 
-         <!----Beginning of Online Learning---------->
+         {{-- <!----Beginning of Online Learning---------->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chalkboard-teacher"></i>
@@ -470,12 +470,12 @@
                   <p>Virtual Class</p>
                 </a>
               </li> --}}
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{route('online-learning.manage')}}" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>Manage Lessons</p>
                 </a>
-              </li>
+              </li> --}}
 
               {{-- <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
@@ -511,12 +511,12 @@
                 </a>
               </li> --}}
            
-              @endrole
+              {{-- @endrole --}}
 
 
               
 
-              @role('school-administrator')
+              {{-- @role('school-administrator')
            <li class="nav-item">
                 <a href="{{ route('online-learning.create')}}" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
@@ -528,9 +528,9 @@
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>View Assessements</p>
                 </a>
-              </li>
+              </li> --}}
               
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ route('online-learning.create_assessement_teacher')}}" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>View Results</p>
@@ -540,7 +540,7 @@
             
            
               @endrole
-            </ul>
+            </ul> --}}
             {{-- <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="fas fa-video nav-icon"></i>
@@ -553,7 +553,7 @@
                 <p>Virtual Meeting</p>
               </a>
             </li> --}}
-        <!---end of Online Learning-----> 
+        <!---end of Online Learning----->  
 
 
 
@@ -975,28 +975,6 @@
           </li>
          @endif
 
-          @role('admin_teacher')
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-building"></i>
-              <p>
-                Departments
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ route('department.create') }}" class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
-                  <p> Department Management</p>
-                </a>
-              </li>
-
-            
-
-            </ul>
-          </li>
-          @endrole
 
          
           @role('teacher')
@@ -1105,7 +1083,7 @@
 
               <li class="nav-item">
                 <a href="{{ route('subject.create') }}" class="nav-link">
-                  <i class="nav-icon fas fa-book-open"></i>
+                  <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>
                     Subjects Management
                   </p>
@@ -1113,7 +1091,7 @@
               </li>
               <li class="nav-item">
                 <a href="{{ route('allocation.create') }}" class="nav-link">
-                  <i class="nav-icon fas fa-book-open"></i>
+                  <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>
                     Subjects Allocations
                   </p>
@@ -1159,7 +1137,7 @@
     <ul class="nav nav-treeview">
       <li class="nav-item">
       <a href="{{route('resolutions.index')}}" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
+           <i class="nav-icon fas fa-chevron-circle-right"></i>
           <p>Manage Resolutions</p>
         </a>
       </li>
@@ -1182,7 +1160,7 @@
 
       <li class="nav-item">
         <a href="{{route('transition.index')}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
+             <i class="nav-icon fas fa-chevron-circle-right"></i>
             <p>Student Migration</p>
           </a>
         </li>
@@ -1190,7 +1168,7 @@
     
       <li class="nav-item">
         <a href="{{route('sequence.index')}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
+             <i class="nav-icon fas fa-chevron-circle-right"></i>
             <p>Class Sequencing</p>
           </a>
         </li>
@@ -1211,13 +1189,13 @@
     <ul class="nav nav-treeview">
       <li class="nav-item">
       <a href="{{route('timetable.index')}}" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
+           <i class="nav-icon fas fa-chevron-circle-right"></i>
           <p>Add Timetable</p>
         </a>
       </li>
       <li class="nav-item">
         <a href="{{route('timetable.show')}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
+             <i class="nav-icon fas fa-chevron-circle-right"></i>
             <p>Manage Timetable</p>
           </a>
         </li>
@@ -1272,7 +1250,7 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a href="{{route('assessement_settings.index')}}" class="nav-link">
+                <a href="/marks/settings" class="nav-link">
                   <i class="fas fa-newspaper nav-icon"></i>
                   <p>Marks Settings</p>
               
@@ -1535,9 +1513,16 @@
               </li>
 
               <li class="nav-item">
-                <a href="/users/teacher/assign/headofdepartment" class="nav-link">
+                <a href="/academic-admin/department" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>HOD Management</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="/users/teacher/assign/headofdepartment" class="nav-link">
+                  <i class="nav-icon fas fa-chevron-circle-right"></i>
+                  <p>Commitees</p>
                 </a>
               </li>
 

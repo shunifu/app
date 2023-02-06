@@ -12,6 +12,7 @@ class Stream extends Model
         'stream_name',
         'stream_type',
         'final_stream',
+        'sequence'
         
     ];
 }

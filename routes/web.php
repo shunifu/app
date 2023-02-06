@@ -89,6 +89,7 @@ use App\Http\Controllers\StudentAttendanceController;
 use App\Http\Controllers\AssessementSettingController;
 use App\Http\Controllers\CoronaSurvellianceController;
 use App\Http\Controllers\AssessementQuestionController;
+use App\Http\Controllers\MarkSettingController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\PermissionsManagementController;
 Route::get('/', function () {
@@ -298,7 +299,7 @@ Route::get('/class-sequencing/delete/{id}', [ClassSequenceController::class,'des
 
 
 //Stream Sequence
-Route::get('/stream-sequencing/', [ClassSequenceController::class,'index'])->name('sequence.index');
+
 
 
 //End of Class Sequence
@@ -725,6 +726,15 @@ Route::post('/report/variable/update', [ReportTemplateController::class,'variabl
 
 
 //End of Report Settings
+
+
+//Beginning of Mark Settings
+
+Route::get('/marks/settings', [MarkSettingController::class,'index'])->name('marks_settings.index');
+Route::post('/marks/settings/save', [MarkSettingController::class,'store'])->name('marks_settings.store');
+Route::get('/marks/settings/edit/{id}', [MarkSettingController::class,'edit'])->name('marks_settings.edit');
+Route::post('/marks/update', [MarkSettingController::class,'update'])->name('marks_settings.update');
+//End of Mark Settings
 
 //Term Based
 Route::get('/report/term-based', [ReportController::class,'create'])->name('report.create');

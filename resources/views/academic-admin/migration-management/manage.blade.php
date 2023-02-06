@@ -52,7 +52,9 @@ Please note that if you want to change a students status, please go back to Insi
                             <th>Name</th>
                             <th>Middlename</th>
                             <th>Current Class</th>
-
+                            @if ($scope=="external")
+                            <th>Migration Status</th>
+                            @endif
                           
                                 
                            
@@ -61,6 +63,7 @@ Please note that if you want to change a students status, please go back to Insi
                                 @if ($scope=="internal")
                             <th>Result  <i class="fas fa-info-circle " data-toggle="tooltip" data-placement="top" title="If you want to change the result of the student, go to Insights Dashboard, then go Term Insights"></th>
                              @endif
+                             
                             
                         </tr>
                     </thead>
@@ -153,8 +156,8 @@ Please note that if you want to change a students status, please go back to Insi
                             <input type="hidden" name="from_session[]" value="{{$from_session}}"> 
                             <input type="hidden" name="to_session[]" value="{{$to_session}}"> 
                             <input type="hidden" name="current_class[]" value="{{$current_class}}"> 
-                            <input type="hidden"  name="final_stream_status" value="{{$final_stream_status}}"
-                           
+                            <input type="hidden"  name="final_stream_status" value="{{$final_stream_status}}">
+                            <input type="hidden"  name="scope" value="internal">
                           
                         </tr>
                         @endforeach
@@ -178,10 +181,10 @@ Please note that if you want to change a students status, please go back to Insi
                        <td>{{$item->grade_name}}</td>
                        <td>
 
-                 
+                    
                    
                        
-                        <select class="form-control" name="to" id="">
+                        <select class="form-control" name="destination_class[]" required id="">
                             <option value="">Choose Class</option>
                         
                             @foreach ($stream_sequence as $new_class)
@@ -207,8 +210,8 @@ Please note that if you want to change a students status, please go back to Insi
                        <input type="hidden" name="from_session[]" value="{{$from_session}}"> 
                        <input type="hidden" name="to_session[]" value="{{$to_session}}"> 
                        <input type="hidden" name="current_class[]" value="{{$current_class}}"> 
-                       <input type="hidden"  name="final_stream_status" value="{{$final_stream_status}}"
-                      
+                       <input type="hidden"  name="final_stream_status" value="{{$final_stream_status}}">
+                       <input type="hidden"  name="scope" value="external">
                      
                    </tr>
                    @endforeach

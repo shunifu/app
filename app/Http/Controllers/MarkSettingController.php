@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MarkSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class MarkSettingController extends Controller
 {
@@ -14,7 +15,23 @@ class MarkSettingController extends Controller
      */
     public function index()
     {
-        return view('se')
+
+
+        if (!Schema::hasTable('mark_settings')) {
+            Schema::create('mark_settings', function($table){
+                  
+                   $table->id();
+                   $table->integer('marks_mode');
+                   $table->timestamps();
+           });
+       }
+
+
+        $markSettings=MarkSetting::all();
+
+
+
+        return view('academic-admin.settings-management.marks.index', compact('markSettings'));
     }
 
     /**

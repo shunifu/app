@@ -43,18 +43,22 @@ class StreamController extends Controller
         $validation=$request->validate([
             'stream_name'=>'required',
             'stream_type'=>'required',
-            'final_stream'=>'required'
+            'final_stream'=>'required',
+            'next_stream'=>'required',
         ]);
 
         $stream_name=$request->input('stream_name');
         $stream_type=$request->input('stream_type');
         $final_stream=$request->input('final_stream');
+        $next_stream=$request->input('next_stream');
       
         Stream::create([
             'stream_name' =>  $stream_name,
             'stream_type' =>  $stream_type,
             'final_stream'  =>  $final_stream, 
+            'sequence'  =>  $next_stream, 
         ]);
+
 
       
 
@@ -86,7 +90,7 @@ class StreamController extends Controller
     
         $stream=Stream::find($stream_id);
 
-        $streams=Stream::where('id','<>', $stream)->get();
+        $streams=Stream::where('id','<>', $stream_id)->get();
 
        
        
@@ -105,19 +109,32 @@ class StreamController extends Controller
     public function update(Request $request, Stream $stream)
     {
 
+    
+
         //validation
         $validation=$request->validate([
             'stream_name'=>'required',
             'stream_type'=>'required',
             'final_stream'=>'required',
+            'next_stream'=>'required',
         ]);
     
+        //Check if seqeunce already exists
+
+        $check=Stream::where('sequence',$request->next_stream )->where('sequence','<>','0')->exists();
+        if ($check) {
+            flash()->overlay(' <i class="fa fa-exclamation-triangle" aria-hidden="true text-danger"></i> Error. The was an error updating. Sequence already exists. '.$request->stream_name, 'Edit Stream');
+
+            return Redirect::back();  
+        }else{
+
         
        
         $update=Stream::find($request->id)->update([
             "stream_name"=>$request->stream_name,
             "stream_type"=>$request->stream_type,
             "final_stream"=>$request->final_stream,
+            "sequence"=>$request->next_stream,
         ]);
 
         if($update){
@@ -129,6 +146,7 @@ class StreamController extends Controller
 
             return Redirect::back();  
         }
+    }
     }
 
     /**
