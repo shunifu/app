@@ -47,7 +47,7 @@
 					<div>
 						<p class="mb-0 text-secondary">Total Students</p>
 						<h4 class="my-1 text-info">4805</h4>
-						{{-- <p class="mb-0 font-13">+2.5% from last week</p> --}}
+						{{-- <p class="mb-0 font-13">+2.5% from last week</p> 
 					</div>
 					<div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa-solid fa-users-between-lines"></i>
 					</div>
@@ -150,4 +150,4 @@
 		</div>
 	  </div> 
 	</div>
-</div> --}}
+</div> 
