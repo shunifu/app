@@ -36,7 +36,6 @@
         <!-- form start -->
         <form action="{{ route('term.update') }}" method="POST" >
 
-          @method('PATCH');
             @csrf
             {{-- @method('patch') --}}
         <!-- /beginning of card-body -->
@@ -72,10 +71,19 @@
                 </div>
 
                 <div class="form-group">
+                  <x-jet-label>Next Term Date</x-jet-label>
+                 
+                  <input type="date" name="next_term_date" class="form-control" value="{{$term->next_term_date}}">
+                  @error('next_term_date')
+                  <span class="text-danger">{{$message}}</span>  
+                  @enderror
+              </div>
+
+                <div class="form-group">
                     <x-jet-label>Borders Return</x-jet-label>
                    
-                    <input type="date" name="borders_return" class="form-control" value="{{$term->borders_return_date}}">
-                    @error('borders_return')
+                    <input type="date" name="borders_return_date" class="form-control" value="{{$term->borders_return_date}}">
+                    @error('borders_return_date')
                     <span class="text-danger">{{$message}}</span>  
                     @enderror
                 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AcademicSession;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Grade;
@@ -16,6 +17,8 @@ use Illuminate\Http\Request;
 use App\Models\CalendarEvent;
 use App\Models\StudentLesson;
 use App\Models\AssessementOnline;
+use App\Models\Department;
+use App\Models\GradeTeacher;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -80,6 +83,16 @@ if (!Schema::hasColumn('users', 'last_seen')) //check the column
         $total_classes=Grade::all()->count();
 
 
+        $teaching_loads=TeachingLoad::where('active', 1)->count();
+
+        $activeSession=AcademicSession::where('active', 1)->first();
+        $activeSessionID=$activeSession->id;
+
+        $class_teachers=GradeTeacher::where('academic_session',$activeSessionID)->count();
+
+        $departments=Department::all()->count();
+
+
 
         //$total_lessons=Lesson::where('teacher_id', Auth::user()->id)->first();
        $total_assessements=AssessementOnline::where('teacher_id', Auth::user()->id)->count();
@@ -98,7 +111,7 @@ if (!Schema::hasColumn('users', 'last_seen')) //check the column
      
        // $teacher_loads=TeachingLoad::where();
 
-        return view('dashboard.admin-teacher', compact('teachers','total_students','students','total_teachers', 'total_parents','my_students', 'total_classes','greetings', 'total_loads', 'total_assessements', 'total_lessons', 'total_students'));
+        return view('dashboard.admin-teacher', compact('departments','class_teachers','teaching_loads','teachers','total_students','students','total_teachers', 'total_parents','my_students', 'total_classes','greetings', 'total_loads', 'total_assessements', 'total_lessons', 'total_students'));
 
 
 

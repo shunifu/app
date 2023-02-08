@@ -89,9 +89,12 @@ use App\Http\Controllers\StudentAttendanceController;
 use App\Http\Controllers\AssessementSettingController;
 use App\Http\Controllers\CoronaSurvellianceController;
 use App\Http\Controllers\AssessementQuestionController;
+use App\Http\Controllers\DisciplinaryCasesController;
 use App\Http\Controllers\MarkSettingController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\PermissionsManagementController;
+use App\Http\Controllers\TimetableController;
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -172,9 +175,9 @@ Route::get('/academic-admin/session/delete/{id}', [AcademicSessionController::cl
 
 Route::get('/view/terms/{id}', [TermController::class,'index'])->name('term.index');
 Route::post('terms/add/', [TermController::class,'store'])->name('term.store');
-Route::post('terms/edit/', [TermController::class,'edit'])->name('term.edit');
-Route::patch('terms/update', [TermController::class,'update'])->name('term.update');
-Route::delete('/terms/delete/', [TermController::class,'destroy'])->name('term.destroy');
+Route::get('/terms/edit/{id}', [TermController::class,'edit'])->name('term.edit');
+Route::post('terms/update', [TermController::class,'update'])->name('term.update');
+Route::get('/terms/delete/{id}', [TermController::class,'destroy'])->name('term.destroy');
 
 //Terms
 // Route::get('/academic-admin/terms', [ShunifuTermController::class,'create'])->name('term.create');
@@ -629,8 +632,8 @@ Route::post('/check/marks/',[CheckController::class,'check_marks'])->name('check
 
 //Beginning of Timetable
 //Assessement Settings
-Route::get('/timetable/',[TimeTableController::class,'index'])->name('timetable.index');
-Route::get('/timetable/show',[TimeTableController::class,'show'])->name('timetable.show');
+Route::get('/timetable/',[TimetableController::class,'index'])->name('timetable.index');
+Route::get('/timetable/show',[TimetableController::class,'show'])->name('timetable.show');
 
 Route::post('/settings/assessements/type/add',[AssessementTypeController::class,'store'])->name('assessement-type.store');
 Route::get('/assessement/type/edit/{id}',[AssessementTypeController::class,'edit'])->name('assessement-type.edit');
@@ -648,17 +651,16 @@ Route::get('/parent/view/{id}',  [ParentController::class,'show'])->name('parent
 Route::post('/parent/edit/',  [ParentController::class,'edit'])->name('parent.edit');
 Route::post('/parent/import/',  [ParentController::class,'import'])->name('parents.import');
 
+Route::get('/users/parent/discipline', [ParentController::class,'discipline'])->name('parents.discipline');
+Route::post('/parents/view/child-performance', [ParentController::class,'child_performance'])->name('parents.child_performance');
+Route::get('/parents/communication', [ParentController::class,'communication_index'])->name('parent.communication_index');
 
-//Parent Data Route
+
+//Allocation Data Route
 Route::get('/allocation', [AllocationController::class,'create'])->name('allocation.create');
 Route::post('/allocation/store', [AllocationController::class,'store'])->name('allocation.store');
-Route::post('/allocation/view/{id}', [AllocationController::class,'view'])->name('allocation.view');
-
-Route::get('/users/parent/discipline', [ParentController::class,'discipline'])->name('parents.discipline');
-
-Route::post('/parents/view/child-performance', [ParentController::class,'child_performance'])->name('parents.child_performance');
-
-Route::get('/parents/communication', [ParentController::class,'communication_index'])->name('parent.communication_index');
+Route::get('/allocation/view/{grade_id}/{session_id}', [AllocationController::class,'show'])->name('allocation.view');
+//End of Allocation
 
 
 //Communication Management
@@ -692,6 +694,15 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
 
 
 //End of Class Teacher
+
+
+//Beginning of Disciplinary Cases
+Route::get('/disciplinary-cases', [DisciplinaryCasesController::class,'index'])->name('disciplinary.index');
+Route::post('/disciplinary-cases/store', [DisciplinaryCasesController::class,'store'])->name('disciplinary.store');
+Route::get('/disciplinary-cases/edit/{id}', [DisciplinaryCasesController::class,'edit'])->name('disciplinary.edit');
+Route::post('/disciplinary-cases/update', [DisciplinaryCasesController::class,'update'])->name('disciplinary.update');
+Route::get('/disciplinary-cases/delete/{id}', [DisciplinaryCasesController::class,'destroy'])->name('disciplinary.delete');
+//end of disciplinary
 
 //Report Management
 

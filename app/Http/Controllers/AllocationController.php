@@ -50,17 +50,21 @@ class AllocationController extends Controller
            });
        }
 
+       $getActiveSession=AcademicSession::where('active', 1)->first();
+       $ActiveSession=$getActiveSession->id;
+
         $allocations = DB::table('allocations')
         ->join('subjects', 'subjects.id', '=', 'allocations.subject_id')
         ->join('grades', 'grades.id', '=', 'allocations.grade_id')
-        ->select('grades.id as grade_id', 'allocations.id as allocation_id', 'subjects.id as subject_id', 'subjects.subject_name', 'grades.grade_name')
-        ->where('active', 1)
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'allocations.academic_year')
+        ->select('grades.id as grade_id', 'allocations.id as allocation_id', 'subjects.id as subject_id', 'subjects.subject_name', 'grades.grade_name', 'academic_sessions.academic_session')
+        ->where('academic_year', $ActiveSession)
         ->groupBy('grades.id')
         ->get();
 
       
 
-        return view('academic-admin.allocations-management.index',compact('subjects', 'grades', 'allocations', 'sessions') );
+        return view('academic-admin.allocations-management.index',compact('subjects', 'grades', 'allocations', 'sessions', 'ActiveSession') );
     }
 
     /**
@@ -90,7 +94,7 @@ class AllocationController extends Controller
 
         if ($allocationExists) {
 
-            flash()->overlay('<i class="fas fa-check-circle text-w"></i>'.' Warning, Allocations already exists . ', 'Response');
+            flash()->overlay('<i class="fas fa-check-circle text-warning"></i>'.' Warning, Allocations already exists . ', 'Response');
             return Redirect::back();
         }else{
 
@@ -126,9 +130,25 @@ class AllocationController extends Controller
      * @param  \App\Models\Allocation  $allocation
      * @return \Illuminate\Http\Response
      */
-    public function show(Allocation $allocation, $id)
+    public function show(Allocation $allocation, $grade_id, $academic_session)
     {
-        //
+        $class_id=decrypt($grade_id);
+
+      
+     
+      //  $allocation=Allocation::where('id',$allocation_id)->get();
+
+
+ $allocation = DB::table('allocations')
+        ->join('subjects', 'subjects.id', '=', 'allocations.subject_id')
+        ->join('grades', 'grades.id', '=', 'allocations.grade_id')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'allocations.academic_year')
+        ->select('allocations.id as allocation_id','grades.id as grade_id', 'allocations.id as allocation_id', 'subjects.id as subject_id', 'subjects.subject_name', 'grades.grade_name', 'academic_sessions.academic_session')
+        ->where('allocations.grade_id', $class_id)
+        ->where('allocations.academic_year', $academic_session)
+        ->get();
+       
+        return view('academic-admin.allocations-management.view',compact('allocation'));
     }
 
     /**

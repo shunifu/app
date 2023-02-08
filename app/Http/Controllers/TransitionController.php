@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Models\ClassSequence;
 use App\Models\AcademicSession;
 use App\Models\Grade;
+use App\Models\ParentStudent;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -286,7 +287,10 @@ class TransitionController extends Controller
             if($final_stream_status==1){
                 //archive all students in form 5
 
-        
+
+                //check if the academic year in question is active or not.
+
+              
 
                 foreach ($students as $key => $val) {
 
@@ -298,6 +302,8 @@ class TransitionController extends Controller
                    
 
                     User::where('id', $student)->update([ 'active'=> 0]);
+
+                    ParentStudent::where('student_id', $student)->update(['active'=>0]);
                 }
 
                 flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success. . Migration Successful ', 'Migration Process Notice');

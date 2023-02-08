@@ -123,7 +123,7 @@ background-color: #f7f7ff;
       
     </x-slot>
 
-    <div class="row justify-content-center">
+    <div class="row ">
         <div class="col-md-12">
          
 
@@ -131,68 +131,6 @@ background-color: #f7f7ff;
              
     
   
-
-   
-    <div class="row">
-      @role('admin_teacher')
-   
-      <div class="col-12 col-sm-8 col-md-4">
-        <div class="info-box mb-3">
-          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book-open"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Your Loads</span>
-            <span class="info-box-number">{{$total_loads}}</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-
-      <!-- fix for small devices only -->
-      <div class="clearfix hidden-md-up"></div>
-
-      <div class="col-12 col-sm-8 col-md-4">
-        <div class="info-box mb-3">
-          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-chalkboard-teacher"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Your Lessons</span>
-            <span class="info-box-number">{{$total_lessons}}</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-      <div class="col-12 col-sm-8 col-md-4">
-        <div class="info-box mb-3">
-          <span class="info-box-icon bg-fuchsia elevation-1"><i class="far fa-edit"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Your Assessements</span>
-            <span class="info-box-number">{{$total_assessements}}</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-      @endrole
-    </div>
-   
-
-
-    <div class="mb-2">
-      <hr>
-      <div class="row">
- 
-      </div>
-     
-     
-    </div>
-   
              
         </div>
     </div>

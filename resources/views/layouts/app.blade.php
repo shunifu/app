@@ -736,7 +736,18 @@
                   </p>
                 </a>
               </li>
-@endrole
+
+          
+
+              <li class="nav-item">
+                <a href="/disciplinary-cases" class="nav-link">
+                  <i class="fas fa-chalkboard-teacher  nav-icon  "></i>
+                  <p>
+                    Disciplinary Cases
+                  </p>
+                </a>
+              </li>
+          @endrole
             
 
 
@@ -1148,7 +1159,9 @@
 
   <li class="nav-item has-treeview">
     <a href="#" class="nav-link">
-      <i class="nav-icon fas fa-book-reader"></i>
+  
+<i class="fas fa-forward  nav-iconf   "></i>
+
       <p>
        Migration Management
         <i class="fas fa-angle-left right"></i>
@@ -1177,9 +1190,11 @@
  
   </li>
 
+  
+
   <li class="nav-item has-treeview">
     <a href="#" class="nav-link">
-      <i class="nav-icon fas fa-book-reader"></i>
+      <i class="nav-icon fas fa-edit"></i>
       <p>
        Timetable Management
         <i class="fas fa-angle-left right"></i>
@@ -1231,8 +1246,8 @@
 
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
-                  
-                  <i class="nav-icon fas fa-user-friends"></i>
+                  <i class="fas fa-calendar-alt nav-icon    "></i>
+
                   <p>
                     Session Management
                     <i class="fas fa-angle-left right"></i>

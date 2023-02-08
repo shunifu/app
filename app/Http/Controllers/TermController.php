@@ -86,12 +86,13 @@ return Redirect::back();
 
     }
 
-    public function edit(Request $request){
+    public function edit($id){
       
+        $term_id=decrypt($id);
+    
       
-        $id=$request->id;
         
-        $term=Term::find($id);
+        $term=Term::find($term_id);
      return view('academic-admin.academic-session-management.terms.edit', compact('term'));
 
   
@@ -117,14 +118,13 @@ $final_term=1;
 
 
 
-// UPDATE `terms` SET `start_date` = '2022-12-13 13:41:26' WHERE `terms`.`id` = 2;
-
         $update=Term::where('id',$request->term_id)->update([
             "term_name"=>$request->term_name,
             "start_date"=>$request->opening_date,
             "end_date"=>$request->closing_date,
             "final_term"=>$final_term,
-
+            "borders_return_date"=>$request->borders_return_date,
+            "next_term_date"=>$request->next_term_date,
 
         ]);
 
@@ -167,9 +167,11 @@ $existsInStudentSubjectAverages=StudentSubjectAverage::where('term_id', $term)->
 
 if ($existsInAssessements || $existsInCa_Exams || $existsInAssessementsProgressReport || $existsInAssessementsWeights || $existsInTermAverages ) {
 
-    flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Sorry.Cannot delete term as it is already assigned in assessements', 'Delete Term ');
+    flash()->overlay('<i class="fas fa-exclamation-circle  text-danger"></i>'.' Sorry.Cannot delete term as it is already assigned in assessements', 'Delete Term ');
 
     return Redirect::back();
+
+
     
 }else{
 

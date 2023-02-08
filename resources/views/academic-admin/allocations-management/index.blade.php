@@ -27,7 +27,7 @@
   
     <div class="card card-light">
         <div class="card-header">
-          <h3 class="card-title">Add Subject Allocation</h3>
+          <h3 class="card-title">Add Subject Allocations</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
@@ -107,12 +107,13 @@
       
         <div class="card-body">
         <div class="responsive">
-          <table class="table  table-hover table-responsive-sm">
+          <table class="table  table-hover table-responsive-sm table-bordered"> 
+            <thead class="thead-light">
             <thead class="thead-light">
               <tr>
                 <th>Class</th>
                 <th>Allocations</th>
-              
+                <th>Academic Year</th>
                 <th>Manage</th>
               </tr>
             </thead>
@@ -121,15 +122,23 @@
                @foreach ($allocations as $allocation)
                <tr>
                    <td>{{$allocation->grade_name}}</td>
-                   <td><a href="/allocation/view/{{$allocation->allocation_id}}">View Allocations</a></td>
+                   <td><a href="/allocation/view/{{encrypt($allocation->grade_id)}}/{{$ActiveSession}}">View Allocations</a></td>
                  
+                   <td class="text-center py-0 align-middle">{{$allocation->academic_session}}</td>
                    
+                   <td class="text-center py-0 align-middle">
+                    <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        Action
+                      </button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/allocation/session/view/{{encrypt($allocation->allocation_id)}}"><i class="fas fa-eye"></i> View </a>
+                        <a class="dropdown-item" href="/allocation/session/edit/{{encrypt($allocation->allocation_id)}}"><i class="fas fa-edit"></i> Edit </a>
+                        <a class="dropdown-item" href="/allocation/session/delete/{{encrypt($allocation->allocation_id)}}"><i class="fas fa-trash"></i> Delete </a>
+                 
+                      </div>
+                    </div>
                    
-                   <td>
-                    
-                    <a href="/allocation/session/view/{{$allocation->allocation_id}}"><button  class="btn btn-light "><i class="fas fa-eye"> </i> View</button></a> 
-                     <a href="/allocation/session/edit/{{$allocation->allocation_id}}"><button class="btn btn-light"><i class="fas fa-edit"> </i> Edit</button></a> 
-                    <a href="/allocation/terms/delete/{{$allocation->allocation_id}}"><button  class="btn btn-light"><i class="fas fa-trash"> </i> Delete</button></a> 
                   
                      
                     

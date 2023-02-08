@@ -71,11 +71,21 @@
          
       </div>
 
+      <div class="form-group">
+        <x-jet-label>Next Term Start Date</x-jet-label>
+        <x-jet-input name="next_term_date" id="next_term_date"  type="date"  ></x-jet-input>
+        @error('next_term_date')
+        <span class="text-danger">{{$message}}</span>  
+        @enderror
+       
+    </div>
+
+
     
 
     <div class="form-group">
       <x-jet-label>Border Return Date</x-jet-label>
-      <x-jet-input name="borders_return_date" id="end_date"  type="date"  ></x-jet-input>
+      <x-jet-input name="borders_return_date" id="borders_return_date"  type="date"  ></x-jet-input>
       @error('end_date')
       <span class="text-danger">{{$message}}</span>  
       @enderror
@@ -131,7 +141,7 @@
                 <th>Term Name</th>
                 <th>Opening Date</th>
                 <th>Closing Date</th>
-              
+                <th>Next Term Date</th>
                 <th>Borders Return</th>
                 <th>Type</th>
                 <th>Manage Term</th>
@@ -145,7 +155,15 @@
                    <td>{{$term->term_name}}</td>
                    <td>{{date("j F Y", strtotime($term->start_date))}} </td>
                    <td>{{date("j F Y", strtotime($term->end_date))}} </td>
-                  
+                   <td>
+                    <?php 
+                    if(($term->next_term_date)=="0000-00-00"){
+                    echo 'not added';
+                  }else{
+                    echo date("j F Y", strtotime($term->next_term_date));
+                  }
+                  ?>
+                  </td>
                   <td>
                     <?php 
                     if(is_null($term->borders_return_date)){
@@ -165,29 +183,25 @@
                    
 
                   <td class="text-left py-0 align-middle">
+                    <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        Action
+                      </button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/terms/edit/{{encrypt($term->term_id)}}"><i class="fas fa-eye"></i> Edit Term  </a>
+                        <a class="dropdown-item" href="/terms/delete/{{encrypt($term->term_id)}}"><i class="fas fa-trash-alt"></i> Delete Term</a>
+                      </div>
+                    </div>
+
+               
+
+                  </td>
 
 
                   
 
-                    {{-- <div class="btn-group btn-group-sm ">
-                    <form action="/terms/edit/" method="POST">
-                        @csrf
-                        @method('post')
-                        <input type="hidden" name="id" value="{{$term->term_id}}" /> 
-                  
-                        <button type="submit" class="btn btn-primary ">Edit</button>
-                    </form>
-
-                      <form action="terms/delete/" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="id" value="{{$term->term_id}}" />
-                  
-                        <button type="submit" class="btn  btn-danger">Delete</button>
-                    </form>
-
-                  </div> --}}
-                <td>
+                
+                
 
 
                  

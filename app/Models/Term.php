@@ -16,7 +16,9 @@ class Term extends Model
         'term_name',
         'start_date',
         'end_date',
-        'final_term'
+        'final_term',
+        'borders_return_date',
+        'next_term_date'
         
 
     ];

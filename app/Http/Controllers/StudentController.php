@@ -1438,14 +1438,14 @@ public function bulk_pathway_index(){
 
 public function bulk_pathway_store(Request $request){
 
-   // dd($request->all());
+ dd($request->all());
   
     $student=Role::where('name', 'student')->first();
     $parent_role=Role::where('name', 'parent')->first();
-$academic_year=AcademicSession::where('active', 1)->first();
-$session=$academic_year->id;
+    $academic_year=AcademicSession::where('active', 1)->first();
+    $session=$academic_year->id;
 
-    //Validation
+ //   Validation
     // $validation=$request->validate([
     //     'name'=>'required|alpha',
     //     'middlename'=>'nullable|alpha',
