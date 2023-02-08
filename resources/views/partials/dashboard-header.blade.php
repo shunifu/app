@@ -166,7 +166,7 @@
 					   
 					   <p class="mb-0 text-secondary">Departments</p>
 					   <h4 class="my-1 text-info">{{$departments}}</h4>
-					   <a href="/users/student/management"><p class="mb-0 font-13 text-info " >View Departments </p></a>
+					   <a href="/academic-admin/department"><p class="mb-0 font-13 text-info " >View Departments </p></a>
 				   </div>
 				   <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fas fa-building    "></i>
 				   </div>
