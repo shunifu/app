@@ -20,7 +20,7 @@
                             <ul>
                                 <li>Those that <span class="text-bold">passed</span> in the previous academic year will proceed to the  class. </li>
                                 <li>Those that got <span class="text-bold">promoted</span> in the previous academic year will proceed to the  class. </li>
-                                <li>Those that <span class="text-bold">passed</span> in the previous academic year will remain in that class. </li>
+                                <li>Those that <span class="text-bold">failed</span> in the previous academic year will remain in that class. </li>
                                 <li>Those with <strong>Try Another School</strong> in the previous academic year will be archived. </li>
                             </ul>
 
