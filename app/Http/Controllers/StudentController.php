@@ -1438,7 +1438,7 @@ public function bulk_pathway_index(){
 
 public function bulk_pathway_store(Request $request){
 
- dd($request->all());
+dd($request->all());
   
     $student=Role::where('name', 'student')->first();
     $parent_role=Role::where('name', 'parent')->first();
@@ -1463,6 +1463,7 @@ public function bulk_pathway_store(Request $request){
     $gender=$request->gender;
     $parent_cell=$request->parent_cell;
     $parent_email=$request->parent_email;
+    $grade=$request->grade;
 
     for ($i = 0; $i <count($name); $i++) {
         $user = User::create([
@@ -1479,13 +1480,13 @@ public function bulk_pathway_store(Request $request){
  
         $student_id=$user->id;
 
-   //     Add student to class/grade
-        $class_student=StudentClass::create([
-     'student_id'=>$student_id[$i],
-     'grade_id'=>$request->grade[$i],
-     'academic_session'=>$session[$i],
-     'active'=>1,
-    ]);
+//    //     Add student to class/grade
+//         $class_student=StudentClass::create([
+//      'student_id'=>$student_id,
+//      'grade_id'=>$grade,
+//      'academic_session'=>$session,
+//      'active'=>1,
+//     ]);
 
         //if parent details are avaiable then add parent details.
 

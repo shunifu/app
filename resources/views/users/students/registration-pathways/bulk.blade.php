@@ -20,20 +20,18 @@
        
         </div>
     </div> 
-    <div class="row">
-        <div class="col">
 
-            <div class="card text-left">
+    <div class="card text-left">
             
-              <div class="card-body">
-                <h3 class="text-bold">Step 1  <small class="text-danger">*</small></h3>
-                <small>First select the class you want to add the students for.</small>
-                <p class="card-text">  <div class="col form-group">
-                  <form action="{{route('pathway.bulk_store')}}" method="post">  
-                    @csrf
-                    <x-jet-label>Choose Class</x-jet-label>
+      <div class="card-body">
+    <form action="{{route('pathway.bulk_store')}}" method="post">  
+      @csrf
+    <div class="form-row" id="master_div">
+      <div class="col-md-1 form-group">
+
+                    <x-jet-label> Class</x-jet-label>
                     <select class="form-control" name="grade">
-                    <option value="">Select Class</option>
+                    <option value=""> Class</option>
                     @foreach ($class as $student_class)
                     <option value={{$student_class->id}}>{{$student_class->grade_name}}</option>
                     @endforeach
@@ -41,110 +39,117 @@
                     @error('grade')
                     <span class="text-danger">{{$message}}</span>  
                     @enderror
-                    </div></p>
-              </div>
-            </div>
         </div>
-    </div>
-          <div class="card card-light">
           
-              <div class="card-body">
-
-                <h3 class="text-bold">Step 2</h3>
-
-                          
-              
-                <div class="card-body">
-                      @csrf
-                      <table class="table table-sm table-hover mx-auto table-bordered">
-                       <thead class="thead-light">
-                           <tr>
-                            <th>Lastname <br><small id="lastname"  class="text-muted">Enter lastname of student</small>  <small class="text-danger">*</small></th>
-                            <th>Name <br><small id="name" class="text-muted">Enter name of student</small> <small class="text-danger">*</small></th>
-                            <th>Middlename <br><small id="middlename" class="text-muted">Enter middlename of student</small></th>
-                            <th>Gender <br><small id="gender" class="text-muted">Gender of student</small> <small class="text-danger">*</small> </th>
-                            <th>Parent Cell <br><small id="parent_cell" class="text-muted">Enter Parent Cell</small></th>
-                            <th>Parent Email <br><small id="parent_email" class="text-muted">Enter Parent Email</small></th>
-                            <th>Action</th>
-                             
-                           </tr>
-                       </thead>
-                       <tbody class="added_data">
-
-                           <tr id="table_row">
-    <td><input type="text" name="lastname[]" id="lastname" required    class="form-control" placeholder="Student Surname" aria-describedby="lastname"></td>
-    <td><input type="text" name="name[]" id="name" required class="form-control" placeholder="Student Name" aria-describedby="helpId"></td>
-    <td><input type="text" name="middlename[]" id="middlename" class="form-control" placeholder="Student Middlename" aria-describedby="middlename"></td>
-    <td>
-    <select class="form-control" name="gender[]" required id="gender">
-    <option value="">Select Gender</option>
-    <option value="male">Male</option>
-    <option value="female">Female</option>
-    </select>
-    </td>
-
-    <td><input type="number" name="parent_cell[]"  id="parent_cell" class="form-control" placeholder="Parent Cell" aria-describedby="parent_cell"></td>
-    <td><input type="email" name="parent_email[]"  id="parent_email" class="form-control" placeholder="Parent Email" aria-describedby="parent_email"></td>
-
-    <td>
-        <div class="col">
-            <div class="row">
-                <button type="button" class="btn btn-success" name="add"
-                id="add_input" type="button"><i class="fas fa-plus-circle"></i></button>
-            </div>
-        </div>
-
-      
-    </td>
     
-                           </tr>
-                          
-                       </tbody>
-                   </table>
-
-                    
-                    
-
-                                
-                </div>
-                <!-- /.card-body -->
-      
-                <div class="card-footer">
-                  <x-jet-button>Register Student</x-jet-button>
-                </div>
-            </form>
-
-                
-              </div>
-
-            </div>
-      
-      
+        <div class="col-md-2 form-group">
+              <div class="col form-group">
+                  <x-jet-label>Surname</x-jet-label>
+                  <input type="text" name="lastname[]" id="lastname" required    class="form-control" placeholder="Student Surname" >
+                  @error('lastname')
+                  <span class="text-danger">{{$message}}</span>  
+                  @enderror
+                  </div></p>
         </div>
 
-     
+        <div class="col-md-2 form-group">
+          <div class="col form-group">
+              <x-jet-label>Name</x-jet-label>
+              <input type="text" name="name[]" id="name" required    class="form-control" placeholder="Student Name" >
+              @error('name')
+              <span class="text-danger">{{$message}}</span>  
+              @enderror
+              </div></p>
+    </div>
+
+    <div class="col-md-2 form-group">
+      <div class="col form-group">
+          <x-jet-label>Middlename</x-jet-label>
+          <input type="text" name="middlename[]" id="name" required    class="form-control" placeholder="Student Middlename" >
+          @error('nmiddleame')
+          <span class="text-danger">{{$message}}</span>  
+          @enderror
+          </div></p>
+    </div>
+
+    <div class="col-md-2 form-group">
+      <div class="col form-group">
+        <x-jet-label>Gender</x-jet-label>
+    <select class="form-control" name="gender[]" required id="gender">
+      <option value="">Select Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      </select>
+      </div>
+    </div>
 
 
-     
-            
+    <div class="col-md-2 form-group">
+      <div class="col form-group">
+          <x-jet-label>Parent Cell</x-jet-label>
+          <input type="number" name="parent_cell[]" id="parent_cell" required    class="form-control" placeholder="Parent Cell" >
+          @error('name')
+          <span class="text-danger">{{$message}}</span>  
+          @enderror
           </div>
+</div>
+
+
+<div class="col-md-1 form-group">
+  <div class="col form-group">
+    <x-jet-label class="label"> Add More</x-jet-label>
+      <button type="button" class="btn btn-success" name="add"
+      id="add_input" type="button"><i class="fas fa-plus-circle"></i></button>
+     
+      </div>
+</div>
+
+      </div>
+
+      <div id="slave_div">
+        <div class="col-md-1 form-group">
+          <div class="col form-group">
+            <x-jet-label class="label"> Add More</x-jet-label>
+              <input type="button" class="btn btn-danger" name="add"
+              id="add_input" type="button"><i class="fas fa-plus-circle"></i></button>
+             
+              </div>
+        </div>
+      </div>
+
+        <x-jet-button>Register Student</x-jet-button>
+     
+    </form>
+      </div>
+    </div>
           
+ 
+
+
           <script>
               $(document).ready(function () {
-                  var i=1;
+                
                   $("#add_input").click(function (e) { 
-                     e.preventDefault();
-                      i++;
-                    //   $('#master-div').clone().find("input:text").val("").end().appendTo('#slave-div');
-$("tbody").append('<tr id="row'+i+'"> <td><input type="text" name="lastname[]"  id="lastname" class="form-control" placeholder="Student Surname" aria-describedby="lastname" required></td><td><input type="text" name="name[]" id="name" class="form-control" placeholder="Student Name" required aria-describedby="name"></td><td><input type="text" name="middlename[]" id="middlename" class="form-control" placeholder="Student Middlename" aria-describedby="middlename"></td> <td><select class="form-control" name="gender[]" id="gender"><option value="">Select Gender</option><option value="male">Male</option><option value="female">Female</option></select></td><td><input type="number" name="parent_cell[]" id="parent_cell" class="form-control" placeholder="Parent Cell" aria-describedby="parent_cell"></td><td><input type="email" name="parent_email[]" id="parent_email" class="form-control" placeholder="Parent Email" aria-describedby="parent_email"></td><td><button class="btn btn-danger btn_remove" name="remove" id='+i+' type="button"><i class="fas fa-times"></i></button> </td></tr>');    
+               
+                    var copySlot = $("#master_div").clone(); // clone here 
+                    $('label', copySlot).hide(); // hide Clone Label
+                    $('button', copySlot).hide(); // hide Clone Label
+                    copySlot.appendTo("#slave_div"); // append now
+                     
+                //   var clone=$('#master_div').clone().find("label", "#add_input").hide().end().appendTo('#slave_div');
+                  
+  
                   });
+
+                  $(document).on('click', '.btn_remove', function () {
+                var button_id = $(this).attr("id");
+                $('#slave_div').remove();
+            });
+        
               });
 
 
-              $(document).on('click', '.btn_remove', function () {
-                var button_id = $(this).attr("id");
-                $('#row' + button_id + '').remove();
-            });
+           
 
           </script>
 

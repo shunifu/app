@@ -142,20 +142,20 @@ return [
  
  
 
-    'DB_CONNECTION' => 'mysql',
-    'DB_HOST' => "ypc8xu1divj9z5cj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-    'DB_PORT' => '3306',
-    'DB_DATABASE' => env('DB_NAME'),
-    'DB_USERNAME' => 'r9xoialesfxre2fb',
-    'DB_PASSWORD'=>'hdy7q3v7xcubgglt',
-
-
     // 'DB_CONNECTION' => 'mysql',
-    // 'DB_HOST' => "127.0.0.1",
+    // 'DB_HOST' => "ypc8xu1divj9z5cj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     // 'DB_PORT' => '3306',
     // 'DB_DATABASE' => env('DB_NAME'),
-    // 'DB_USERNAME' => 'root',
-    // 'DB_PASSWORD'=>'',
+    // 'DB_USERNAME' => 'r9xoialesfxre2fb',
+    // 'DB_PASSWORD'=>'hdy7q3v7xcubgglt',
+
+
+    'DB_CONNECTION' => 'mysql',
+    'DB_HOST' => "127.0.0.1",
+    'DB_PORT' => '3306',
+    'DB_DATABASE' => env('DB_NAME'),
+    'DB_USERNAME' => 'root',
+    'DB_PASSWORD'=>'',
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -216,6 +216,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
         
+        
       //  Clickatell\ClickatellServiceProvider::class,
         
 
@@ -274,6 +275,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Clickatell' => Clickatell\ClickatellFacade::class,
         'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
+        'LaravelPwa' => \Ladumor\LaravelPwa\LaravelPwa::class,
 
     ],
 
