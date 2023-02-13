@@ -36,6 +36,7 @@
         "messagebird/php-rest-api": "^1.19",
         "php-flasher/flasher": "^1.7",
         "pusher/pusher-php-server": "^5.0",
+        "rakibdevs/openweather-laravel-api": "^1.9",
         "santigarcor/laratrust": "^7.1",
         "seshac/otp-generator": "^0.0.6",
         "silviolleite/laravelpwa": "^2.0",
@@ -100,6 +101,8 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "post-install-cmd": [ "ln -sr storage/app/public public/storage" ]
+
     }
 }

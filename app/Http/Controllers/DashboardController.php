@@ -170,7 +170,7 @@ if (!Schema::hasColumn('users', 'last_seen')) //check the column
     
 
         
-        }elseif(Auth::user()->hasRole('hod') && Auth::user()->hasRole('teacher')){
+        }elseif(Auth::user()->hasRole('hod')){
 
             //HOD dashboard
             //
@@ -213,7 +213,10 @@ if (!Schema::hasColumn('users', 'last_seen')) //check the column
 
   return view('dashboard.parent', compact('children','mychildren', 'greetings', 'assessements'));
 
-        }elseif(Auth::user()->hasRole('teacher')){
+        }
+        
+        
+        if(Auth::user()->hasRole('teacher')){
 
 
             $teacher_teaching_loads=DB::table('teaching_loads')
@@ -231,9 +234,16 @@ if (!Schema::hasColumn('users', 'last_seen')) //check the column
             ->where('teaching_loads.teacher_id', Auth::user()->id )
             ->count();
 
+            $total_marks=DB::table('marks')
+            ->join('academic_sessions','academic_sessions.id','=','marks.session_id')
+            ->where('academic_sessions.active', 1 )
+            ->where('marks.active', 1 )
+            ->where('marks.teacher_id', Auth::user()->id )
+            ->count();
 
 
-            return view('dashboard.teacher', compact('teacher_teaching_loads', 'teacher_total_students', 'greetings'));
+
+            return view('dashboard.teacher', compact('teacher_teaching_loads', 'teacher_total_students', 'greetings', 'total_marks'));
     }
     }
 

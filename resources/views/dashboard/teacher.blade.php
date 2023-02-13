@@ -1,25 +1,28 @@
 <x-app-layout>
+  
     <x-slot name="header">
+      
+      @include('partials.dashboard-css')
+
       <style>
-        .profile-head {
-        transform: translateY(5rem)
-    }
-    
-    .cover {
-        background-image: url(https://res.cloudinary.com/innovazaniacloud/image/upload/v1637780706/pexels-photo-4143791_hwaedg.jpg);
-      background-size: cover;
-        background-repeat: no-repeat
-    }
-    
-    </style>
-        <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        
+body{
+  color:gray;
+
+}
+
+.small-text{
+  font-size:15px;
+}
+
+
+      </style>
       
     </x-slot>
 
-    <!-- Button trigger modal -->
-    
-   
-    
+<div class="card text-left">
+
+
     <!-- Modal -->
     <div class="modal fade" id="notice" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -39,7 +42,7 @@
              @endif !<br>
 
              <?php
-if (empty(\App\Models\TeachingLoad::where('teacher_id', Auth::user()->id))){
+if (!(\App\Models\TeachingLoad::where('teacher_id', Auth::user()->id)->where('active', 1))->exists()){
   ?>
 
             
@@ -74,7 +77,7 @@ if (empty(\App\Models\Mark::where('teacher_id', Auth::user()->id))){
 }else{
   ?>
   
-  If you happen to teach a subject whereby you group students, lets say for example you teach English Literature in Form 4 and you teach 4 students in Form 4A, 8 in Form 4B and 10 Form 4C, you can NOW select each of the classes  when you are adding the marks (multiple selection).You just need to select the checkboxes next to the classes you want to add the marks for (as a group).
+Welcome back to Shunifu, <span class="text-bold">Eswatini's leading school management platform</span>'. This platform has been specially designed to help you, <span class="text-bold">{{Auth::user()->name}}</span>, do your work quickly, effeciently and effectively. Shunifu is here for YOU!
 
   <?php
 
@@ -96,47 +99,41 @@ if (empty(\App\Models\Mark::where('teacher_id', Auth::user()->id))){
     </div>
 
     <div class="row justify-content-center">
+      
         <div class="col">
-         
-          <div class="bg-white shadow rounded overflow-hidden">
-            <div class="px-4 pt-4 pb-4 elevation-2 cover">
-                <div class="media align-items-end profile-head">
-                    <div class="profile mr-2">
-                        @if(empty(Auth::user()->profile_photo_url))
-                        <img src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1613141854/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300_urpxk5.jpg" alt="..." width="180" class="rounded mt-8 rounded-circle">
-                        @else
-
-                        <img class="user-image img-circle " width="64" height="64" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                        @endif
-                    </div>
-                   
-                </div>
-            </div>
+          <img class="card-img-top"
+          src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_190,w_970/b_rgb:000000,e_gradient_fade,y_-0.0/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_100_style_light_align_center:{{Auth::user()->name}},w_0.0,y_0.0/v1613303961/shunifu_header_1_h8yy55.png"
+          alt="">
+          <div class="bg-white shadow rounded overflow-hidden cover">
+          
             
-            <div class="bg-white p-4  mt-5 d-flex">
+            <div class="bg-white p-3  ">
+
+
                 <div class="col text-justify">
-                    <h3 class="mb-1">{{Auth::user()->name}} {{Auth::user()->middlename}} {{Auth::user()->lastname}}<svg class="ml-1"  xmlns="http://www.w3.org/2000/svg"
-                            width="26" height="25.19" viewBox="0 0 24 23.25">
+                    <h4 class="mb-1 text-secondary" >{{Auth::user()->name}} {{Auth::user()->middlename}} {{Auth::user()->lastname}}<svg class="ml-1"  xmlns="http://www.w3.org/2000/svg"
+                            width="20" height="20" viewBox="0 0 24 23.25">
                             <path
                                 d="M23.823,11.991a.466.466,0,0,0,0-.731L21.54,8.7c-.12-.122-.12-.243-.12-.486L21.779,4.8c0-.244-.121-.609-.478-.609L18.06,3.46c-.12,0-.36-.122-.36-.244L16.022.292a.682.682,0,0,0-.839-.244l-3,1.341a.361.361,0,0,1-.48,0L8.7.048a.735.735,0,0,0-.84.244L6.183,3.216c0,.122-.24.244-.36.244L2.58,4.191a.823.823,0,0,0-.48.731l.36,3.412a.74.74,0,0,1-.12.487L.18,11.381a.462.462,0,0,0,0,.732l2.16,2.437c.12.124.12.243.12.486L2.1,18.449c0,.244.12.609.48.609l3.24.735c.12,0,.36.122.36.241l1.68,2.924a.683.683,0,0,0,.84.244l3-1.341a.353.353,0,0,1,.48,0l3,1.341a.786.786,0,0,0,.839-.244L17.7,20.035c.122-.124.24-.243.36-.243l3.24-.734c.24,0,.48-.367.48-.609l-.361-3.413a.726.726,0,0,1,.121-.485Z"
                                 fill="#0D6EFD"></path>
                             <path data-name="Path" d="M4.036,10,0,5.8,1.527,4.2,4.036,6.818,10.582,0,12,1.591Z"
                                 transform="translate(5.938 6.625)" fill="#fff"></path>
                         </svg>
-                    </h3>
+                    </h4>
                     <hr>
                    
-                    <p class="text-gray-700 mb-1 2h-base">{{$greetings}} {{\Spatie\Emoji\Emoji::waving_hand()}}{{Auth::user()->name}}<p>
+                    {{-- <p class="text-gray-700 mb-1 2h-base">{{$greetings}} {{\Spatie\Emoji\Emoji::waving_hand()}}{{Auth::user()->name}}<p> --}}
                      
-                         <br>
+                         {{-- <br> --}}
                <span class="text-gray-700 mb-1 2h-base">
-                  We are so glad to have you  use the     @foreach (\App\Models\School::all() as $item)
-
-                  {{ ($item->school_name) }} Shunifu app
-                  @endforeach {{\Spatie\Emoji\Emoji::growingHeart()}}. 
-                  In the event you need assistance  please feel free to send us a text on 
-                  <a href="https://api.whatsapp.com/send?phone=26876890726&text='Hi Shunifu, this is, {{Auth::user()->name}}  {{Auth::user()->lastname}}, from @foreach (\App\Models\School::all() as $item) {{$item->school_name }} @endforeach I need assistance, my email is {{Auth::user()->email}} and cell number is {{Auth::user()->cell_number}} "><i class="fab fa-whatsapp "></i> WhatsApp</a> or call us on <a href="tel:+26876890726">MTN</a> or <a href="tel:+26879890726">Eswatini Mobile</a>. We will be glad to provide you with the assistance that you need.
-
+                {{$greetings}}  {{\Spatie\Emoji\Emoji::waving_hand()}}{{Auth::user()->name}}, welcome back to Shunifu <span class="text-bold">Eswatini's most efficient, convenient and reliable school management platform</span>. This platform has been specially designed to help you, <span class="text-bold">{{Auth::user()->salutation}} {{Auth::user()->lastname}}</span> to do your work quickly, efficiently and effectively. Shunifu is here for you, to simplify your work as an educator.
+           <hr>
+  
+                 The Shunifu team, is on stand-by to help you in the event you need assistance. To get assisted  you can
+                 send us a message on WhatsApp  using the number
+                  <a href="https://api.whatsapp.com/send?phone=26876890726&text='Hi Shunifu, this is, {{Auth::user()->name}}  {{Auth::user()->lastname}}, from @foreach (\App\Models\School::all() as $item) {{$item->school_name }} @endforeach I need assistance, my email is {{Auth::user()->email}} and cell number is {{Auth::user()->cell_number}} "><i class="fab fa-whatsapp "></i> 76890726</a> or call  <a href="tel:+26876890726">7689 0726  </a><small>(MTN)</small> /
+                   <a href="tel:+26879890726">7989 0726 </a><small>(Eswatini Mobile)</small>. Thank you and have a splendid Shunifu experience.
+             
                 </div>
             </div>
         
@@ -144,74 +141,83 @@ if (empty(\App\Models\Mark::where('teacher_id', Auth::user()->id))){
         <div class="mb-4">
 
         </div>
-            <div class="row">
-               <div class="col-lg-3 col-6">
-                  <!-- small box -->
-                  <div class="small-box bg-info">
-                    <div class="inner">
-                      <h3>{{$teacher_total_students}}</h3>
-      
-                      <p>{{Auth::user()->name}}'s students</p>
-                    </div>
-                    <div class="icon">
-                      <i class="ion-ios-people"></i>
+
+
+        <div class="container">
+          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+                 <div class="col">
+               <div class="card radius-10 border-start border-0 border-3 border-info">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
                       
+                      <p class="mb-0 text-secondary">Total Students</p>
+                      <h4 class="my-1 text-info">{{$teacher_total_students}}</h4>
+                      <a href="/users/student/management"><p class="mb-0 font-13 text-info " >View Students </p></a>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa-solid fa-users-between-lines"></i>
+                    </div>
                   </div>
-                </div> 
-                <!-- ./col -->
-               <div class="col-lg-3 col-6">
-                  <!-- small box -->
-                  <div class="small-box bg-success">
-                    <div class="inner">
-                      <h3>{{$teacher_teaching_loads}}</h3>
-      
-                      <p>{{Auth::user()->name}}'s teaching loads</p>
-                    </div>
-                    <div class="icon">
-                      <i class="ion-android-people"></i>
-                    </div>
-                    <a href="/users/teacher/loads/manage" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                  </div>
-                </div> 
-                <!-- ./col -->
-
-
-                <div class="col-lg-3 col-6">
-                  <!-- small box -->
-                  <div class="small-box bg-orange">
-                    <div class="inner">
-                      <h3>Marks</h3>
-      
-                      <p>{{Auth::user()->name}}'s Marks</p>
-                    </div>
-                    <div class="icon">
-                      <i class="ion-ios-bookmarks"></i>
-                    </div>
-                    <a href="/marks/" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                  </div>
-                </div> 
-           
-           
-                <div class="col-lg-3 col-6">
-                  <!-- small box -->
-                  <div class="small-box bg-pink">
-                    <div class="inner">
-                      <h3>Profile</h3>
-      
-                      <p>{{Auth::user()->name}}'s Profile</p>
-                    </div>
-                    <div class="icon">
-                      <i class="ion-person-stalker"></i>
-                    </div>
-                    <a href="/teacher/view/{{Crypt::encryptString(Auth::user()->id)}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                  </div>
-                </div> 
-                
                 </div>
-                <!-- ./col -->
+               </div>
+               </div>
+               <div class="col">
+              <div class="card radius-10 border-start border-0 border-3 border-danger">
+                 <div class="card-body">
+                   <div class="d-flex align-items-center">
+                     <div>
+                       <p class="mb-0 text-secondary"> Teaching Loads</p>
+                       <h4 class="my-1 text-danger">{{$teacher_teaching_loads}}</h4>
+                       <a href="/users/teachers/manage"><p class="mb-0 font-13 text-danger">View Teaching Loads </p></a> 
+                     </div>
+              
+                     <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i class="fas fa-user-graduate    "></i>
+                     </div>
+                   </div>
+                 </div>
               </div>
+              </div>
+              <div class="col">
+              <div class="card radius-10 border-start border-0 border-3 border-success">
+                 <div class="card-body">
+                   <div class="d-flex align-items-center">
+                     <div>
+                       <p class="mb-0 text-secondary">Total Marks</p>
+                       <h4 class="my-1 text-success">{{$total_marks}}<small class="small-text"> marks added</small></h4>
+                       <a href="/marks/"><p class="mb-0 font-13 text-success">View Marks</p></a> 
+                    
+                     </div>
+                     <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class="fas fa-user-friends    "></i>
+                     </div>
+                   </div>
+                 </div>
+              </div>
+              </div>
+          
+              <div class="col">
+              <div class="card radius-10 border-start border-0 border-3 border-warning">
+                 <div class="card-body">
+                   <div class="d-flex align-items-center">
+                     <div>
+                       <p class="mb-0 text-secondary">My Profile</p>
+                       <h4 class="my-1 text-warning">{{Auth::user()->name}}</h4>
+                      <a href="/teacher/view/{{Crypt::encryptString(Auth::user()->id)}}"> <p class="mb-0 font-13 text-secondary ">View My Profile</p></a>
+                     </div>
+                     <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto"><i class="fa fa-users"></i>
+                     </div>
+                   </div>
+                 </div>
+              </div>
+              </div> 
+          
+         
+          
+            </div>
+          </div>
+
+
+
+
     
              
     

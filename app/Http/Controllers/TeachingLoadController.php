@@ -366,11 +366,11 @@ return view('teaching-loads.index', compact('classes', 'sessions', 'subjects'));
      if(Auth::user()->hasRole('teacher')){
 
 
+      $activeSession=AcademicSession::where('active', 1)->first();
+    
+      $activeSessionID=$activeSession->id;
+      $activeSessionYear=$activeSession->academic_session;
 
-      if(!is_null($authorizedTeacher=TeachingLoad::where('teacher_id', Auth::user()->id)->first('teacher_id'))){ 
-        if($authorizedTeacher=TeachingLoad::where('teacher_id', Auth::user()->id)->first('teacher_id')->toArray());
-        $teacher_id=$authorizedTeacher['teacher_id'];
-        if ($teacher_id==Auth::user()->id ) {
         
            $result_loads=DB::table('teaching_loads')
            ->join('users','teaching_loads.teacher_id','=','users.id')
@@ -378,26 +378,33 @@ return view('teaching-loads.index', compact('classes', 'sessions', 'subjects'));
            ->join('grades','teaching_loads.class_id','=','grades.id')
            ->join('academic_sessions','teaching_loads.session_id','=','academic_sessions.id')
            ->where('teaching_loads.teacher_id', Auth::user()->id )
-           ->where('academic_sessions.active', 1 )//or active ==1
            ->where('teaching_loads.active', 1 )
-           //where('school_id', 0612)
+           ->where('teaching_loads.session_id',$activeSessionID )
            ->select('subject_name','grade_name', 'name', 'teaching_loads.id')
            ->orderBy('grades.grade_name', 'ASC')
-           ->get();//add academic year
-           return view('teaching-loads.manage', compact('result_loads'));
-      
-       }else{
-        return view('errors.unauthorized');
-       }
-      }else{
-       return view('errors.notfound2');
-      }
-      }else{
-        return view('errors.unauthorized');
-      }
+           ->get();
+
+          // dd($result_loads);
+
+           if(($result_loads->isEmpty())){
+          
+            $int=0;
+           }else{
+            $int=1;
+           }
+          
+          return view('teaching-loads.manage', compact('result_loads', 'int', 'activeSessionYear'));
+          
+           
+        
 
    
+   }else{
+    //not a teacher show not a teacher blade file
+    return view('errors.unauthorized');
    }
+
+  }
 
 
    public function transfer_loads_index(){
