@@ -91,7 +91,7 @@ return [
         'joppahigh.shunifu.app',
         'mshenguhigh.shunifu.app',
         'lomahashacentralhigh.shunifu.app', 
-        'stjohnboscocp.shunifu.app', 
+        'stjohnboscohigh.shunifu.app', 
         // 'florence'
 
         
