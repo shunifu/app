@@ -45,7 +45,7 @@ return [
         'charleswesleyhigh.shunifu.app',
         'mhlatanehigh.shunifu.app',
         'londudumahigh.shunifu.app',
-        'kaboycehigh.shunifu.app',
+        'kaboycehighschool.shunifu.app',
         'sigcawenihigh.shunifu.app', 
         'phonjwanehigh.shunifu.app',
         'mkhwelihigh.shunifu.app', 
@@ -99,7 +99,7 @@ return [
     ],
 
     /**
-     * Tenancy bootstrappers are executed when tenancy is initialized.
+     * Tenancy bootstrappers are executed when tenancy is initialized.xp
      * Their responsibility is making Laravel features tenant-aware.
      *
      * To configure their behavior, see the config keys below.
