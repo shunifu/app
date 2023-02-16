@@ -30,11 +30,8 @@ class AppServiceProvider extends ServiceProvider
         // JetstrapFacade::bootstrap4();
         // JetstrapFacade::useAdminLte3();
 
-        if($this->app->environment('production')) {
-            URL::forceScheme('https');
-            
-        }else{
-            
+        if(config('app.env') === 'production') {
+            \URL::forceScheme('https');
         }
 
         //dd(env('APP_ENV'));

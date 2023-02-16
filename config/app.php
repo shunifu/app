@@ -5,6 +5,18 @@
 
    // $db_name="boyce";
 
+// use Illuminate\Support\Facades\URL;
+
+  
+// $url = URL::to('/');
+
+// $bits = parse_url($url);
+// $subdomain = strtok($bits['host'], '.');
+
+
+// if($subdomain=="stfrancis"){
+// $name="St Francis High";
+// }
 
 
 
@@ -21,7 +33,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Shunifu'),
+    'name' => env('APP_NAME', "Shunifu"),
 
     /*
     |--------------------------------------------------------------------------
@@ -60,7 +72,10 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+
+    
+  
+    'url' => env('APP_URL', "Shunifu"),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -127,8 +142,7 @@ return [
     |
     */
     
-    'key' => env('APP_KEY'),
-
+    'key' => 'base64:2qLf/+DALcgsppX84xz24a4/9l39+8Ef2bQrMBRH4gg=',
     'cipher' => 'AES-256-CBC',
 
 
@@ -149,6 +163,12 @@ return [
     'DB_USERNAME' => 'r9xoialesfxre2fb',
     'DB_PASSWORD'=>'hdy7q3v7xcubgglt',
 
+    // 'APP_DEBUG' => 'false',
+    // 'APP_ENV' => 'production',
+ 
+    
+    
+
 
     // 'DB_CONNECTION' => 'mysql',
     // 'DB_HOST' => "127.0.0.1",
@@ -156,6 +176,21 @@ return [
     // 'DB_DATABASE' => env('DB_NAME'),
     // 'DB_USERNAME' => 'root',
     // 'DB_PASSWORD'=>'',
+
+
+
+'DB_CONNECTION_CENTRAL'=>'shunifu_console',
+'DB_HOST_CENTRAL'=>'127.0.0.1',
+'DB_PORT_CENTRAL'=>'3306',
+'DB_DATABASE_CENTRAL'=>'shunifu_central',
+'DB_USERNAME_CENTRAL'=>'rooT',
+'DB_PASSWORD_CENTRAL'=>'DFFGDG',
+
+'GOOGLE_CLIENT_ID'=>"647711867996-0g1vr98vus94v8p37oo5u6sb6b3opder.apps.googleusercontent.com",
+'GOOGLE_CLIENT_SECRET'=>"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",
+'GOOGLE_REDIRECT_URL'=>"/redirect/google",
+
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

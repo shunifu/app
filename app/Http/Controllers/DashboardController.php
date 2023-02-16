@@ -23,6 +23,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 
 class DashboardController extends Controller
 {
@@ -241,6 +242,9 @@ if (!Schema::hasColumn('users', 'last_seen')) //check the column
             ->where('marks.teacher_id', Auth::user()->id )
             ->count();
 
+
+            // $i = URL::to('/');
+            // dd($i);
 
 
             return view('dashboard.teacher', compact('teacher_teaching_loads', 'teacher_total_students', 'greetings', 'total_marks'));

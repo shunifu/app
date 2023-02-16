@@ -128,7 +128,7 @@ Welcome back to Shunifu, <span class="text-bold">Eswatini's leading school manag
                <span class="text-gray-700 mb-1 2h-base">
                 {{$greetings}}  {{\Spatie\Emoji\Emoji::waving_hand()}}{{Auth::user()->name}}, welcome back to Shunifu <span class="text-bold">Eswatini's most efficient, convenient and reliable school management platform</span>. This platform has been specially designed to help you, <span class="text-bold">{{Auth::user()->salutation}} {{Auth::user()->lastname}}</span> to do your work quickly, efficiently and effectively. Shunifu is here for you, to simplify your work as an educator.
            <hr>
-  
+ 
                  The Shunifu team, is on stand-by to help you in the event you need assistance. To get assisted  you can
                  send us a message on WhatsApp  using the number
                   <a href="https://api.whatsapp.com/send?phone=26876890726&text='Hi Shunifu, this is, {{Auth::user()->name}}  {{Auth::user()->lastname}}, from @foreach (\App\Models\School::all() as $item) {{$item->school_name }} @endforeach I need assistance, my email is {{Auth::user()->email}} and cell number is {{Auth::user()->cell_number}} "><i class="fab fa-whatsapp "></i> 76890726</a> or call  <a href="tel:+26876890726">7689 0726  </a><small>(MTN)</small> /
