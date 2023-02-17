@@ -917,7 +917,7 @@ public function parent_update(Request $request){
                 //3. grade_students.active=0
                 if ($grade->exists()) {
                     $grade->update(['active'=>'0']);
-                    $grade->delete();
+                //    $grade->delete();
                    
 
                 }
