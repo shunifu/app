@@ -823,8 +823,8 @@ public function parent_update(Request $request){
         ->join('academic_sessions','grades_students.academic_session','=','academic_sessions.id')
         ->where('grade_id', $class_id)
         ->where('academic_sessions.id', $session_id)
-        ->where('grades_students.active',1)
-        ->select('users.id as user_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname','users.profile_photo_path', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class')->get();
+        // ->where('grades_students.active',1)
+        ->select('users.id as user_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname','users.profile_photo_path', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class', 'users.active')->get();
 
         return view('users.students.removal-management.view', compact('students', 'sessions', 'classes', 'session_id'));
 

@@ -105,7 +105,7 @@
                                             <tr>
                                               <th><input type="checkbox" id="select_all" name="select_all">
                                                 <label for="students">Select All</label></th>
-                                               
+                                                <th>Student Status</th>
                                               <th>Student Surname</th>
                                               <th>Student Names</th>
                                               <th>Student Class</th>
@@ -118,7 +118,14 @@
             <input type="hidden" name="session" value="{{$item->academic_session_id}}">
               <tr>
               <td><input type="checkbox" class="students" name="students[]" value="{{$item->user_id}}" ></td>
-             
+              <td>
+                @if ($item->active==1)
+                    <span class="bg-success">Active</span>
+                    @else
+                    <span class="bg-danger">Inactive</span>
+                @endif
+                
+              </td>
               <td>{{$item->lastname}} </td>
               <td>{{$item->name}} {{$item->middlename}}  </td>
               <td>{{$item->grade_name}}</td>
