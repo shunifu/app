@@ -47,6 +47,8 @@ if ($hour >= 20) {
 }
 
 
+$sessionIs=AcademicSession::where('active', 1)->first();
+$activeSessionIs=$sessionIs->academic_year;
 
 if (!Schema::hasColumn('users', 'last_seen')) //check the column
 {
@@ -88,7 +90,7 @@ if (!Schema::hasColumn('users', 'last_seen')) //check the column
 
         $activeSession=AcademicSession::where('active', 1)->first();
         $activeSessionID=$activeSession->id;
-
+        $activeSessionName=$activeSession->academic_session;
         $class_teachers=GradeTeacher::where('academic_session',$activeSessionID)->count();
 
         $departments=Department::all()->count();
@@ -112,7 +114,7 @@ if (!Schema::hasColumn('users', 'last_seen')) //check the column
      
        // $teacher_loads=TeachingLoad::where();
 
-        return view('dashboard.admin-teacher', compact('departments','class_teachers','teaching_loads','teachers','total_students','students','total_teachers', 'total_parents','my_students', 'total_classes','greetings', 'total_loads', 'total_assessements', 'total_lessons', 'total_students'));
+        return view('dashboard.admin-teacher', compact('activeSessionName','departments','class_teachers','teaching_loads','teachers','total_students','students','total_teachers', 'total_parents','my_students', 'total_classes','greetings', 'total_loads', 'total_assessements', 'total_lessons', 'total_students'));
 
 
 

@@ -36,7 +36,10 @@
                     <path data-name="Path" d="M4.036,10,0,5.8,1.527,4.2,4.036,6.818,10.582,0,12,1.591Z"
                         transform="translate(5.938 6.625)" fill="#fff"></path>
                 </svg>
+
+				
             </h4>
+			<span class="text-small text-secondary">Current Session is {{$activeSessionName}}</span>
             <p></p>
             <span class="text-gray-700 mb-1 2h-base">
                 {{$greetings}}  {{\Spatie\Emoji\Emoji::waving_hand()}}{{Auth::user()->name}}, welcome back to Shunifu which is <span class="text-bold">Eswatini's most efficient, convenient and reliable school management platform</span>. This platform has been specially designed to help you, <span class="text-bold">{{Auth::user()->salutation}} {{Auth::user()->lastname}}</span> to do your work quickly, efficiently and effectively. Shunifu is here for you, to simplify and enhance your work at @foreach (\App\Models\School::all() as $item)
