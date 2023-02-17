@@ -190,6 +190,9 @@ return [
 'GOOGLE_CLIENT_SECRET'=>"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",
 'GOOGLE_REDIRECT_URL'=>"/redirect/google",
 
+'CLOUDINARY_URL'=>'cloudinary://434951831945849:NJZgQVie22hrsjoXbro416J9PVs@innovazaniacloud',
+'CLOUDINARY_PRESET'=>'XXXXXXXXXXXXX',
+'CLOUDINARY_NOTIFICATION_URL'=''
 
     /*
     |--------------------------------------------------------------------------
