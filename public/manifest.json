@@ -2,8 +2,8 @@
 {
 
     
-    "name": "Sigcaweni High",
-    "short_name": env('APP_NAME', 'My PWA App'),
+    "name": "School",
+    "short_name": "Shunifu",
     "start_url": "/index.php",
     "background_color": "#6777ef",
     "description": "Tutorial of Laravel Package",

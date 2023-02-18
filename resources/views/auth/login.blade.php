@@ -8,7 +8,7 @@
 
     <!-- PWA  -->
 {{-- <meta name="theme-color" content="#6777ef"/>
-<link rel="apple-touch-icon" href="https://res.cloudinary.com/innovazaniacloud/image/upload/v1670686954/shunifu/logo_1042.png">
+<link rel="apple-touch-icon" href="{{$item->school_logo}}">
 <link rel="manifest" href="{{ asset('/manifest.json') }}"> --}}
 
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
