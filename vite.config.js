@@ -1,25 +1,18 @@
-import laravel from 'laravel-vite-plugin'
-import {defineConfig} from 'vite'
 
+import {defineConfig} from 'vite';
+import laravel from 'laravel-vite-plugin';
+import path from 'path';
 export default defineConfig({
-    manifest: true,
     plugins: [
-        laravel([
-            'resources/sass/app.scss',
-            'resources/js/app.js',
-        ]),
+        laravel({
+            input: [
+                'resources/css/app.css', 'resources/js/app.js'],
+            refresh: true,
+        }),
     ],
-    server: {
-        https: true
+    resolve: {
+        alias: {
+            '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
+        }
     },
 });
-
-
-
-// mix.js('resources/js/app.js', 'public/js')
-//     .sass('resources/sass/app.scss', 'public/css')
-//     .webpackConfig(require('./webpack.config'));
-
-// // Core Ui assets...
-// mix.js('resources/js/admin-lte.js', 'public/js')
-//     .sass('resources/sass/admin-lte.scss', 'public/css');

@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- PWA  -->
-<meta name="theme-color" content="#6777ef"/>
+{{-- <meta name="theme-color" content="#6777ef"/>
 <link rel="apple-touch-icon" href="https://res.cloudinary.com/innovazaniacloud/image/upload/v1670686954/shunifu/logo_1042.png">
-<link rel="manifest" href="{{ asset('/manifest.json') }}">
+<link rel="manifest" href="{{ asset('/manifest.json') }}"> --}}
 
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
@@ -360,13 +360,13 @@ a[target='_blank']{
     }
 </script> --}}
 
-<script src="{{ asset('/sw.js') }}"></script>
+{{-- <script src="{{ asset('/sw.js') }}"></script>
 <script>
     if (!navigator.serviceWorker.controller) {
         navigator.serviceWorker.register("/sw.js").then(function (reg) {
             console.log("Service worker has been registered for scope: " + reg.scope);
         });
     }
-</script>
+</script> --}}
 </html>
 

@@ -13,7 +13,7 @@
 
           /* .sidebar-dark-warning{background-color: rgb(49, 49, 49) !important} */
          </style>
-      
+      <img src="{{ Vite::asset('resources/sass/app.scss') }}">
          @vite(['resources/sass/app.scss', 'resources/js/app.js'])
          {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
