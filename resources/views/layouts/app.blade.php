@@ -20,7 +20,7 @@
    
     {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}">  --}}
    
-    <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet">
+    {{-- <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href=' https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
@@ -1850,19 +1850,19 @@
         @stack('modals')
            <!-- Scripts -->
       
-        <script src="https://cdn.statically.io/gist/innovazania/b8793c83a804e280c38ddcfe14d23f20/raw/d22fe37eb7ca6cdcbb3def5761244fae4dca450c/livewire.js" ></script>  
+        {{-- <script src="https://cdn.statically.io/gist/innovazania/b8793c83a804e280c38ddcfe14d23f20/raw/d22fe37eb7ca6cdcbb3def5761244fae4dca450c/livewire.js" ></script>  
            @livewireScripts
 
           <script src="https://cdn.statically.io/gh/innovazania/assets/master/app.js"></script>
            <script src="https://cdn.statically.io/gh/innovazania/assets/7f444680/admin-lte.js"></script>
-           <script src="https://cdn.statically.io/gh/innovazania/assets/9ec219d9/notify.js"></script>
+           <script src="https://cdn.statically.io/gh/innovazania/assets/9ec219d9/notify.js"></script> --}}
 
         
           
           {{-- <script  src="/js/app.js" ></script>  --}}
           {{-- <script  src="/js/dist/jquery.js" ></script>  --}}
-{{--         
-          <script src="{{asset('js/app.js')}}"></script> --}}
+      
+          <script src="{{asset('js/app.js')}}"></script> 
           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
            {{-- <script src="https://code.highcharts.com/highcharts.js"></script> --}}
            {{-- <script src="https://cdn.jsdelivr.net/npm/@wiris/mathtype-tinymce5@7.24.6/plugin.min.js"></script> --}}

@@ -43,7 +43,6 @@
         "socialiteproviders/yahoo": "^4.1",
         "spatie/emoji": "^2.2",
         "spatie/laravel-google-calendar": "^3.2",
-      
         "yajra/laravel-datatables-oracle": "~9.0",
         "yajra/laravel-disqus": "^1.2"
     },

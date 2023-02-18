@@ -4,7 +4,7 @@ return [
     'name' => 'Shunifu School App',
     'manifest' => [
         'name' => env('APP_NAME', 'Shunifu School App'),
-        'short_name' => env('PWA_SHORT_NAME', 'Shunifu School App'),
+        'short_name' => env('PWA_SHORT_NAME', 'Shunifu'),
         'start_url' => '/',
         'background_color' => '#ffffff',
         'theme_color' =>  env('PWA_THEME_COLOR'),
