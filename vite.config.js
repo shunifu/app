@@ -10,8 +10,16 @@ export default defineConfig({
         ]),
     ],
     server: {
-        https: false
+        https: true
     },
 });
 
 
+
+// mix.js('resources/js/app.js', 'public/js')
+//     .sass('resources/sass/app.scss', 'public/css')
+//     .webpackConfig(require('./webpack.config'));
+
+// // Core Ui assets...
+// mix.js('resources/js/admin-lte.js', 'public/js')
+//     .sass('resources/sass/admin-lte.scss', 'public/css');
