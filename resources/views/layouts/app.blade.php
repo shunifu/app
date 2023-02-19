@@ -6,6 +6,7 @@
         
         <meta name="csrf-token" content="{{ csrf_token() }}">
          <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+
    
 
          <style>
@@ -13,6 +14,8 @@
 
           /* .sidebar-dark-warning{background-color: rgb(49, 49, 49) !important} */
          </style>
+
+         
    
          @vite(['resources/css/app.css', 'resources/js/app.js'])
          {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}

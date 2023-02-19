@@ -12,15 +12,15 @@
 {{-- <meta name="theme-color" content="#000000"> --}}
 
 <!-- Add to homescreen for Chrome on Android -->
-{{-- <meta name="mobile-web-app-capable" content="yes">
+ <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="PWA">
-<link rel="icon" sizes="512x512" href="{{config('app.school_logo')}}"> --}}
+<link rel="icon" sizes="512x512" href="{{config('app.school_logo')}}"> 
 
 <!-- Add to homescreen for Safari on iOS -->
-{{-- <meta name="apple-mobile-web-app-capable" content="yes">
+ <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="PWA">
-<link rel="apple-touch-icon" href="{{config('app.school_logo')}}"> --}}
+<link rel="apple-touch-icon" href="{{config('app.school_logo')}}">
 
 <link rel="manifest" href="https://progressier.com/client/progressier.json?id=mRuQhHD6PyzeinPjlO9K"><script defer src="https://progressier.com/client/script.js?id=mRuQhHD6PyzeinPjlO9K"></script> 
 
