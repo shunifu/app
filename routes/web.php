@@ -99,6 +99,12 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/offline', function () {
+
+    return view('modules/laravelpwa/offline');
+    
+    });
+
 Route::get('/reset', function () {
     return view('auth.forgot-password');
 });

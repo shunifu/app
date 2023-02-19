@@ -4,13 +4,13 @@ return [
     'name' => 'Shunifu School App',
     'manifest' => [
         'name' => env('APP_NAME', 'Shunifu School App'),
-        'short_name' => env('PWA_SHORT_NAME', 'Shunifu'),
+        'short_name' => env('PWA_SHORT_NAME', 'Shunifu School App'),
         'start_url' => '/',
-        'background_color' => '#FFFFFF',
-        'theme_color' =>  env('PWA_THEME_COLOR', '#FFFFFF'),
+        'background_color' => '#ffffff',
+        'theme_color' =>  env('PWA_THEME_COLOR'),
         'display' => 'standalone',
         'orientation'=> 'any',
-   
+        'status_bar'=> env('PWA_STATUS_BAR'),
         'icons' => [
             '72x72' => [
                 'path' => env('PWA_PATH_72'),
@@ -41,7 +41,7 @@ return [
                 'purpose' => 'any'
             ],
             '512x512' => [
-                'path' => config('PWA_PATH_512'),
+                'path' => env('PWA_PATH_512'),
                 'purpose' => 'any'
             ],
         ],

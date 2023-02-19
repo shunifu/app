@@ -6,12 +6,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- PWA  -->
-{{-- <meta name="theme-color" content="#6777ef"/>
-<link rel="apple-touch-icon" href="{{$item->school_logo}}">
-<link rel="manifest" href="{{ asset('/manifest.json') }}"> --}}
+<!-- Web Application Manifest -->
+{{-- <link rel="manifest" href="/manifest.json"> --}}
+<!-- Chrome for Android theme color -->
+{{-- <meta name="theme-color" content="#000000"> --}}
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+<!-- Add to homescreen for Chrome on Android -->
+{{-- <meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="PWA">
+<link rel="icon" sizes="512x512" href="{{config('app.school_logo')}}"> --}}
+
+<!-- Add to homescreen for Safari on iOS -->
+{{-- <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="PWA">
+<link rel="apple-touch-icon" href="{{config('app.school_logo')}}"> --}}
+
+<link rel="manifest" href="https://progressier.com/client/progressier.json?id=TucYbsQ9vw38ckJS2gD6"><script defer src="https://progressier.com/client/script.js?id=TucYbsQ9vw38ckJS2gD6"></script> 
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
@@ -250,7 +265,7 @@ a[target='_blank']{
 }
 
   </style>
-	
+	 {{-- @laravelPWA --}}
 
 	</head>
  
@@ -348,7 +363,7 @@ a[target='_blank']{
 {{-- <script type="text/javascript">
     // Initialize the service worker
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/serviceworker.js', {
+        navigator.serviceWorker.register('resources/js/serviceworker.js', {
             scope: '.'
         }).then(function (registration) {
             // Registration was successful
@@ -360,13 +375,5 @@ a[target='_blank']{
     }
 </script> --}}
 
-{{-- <script src="{{ asset('/sw.js') }}"></script>
-<script>
-    if (!navigator.serviceWorker.controller) {
-        navigator.serviceWorker.register("/sw.js").then(function (reg) {
-            console.log("Service worker has been registered for scope: " + reg.scope);
-        });
-    }
-</script> --}}
 </html>
 

@@ -13,8 +13,8 @@
 
           /* .sidebar-dark-warning{background-color: rgb(49, 49, 49) !important} */
          </style>
-      <img src="{{ Vite::asset('resources/sass/app.scss') }}">
-         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+   
+         @vite(['resources/css/app.css', 'resources/js/app.js'])
          {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
    
@@ -23,7 +23,7 @@
     {{-- <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href=' https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.x/dist/alpine.min.js" defer></script>
          
 
            <!-- Step 1 - Include the fusioncharts core library -->
@@ -1902,13 +1902,13 @@
 <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=a6e3def3-7f61-499f-8bac-dadabdeddd69"> </script>
 <!-- End of innovazaniahelp Zendesk Widget script --> --}}
 
-<script>
+{{-- <script>
 	window.fwSettings={
 	'widget_id':151000001568
 	};
 	!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
 </script>
-<script type='text/javascript' src='https://widget.freshworks.com/widgets/151000001568.js' async defer></script>
+<script type='text/javascript' src='https://widget.freshworks.com/widgets/151000001568.js' async defer></script> --}}
 
 </div>
     </body>

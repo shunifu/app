@@ -156,26 +156,28 @@ return [
  
  
 
-    'DB_CONNECTION' => 'mysql',
-    'DB_HOST' => "ypc8xu1divj9z5cj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-    'DB_PORT' => '3306',
-    'DB_DATABASE' => env('DB_NAME'),
-    'DB_USERNAME' => 'r9xoialesfxre2fb',
-    'DB_PASSWORD'=>'hdy7q3v7xcubgglt',
+    // 'DB_CONNECTION' => 'mysql',
+    // 'DB_HOST' => "ypc8xu1divj9z5cj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    // 'DB_PORT' => '3306',
+    // 'DB_DATABASE' => env('DB_NAME'),
+    // 'DB_USERNAME' => 'r9xoialesfxre2fb',
+    // 'DB_PASSWORD'=>'hdy7q3v7xcubgglt',
 
     // 'APP_DEBUG' => 'false',
     // 'APP_ENV' => 'production',
  
     
     
+    // if (App::environment('local')) {
+    //     // The environment is local
+    // }
 
-
-    // 'DB_CONNECTION' => 'mysql',
-    // 'DB_HOST' => "127.0.0.1",
-    // 'DB_PORT' => '3306',
-    // 'DB_DATABASE' => env('DB_NAME'),
-    // 'DB_USERNAME' => 'root',
-    // 'DB_PASSWORD'=>'',
+    'DB_CONNECTION' => 'mysql',
+    'DB_HOST' => "127.0.0.1",
+    'DB_PORT' => '3306',
+    'DB_DATABASE' => env('DB_NAME'),
+    'DB_USERNAME' => 'root',
+    'DB_PASSWORD'=>'',
 
 
 

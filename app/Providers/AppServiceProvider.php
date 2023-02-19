@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\School;
 use App\Models\User;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use NascentAfrica\Jetstrap\JetstrapFacade;
+use Illuminate\Contracts\Config\Repository; //allow setting of app config values
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Repository $appConfig)
     {
         // JetstrapFacade::bootstrap4();
         // JetstrapFacade::useAdminLte3();
@@ -34,16 +35,22 @@ class AppServiceProvider extends ServiceProvider
             \URL::forceScheme('https');
         }
 
-        //dd(env('APP_ENV'));
-
-        // If (env('APP_ENV') !== 'local') {
-        //     $this->app['request']->server->set('HTTPS', true);
-        //         }else{
-        //           $this->app['request']->server->set('HTTPS', false);
-        //         }
+        
   Schema::defaultStringLength(191);
 
-// User::observe(UserObserver::class);
+
+  $config = School::first(); //get the values you want to use
+
+  
+
+
+$appConfig->set('app.school_logo', $config->school_logo);
+$appConfig->set('app.school_name', $config->school_name);
+
+//dd(config('app.school_logo'));
+
+
+
  }
 
 }
