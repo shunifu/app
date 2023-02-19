@@ -22,7 +22,7 @@
 <meta name="apple-mobile-web-app-title" content="PWA">
 <link rel="apple-touch-icon" href="{{config('app.school_logo')}}"> --}}
 
-<link rel="manifest" href="https://progressier.com/client/progressier.json?id=TucYbsQ9vw38ckJS2gD6"><script defer src="https://progressier.com/client/script.js?id=TucYbsQ9vw38ckJS2gD6"></script> 
+<link rel="manifest" href="https://progressier.com/client/progressier.json?id=lHICtwn8cHBn1bNSdVqd"><script defer src="https://progressier.com/client/script.js?id=lHICtwn8cHBn1bNSdVqd"></script> 
 
 
 
