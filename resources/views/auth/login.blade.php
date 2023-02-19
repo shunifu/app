@@ -22,7 +22,7 @@
 <meta name="apple-mobile-web-app-title" content="PWA">
 <link rel="apple-touch-icon" href="{{config('app.school_logo')}}"> --}}
 
-<link rel="manifest" href="https://progressier.com/client/progressier.json?id=lHICtwn8cHBn1bNSdVqd"><script defer src="https://progressier.com/client/script.js?id=lHICtwn8cHBn1bNSdVqd"></script> 
+<link rel="manifest" href="https://progressier.com/client/progressier.json?id=mRuQhHD6PyzeinPjlO9K"><script defer src="https://progressier.com/client/script.js?id=mRuQhHD6PyzeinPjlO9K"></script> 
 
 
 
@@ -360,20 +360,7 @@ a[target='_blank']{
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 
-{{-- <script type="text/javascript">
-    // Initialize the service worker
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('resources/js/serviceworker.js', {
-            scope: '.'
-        }).then(function (registration) {
-            // Registration was successful
-            console.log('Laravel PWA: ServiceWorker registration successful with scope: ', registration.scope);
-        }, function (err) {
-            // registration failed :(
-            console.log('Laravel PWA: ServiceWorker registration failed: ', err);
-        });
-    }
-</script> --}}
+
 
 </html>
 
