@@ -22,6 +22,28 @@
 <meta name="apple-mobile-web-app-title" content="PWA">
 <link rel="apple-touch-icon" href="{{config('app.school_logo')}}">
 
+{{-- window.addEventListener('installready', function(e){
+				
+      //Show your own installation UI
+      //Include our Install Button code for best results
+      //e.detail.ios is true if the user is on Safari/iOS. 
+      //Or false if it's a native prompt (all other platforms)
+      console.log(e.detail.ios); 
+    
+}); --}}
+
+
+<script>
+    window.addEventListener('installready', function(e){
+				
+				  //Show your own installation UI
+				  //Include our Install Button code for best results
+				  //e.detail.ios is true if the user is on Safari/iOS. 
+				  //Or false if it's a native prompt (all other platforms)
+				  console.log(e.detail.ios); 
+				
+			});
+</script>
 <link rel="manifest" href="https://progressier.com/client/progressier.json?id=mRuQhHD6PyzeinPjlO9K"><script defer src="https://progressier.com/client/script.js?id=mRuQhHD6PyzeinPjlO9K"></script> 
 
 
