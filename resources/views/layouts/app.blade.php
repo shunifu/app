@@ -6,7 +6,6 @@
         
         <meta name="csrf-token" content="{{ csrf_token() }}">
          <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
-
    
 
          <style>
@@ -14,10 +13,8 @@
 
           /* .sidebar-dark-warning{background-color: rgb(49, 49, 49) !important} */
          </style>
-
-         
-   
-         {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+      
+         {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
          {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
    
@@ -26,7 +23,7 @@
     <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href=' https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.x/dist/alpine.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
          
 
            <!-- Step 1 - Include the fusioncharts core library -->
@@ -1852,20 +1849,20 @@
 
         @stack('modals')
            <!-- Scripts -->
-           <script src="https://cdn.statically.io/gh/innovazania/assets/master/app.js"></script>
-           <script src="https://cdn.statically.io/gh/innovazania/assets/7f444680/admin-lte.js"></script>
-           <script src="https://cdn.statically.io/gh/innovazania/assets/9ec219d9/notify.js"></script> 
-
-        {{-- <script src="https://cdn.statically.io/gist/innovazania/b8793c83a804e280c38ddcfe14d23f20/raw/d22fe37eb7ca6cdcbb3def5761244fae4dca450c/livewire.js" ></script>  
+      
+        <script src="https://cdn.statically.io/gist/innovazania/b8793c83a804e280c38ddcfe14d23f20/raw/d22fe37eb7ca6cdcbb3def5761244fae4dca450c/livewire.js" ></script>  
            @livewireScripts
 
-         
+          <script src="https://cdn.statically.io/gh/innovazania/assets/master/app.js"></script>
+           <script src="https://cdn.statically.io/gh/innovazania/assets/7f444680/admin-lte.js"></script>
+           <script src="https://cdn.statically.io/gh/innovazania/assets/9ec219d9/notify.js"></script>
+
         
           
           {{-- <script  src="/js/app.js" ></script>  --}}
           {{-- <script  src="/js/dist/jquery.js" ></script>  --}}
-      
-          <script src="{{asset('js/app.js')}}"></script> 
+{{--         
+          <script src="{{asset('js/app.js')}}"></script> --}}
           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
            {{-- <script src="https://code.highcharts.com/highcharts.js"></script> --}}
            {{-- <script src="https://cdn.jsdelivr.net/npm/@wiris/mathtype-tinymce5@7.24.6/plugin.min.js"></script> --}}
@@ -1905,13 +1902,13 @@
 <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=a6e3def3-7f61-499f-8bac-dadabdeddd69"> </script>
 <!-- End of innovazaniahelp Zendesk Widget script --> --}}
 
-{{-- <script>
+<script>
 	window.fwSettings={
 	'widget_id':151000001568
 	};
 	!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
 </script>
-<script type='text/javascript' src='https://widget.freshworks.com/widgets/151000001568.js' async defer></script> --}}
+<script type='text/javascript' src='https://widget.freshworks.com/widgets/151000001568.js' async defer></script>
 
 </div>
     </body>
