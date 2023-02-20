@@ -11,6 +11,30 @@
 <img class="card-img-top" src=" https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_260,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_50_style_light_align_center:Communication Portal,w_0.4,y_0.20/v1663377965/pexels-photo-5387282_i3n2dk.jpg"
                     alt="">
 
+
+                    <!-- Button trigger modal -->
+                  
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="notice" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Notice</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                    Hi {{Auth::user()->name}}, please note that the communication module is undergoing a second upgrade. Due to the high usage of the module the technical team is upgrading the module for increased speed and high SMS delivery to recipients especially parents.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 
                     
                     <!-- Modal -->
@@ -74,7 +98,7 @@
                                 <x-jet-label>Select Recipient</x-jet-label>
                                 <select class="form-control"  id="recipient" name="recipient">
                                     <option value="">Select Recipient </option>
-                                    <option value="parents">Parents</option>  
+                                    {{-- <option value="parents">Parents</option>   --}}
                                     <option value="teachers">Teachers</option>   
                                 </select>
                                 @error('recipient')
@@ -85,7 +109,7 @@
                             <div class="col form-group">
                                 <x-jet-label> Select Channels</x-jet-label>
                               <br>
-                                <input type="checkbox" id="channel" name="channel" value="sms">
+                                <input type="checkbox" id="channel"  disabled name="channel" value="sms">
                                 SMS
                                 <br>
                                 <input type="checkbox" disabled  id="channel" name="channel" value="push">
@@ -196,6 +220,9 @@
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
+
+$("#notice").modal('show'); 
 
 
 $("#submit").click(function (e) { 
