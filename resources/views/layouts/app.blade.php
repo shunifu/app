@@ -3,6 +3,23 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        {{-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> --}}
+
+        <!-- Web Application Manifest -->
+        {{-- <link rel="manifest" href="/manifest.json"> --}}
+        <!-- Chrome for Android theme color -->
+        {{-- <meta name="theme-color" content="#000000"> --}}
+        
+        <!-- Add to homescreen for Chrome on Android -->
+         <meta name="mobile-web-app-capable" content="yes">
+        <meta name="application-name" content="PWA">
+        <link rel="icon" sizes="512x512" href="{{config('app.school_logo')}}"> 
+        
+        <!-- Add to homescreen for Safari on iOS -->
+         <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="PWA">
+        <link rel="apple-touch-icon" href="{{config('app.school_logo')}}">
         
         <meta name="csrf-token" content="{{ csrf_token() }}">
          <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
@@ -14,8 +31,8 @@
           /* .sidebar-dark-warning{background-color: rgb(49, 49, 49) !important} */
          </style>
       
-         {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
-         {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+         {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js'])  --}}
+         {{-- @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
    
     {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}">  --}}
@@ -990,7 +1007,7 @@
          
           @role('teacher')
 
-          <li class="nav-item has-treeview">
+          {{-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-building"></i>
               <p>
@@ -1023,7 +1040,7 @@
             
 
             </ul>
-          </li>
+          </li> --}}
 
           @endrole
 
@@ -1861,18 +1878,11 @@
           
           {{-- <script  src="/js/app.js" ></script>  --}}
           {{-- <script  src="/js/dist/jquery.js" ></script>  --}}
-{{--         
-          <script src="{{asset('js/app.js')}}"></script> --}}
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
-           {{-- <script src="https://code.highcharts.com/highcharts.js"></script> --}}
-           {{-- <script src="https://cdn.jsdelivr.net/npm/@wiris/mathtype-tinymce5@7.24.6/plugin.min.js"></script> --}}
-           <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-           <script>
-           
-           const div = d3.selectAll("div");
-           
-           </script>
+        
           
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+     
+        
         
         <script>
           $('#flash-overlay-modal').modal();

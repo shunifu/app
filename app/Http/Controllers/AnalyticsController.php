@@ -1861,7 +1861,7 @@ if ($request->indicator=="scoresheet" OR $request->indicator=="manual_promotion"
         MAX(CASE WHEN subjects.id=20 THEN student_subject_averages.student_average END) AS 'FashionFabrics',
         MAX(CASE WHEN subjects.id=21 THEN student_subject_averages.student_average END) AS 'Accounting',
         MAX(CASE WHEN subjects.id=22 THEN student_subject_averages.student_average END) AS 'Economics',
-      
+        MAX(CASE WHEN subjects.id=25 THEN student_subject_averages.student_average END) AS 'ICT',
         MAX(CASE WHEN subjects.id=24 THEN student_subject_averages.student_average END) AS 'AdditionalMathametics',
         MAX(CASE WHEN subjects.id=26 THEN student_subject_averages.student_average END) AS 'RE',
         MAX(CASE WHEN subjects.id=27 THEN student_subject_averages.student_average END) AS 'History',
