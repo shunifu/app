@@ -268,6 +268,7 @@ public function view ($id){
         ->where('grades_students.academic_session', $session_id)
         ->where('academic_sessions.id',$session_id )
         ->where('grades_students.active',1 )
+        ->where('users.active',1 )
         ->orderBy('lastname')->orderBy('name')->get();
 
       
