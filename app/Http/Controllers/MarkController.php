@@ -7,6 +7,7 @@ use App\Models\Mark;
 use App\Models\Grade;
 use App\Models\PassRate;
 use App\Models\Assessement;
+use App\Models\School;
 use App\Models\StudentLoad;
 use App\Models\TeachingLoad;
 use Illuminate\Http\Request;
@@ -44,7 +45,16 @@ class MarkController extends Controller
         $assessements= $this->assessements();
         $teaching_loads= $this->teaching_loads();
 
-        return view('academic-admin.marks-management.index', compact('greetings','teaching_loads','assessements'));
+
+        $school_code=School::first();
+        if($school_code->school_code=="0238"){
+            flash()->overlay('<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'.' Sorry '.Auth::user()->name . 'You have missed the Marks Deadline', 'Add Marks');
+            return redirect('/marks');
+        }else{
+            return view('academic-admin.marks-management.index', compact('greetings','teaching_loads','assessements'));
+        }
+
+       
     }
 
     /**
