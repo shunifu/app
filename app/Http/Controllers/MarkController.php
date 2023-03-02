@@ -46,13 +46,13 @@ class MarkController extends Controller
         $teaching_loads= $this->teaching_loads();
 
 
-        $school_code=School::first();
-        if($school_code->school_code=="0238"){
-            flash()->overlay('<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'.' Sorry '.Auth::user()->name . 'You have missed the Marks Deadline', 'Add Marks');
-            return redirect('/marks');
-        }else{
+        // $school_code=School::first();
+        // if($school_code->school_code=="0238"){
+        //     flash()->overlay('<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'.' Sorry '.Auth::user()->name . 'You have missed the Marks Deadline', 'Add Marks');
+        //     return redirect('/marks');
+        // }else{
             return view('academic-admin.marks-management.index', compact('greetings','teaching_loads','assessements'));
-        }
+        // }
 
        
     }
