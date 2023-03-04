@@ -407,7 +407,7 @@ $collection=Excel::import(new StudentsImport, $request->file('import'));
         
         flash()->overlay('Success. You have added students', 'Add Students');
 
-      return redirect('/students/manage/');
+      return redirect('/users/student');
      
        
     }

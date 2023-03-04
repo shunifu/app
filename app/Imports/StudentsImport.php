@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Date;
+use PhpOffice\PhpSpreadsheet\Shared;
 
 
 class StudentsImport implements ToCollection, WithHeadingRow
@@ -41,9 +43,15 @@ class StudentsImport implements ToCollection, WithHeadingRow
          
      
             foreach ($rows as $row) {
-                // if (empty($row['student_cell'])) {
-                //     $student_cell="";
-                // } else {
+            //  if (empty($row['student_cell'])) {
+            //         $student_cell="";
+            //     } 
+
+                // if (empty($row['dob'])) {
+                //     $date_of_birth="";
+                // } 
+                
+                //else {
                 //     $student_cell=$row['student_cell'];
                 // }
                 // if (empty($row['gender'])) {
@@ -57,12 +65,21 @@ class StudentsImport implements ToCollection, WithHeadingRow
                 // } else {
                 //     $pin=$row['pin'];
                 // }
+
+              
+             
+
+        
+         
+                
                       
                 $student=User::create([
                         'name'=>$row['name'],
                         'lastname'=>$row['lastname'],
                         'middlename'=>$row['middlename'],
                         'national_id'=>$row['pin'],
+                        'date_of_birth' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d'),
+                        'user_code'=>$row['code'],
                      //   'cell_number'=>$row['student_cell'],
                        'gender'=>$row['gender'],
                         'role_id'=>$student_role->id,
