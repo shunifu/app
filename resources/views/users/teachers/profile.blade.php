@@ -60,7 +60,7 @@
 
         @if (Auth::user()->id==$result_user->id)
 
-        <div class="col-md-4 mx-auto">  
+        <div class="col-md-3 mx-auto">  
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
          
@@ -129,8 +129,19 @@
                        
                         <div class="form-row">
                 <input type="hidden" name="id" value="{{ $result_user->national_id }}">
+
+
+                <div class="form-group col-md-3">
+                  <label for="">Salutation</label>
+                  <select class="form-control" name="salutation" id="salutation">
+                    <option value="{{ $result_user->salutation }}">{{ $result_user->salutation }}</option>
+                    <option value="Mr">Mr</option>
+                    <option value="Mrs">Mrs</option>
+                    <option value="Miss">Miss</option>
+                  </select>
+                </div>
                             
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-3 form-group">
                                 <x-jet-label>First Name</x-jet-label>
                                 <x-jet-input name="first_name" value="{{ $result_user->name }}"
                                     placeholder="First Name"></x-jet-input>
@@ -139,7 +150,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-3 form-group">
                                 <x-jet-label>Middle Name</x-jet-label>
                                 <x-jet-input name="middle_name" 
                                     value="{{ $result_user->middlename }}" placeholder="Middle Name">
@@ -149,7 +160,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-3 form-group">
                                 <x-jet-label>Last Name</x-jet-label>
                                 <x-jet-input name="last_name" value="{{ $result_user->lastname }}"
                                     required>
@@ -160,7 +171,7 @@
                             </div>
 
                             
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-3 form-group">
                             <x-jet-label>National ID</x-jet-label>
                             <x-jet-input name="national_id" type="number"
                                 value="{{ $result_user->national_id }}"></x-jet-input>
@@ -169,7 +180,7 @@
                             @enderror
                         </div>
             
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-3 form-group">
                             <x-jet-label>Date of Birth</x-jet-label>
                             <x-jet-input name="date_of_birth"
                                 value="{{ $result_user->date_of_birth }}" type="date">
@@ -179,7 +190,7 @@
                             @enderror
                         </div>
             
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-3 form-group">
                             <x-jet-label>Gender</x-jet-label>
                             <select class="form-control" name="gender">
             
@@ -213,8 +224,13 @@
                         </div>
                         <input type="hidden" value="{{$result_user->id}}" name="id">
             
+           
+                        </div> 
+                    <x-jet-button>Update Teacher</x-jet-button>
               
-                        <x-jet-button>Update Teacher</x-jet-button>
+ 
+                       
+                     
 
                     </form>
                 <!-- /.form row -->

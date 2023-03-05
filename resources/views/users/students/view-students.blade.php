@@ -297,7 +297,7 @@
                 <table class="table table-sm table-hover mx-auto table-bordered " style="width:100%" id="students_table">
                   <thead class="thead-light">
                       <tr>
-                          <th>Select</th>
+                      
                           <th>Lastname</th>
                           <th>Name</th>
                           <th>Middlename</th>
@@ -470,7 +470,6 @@
        @role('admin_teacher')
 
        $('tbody').append('<tr>\
-                    <td> <input type="checkbox"  name="" id="" value="checkedValue"></td>\
                     <td>'+lastname+'</td>\
                     <td>'+name+'</td>\
                     <td>'+middlename+'</td>\

@@ -242,7 +242,6 @@ class StudentController extends Controller
             ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
             ->where('grades.stream_id',$stream_id)
             ->where('grades_students.active', 1)
-           
             ->where('users.active', 1)
             ->select('users.*','grades.grade_name', 'academic_sessions.academic_session', 'grades.id as grade_id')
             ->get();

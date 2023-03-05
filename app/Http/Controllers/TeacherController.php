@@ -354,6 +354,7 @@ $otp =  mt_rand(1000,9999);
                 'date_of_birth'=>$request->date_of_birth,
                 'gender'=>$request->gender, 
                 'email'=>$request->email,
+                'salutation'=>$request->salutation,
                 'cell_number'=>$request->cell
             ]);
 
