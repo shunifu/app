@@ -343,7 +343,7 @@ return view('teaching-loads.index', compact('classes', 'sessions', 'subjects'));
          ->where('grades_students.academic_session', $academic_session)
          ->where('users.active', 1)
          ->select('users.name','users.lastname','users.id', 'users.middlename', 'grades_students.academic_session')
-         ->get();
+         ->orderBy('lastname')->orderBy('name')->get();
          //remember to add academic year
     
        return view('teaching-loads.teaching-loads', compact('result_students', 'teacher_id', 'subject_id', 'sessions','classes', 'subjects', 'load_subject', 'load_class', 'load_session' ));

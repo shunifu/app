@@ -1005,9 +1005,9 @@
 
 
          
-          @role('teacher')
+          @role('admin_teacher')
 
-          {{-- <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-building"></i>
               <p>
@@ -1040,7 +1040,7 @@
             
 
             </ul>
-          </li> --}}
+          </li>
 
           @endrole
 
