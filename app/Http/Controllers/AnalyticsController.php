@@ -705,6 +705,9 @@ if($criteria->average_calculation=="custom" ){
 
     }
 
+
+    
+
     }
 
 
