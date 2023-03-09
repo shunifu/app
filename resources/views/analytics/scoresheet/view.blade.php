@@ -58,10 +58,10 @@ th span {
             <div class="mx-auto text-center">
 
           
-            <div class="row mx-auto" style="width: 300px; display:block">
+          
                 <div class="col"><img src={{$item->school_letter_head}}  /></div>
                 <div class="col">  <h4 class="text-center  text-bold lead">{{$item->school_name}}</h4></div>
-            </div>
+           
             <i class="fas fa-envelope mx-2"></i> {{$item->school_email}} | <i class="fas fa-phone-square    "></i> {{$item->school_telephone}}</i>
                     <p>
                         <h3 class="text-bold">{{$stream_title}}  {{$assessement_name}} Scoresheet</h3>
@@ -72,6 +72,22 @@ th span {
             @endforeach
           
             </div>
+
+            <hr>
+            <span class="text-small">Criteria is as follows;</span>   
+            <ul>
+             @if ($term_average_rule=="default")
+                 Student average is the average of all subjects.
+             @else
+             Student average is best {{$number_of_subjects}} subjects @if ($passing_subject_rule=="1")
+                 inclusive of {{$passing_subject_name}}
+ 
+             @endif
+             @endif
+            
+         
+         </ul>          
+             <hr>
                          
             <hr>
         <thead class="thead-light hidden-md-up">

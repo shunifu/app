@@ -56,24 +56,37 @@ th span {
         <div class="col-md-12 mx-auto">
 
             @foreach (\App\Models\School::all() as $item)
-            <div class="mx-auto text-center">
+            <div class="mx-auto text-center mx-auto d-block">
 
           
-            <div class="row mx-auto" style="width: 300px; display:block">
-                <div class="col"><img src={{$item->school_letter_head}}  /></div>
-                <div class="col">  <h4 class="text-center  text-bold lead">{{$item->school_name}}</h4></div>
-            </div>
-            <i class="fas fa-envelope mx-2"></i> {{$item->school_email}} | <i class="fas fa-phone-square    "></i> {{$item->school_telephone}}</i>
-                    <p>
-                        <h3 class="text-bold">{{$stream_title}}  {{$assessement_name}} Scoresheet</h3>
-                    </p>
-                
-            </div>
+            
+                    <div class="col"><img class="mx-auto d-block" src={{$item->school_letter_head}}  /></div>
+                    <div class="col">  <h4 class="text-center  text-bold lead">{{$item->school_name}}</h4></div>
+               
+                <i class="fas fa-envelope mx-2"></i> {{$item->school_email}} | <i class="fas fa-phone-square    "></i> {{$item->school_telephone}}</i>
+                        <p>
+                            <h3 class="text-bold">{{$stream_title}} Scoresheet</h3>
+                        </p>
+                    
+             
            
             @endforeach
           
             </div>
-                         
+           <hr>
+           <span class="text-small">Criteria is as follows;</span>   
+           <ul>
+            @if ($term_average_rule=="default")
+                Student average is the average of all subjects.
+            @else
+            Student average is best {{$number_of_subjects}} subjects @if ($passing_subject_rule=="1")
+                inclusive of {{$passing_subject_name}}
+
+            @endif
+            @endif
+           
+        
+        </ul>          
             <hr>
         <thead class="thead-light hidden-md-up">
 
@@ -95,7 +108,7 @@ th span {
         <th><span>Agriculture</span></th>
         <th><span>Expressive Arts</span></th>
         <th><span>ICT</span></th>
-        <th><span>Consumer</span></th>
+        <th><span>ConsumerScience</span></th>
         <th><span>HPE</span></th>
       
    
@@ -111,6 +124,8 @@ th span {
       
         </thead>
         <tbody>
+
+            
 
             @forelse($scoresheet as $student)
                 <tr>
@@ -352,12 +367,12 @@ where student_id = ".$student->learner_id.""));
                     </td>
 
                     <td class="align-middle p-2">
-                        @if ($student->Agriculture>=$pass_rate)
-                        <span class="text-secondary">{{ $student->Agriculture}}% </span>
-                        @elseif(is_null($student->Agriculture))
+                        @if ($student->Agriculturep>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Agriculturep}}% </span>
+                        @elseif(is_null($student->Agriculturep))
                         -
-                        @elseif($student->Agriculture<$pass_rate )
-                        <span class="text-danger">{{ $student->Agriculture}}% </span>
+                        @elseif($student->Agriculturep<$pass_rate )
+                        <span class="text-danger">{{ $student->Agriculturep}}% </span>
                         @endif
                     </td>
 
@@ -374,23 +389,23 @@ where student_id = ".$student->learner_id.""));
                     
 
                     <td class="align-middle p-2">
-                        @if ($student->ICT>=$pass_rate)
-                        <span class="text-secondary">{{ $student->ICT}}% </span>
-                        @elseif(is_null($student->ICT))
+                        @if ($student->ICTp>=$pass_rate)
+                        <span class="text-secondary">{{ $student->ICTp}}% </span>
+                        @elseif(is_null($student->ICTp))
                         -
-                        @elseif($student->ICT<$pass_rate )
-                        <span class="text-danger">{{ $student->ICT}}% </span>
+                        @elseif($student->ICTp<$pass_rate )
+                        <span class="text-danger">{{ $student->ICTp}}% </span>
                         @endif
                     </td>
-                    {{-- <td class="align-middle p-2">
-                        @if ($student->Consumer>=$pass_rate)
-                        <span class="text-secondary">{{ $student->Consumer}}% </span>
-                        @elseif(is_null($student->Consumer))
+                    <td class="align-middle p-2">
+                        @if ($student->ConsumerSciencep>=$pass_rate)
+                        <span class="text-secondary">{{ $student->ConsumerSciencep}}% </span>
+                        @elseif(is_null($student->ConsumerSciencep))
                         -
-                        @elseif($student->Consumer<$pass_rate )
-                        <span class="text-danger">{{ $student->Consumer}}% </span>
+                        @elseif($student->ConsumerSciencep<$pass_rate )
+                        <span class="text-danger">{{ $student->ConsumerSciencep}}% </span>
                         @endif
-                    </td> --}}
+                    </td>
                     
                   
                     <td class="align-middle p-2">

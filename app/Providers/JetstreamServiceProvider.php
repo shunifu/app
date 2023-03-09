@@ -54,22 +54,32 @@ class JetstreamServiceProvider extends ServiceProvider
 
             $user = User::where('email', $request->auth)
                             ->where('active', 1)
+                            
                             ->orWhere('cell_number', $request->auth)
                             ->first();
 
 
-                      //    dd($user);
+                   //      dd($user);
 
             if ($user && Hash::check($request->password, $user->password )&& $user->status==1) {
                 return $user;
             }
             if($user && $user->status==0){
 
-                //check if OTP has expired or not
+                //check if entered OTP is valid
+            //    $checkOTP = Otp::validate($user->id);
 
-                // $check = Otp::validate($user->id);
+              //  dd($checkOTP);
+
+                //if OTP is not valid
+                //1. Alert user that OTP is not valid
+
+
+
+                //if OTP is valid 
+                //
          
-                // dd($hasExpired);
+               
                 // $otp_time=$hasExpired->expired_at->format('Y-m-d H:i:s');
 
                 // $now = Carbon::now()->format('Y-m-d H:i:s');

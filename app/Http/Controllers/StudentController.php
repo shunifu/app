@@ -1279,6 +1279,8 @@ public function get_students(Request $request){
 
      return view('users.students.transfer-management.student-list', compact('result','grades_list', 'class_name'));
 
+     //scope
+
 }
 
 public function transfer_students(Request $request){
@@ -1383,12 +1385,7 @@ public function process_transfer($student_id,$transfer_to){
 
         //1 Check if parent_cell is filled
 
-        if(is_null($request->parent_cell) AND is_null($request->parent_email)){
-
-            //If both fields are empty then do nothing
-
-
-        }else{
+        
 
             if(is_null($request->parent_cell)){
                 $parent_cell='';
@@ -1415,7 +1412,7 @@ public function process_transfer($student_id,$transfer_to){
             'student_id'=>$student_id,
            ]);
 
-        }
+        
 
     flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added'.'<span class="text-bold"> '.$request->first_name.' '.$request->last_name.'</span> '.'into the student registry.', 'Register Student');
  

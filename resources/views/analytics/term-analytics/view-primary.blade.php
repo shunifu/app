@@ -59,10 +59,9 @@ th span {
             <div class="mx-auto text-center">
 
           
-            <div class="row mx-auto" style="width: 300px; display:block">
                 <div class="col"><img src={{$item->school_letter_head}}  /></div>
                 <div class="col">  <h4 class="text-center  text-bold lead">{{$item->school_name}}</h4></div>
-            </div>
+           
             <i class="fas fa-envelope mx-2"></i> {{$item->school_email}} | <i class="fas fa-phone-square    "></i> {{$item->school_telephone}}</i>
                     <p>
                         <h3 class="text-bold">{{$stream_title}} Scoresheet</h3>

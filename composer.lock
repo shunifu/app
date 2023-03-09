@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d98ce4ed5d6c87147a0946e3ffbe218",
+    "content-hash": "b39f775d6c59a31bc13df8a06a0ed101",
     "packages": [
         {
             "name": "africastalking/africastalking",
@@ -6843,16 +6843,16 @@
         },
         {
             "name": "seshac/otp-generator",
-            "version": "0.0.6",
+            "version": "0.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/seshac/otp-generator.git",
-                "reference": "ffe65b970f5fb8bf6d5d86b7f8b1a4e44efe0d7c"
+                "reference": "315ec0502caaf7d23616ecd4b1abb5e8e352a0e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/seshac/otp-generator/zipball/ffe65b970f5fb8bf6d5d86b7f8b1a4e44efe0d7c",
-                "reference": "ffe65b970f5fb8bf6d5d86b7f8b1a4e44efe0d7c",
+                "url": "https://api.github.com/repos/seshac/otp-generator/zipball/315ec0502caaf7d23616ecd4b1abb5e8e352a0e1",
+                "reference": "315ec0502caaf7d23616ecd4b1abb5e8e352a0e1",
                 "shasum": ""
             },
             "require": {
@@ -6888,7 +6888,7 @@
                 {
                     "name": "sesha",
                     "email": "seshadriece008@gmail.com",
-                    "homepage": "https://spatie.be",
+                    "homepage": "https://sesha.in",
                     "role": "Developer"
                 }
             ],
@@ -6901,7 +6901,7 @@
             ],
             "support": {
                 "issues": "https://github.com/seshac/otp-generator/issues",
-                "source": "https://github.com/seshac/otp-generator/tree/0.0.6"
+                "source": "https://github.com/seshac/otp-generator/tree/0.0.7"
             },
             "funding": [
                 {
@@ -6909,7 +6909,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-01-29T04:38:32+00:00"
+            "time": "2021-12-12T15:58:54+00:00"
         },
         {
             "name": "socialiteproviders/manager",

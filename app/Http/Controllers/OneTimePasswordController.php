@@ -28,6 +28,8 @@ class OneTimePasswordController extends Controller
 // dd($userExists);
 $userID=$userExists->id;
 $cellIs=$userExists->cell_number;
+
+//$otp =  Otp::generate($user);
       
         $otp =  mt_rand(1000,9999);
 
