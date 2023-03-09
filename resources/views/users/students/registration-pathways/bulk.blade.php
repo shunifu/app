@@ -126,13 +126,13 @@
                   $("#add_input").click(function (e) { 
 
              //       $("#master_div").clone().appendTo("#slave_div").val;
-            //  .clone().appendTo('.fieldset-clone').find('.name').val('');
+             .clone().appendTo('.fieldset-clone').find('.name').val('');
                
-                    var copySlot = $("#master_div").clone().val(); // clone here 
+                    var copySlot = $("#master_div").clone(true).val(" "); // clone here 
                     $('label', copySlot).hide(); // hide Clone Label
                     $('button', copySlot).hide(); // hide Clone Label
                     $('text', copySlot).val(""); // hide Clone Label
-                    copySlot.appendTo("#slave_div").val(""); // append now
+                    copySlot.appendTo("#slave_div"); // append now
                      
                 //   var clone=$('#master_div').clone().find("label", "#add_input").hide().end().appendTo('#slave_div');
                   

@@ -649,18 +649,18 @@ if($criteria->average_calculation=="custom" ){
         $loads=DB::select(DB::raw(" SELECT teaching_load_id  FROM marks  WHERE teaching_load_id NOT IN (SELECT student_loads.teaching_load_id FROM student_loads WHERE student_id=".$student." AND student_loads.active=1) AND student_id=".$student.""));
 
         
-        if(!is_null($loads)){
-            foreach($loads as $load){
+        // if(!is_null($loads)){
+        //     foreach($loads as $load){
     
-                $insert_load = StudentLoad::create([
-                    'student_id'=>$student,
-                    'teaching_load_id'=>$load->teaching_load_id,
+        //         $insert_load = StudentLoad::create([
+        //             'student_id'=>$student,
+        //             'teaching_load_id'=>$load->teaching_load_id,
             
-                        ]);
+        //                 ]);
             
-            }
+        //     }
 
-        }
+        // }
            
 
     }
