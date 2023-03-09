@@ -520,7 +520,8 @@ $getAssessement=Assessement::find($assessement_id);
 
 $assessement_name=$getAssessement->assessement_name;
 
-   
+$activeYearIs=AcademicSession::where('active',1)->first();
+$activeYear=$activeYearIs->id;
   // dd($criteria->passing_subject_rule);
 
   
@@ -633,37 +634,80 @@ if($criteria->average_calculation=="custom" ){
     $total_marks = DB::table('marks')
     ->join('teaching_loads', 'marks.teaching_load_id', '=', 'teaching_loads.id')
     ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
-    ->join('student_loads', 'student_loads.teaching_load_id', '=', 'teaching_loads.id')
+    ->where('teaching_loads.active', 1)
     ->where('marks.student_id', $student)
-    ->where('assessement_id', $assessement_id)
-    ->where('student_loads.active', 1)
+    ->where('marks.active', 1)
     ->where('subjects.subject_type','<>', 'non-value')
+    ->where('marks.session_id', $activeYear)//Scoping to active academic year. 
     ->get()->count();
+
   
-    $total_marks=Mark::where('student_id', $student)->where('assessement_id', $assessement_id)->count();
+  
+    // $total_marks=Mark::where('student_id', $student)->where('assessement_id', $assessement_id)->count();
 
     if($total_marks>$total_subjects){
         //More marks than teaching loads
         //->Probably deleted loads & left mark
 
-        $loads=DB::select(DB::raw(" SELECT teaching_load_id  FROM marks  WHERE teaching_load_id NOT IN (SELECT student_loads.teaching_load_id FROM student_loads WHERE student_id=".$student." AND student_loads.active=1) AND student_id=".$student.""));
+        $loads=DB::select(DB::raw(" SELECT teaching_load_id  FROM marks  WHERE teaching_load_id NOT IN (SELECT student_loads.teaching_load_id FROM student_loads WHERE student_id=".$student." AND student_loads.active=1) AND student_id=".$student." AND assessement_id=".$assessement_id.""));
+
+      //  dd($loads);
 
         
-        // if(!is_null($loads)){
-        //     foreach($loads as $load){
+        if(!is_null($loads)){
+            foreach($loads as $load){
     
-        //         $insert_load = StudentLoad::create([
-        //             'student_id'=>$student,
-        //             'teaching_load_id'=>$load->teaching_load_id,
+                $insert_load = StudentLoad::create([
+                    'student_id'=>$student,
+                    'teaching_load_id'=>$load->teaching_load_id,
             
-        //                 ]);
+                        ]);
             
-        //     }
+            }
 
-        // }
+        }
            
 
     }
+
+
+
+   
+    
+    if($total_subjects>$total_marks){
+        //More subjects than marks
+       //fix bug where assessement 
+
+        $loads=DB::select(DB::raw(" SELECT teaching_load_id  FROM student_loads  WHERE teaching_load_id   IN (SELECT teaching_load_id FROM marks WHERE student_id=".$student." AND assessement_id=".$assessement_id." AND active=0) AND student_loads.student_id=".$student." AND student_loads.active=1 "));
+
+    
+
+       // dd($loads);
+      
+
+        
+        if(!is_null($loads)){
+
+            //update marks table by making session_id="active academic year" & marks.active=1
+
+  
+            foreach($loads as $load){
+
+                Mark::where('student_id',$student)->where('teaching_load_id', $load->teaching_load_id)->update([
+                    "active"=>'1',
+                    "session_id"=>$activeYear,
+                ]);
+    
+             
+
+        }
+           
+
+    }
+
+    }
+
+
   //  $avg_calculation="ROUND(SUM(t.mark) /".$number_of_subjects.", $number_of_decimal_places )";
 
   if($term_average_type=="decimal"){
@@ -687,7 +731,8 @@ where marks.student_id =".$student." AND marks.assessement_id=".$assessement_id.
                    ) nps, 
              (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id =".$student."  AND marks.assessement_id =".$assessement_id." AND marks.mark>=".$pass_rate."  AND subject_id=".$passing_subject.") prm,
 
-             (SELECT (SELECT COUNT(*) from marks  where marks.student_id=".$student." and marks.assessement_id=".$assessement_id." AND marks.active=1) as marks_count, (SELECT COUNT(*) from student_loads INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id  where student_loads.student_id=".$student." AND teaching_loads.active=1 and student_loads.active=1 ) as loads_count
+             (SELECT (SELECT COUNT(*) from marks  where marks.student_id=".$student." and marks.assessement_id=".$assessement_id." AND marks.active=1) as marks_count,
+            (SELECT COUNT(*) from student_loads INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id  where student_loads.student_id=".$student." AND teaching_loads.active=1 and student_loads.active=1 ) as loads_count
              )lmr,
           
              (SELECT DISTINCT(assessements.term_id) as term, assessements.assessement_type from marks INNER JOIN assessements ON assessements.id=marks.assessement_id WHERE assessements.id=".$assessement_id." ) term_id"));
@@ -1107,13 +1152,12 @@ if($request->analysis_indicator=='subject_analysis'){
 
 
         
-}else{
-    return 'errorunauthorized access';
 }
+        }
 
 
    
-}
+
 
 
 public function term_based_12(Request $request){
