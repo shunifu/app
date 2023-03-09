@@ -910,7 +910,7 @@ $base64=$school_data->base64;
 if($school_data->school_type=="primary-school"){
     return view('analytics.scoresheet.primary',compact('scoresheet','stream_title', 'section_id', 'assessement_name','assessement_id', 'tie_type', 'streamofstudent', 'assessement_id', 'base64', 'pass_rate','key', 'classofstudent', 'term_average_rule', 'number_of_subjects', 'passing_subject_rule', 'passing_subject_name'));   
 }else{
-    return view('analytics.scoresheet.index',compact('scoresheet','stream_title', 'section_id', 'assessement_name','assessement_id', 'tie_type', 'streamofstudent', 'assessement_id', 'base64', 'pass_rate', 'key', 'classofstudent',, 'term_average_rule', 'number_of_subjects', 'passing_subject_rule', 'passing_subject_name'));   
+    return view('analytics.scoresheet.index',compact('scoresheet','stream_title', 'section_id', 'assessement_name','assessement_id', 'tie_type', 'streamofstudent', 'assessement_id', 'base64', 'pass_rate', 'key', 'classofstudent', 'term_average_rule', 'number_of_subjects', 'passing_subject_rule', 'passing_subject_name'));   
 }
 
 
