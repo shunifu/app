@@ -65,7 +65,7 @@
     <div class="col-md-2 form-group">
       <div class="col form-group">
           <x-jet-label>Middlename</x-jet-label>
-          <input type="text" name="middlename[]" id="name" required    class="form-control" placeholder="Student Middlename" >
+          <input type="text" name="middlename[]" id="name"     class="form-control" placeholder="Student Middlename" >
           @error('nmiddleame')
           <span class="text-danger">{{$message}}</span>  
           @enderror
@@ -83,7 +83,7 @@
       </div>
     </div>
 
-
+{{-- 
     <div class="col-md-2 form-group">
       <div class="col form-group">
           <x-jet-label>Parent Cell</x-jet-label>
@@ -92,7 +92,7 @@
           <span class="text-danger">{{$message}}</span>  
           @enderror
           </div>
-</div>
+</div> --}}
 
 
 <div class="col-md-1 form-group">
@@ -106,16 +106,7 @@
 
       </div>
 
-      <div id="slave_div">
-        <div class="col-md-1 form-group">
-          <div class="col form-group">
-            <x-jet-label class="label"> Add More</x-jet-label>
-              <input type="button" class="btn btn-danger" name="add"
-              id="add_input" type="button"><i class="fas fa-plus-circle"></i></button>
-             
-              </div>
-        </div>
-      </div>
+   
 
         <x-jet-button>Register Student</x-jet-button>
      
