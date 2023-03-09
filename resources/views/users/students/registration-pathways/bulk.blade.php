@@ -30,7 +30,7 @@
       <div class="col-md-1 form-group">
 
                     <x-jet-label> Class</x-jet-label>
-                    <select class="form-control" name="grade">
+                    <select class="form-control" name="grade[]">
                     <option value=""> Class</option>
                     @foreach ($class as $student_class)
                     <option value={{$student_class->id}}>{{$student_class->grade_name}}</option>
@@ -83,30 +83,33 @@
       </div>
     </div>
 
-{{-- 
-    <div class="col-md-2 form-group">
-      <div class="col form-group">
-          <x-jet-label>Parent Cell</x-jet-label>
-          <input type="number" name="parent_cell[]" id="parent_cell" required    class="form-control" placeholder="Parent Cell" >
-          @error('name')
-          <span class="text-danger">{{$message}}</span>  
-          @enderror
-          </div>
-</div> --}}
 
 
-<div class="col-md-1 form-group">
+
+      </div>
+
+
+<div id="slave_div">
+
   <div class="col form-group">
-    <x-jet-label class="label"> Add More</x-jet-label>
+    <x-jet-label class="label"> Add More Students</x-jet-label>
       <button type="button" class="btn btn-success" name="add"
       id="add_input" type="button"><i class="fas fa-plus-circle"></i></button>
      
       </div>
+
 </div>
 
-      </div>
-
-   
+      {{-- <div id="slave_div">
+        <div class="col-md-1 form-group">
+          <div class="col form-group">
+            <x-jet-label class="label"> Add More</x-jet-label>
+              <input type="button" class="btn btn-danger" name="add"
+              id="add_input" type="button"><i class="fas fa-plus-circle"></i></button>
+             
+              </div>
+        </div>
+      </div> --}}
 
         <x-jet-button>Register Student</x-jet-button>
      
@@ -121,11 +124,15 @@
               $(document).ready(function () {
                 
                   $("#add_input").click(function (e) { 
+
+             //       $("#master_div").clone().appendTo("#slave_div").val;
+            //  .clone().appendTo('.fieldset-clone').find('.name').val('');
                
-                    var copySlot = $("#master_div").clone(); // clone here 
+                    var copySlot = $("#master_div").clone().val(); // clone here 
                     $('label', copySlot).hide(); // hide Clone Label
                     $('button', copySlot).hide(); // hide Clone Label
-                    copySlot.appendTo("#slave_div"); // append now
+                    $('text', copySlot).val(""); // hide Clone Label
+                    copySlot.appendTo("#slave_div").val(""); // append now
                      
                 //   var clone=$('#master_div').clone().find("label", "#add_input").hide().end().appendTo('#slave_div');
                   

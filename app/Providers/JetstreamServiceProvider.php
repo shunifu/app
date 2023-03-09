@@ -61,10 +61,10 @@ class JetstreamServiceProvider extends ServiceProvider
 
                    //      dd($user);
 
-            if ($user && Hash::check($request->password, $user->password )&& $user->status==1) {
+            if ($user && Hash::check($request->password, $user->password )) {
                 return $user;
             }
-            if($user && $user->status==0){
+            // if($user && $user->status==0){
 
                 //check if entered OTP is valid
             //    $checkOTP = Otp::validate($user->id);
@@ -101,16 +101,16 @@ class JetstreamServiceProvider extends ServiceProvider
 
                 // if($diff>0 ){
                     //OTP is still active
-                    return $user;
-                // }
+                 
 
-
+                // $request->session()->flash('error', 'Login credentials incorrect. If problem persists please consult the system administrator. Siyabonga!');
+                // return false;
                 
         
 
                
       
-            }
+                // }
             
             if(!($user && Hash::check($request->password, $user->password))){
                 $request->session()->flash('error', 'Login credentials incorrect. If problem persists please consult the system administrator. Siyabonga!');
