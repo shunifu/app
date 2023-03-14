@@ -23,6 +23,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\ActivityByUser::class,
         
+        
     ];
 
     /**
@@ -46,6 +47,10 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+
+        'role' => \Laratrust\Middleware\LaratrustRole::class,
+'permission' => \Laratrust\Middleware\LaratrustPermission::class,
+'ability' => \Laratrust\Middleware\LaratrustAbility::class,
     ];
 
     /**
