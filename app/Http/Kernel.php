@@ -48,9 +48,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
-        'role' => \Laratrust\Middleware\LaratrustRole::class,
-'permission' => \Laratrust\Middleware\LaratrustPermission::class,
-'ability' => \Laratrust\Middleware\LaratrustAbility::class,
+        
     ];
 
     /**
@@ -74,5 +72,8 @@ class Kernel extends HttpKernel
         'permission' => \Laratrust\Middleware\LaratrustPermission::class,
         'ability' => \Laratrust\Middleware\LaratrustAbility::class,
         'CheckPassword' => \App\Http\Middleware\CheckPassword::class,
+        'role' => \Laratrust\Middleware\LaratrustRole::class,
+'permission' => \Laratrust\Middleware\LaratrustPermission::class,
+'ability' => \Laratrust\Middleware\LaratrustAbility::class,
     ];
 }
