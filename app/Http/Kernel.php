@@ -73,7 +73,7 @@ class Kernel extends HttpKernel
         'ability' => \Laratrust\Middleware\LaratrustAbility::class,
         'CheckPassword' => \App\Http\Middleware\CheckPassword::class,
         'role' => \Laratrust\Middleware\LaratrustRole::class,
-'permission' => \Laratrust\Middleware\LaratrustPermission::class,
-'ability' => \Laratrust\Middleware\LaratrustAbility::class,
+        'permission' => \Laratrust\Middleware\LaratrustPermission::class,
+        'ability' => \Laratrust\Middleware\LaratrustAbility::class,
     ];
 }
