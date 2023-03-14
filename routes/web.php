@@ -118,116 +118,109 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
     Route::get('/dashboard' ,'App\Http\Controllers\DashboardController@index')->name('dashboard');
 
    
-
+//Admin Routes
+    Route::group([ 'middleware' => ['role:admin']], function() {
+     
     //Secton Routes
-Route::get('/academic-admin/section', [SectionController::class,'index'])->name('section.index');
-Route::post('/academic-admin/section/add', [SectionController::class,'store'])->name('section.store');
-Route::get('/academic-admin/section/edit/{section}', [StreamController::class,'edit'])->name('stream.edit');
-Route::get('/academic-admin/section/delete/{section}', [StreamController::class,'destroy'])->name('section.destroy');
+    Route::get('/academic-admin/section', [SectionController::class,'index'])->name('section.index');
+    Route::post('/academic-admin/section/add', [SectionController::class,'store'])->name('section.store');
+    Route::get('/academic-admin/section/edit/{section}', [StreamController::class,'edit'])->name('stream.edit');
+    Route::get('/academic-admin/section/delete/{section}', [StreamController::class,'destroy'])->name('section.destroy');
+    
+    //Stream Routes
+    Route::get('/academic-admin/stream', [StreamController::class,'create'])->name('stream.create');
+    Route::post('/academic-admin/stream/add', [StreamController::class,'store'])->name('stream.store');
+    Route::get('/academic-admin/stream/edit/{id}', [StreamController::class,'edit'])->name('stream.edit');
+    Route::patch('/academic-admin/update', [StreamController::class,'update'])->name('stream.update');
+    
+    Route::get('/academic-admin/stream/delete/{stream}', [StreamController::class,'destroy'])->name('stream.destroy');
+    
+    //Class Routes
+    Route::get('/academic-admin/class', [GradeController::class,'index'])->name('grade.index');
+    Route::get('/academic-admin/class-lists', [GradeController::class,'class_lists_index'])->name('grade.class_lists_index');
+    Route::post('/academic-admin/class-lists/view', [GradeController::class,'class_lists_view'])->name('grade.class_lists_view');
+    Route::get('/academic-admin/class/view/{id}', [GradeController::class,'show'])->name('grade.show');
+    Route::get('/academic-admin/class/pdf/{id}', [GradeController::class, 'createPDF']);
+    Route::post('/academic-admin/class/add', [GradeController::class,'store'])->name('grade.store');
+    Route::get('/academic-admin/class/edit/{id}', [GradeController::class,'edit'])->name('grade.edit');
+    Route::post('/academic-admin/class/update', [GradeController::class,'update'])->name('grade.update');
+    Route::get('/academic-admin/class/delete/{section}', [GradeController::class,'destroy'])->name('grade.destroy');
+    
+    //Subject Routes
+    Route::get('/academic-admin/subject', [SubjectController::class,'create'])->name('subject.create');
+    Route::post('/academic-admin/subject/add', [SubjectController::class,'store'])->name('subject.store');
+    Route::get('/academic-admin/subject/edit/{id}', [SubjectController::class,'edit'])->name('subject.edit');
+    Route::post('/academic-admin/subject/update/', [SubjectController::class,'update'])->name('subject.update');
+    Route::get('/academic-admin/subject/delete/{id}', [SubjectController::class,'destroy'])->name('subject.destroy');
+    
+    //Department Routes
+    Route::get('/academic-admin/department', [DepartmentController::class,'create'])->name('department.create');
+    Route::get('/academic-admin/department/teacher', [DepartmentController::class,'add_teacher'])->name('department.teacher');
+    Route::post('/academic-admin/department/add', [DepartmentController::class,'store'])->name('department.store');
+    Route::get('/academic-admin/department/edit/{id}', [DepartmentController::class,'edit'])->name('department.edit');
+    Route::post('/academic-admin/department/update/', [DepartmentController::class,'update'])->name('department.update');
+    Route::delete('/academic-admin/department/delete/{id}', [DepartmentController::class,'destroy'])->name('department.destroy');
+    
+    Route::get('/users/student/class/get/students/{id} ', [StudentController::class,'search'])->name('students.search');
+    Route::get('/students/transfer/',[StudentController::class,'transfer'])->name('students.transfer');
+    Route::post('/students/transfer/load',[StudentController::class,'get_students'])->name('students.gets_students');
+    Route::get('/students/transfer/process/',[StudentController::class,'transfer_students'])->name('students.transfer_students');
+    
+    Route::post('/student/import/',  [StudentController::class,'import'])->name('student.import');
+    
+    //School Routes
+    Route::get('/academic-admin/school', [SchoolController::class,'create'])->name('school.create');
+    Route::post('/academic-admin/school/add', [SchoolController::class,'store'])->name('school.store');
+    Route::post('/academic-admin/school/edit/', [SchoolController::class,'edit'])->name('school.edit');
+    Route::get('/academic-admin/school/delete/{id}', [SchoolController::class,'destroy'])->name('school.destroy');
+    
+    //Academic Session Routes
+    Route::get('/academic-admin/session', [AcademicSessionController::class,'create'])->name('session.create');
+    Route::post('/academic-admin/session/add', [AcademicSessionController::class,'store'])->name('session.store');
+    Route::get('/academic-admin/session/edit/{id}', [AcademicSessionController::class,'edit'])->name('session.edit');
+    Route::post('/academic-admin/session/update', [AcademicSessionController::class,'update'])->name('session.update');
+    Route::get('/academic-admin/session/delete/{id}', [AcademicSessionController::class,'destroy'])->name('sesson.destroy');
+    
+    Route::get('/view/terms/{id}', [TermController::class,'index'])->name('term.index');
+    Route::post('terms/add/', [TermController::class,'store'])->name('term.store');
+    Route::get('/terms/edit/{id}', [TermController::class,'edit'])->name('term.edit');
+    Route::post('terms/update', [TermController::class,'update'])->name('term.update');
+    Route::get('/terms/delete/{id}', [TermController::class,'destroy'])->name('term.destroy');
+    
+    //Terms
+    // Route::get('/academic-admin/terms', [ShunifuTermController::class,'create'])->name('term.create');
+    // Route::post('/academic-admin/terms/add', [ShunifuTermController::class,'store'])->name('term.store');
+    Route::get('/academic-admin/session/edit/{id}', [AcademicSessionController::class,'edit'])->name('term.edit');
+    Route::get('/academic-admin/session/delete/{id}', [AcademicSessionController::class,'destroy'])->name('term.destroy');
+    
+    
+    
+    
+    //End of terms
+    
+    Route::get('/academic-admin/resolution-management/index', [ResolutionController::class,'index'])->name('resolutions.index');
+    
+    Route::post('/academic-admin/resolution-management/view', [ResolutionController::class,'load'])->name('resolutions.load');
+    
+    
+    //Roles Management
+    Route::get('/roles/', [RolesManagementController::class,'create'])->name('roles.index');
+    Route::post('/roles/add', [RolesManagementController::class,'store'])->name('roles.store');
+    //Route::pac('/roles/', [RolesManagementController::class,'index'])->name('roles.index');
+    //End of Roles Management
+    
+    
+    //Permissions Management
+    Route::get('/permissions/', [PermissionsManagementController::class,'create'])->name('permissions.index');
+    Route::post('/permissions/add', [PermissionsManagementController::class,'store'])->name('permissions.store');
+    
+    //End of Permissions Management
+    
+    
+    //Lesson Plan Management //
+    
 
-//Stream Routes
-Route::get('/academic-admin/stream', [StreamController::class,'create'])->name('stream.create');
-Route::post('/academic-admin/stream/add', [StreamController::class,'store'])->name('stream.store');
-Route::get('/academic-admin/stream/edit/{id}', [StreamController::class,'edit'])->name('stream.edit');
-Route::patch('/academic-admin/update', [StreamController::class,'update'])->name('stream.update');
-
-Route::get('/academic-admin/stream/delete/{stream}', [StreamController::class,'destroy'])->name('stream.destroy');
-
-//Class Routes
-Route::get('/academic-admin/class', [GradeController::class,'index'])->name('grade.index');
-Route::get('/academic-admin/class-lists', [GradeController::class,'class_lists_index'])->name('grade.class_lists_index');
-Route::post('/academic-admin/class-lists/view', [GradeController::class,'class_lists_view'])->name('grade.class_lists_view');
-Route::get('/academic-admin/class/view/{id}', [GradeController::class,'show'])->name('grade.show');
-Route::get('/academic-admin/class/pdf/{id}', [GradeController::class, 'createPDF']);
-Route::post('/academic-admin/class/add', [GradeController::class,'store'])->name('grade.store');
-Route::get('/academic-admin/class/edit/{id}', [GradeController::class,'edit'])->name('grade.edit');
-Route::post('/academic-admin/class/update', [GradeController::class,'update'])->name('grade.update');
-Route::get('/academic-admin/class/delete/{section}', [GradeController::class,'destroy'])->name('grade.destroy');
-
-//Subject Routes
-Route::get('/academic-admin/subject', [SubjectController::class,'create'])->name('subject.create');
-Route::post('/academic-admin/subject/add', [SubjectController::class,'store'])->name('subject.store');
-Route::get('/academic-admin/subject/edit/{id}', [SubjectController::class,'edit'])->name('subject.edit');
-Route::post('/academic-admin/subject/update/', [SubjectController::class,'update'])->name('subject.update');
-Route::get('/academic-admin/subject/delete/{id}', [SubjectController::class,'destroy'])->name('subject.destroy');
-
-//Department Routes
-Route::get('/academic-admin/department', [DepartmentController::class,'create'])->name('department.create');
-Route::get('/academic-admin/department/teacher', [DepartmentController::class,'add_teacher'])->name('department.teacher');
-Route::post('/academic-admin/department/add', [DepartmentController::class,'store'])->name('department.store');
-Route::get('/academic-admin/department/edit/{id}', [DepartmentController::class,'edit'])->name('department.edit');
-Route::post('/academic-admin/department/update/', [DepartmentController::class,'update'])->name('department.update');
-Route::delete('/academic-admin/department/delete/{id}', [DepartmentController::class,'destroy'])->name('department.destroy');
-
-Route::get('/users/student/class/get/students/{id} ', [StudentController::class,'search'])->name('students.search');
-Route::get('/students/transfer/',[StudentController::class,'transfer'])->name('students.transfer');
-Route::post('/students/transfer/load',[StudentController::class,'get_students'])->name('students.gets_students');
-Route::get('/students/transfer/process/',[StudentController::class,'transfer_students'])->name('students.transfer_students');
-
-Route::post('/student/import/',  [StudentController::class,'import'])->name('student.import');
-
-//School Routes
-Route::get('/academic-admin/school', [SchoolController::class,'create'])->name('school.create');
-Route::post('/academic-admin/school/add', [SchoolController::class,'store'])->name('school.store');
-Route::post('/academic-admin/school/edit/', [SchoolController::class,'edit'])->name('school.edit');
-Route::get('/academic-admin/school/delete/{id}', [SchoolController::class,'destroy'])->name('school.destroy');
-
-//Academic Session Routes
-Route::get('/academic-admin/session', [AcademicSessionController::class,'create'])->name('session.create');
-Route::post('/academic-admin/session/add', [AcademicSessionController::class,'store'])->name('session.store');
-Route::get('/academic-admin/session/edit/{id}', [AcademicSessionController::class,'edit'])->name('session.edit');
-Route::post('/academic-admin/session/update', [AcademicSessionController::class,'update'])->name('session.update');
-Route::get('/academic-admin/session/delete/{id}', [AcademicSessionController::class,'destroy'])->name('sesson.destroy');
-
-Route::get('/view/terms/{id}', [TermController::class,'index'])->name('term.index');
-Route::post('terms/add/', [TermController::class,'store'])->name('term.store');
-Route::get('/terms/edit/{id}', [TermController::class,'edit'])->name('term.edit');
-Route::post('terms/update', [TermController::class,'update'])->name('term.update');
-Route::get('/terms/delete/{id}', [TermController::class,'destroy'])->name('term.destroy');
-
-//Terms
-// Route::get('/academic-admin/terms', [ShunifuTermController::class,'create'])->name('term.create');
-// Route::post('/academic-admin/terms/add', [ShunifuTermController::class,'store'])->name('term.store');
-Route::get('/academic-admin/session/edit/{id}', [AcademicSessionController::class,'edit'])->name('term.edit');
-Route::get('/academic-admin/session/delete/{id}', [AcademicSessionController::class,'destroy'])->name('term.destroy');
-
-
-
-
-//End of terms
-
-Route::get('/academic-admin/resolution-management/index', [ResolutionController::class,'index'])->name('resolutions.index');
-
-Route::post('/academic-admin/resolution-management/view', [ResolutionController::class,'load'])->name('resolutions.load');
-
-
-//Roles Management
-Route::get('/roles/', [RolesManagementController::class,'create'])->name('roles.index');
-Route::post('/roles/add', [RolesManagementController::class,'store'])->name('roles.store');
-//Route::pac('/roles/', [RolesManagementController::class,'index'])->name('roles.index');
-//End of Roles Management
-
-
-//Permissions Management
-Route::get('/permissions/', [PermissionsManagementController::class,'create'])->name('permissions.index');
-Route::post('/permissions/add', [PermissionsManagementController::class,'store'])->name('permissions.store');
-
-//End of Permissions Management
-
-
-//Lesson Plan Management //
-
-
-
-
-//End of Lesson Plan //
-
-
-Route::get('/get/stream/{stream_id}', [SchoolFeeController::class,'getStream'])->name('stream.get');
-
-
-
-//Student Data Route
+    //Student Data Route
 Route::get('/users/student', [StudentController::class,'create'])->name('student.create');
 Route::post('/users/student/manage/load', [StudentController::class,'load'])->name('student.load');
 Route::post('/users/student/manage/list', [StudentController::class,'list'])->name('student.list');
@@ -302,6 +295,28 @@ Route::get('/class-sequencing/create', [ClassSequenceController::class,'create']
 
 Route::post('/class-sequencing/add', [ClassSequenceController::class,'store'])->name('sequence.store');
 Route::get('/class-sequencing/delete/{id}', [ClassSequenceController::class,'destroy'])->name('sequence.destroy');
+
+
+
+
+    });
+
+
+    //end of Admin Routes
+
+
+
+
+
+
+//End of Lesson Plan //
+
+
+Route::get('/get/stream/{stream_id}', [SchoolFeeController::class,'getStream'])->name('stream.get');
+
+
+
+
 
 
 //end of class_sequence

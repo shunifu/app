@@ -34,6 +34,7 @@
         "mavinoo/laravel-batch": "^2.2",
         "mckenziearts/laravel-notify": "^2.1",
         "messagebird/php-rest-api": "^1.19",
+        "owen-it/laravel-auditing": "^13.4",
         "php-flasher/flasher": "^1.7",
         "pusher/pusher-php-server": "^5.0",
         "rakibdevs/openweather-laravel-api": "^1.9",

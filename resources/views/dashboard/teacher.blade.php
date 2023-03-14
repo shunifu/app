@@ -153,7 +153,7 @@ Welcome back to Shunifu, <span class="text-bold">Eswatini's leading school manag
                       
                       <p class="mb-0 text-secondary">Total Students</p>
                       <h4 class="my-1 text-info">{{$teacher_total_students}}</h4>
-                      <a href="/users/student/management"><p class="mb-0 font-13 text-info " >View Students </p></a>
+                      <a href="/users/teacher/loads/manage"><p class="mb-0 font-13 text-info " >View Students </p></a>
                     </div>
                     <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa-solid fa-users-between-lines"></i>
                     </div>
@@ -168,7 +168,7 @@ Welcome back to Shunifu, <span class="text-bold">Eswatini's leading school manag
                      <div>
                        <p class="mb-0 text-secondary"> Teaching Loads</p>
                        <h4 class="my-1 text-danger">{{$teacher_teaching_loads}}</h4>
-                       <a href="/users/teachers/manage"><p class="mb-0 font-13 text-danger">View Teaching Loads </p></a> 
+                       <a href="/users/teacher/loads/manage"><p class="mb-0 font-13 text-danger">View Teaching Loads </p></a> 
                      </div>
               
                      <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i class="fas fa-user-graduate    "></i>
