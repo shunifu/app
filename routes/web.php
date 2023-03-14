@@ -119,7 +119,7 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
 
    
 //Admin Routes
-    Route::group([ 'middleware' => ['role:admin']], function() {
+    Route::group([ 'middleware' => ['role:admin_teacher']], function() {
      
     //Secton Routes
     Route::get('/academic-admin/section', [SectionController::class,'index'])->name('section.index');
