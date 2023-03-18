@@ -627,7 +627,7 @@ Route::patch('/marks/update',[MarkController::class,'update'])->name('marks.upda
 Route::get('/marks/analytics',[MarkController::class,'analysis'])->name('marks.analysis');
 Route::post('/marks/analytics/show',[MarkController::class,'analysis_store'])->name('marks.analysis_store');
 
-Route::get('/marks/check/',[MarkController::class,'check_marks'])->name('marks.check');
+Route::get('/marks/check',[MarkController::class,'check_marks'])->name('marks.check');
 Route::post('/marks/check/form',[MarkController::class,'marks_check_search'])->name('marks.check_search_form');
 
 Route::get('/checker/ratio/index',[RatioCheckerController::class,'index'])->name('ratio_checker.index');
@@ -637,14 +637,14 @@ Route::post('/checker/ratio/process',[RatioCheckerController::class,'process'])-
 
 
 //Checks
-Route::get('/check/loads/',[CheckController::class,'check_loads_index'])->name('check.loads');
-Route::get('admin/check/loads/',[CheckController::class,'admin_check_loads_index'])->name('admin_check.loads');
+Route::get('/check/loads',[CheckController::class,'check_loads_index'])->name('check.loads');
+Route::get('admin/check/loads',[CheckController::class,'admin_check_loads_index'])->name('admin_check.loads');
 
 Route::post('/check/loads/process',[CheckController::class,'check_loads_process'])->name('check_loads_process');
 Route::post('admin/check/loads/process',[CheckController::class,'admin_check_loads_process'])->name('admin_check_loads_process');
 
 Route::get('/check/loads/view/{id}', [CheckController::class,'view_students'])->name('teaching_loads.view-checker');
-Route::post('/check/marks/',[CheckController::class,'check_marks'])->name('check.marks');
+Route::post('/check/marks',[CheckController::class,'check_marks'])->name('check.marks');
 
 
 
@@ -653,7 +653,7 @@ Route::post('/check/marks/',[CheckController::class,'check_marks'])->name('check
 
 //Beginning of Timetable
 //Assessement Settings
-Route::get('/timetable/',[TimetableController::class,'index'])->name('timetable.index');
+Route::get('/timetable',[TimetableController::class,'index'])->name('timetable.index');
 Route::get('/timetable/show',[TimetableController::class,'show'])->name('timetable.show');
 
 Route::post('/settings/assessements/type/add',[AssessementTypeController::class,'store'])->name('assessement-type.store');
@@ -669,8 +669,8 @@ Route::get('/users/parent', [ParentController::class,'create'])->name('parents.c
 Route::get('/users/parents/manage', [ParentController::class,'manage'])->name('parents.manage');
 Route::post('/users/parents/save', [ParentController::class,'store'])->name('parents.store');
 Route::get('/parent/view/{id}',  [ParentController::class,'show'])->name('parent.show');
-Route::post('/parent/edit/',  [ParentController::class,'edit'])->name('parent.edit');
-Route::post('/parent/import/',  [ParentController::class,'import'])->name('parents.import');
+Route::post('/parent/edit',  [ParentController::class,'edit'])->name('parent.edit');
+Route::post('/parent/import',  [ParentController::class,'import'])->name('parents.import');
 
 Route::get('/users/parent/discipline', [ParentController::class,'discipline'])->name('parents.discipline');
 Route::post('/parents/view/child-performance', [ParentController::class,'child_performance'])->name('parents.child_performance');
@@ -693,7 +693,7 @@ Route::post('/communication/send', [CommunicationController::class,'store'])->na
 
 //Promotions Managements
 
-Route::get('/promotions/', [ProgressionStatusController::class,'create'])->name('progression.create');
+Route::get('/promotions', [ProgressionStatusController::class,'create'])->name('progression.create');
 Route::post('/promotions/process', [ProgressionStatusController::class,'store'])->name('progression.store');
 Route::post('/promotions/processing', [ProgressionStatusController::class,'processing'])->name('progression.processing');
 
@@ -773,10 +773,10 @@ Route::get('/report/term-based', [ReportController::class,'create'])->name('repo
 Route::get('/report/term-based/class', [ReportController::class,'class_index'])->name('report.class_index');
 Route::get('/report/term-based/class/teacher', [ReportController::class,'classteacher_index']);
 Route::get('/report/term-based/student', [ReportController::class,'create_student'])->name('report.create_student');
-Route::post('/report/term-based/section/', [ReportController::class,'section'])->name('report.section');
-Route::post('/report/term-based/stream/', [ReportController::class,'stream'])->name('report.stream');
+Route::post('/report/term-based/section', [ReportController::class,'section'])->name('report.section');
+Route::post('/report/term-based/stream', [ReportController::class,'stream'])->name('report.stream');
 //Route::post('/report/term-based/class/', [ReportController::class,'class'])->name('report.class');
-Route::post('/report/term-based/student/', [ReportController::class,'student'])->name('report.student');
+Route::post('/report/term-based/student', [ReportController::class,'student'])->name('report.student');
 
 // Assessement Based Stream Report
 Route::get('/report/assessement-based/', [ReportController::class,'assessement_based_index'])->name('report.assessment_based');
@@ -785,7 +785,7 @@ Route::post('/report/assessement-based/generate', [ReportController::class,'gene
 
 //Open Day Report
 
-Route::get('/report/openday/', [ReportController::class,'open_day_report_index'])->name('openday.create');
+Route::get('/report/openday', [ReportController::class,'open_day_report_index'])->name('openday.create');
 Route::post('/report/openday/process', [ReportController::class,'open_day_report_process'])->name('openday.process');
 
 
@@ -801,8 +801,8 @@ Route::post('/insights/generate', [AnalyticsController::class,'generate'])->name
 
 
 Route::get('/analytics/user/admin', [ParentController::class,'manage'])->name('analytics.admin');
-Route::get('/analytics/user/teacher/', [ParentController::class,'manage'])->name('analytics.teacher');
-Route::get('/analytics/user/student/', [ParentController::class,'manage'])->name('analytics.manage');
+Route::get('/analytics/user/teacher', [ParentController::class,'manage'])->name('analytics.teacher');
+Route::get('/analytics/user/student', [ParentController::class,'manage'])->name('analytics.manage');
 Route::get('/analytics/settings', [AnalyticsController::class,'settings'])->name('analytics.settings');
 
 //Analytics-users
@@ -816,16 +816,16 @@ Route::post('/analytics/term-based/show', [AnalyticsController::class,'term_base
 
 Route::post('/analytics/stream', [AnalyticsController::class,'stream'])->name('analytics.stream');
 Route::post('/analytics/section', [AnalyticsController::class,'section'])->name('analytics.section');
-Route::post('/analytics/class/', [AnalyticsController::class,'grade'])->name('analytics.grade');
+Route::post('/analytics/class', [AnalyticsController::class,'grade'])->name('analytics.grade');
 
 Route::get('/analytics/subjects', [AnalyticsController::class,'subject_analytics']);
 Route::post('/analytics/subjects/view', [AnalyticsController::class,'subject_analytics_view'])->name('analytics.subject');
 
 Route::get('/analytics/subjects', [AnalyticsController::class,'subject_analytics']);
-Route::get('/analytics/class-based/', [AnalyticsController::class,'class_based'])->name('analytics.class_based');
-Route::post('/analytics/class-based/view/', [AnalyticsController::class,'class_based_store'])->name('analytics.class_based_store');
+Route::get('/analytics/class-based', [AnalyticsController::class,'class_based'])->name('analytics.class_based');
+Route::post('/analytics/class-based/view', [AnalyticsController::class,'class_based_store'])->name('analytics.class_based_store');
 
-Route::get('/analytics/loads/check/{student_id}/{assessement_id}/', [AnalyticsController::class,'analytics_loads_check']);
+Route::get('/analytics/loads/check/{student_id}/{assessement_id}', [AnalyticsController::class,'analytics_loads_check']);
 Route::get('/analytics/loads/checker/{student_id}', [AnalyticsController::class,'analytics_loads_checker']);
 
 Route::get('/ana/', [AnalyticsController::class,'term_based_ana']);
@@ -858,7 +858,7 @@ Route::get('/comment/report/{id}',[CommentSettingController::class, 'edit']);
 
 //Beginning of Class NoticeBoard
 
-Route::get('/class/class-noticeboard/', [ParentController::class,'discipline'])->name('parents.discipline');
+Route::get('/class/class-noticeboard', [ParentController::class,'discipline'])->name('parents.discipline');
 
 
 
