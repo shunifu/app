@@ -52,7 +52,32 @@ class MarkSettingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validation=$request->validate([
+            'marks_mode'=>'required',
+        ]);
+     
+        //Check if there is an existing value
+
+        $checkSetting=MarkSetting::first();
+       
+
+        if (is_null($checkSetting)) {
+            $add_mark=MarkSetting::create([
+                'marks_mode'=>$request->marks_mode,
+            ]);
+        }else{
+            $update=MarkSetting::first()->update([
+                'marks_mode'=>$request->marks_mode,
+            ]);
+        }
+
+      
+        flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success. Mode successfully configured.', 'Configure Mode');
+        
+        return redirect('/marks/settings');
+
+       
     }
 
     /**

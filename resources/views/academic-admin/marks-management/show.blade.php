@@ -113,7 +113,7 @@
 <td class="align-middle">
    @if (is_null($student->mark))
    <div class="input-group">
-    <input type="number" min="0" max="100"   id="marks" class="form-control" placeholder="Mark" name="marks[]">  
+    <input type="number" min="0" max="100" {{$mode_value}}   id="marks" class="form-control" placeholder="Mark" name="marks[]">  
    <div class="input-group-append">
     </div>  
 </div>

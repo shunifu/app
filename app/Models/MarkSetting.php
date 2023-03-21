@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class MarkSetting extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'marks_mode',
+    
+    ];
 }

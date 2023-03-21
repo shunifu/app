@@ -90,21 +90,29 @@
       
         <div class="card-body">
 
-      <ol>
+      <ul>
           @foreach ($markSettings as $item)
          
-             
-              
-              
-              
+        
 
                <li>Mark Mode: 
-                <span class="text-bold"> {{$item->marks_mode}} </span>
+                <span class="text-bold">
+                  
+                  @if ($item->marks_mode=="1")
+                    Strict Mode  
+                  @endif
+
+                  @if ($item->marks_mode=="2")
+                  Flex Mode  
+              
+               
+                @endif
+                  </span>
                </li>
 
         
           @endforeach
-              </ol>
+              </ul>
         
         </div>
 

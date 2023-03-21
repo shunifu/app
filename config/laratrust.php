@@ -166,7 +166,7 @@ return [
         /**
          * Define if the laratrust middleware are registered automatically in the service provider
          */
-        'register' => false,
+        'register' => true,
 
         /**
          * Method to be called in the middleware return case.
@@ -258,7 +258,7 @@ return [
         | Turn this value to false if you don't want to use Laratrust admin panel
         |
         */
-        'register' => false,
+        'register' => true,
 
         /*
         |--------------------------------------------------------------------------

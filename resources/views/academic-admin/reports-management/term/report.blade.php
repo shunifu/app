@@ -46,7 +46,7 @@ body { margin: 0px; }
 
             @media print {
             th.background {
-                font-size: 14px;
+                font-size: {{$variable->font_size}};
             background-color: {{$variable->column_color}} !important;
             -webkit-print-color-adjust: exact; 
             color: #FFFFFF !important;
@@ -103,7 +103,8 @@ body { margin: 0px; }
 }
 
 table tbody tr td {
-  font-size: 14px;
+
+    font-size:{{$variable->font_size}};
 }
 
 
@@ -180,6 +181,7 @@ table tbody tr td {
         terms.term_name,
         terms.start_date,
         terms.end_date,
+        terms.next_term_date,
         grades.grade_name,
         grades.id as grade_id,
         streams.stream_name,
@@ -218,24 +220,17 @@ echo '<h3 class="text-center lead text-bold">'.$student_term_data->lastname.' '.
                     <tbody>
                     <tr>
                         <td>
-                        <?php
-
-
-?>
+                        <?php $classofstudent=$student_term_data->grade_id; ?>
                             Student Name: <span class="text-bold">{{$student_term_data->name}} {{$student_term_data->middlename}} {{$student_term_data->lastname}} </span>
                             <br>
                             Student Average: <span class="text-bold">{{$student_term_data->student_average}}%</span>
-                            <br>
-                            Student Position: <span class="text-bold">
-                               <?php
+                           
+                            <?php
 
-                               
-
-$classofstudent=$student_term_data->grade_id;
-
-
-
-
+if ($variable->term_position==0) { 
+}else{
+    
+    ?> <br>Student Position: <span class="text-bold"> <?php       
 if ($tie_type=="share_n_+_1") {
 
     if ($p_key=="stream_based") {
@@ -245,8 +240,6 @@ if ($tie_type=="share_n_+_1") {
  }
  
  //    if tie type is share, i.e ties share the same position run the query below
-
-
 
 $student_position=\DB::select(\DB::raw("select t.*
 from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
@@ -286,6 +279,8 @@ LEFT JOIN term_averages sc ON sc.student_id = st.id
  ORDER BY sc.student_average DESC ) as sub
 WHERE sub.student_id=".$student.""));
     
+}
+
 }
         
 
@@ -428,44 +423,24 @@ WHERE sub.student_id=".$student.""));
                         Term: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
                         <br>
 
-                            @if ($student_term_data->term_name=="Term 1")
-
-                            Term Opening Date <span class="text-bold">05 April 2022</span>
-                            <br>
-                            Term Closing Date <span class="text-bold">19 August 2022</span>
-                            <br>
-                            Next Term Date: <span class="text-bold">7 September 2022</span>
-                                
-                            @else
-
+                        Term Opening Date <span class="text-bold">{{$student_term_data->start_date}}</span>
                         <br>
-                        Term Opening Date <span class="text-bold">13 September 2022</span>
+                        Term Closing Date <span class="text-bold">{{$student_term_data->end_date}}</span>
                         <br>
-                        Term Closing Date <span class="text-bold">22 December 2022</span>
-                        <br>
-                        Next Term Date: <span class="text-bold">17 January 2023</span>
+                        Next Term Date: <span class="text-bold">{{$student_term_data->next_term_date}}</span>
 
-                        @endif
-                            
                         <br>
                         Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
                         <br>
 
-
-
-                        @if (is_null($variable->student_attendance) OR $variable->student_attendance==0)
-
+                        @if ($variable->student_attendance==0)
 
                    
                         @else
 
-
-
                         <?php
 
-
                         $attendance=\DB::select(\DB::raw("SELECT number_of_absent_days FROM cummulative_attendances WHERE student_id=".$student." AND term_id=".$term.""));
-                    
                     
                         
                     if(collect($attendance)->first()) {
@@ -477,8 +452,7 @@ WHERE sub.student_id=".$student.""));
                                    
                     }
                     
-                    
-                                            ?>
+                     ?>
 
                 
                              
@@ -548,8 +522,8 @@ grades.stream_id,
             <th class="background">Subject Name</th>
             <th class="background" >CA</th>     
             <th class="background">Examination</th>   
-            <th class="background">Subject Average</th>   
-            <th class="background">Subject Position</th>   
+            <?php if ($variable->subject_average==0) {   }else{  ?> <th class="background" >Subject Average</th> <?php  }?>
+            <?php if ($variable->subject_position==0) {   }else{  ?> <th class="background" >Subject Postion</th> <?php  }?>
             <th class="background">Symbol</th>
             <th class="background">Comment</th>
             <th class="background">Teacher</th>
@@ -594,40 +568,49 @@ grades.stream_id,
         </td> 
         
 
-    
-         <td> 
-            @if (($item2->student_average<$pass_rate))
-            <span class="text-danger">{{($item2->student_average)}}%</span>
-            @else
-            {{($item2->student_average)}}%
-            @endif
-        </td> 
-  
+        <?php
 
-             <td>
+        
+         if ($variable->subject_average==0) { 
+            
+          }else{  
+            ?><td><?php
 
-            <?php
-           
- $sub_position=\DB::select(\DB::raw("select t.*
+?>
+   @if (($item2->student_average<$pass_rate))
+   <span class="text-danger">{{($item2->student_average)}}%</span>
+   @else
+   {{($item2->student_average)}}%
+   @endif
+</td> 
+<?php
+          }
+
+        
+         if ($variable->subject_position==0) { 
+            
+          }else{  
+
+          ?><td><?php
+
+$sub_position=\DB::select(\DB::raw("select t.*
 from (select student_subject_averages.student_id,student_subject_averages.student_average, rank() over (order by student_subject_averages.student_average  desc) as student_position
 from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." AND  student_subject_averages.student_class IN(SELECT teaching_loads.class_id  FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id  where teaching_loads.teacher_id=".$item2->teacher_id."  and grades.stream_id=".$item2->stream_id.") ) t
 where student_id =".$student.""));
 
 $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads INNER JOIN users ON users.id=student_loads.student_id WHERE users.active=1 AND student_loads.active=1 AND student_loads.teaching_load_id  IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id." AND student_loads.active=1 AND teaching_loads.active=1)"));
 
- foreach ($sub_position as $key_position) {
-   
-        foreach($total as $subtotal){
-            echo $key_position->student_position.' / '.$subtotal->total;
-        }
-       
-    
-    
-      }
-?>
-        </td>
-         
-        <td>
+foreach ($sub_position as $key_position) {
+
+foreach($total as $subtotal){
+echo $key_position->student_position.' / '.$subtotal->total;
+}
+
+}
+
+}?>
+ 
+<td>
             @foreach ($comments as $comment_symbol)
               
             @if(in_array(round($item2->student_average), range($comment_symbol->from,$comment_symbol->to, 0.01)) ) 
@@ -931,11 +914,11 @@ SET SESSION group_concat_max_len = 1000000;
           'MAX(IF(assessements.id = ''',
       assessements.id,
       ''', marks.mark, NULL)) AS ',
-      replace(assessement_name, ' ', '')
-        )
+      replace(assessement_name, ' ', '') 
+        )ORDER BY assessement_name ASC
       ) INTO @sql
 from c_a__exams  INNER JOIN assessements ON assessements.id=c_a__exams.assessement_id 
- INNER JOIN marks ON marks.assessement_id=c_a__exams.assessement_id WHERE c_a__exams.term_id=".$term.";
+ INNER JOIN marks ON marks.assessement_id=c_a__exams.assessement_id WHERE c_a__exams.term_id=".$term." ;
 SET @sql = CONCAT('SELECT 
     subjects.subject_name as Subject, 
     ', @sql, ',

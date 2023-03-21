@@ -297,14 +297,16 @@
                 <table class="table table-sm table-hover mx-auto table-bordered " style="width:100%" id="students_table">
                   <thead class="thead-light">
                       <tr>
-                      
+                          <th>Photo</th>
                           <th>Lastname</th>
                           <th>Name</th>
                           <th>Middlename</th>
                           <th>Class</th>
-                          <th>Student Cell</th>
-                          <th>Photo</th>
-                          <th>Manage</th>
+                       
+                          <th>View Profile</th>
+                          @role('bursar')
+                          <th>Make Payment</th>
+                          @endrole
 
                       </tr>
                   </thead>
@@ -530,12 +532,11 @@
                     // } 
 
                     $('tbody').append('<tr>\
-                    <td> <input type="checkbox"  name="" id="" value="checkedValue"></td>\
+                    <td>  <img src="" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt=""></td>\
                     <td>'+lastname+'</td>\
                     <td>'+name+'</td>\
                     <td>'+middlename+'</td>\
                     <td>'+item.grade_name+'-'+item.academic_session+'</td>\
-                    <td>'+cell+'</td>\
                     <td><a href=/users/profile/student/'+item.id+'>Visit Profile</a></td>\
                     </tr>'  );
                 });
@@ -577,17 +578,18 @@
                     var stu_id = $(this).attr('id');
                    var grade_id=item.grade_id;
 
-               
+                 
                     $('tbody').append('<tr>\
                       <input type="hidden" value='+grade_id+' name="grade_id">\
-                    <td> <input type="checkbox"  name="" id="" value="checkedValue"></td>\
+                      <td>  <img src="" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt=""></td>\
                     <td>'+lastname+'</td>\
                     <td>'+name+'</td>\
                     <td>'+middlename+'</td>\
                     <td>'+item.grade_name+'-'+item.academic_session+'</td>\
-                    <td>'+cell+'</td>\
-                    <td><a href=/users/profile/student/'+item.id+'>Visit Profile</a> | <button type="button" value="'+item.id+'" class=" '+item.id+' btn btn-secondary btn-sm" id="'+item.grade_id+'" >Quick Pay</button> </td>\
-                    \
+                    <td><a href=/users/profile/student/'+item.id+'>Visit Profile</a></td>\
+                    @role('bursar')\
+                    <td><button type="button" value="'+item.id+'" class=" '+item.id+' btn btn-secondary btn-sm" id="'+item.grade_id+'" >Quick Pay</button> </td>\
+                    @endrole\
                     </tr>'  );
 
 

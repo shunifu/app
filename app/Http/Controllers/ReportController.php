@@ -228,6 +228,19 @@ class ReportController extends Controller
 		}
 
 
+
+        //Check Variables
+
+        $reportVariables=ReportVariable::first();
+        if (is_null($reportVariables)) {
+
+            flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Please add report variables. To do so, please go to settings , then Report Settings and click Report Variables');
+            return redirect('/report/variables');
+
+          
+        }
+
+
     //    DB::table('student_subject_averages')->delete();
 
 

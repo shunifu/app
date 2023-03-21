@@ -12,7 +12,7 @@
               <div class="card-header no-print">
                 <h3 class="card-title">View Students</h3>
               </div>
-            
+          
             <div class="card-body">
               @include('users.students.search')
               <hr>

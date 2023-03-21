@@ -7,6 +7,8 @@ use App\Models\Mark;
 use App\Models\Grade;
 use App\Models\PassRate;
 use App\Models\Assessement;
+use App\Models\AssessementSetting;
+use App\Models\MarkSetting;
 use App\Models\School;
 use App\Models\StudentLoad;
 use App\Models\TeachingLoad;
@@ -48,11 +50,29 @@ class MarkController extends Controller
 
         // $school_code=School::first();
         // if($school_code->school_code=="0238"){
-        //     flash()->overlay('<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'.' Sorry '.Auth::user()->name . 'You have missed the Marks Deadline', 'Add Marks');
-        //     return redirect('/marks');
+        //   
         // }else{
+
+
+             //Check if mode set
+
+        //check marks mode
+
+        $checkmode=MarkSetting::first();
+
+        if (is_null($checkmode)) {
+            flash()->overlay('<i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i>'.' Sorry '.Auth::user()->name . ' Please request your school system administrator to set Marks Mode in Mark Settings.', 'Add Marks');
+              return redirect('/dashboard');
+        }else{
             return view('academic-admin.marks-management.index', compact('greetings','teaching_loads','assessements'));
-        // }
+            
+        }
+
+      
+           
+
+
+      
 
        
     }
@@ -207,6 +227,48 @@ return redirect('/marks');
         $string=$request->teaching_load;
         //dd($string);
 
+        $checkmode=MarkSetting::first();
+
+        $mark_mode=$checkmode->marks_mode;
+
+        if($mark_mode==1){
+            //if marks mode = Strict Mode
+            $mode_value="required";
+
+        }else{
+            $mode_value="";
+            
+        }
+
+        //Deadline Checker
+
+        $deadline_data=Assessement::where('id', $assessement_id)->first();
+        $deadline=$deadline_data->marks_deadline;
+
+        $current_date=(date("Y-m-d H:i:s"));
+       
+
+
+     
+
+
+          
+            
+            //check if current date is greater than deadline
+
+            if($current_date>$deadline){
+
+                //failed to meet the deadline
+
+                flash()->overlay('<i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i>'.' Sorry '.Auth::user()->name . ' You failed to meet the deadline for this assessement. To get an extension please  go to the school  administrator and politely request for a deadline extension.', 'Add Marks');
+                return redirect('/marks');
+
+            
+
+
+
+        }elseif(is_null($deadline) OR ($deadline>=$current_date)){
+
       
 // $array=array_map('intval', explode(',', $string));
 $array = implode("','",$string);
@@ -257,9 +319,10 @@ $array = implode("','",$string);
         // dd($loads_description);
 
  
-    return view('academic-admin.marks-management.show', compact('greetings', 'teaching_loads', 'assessements', 'students', 'assessement_id', 'loads_description', 'assessement_description'));      
+    return view('academic-admin.marks-management.show', compact('greetings', 'teaching_loads', 'assessements', 'students', 'assessement_id', 'loads_description', 'assessement_description', 'mode_value'));      
 
     }
+}
 
     public function manage(Request $request){
         $greetings= $this->greetings();

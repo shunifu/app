@@ -1,0 +1,162 @@
+# Query: marks/
+# ContextLines: 1
+
+46 results - 15 files
+
+app/Http/Controllers/MarkController.php:
+  608  
+  609:             flash()->overlay('<i class="fas fa-check-circle success"></i>'.' Sorry. There are no marks for that class and assessement. Click the following link <a href="/marks/">Add Marks</a> to add marks. ', 'Delete Marks');
+  610              return redirect('/marks');
+
+  701  
+  702:         return redirect('marks/transfer');
+  703      }
+
+resources/views/academic-admin/marks-management/manage.blade.php:
+  88      <li class="nav-item" role="presentation">
+  89:         <a class="nav-link bg-light" id="pills-section_analysis-tab"  href="/marks/transfer" role="tab" aria-controls="pills-section_analysis" aria-selected="false">Transfer Marks</a>
+  90          </li>
+
+  93          <li class="nav-item" role="presentation">
+  94:             <a class="nav-link bg-light" id="pills-section_analysis-tab"  href="/marks/manage" role="tab" aria-controls="pills-section_analysis" aria-selected="false">Manage Marks</a>
+  95              </li>
+
+  97      <li class="nav-item" role="presentation">
+  98:     <a class="nav-link bg-light" id="pills-class-analysis-tab"  href="/marks/analytics" role="tab" aria-controls="pills-class-analysis" aria-selected="false">Mark Analyis</a>
+  99      </li>
+
+resources/views/academic-admin/marks-management/show.blade.php:
+   32                      <div class="card-header">
+   33:                         <a href="/marks">
+   34                              <h3 class="card-title p4"><i class="fas fa-hand-point-left mr-2"></i> Back </h3>
+
+  348               $.ajax({
+  349:                  url: '/marks/edit/'+edit_id,
+  350  
+
+  393          },
+  394:                 url: '/marks/update',
+  395                  type: 'PATCH',
+
+resources/views/academic-admin/reports-management/openday/index.blade.php:
+  82      {{-- <li class="nav-item" role="presentation">
+  83:     <a class="nav-link bg-light" id="pills-section_analysis-tab"  href="/marks/manage" role="tab" aria-controls="pills-section_analysis" aria-selected="false">Manage Marks</a>
+  84      </li> --}}
+
+  86      {{-- <li class="nav-item" role="presentation">
+  87:     <a class="nav-link bg-light" id="pills-class-analysis-tab"  href="/marks/analytics" role="tab" aria-controls="pills-class-analysis" aria-selected="false">Mark Analyis</a>
+  88      </li> --}}
+
+resources/views/accounting/fees-management/fee-structure/show.blade.php:
+   28                      <div class="card-header">
+   29:                         <a href="/marks/">
+   30                              <h3 class="card-title p4"><i class="fas fa-hand-point-left mr-2"></i> Back </h3>
+
+  304               $.ajax({
+  305:                  url: '/marks/edit/'+edit_id,
+  306  
+
+  349          },
+  350:                 url: '/marks/update',
+  351                  type: 'PATCH',
+
+resources/views/dashboard/teacher.blade.php:
+  186                         <h4 class="my-1 text-success">{{$total_marks}}<small class="small-text"> marks added</small></h4>
+  187:                        <a href="/marks/"><p class="mb-0 font-13 text-success">View Marks</p></a> 
+  188                      
+
+resources/views/layouts/app.blade.php:
+  1033                <li class="nav-item">
+  1034:                 <a href="/marks/check" class="nav-link">
+  1035                    <i class="nav-icon fas fa-check-circle"></i>
+
+  1067                <li class="nav-item">
+  1068:                 <a href="/marks/analytics"  class="nav-link">
+  1069                    <i class="nav-icon fas fa-check-circle"></i>
+
+  1074                <li class="nav-item">
+  1075:                 <a href="/marks/manage"  class="nav-link">
+  1076                    <i class="nav-icon fas fa-check-circle"></i>
+
+  1081                <li class="nav-item">
+  1082:                 <a href="/marks/transfer"  class="nav-link">
+  1083                    <i class="nav-icon fas fa-check-circle"></i>
+
+  1284                <li class="nav-item">
+  1285:                 <a href="/marks/settings" class="nav-link">
+  1286                    <i class="fas fa-newspaper nav-icon"></i>
+
+resources/views/partials/marks-header.blade.php:
+  65  <li class="nav-item" role="presentation">
+  66: <a class="nav-link bg-light" id="pills-section_analysis-tab"  href="/marks/manage" role="tab" aria-controls="pills-section_analysis" aria-selected="false">Delete Marks</a>
+  67  </li>
+
+  69  <li class="nav-item" role="presentation">
+  70:     <a class="nav-link bg-light" id="pills-section_analysis-tab"  href="/marks/transfer" role="tab" aria-controls="pills-section_analysis" aria-selected="false">Transfer Marks</a>
+  71  </li>
+
+  73  <li class="nav-item" role="presentation">
+  74: <a class="nav-link bg-light" id="pills-class-analysis-tab"  href="/marks/analytics" role="tab" aria-controls="pills-class-analysis" aria-selected="false">Mark Analyis</a>
+  75  </li>
+
+resources/views/partials/parent-link-header.blade.php:
+  50  {{-- <li class="nav-item" role="presentation">
+  51: <a class="nav-link bg-light" id="pills-class-analysis-tab"  href="/marks/analytics" role="tab" aria-controls="pills-class-analysis" aria-selected="false">Mark Analyis</a>
+  52  </li> --}}
+
+resources/views/partials/report_header.blade.php:
+  25          <label class="form-check-label">
+  26:             <input class="form-check-input" type="checkbox" name="teacher_check" id="teacher_check" value="checkedValue"> All Teachers have entered marks for students. If you are not sure, check  <a href="/marks/check">here</a>
+  27          </label>
+
+resources/views/teaching-loads/view-admin.blade.php:
+  206              $.ajax({
+  207:                     url: '/marks/update',
+  208                      type: 'POST',
+
+resources/views/teaching-loads/view.blade.php:
+  129              $.ajax({
+  130:                     url: '/marks/update',
+  131                      type: 'POST',
+
+resources/views/users/students/images/view.blade.php:
+  163              $.ajax({
+  164:                     url: '/marks/update',
+  165                      type: 'POST',
+
+resources/views/users/students/parent-link/list.blade.php:
+   30              <div class="card-header">
+   31:                 <a href="/marks">
+   32                      <h3 class="card-title p4"><i class="fas fa-hand-point-left mr-2"></i> Back </h3>
+
+  224              $.ajax({
+  225:                     url: '/marks/update',
+  226                      type: 'POST',
+
+routes/web.php:
+  614  Route::get('/marks',[MarkController::class,'create'])->name('marks.create');
+  615: Route::post('/marks/students/show',[MarkController::class,'show'])->name('marks.show');
+  616: Route::post('/marks/save',[MarkController::class,'store'])->name('marks.store');
+  617: Route::get('/marks/manage',[MarkController::class,'manage'])->name('marks.manage');
+  618: Route::post('/marks/show',[MarkController::class,'show_marks'])->name('marks.show_marks');
+  619: Route::get('/marks/transfer',[MarkController::class,'transfer_marks'])->name('marks.transfer');
+  620: Route::post('/marks/transfering',[MarkController::class,'transfering'])->name('marks.transfering');
+  621: Route::delete('/marks/delete',[MarkController::class,'destroy'])->name('marks.destroy');
+  622: Route::get('/marks/edit/{id}',[MarkController::class,'edit'])->name('marks.edit');
+  623: Route::patch('/marks/update',[MarkController::class,'update'])->name('marks.update');
+  624  
+
+  626  
+  627: Route::get('/marks/analytics',[MarkController::class,'analysis'])->name('marks.analysis');
+  628: Route::post('/marks/analytics/show',[MarkController::class,'analysis_store'])->name('marks.analysis_store');
+  629  
+  630: Route::get('/marks/check',[MarkController::class,'check_marks'])->name('marks.check');
+  631: Route::post('/marks/check/form',[MarkController::class,'marks_check_search'])->name('marks.check_search_form');
+  632  
+
+  764  
+  765: Route::get('/marks/settings', [MarkSettingController::class,'index'])->name('marks_settings.index');
+  766: Route::post('/marks/settings/save', [MarkSettingController::class,'store'])->name('marks_settings.store');
+  767: Route::get('/marks/settings/edit/{id}', [MarkSettingController::class,'edit'])->name('marks_settings.edit');
+  768: Route::post('/marks/update', [MarkSettingController::class,'update'])->name('marks_settings.update');
+  769  //End of Mark Settings

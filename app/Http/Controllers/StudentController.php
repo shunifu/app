@@ -222,6 +222,15 @@ class StudentController extends Controller
 
     public function student_management_stream($stream_id){
 
+
+        $session=AcademicSession::where('active', 1)->first();
+        $session_id=$session->id;
+
+    
+
+
+    
+
         if($stream_id=="former_students"){
 
             $students = DB::table('grades_students')
@@ -236,15 +245,17 @@ class StudentController extends Controller
 
         }else{
 
-            $students = DB::table('users')
-            ->join('grades_students', 'users.id', '=', 'grades_students.student_id')
-            ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-            ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
-            ->where('grades.stream_id',$stream_id)
-            ->where('grades_students.active', 1)
-            ->where('users.active', 1)
-            ->select('users.*','grades.grade_name', 'academic_sessions.academic_session', 'grades.id as grade_id')
-            ->get();
+            $students= DB::table('grades_students')
+        ->join('users', 'users.id', '=', 'grades_students.student_id')
+        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        ->join('academic_sessions','academic_sessions.id','=','grades_students.academic_session')
+        ->select('grades.grade_name as grade_name','grades.id as grade_id','users.id as id', 'name', 'lastname', 'middlename', 'gender', 'date_of_birth', 'academic_sessions.academic_session',  'profile_photo_path')
+        ->where('grades.stream_id',$stream_id)
+        ->where('grades_students.academic_session', $session_id)
+        ->where('academic_sessions.id',$session_id )
+        ->where('grades_students.active',1 )
+        ->where('users.active',1 )
+        ->orderBy('lastname')->orderBy('name')->get();
         }
 
         return response()->json([
@@ -261,19 +272,33 @@ class StudentController extends Controller
 
         //
         $grade_id=$request->grade_id;
+        $session=AcademicSession::where('active', 1)->first();
+        $session_id=$session->id;
 
         
 
-        $students = DB::table('users')
-        ->join('grades_students', 'users.id', '=', 'grades_students.student_id')
-        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
-        ->where('grades.id',$grade_id)
-        ->where('grades_students.active', 1)
-        ->where('users.active', 1)
-        ->select('users.*','grades.grade_name', 'academic_sessions.academic_session', 'grades.id as grade_id')
-        ->get();
+        // $students = DB::table('users')
+        // ->join('grades_students', 'users.id', '=', 'grades_students.student_id')
+        // ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        // ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
+        // ->where('grades.id',$grade_id)
+        // ->where('grades_students.active', 1)
+        // ->where('users.active', 1)
+        // ->select('users.*','grades.grade_name', 'academic_sessions.academic_session', 'grades.id as grade_id')
+        // ->get();
 
+
+        $students= DB::table('grades_students')
+        ->join('users', 'users.id', '=', 'grades_students.student_id')
+        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        ->join('academic_sessions','academic_sessions.id','=','grades_students.academic_session')
+        ->select('grades.grade_name as grade_name','grades.id as grade_id','users.id as id', 'name', 'lastname', 'middlename', 'gender', 'date_of_birth', 'academic_sessions.academic_session',  'profile_photo_path')
+        ->where('grades_students.grade_id', $grade_id)
+        ->where('grades_students.academic_session', $session_id)
+        ->where('academic_sessions.id',$session_id )
+        ->where('grades_students.active',1 )
+        ->where('users.active',1 )
+        ->orderBy('lastname')->orderBy('name')->get();
 
     
 
@@ -287,11 +312,9 @@ class StudentController extends Controller
 
     public function student_search(Request $request){
         
-        //validation
-        //prevent SQL injection
-
-    
-        //prevent numbers and special characters
+        $grade_id=$request->grade_id;
+        $session=AcademicSession::where('active', 1)->first();
+        $session_id=$session->id;
 
 
         $query=$request->all('query');
@@ -309,16 +332,21 @@ class StudentController extends Controller
         // $student_role=$student_role_id->id;
 
         // $platform = DB::table('idgbPlatforms')->where('name', 'LIKE',"%{$requestedplatform}%")->first();
-         $students = DB::table('users')
-            ->join('grades_students', 'users.id', '=', 'grades_students.student_id')
+  
+
+
+            $students= DB::table('grades_students')
+            ->join('users', 'users.id', '=', 'grades_students.student_id')
             ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-            ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
+            ->join('academic_sessions','academic_sessions.id','=','grades_students.academic_session')
+            ->select('grades.grade_name as grade_name','grades.id as grade_id','users.id as id', 'name', 'lastname', 'middlename', 'gender', 'date_of_birth', 'academic_sessions.academic_session',  'profile_photo_path')
             ->where('name', 'LIKE',"%{$q}%")
-          //  ->where('lastname', 'LIKE',"%{$q}%")
-            ->where('grades_students.active', 1)
-           // ->where('users.role_id', $student_role)
-            ->select('users.*','grades.grade_name', 'academic_sessions.academic_session')
-            ->get();
+            ->orWhere('lastname', 'LIKE',"%{$q}%")
+            ->where('grades_students.academic_session', $session_id)
+            ->where('academic_sessions.id',$session_id )
+            ->where('grades_students.active',1 )
+            ->where('users.active',1 )
+            ->orderBy('lastname')->orderBy('name')->get();
     
     // $students ="HipHipHooray";
 

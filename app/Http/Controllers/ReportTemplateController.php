@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ReportTemplate;
 use App\Models\ReportVariable;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Schema;
 use phpseclib3\Crypt\RC2;
@@ -120,11 +121,25 @@ class ReportTemplateController extends Controller
                 $table->string('student_image')->nullable();
                 $table->string('student_attendance')->nullable();
                 $table->string('data_visualization')->nullable();
+                $table->string('term_position')->nullable();
+                $table->string('subject_position')->nullable();
+                $table->string('subject_average')->nullable();
                 $table->string('font_size')->nullable();
                 $table->string('principal_signature')->nullable();
                 $table->string('school_stamp')->nullable();
                 $table->string('page_orientation')->nullable()->default('potrait');
                 $table->timestamps();
+           });
+       }
+
+       if (!Schema::hasColumn('report_variables', 'subject_position')) //check the column
+       {
+           Schema::table('report_variables', function (Blueprint $table)
+           {
+              
+            $table->string('term_position')->nullable();
+            $table->string('subject_position')->nullable();
+            $table->string('subject_average')->nullable();
            });
        }
 
@@ -157,9 +172,12 @@ class ReportTemplateController extends Controller
 
         'column_color'=>$request->color,
         'student_image'=>$request->student_image,
-        'student_attendance'=>$request->student_attendance,
+        'student_attendance'=>$request->attendance_data,
         'data_visualization'=>$request->data_visualization,
-        'font_size'=>$request->font_size,
+        'term_position'=>$request->term_position,
+        'subject_position'=>$request->subject_position,
+        'subject_average'=>$request->subject_average,
+        'font_size'=>$request->font_size.'px',
         'principal_signature'=>$request->principal_signature,
         'school_stamp'=>$request->school_stamp,
         'page_orientation'=>$request->page_orientation,
@@ -183,9 +201,12 @@ class ReportTemplateController extends Controller
 
             'column_color'=>$request->color,
             'student_image'=>$request->student_image,
-            'student_attendance'=>$request->student_attendance,
+            'student_attendance'=>$request->attendance_data,
             'data_visualization'=>$request->data_visualization,
-            'font_size'=>$request->font_size,
+            'term_position'=>$request->term_position,
+            'subject_position'=>$request->subject_position,
+            'subject_average'=>$request->subject_average,
+            'font_size'=>$request->font_size.'px',
             'principal_signature'=>$request->principal_signature,
             'school_stamp'=>$request->school_stamp,
             'page_orientation'=>$request->page_orientation,

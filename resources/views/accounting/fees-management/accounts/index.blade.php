@@ -85,8 +85,8 @@
 
                      <td class="py-0 align-middle">
                         <div class="btn-group btn-group-md">
-                          <a href="account/edit/{{encrypt($item->id)}}" class="btn btn-info"><i class="fas fa-edit mr-1"></i>Edit</a>
-                          <a href="account/delete/{{encrypt($item->id)}}" class="btn btn-danger exam_assignment_delete"><i class="fas fa-trash mr-1"></i>Delete</a>
+                          <a href="/accounting/fees-management/accounts/account/edit/{{encrypt($item->id)}}" class="btn btn-info"><i class="fas fa-edit mr-1"></i>Edit</a>
+                          <a href="/accounting/fees-management/accounts/account/delete/{{encrypt($item->id)}}" class="btn btn-danger exam_assignment_delete"><i class="fas fa-trash mr-1"></i>Delete</a>
                         </div>
 
 

@@ -166,18 +166,7 @@
                   @enderror
               </div>
 
-              <div class="form-group">
-                  <x-jet-label>Page Orientation</x-jet-label>
-                 <select class="form-control" name="page_orientation">
-                  <option value="">Select Option</option>
-                  <option value="potrait">Potrait</option>
-                  <option value="landscape">Landscape</option>
-              
-                 </select>
-                  @error('page_orientation')
-                  <span class="text-danger">{{$message}}</span>  
-                  @enderror
-              </div>
+          
 
             
 
@@ -230,18 +219,76 @@
 
               <div class="form-group">
                   <x-jet-label>Student Attendance Data</x-jet-label>
-                  <small id="imageHelp" class="form-text text-muted">Enable or disable student image in report.</small>
+                  <small id="imageHelp" class="form-text text-muted">Show or hide student attendance.</small>
                   <select name="attendance_data" id="attendance_data" class="form-control">
                     <option value="{{$variable->student_attendance}}">
                       @if ($variable->student_attendance==1)
-                        Display  
+                        Display Attendance
                       @else
-                        Hide  
-                      @endif</option>
+                        Hide  Attendance
+                      @endif
+                    </option>
                     <option value="1">Show Attendance</option>
                     <option value="0">Remove Student Attendance</option>
                   </select>
-                  @error('student_image')
+                  @error('attendance_data')
+                  <span class="text-danger">{{$message}}</span>  
+                  @enderror
+                </div>
+
+                <div class="form-group">
+                  <x-jet-label>Term Position</x-jet-label>
+                  <small id="imageHelp" class="form-text text-muted">Show or hide student term position.</small>
+                  <select name="term_position" id="term_position" class="form-control">
+                    <option value="{{$variable->term_position}}">
+                      @if ($variable->term_position==1)
+                        Display Term Position
+                      @else
+                        Hide Term Position
+                      @endif
+                    </option>
+                    <option value="1">Show Term Position</option>
+                    <option value="0">Hide Term Position</option>
+                  </select>
+                  @error('term_position')
+                  <span class="text-danger">{{$message}}</span>  
+                  @enderror
+                </div>
+
+                <div class="form-group">
+                  <x-jet-label>Subject Position</x-jet-label>
+                  <small id="imageHelp" class="form-text text-muted">Show or hide student subject position.</small>
+                  <select name="subject_position" id="subject_position" class="form-control">
+                    <option value="{{$variable->subject_position}}">
+                      @if ($variable->subject_position==1)
+                        Display Subject Position
+                      @else
+                        Hide Subject Position
+                      @endif
+                    </option>
+                    <option value="1">Show Subject Position</option>
+                    <option value="0">Hide Subject Position</option>
+                  </select>
+                  @error('subject_position')
+                  <span class="text-danger">{{$message}}</span>  
+                  @enderror
+                </div>
+
+                <div class="form-group">
+                  <x-jet-label>Subject Average</x-jet-label>
+                  <small id="imageHelp" class="form-text text-muted">Show or hide student subject average.</small>
+                  <select name="subject_average" id="subject_average" class="form-control">
+                    <option value="{{$variable->subject_average}}">
+                      @if ($variable->subject_average==1)
+                        Display Subject Average
+                      @else
+                        Hide Subject Average
+                      @endif
+                    </option>
+                    <option value="1">Show Subject Average</option>
+                    <option value="0">Hide Subject Average</option>
+                  </select>
+                  @error('subject_average')
                   <span class="text-danger">{{$message}}</span>  
                   @enderror
                 </div>
@@ -254,7 +301,8 @@
                         Display  
                       @else
                         Hide  
-                      @endif</option>
+                      @endif
+                    </option>
                     <option value="1">Show Data Visualization</option>
                     <option value="0">Hide Data Visualization</option>
                   </select>
@@ -277,9 +325,9 @@
              <select class="form-control" name="principal_signature">
               <option value="{{$variable->principal_signature}}">
                 @if ($variable->principal_signature==1)
-                  Display  
+                  Digital  
                 @else
-                  Hide  
+                  Manual  
                 @endif
               </option>
               <option value="1">Digital Signature</option>
@@ -296,9 +344,9 @@
                   <select class="form-control" name="school_stamp">
                   <option value="{{$variable->school_stamp}}">
                     @if ($variable->school_stamp==1)
-                      Display  
+                      Digital  
                     @else
-                      Hide  
+                      Manual  
                     @endif
                   </option>
                  
@@ -311,18 +359,7 @@
                   @enderror
               </div>
 
-              <div class="form-group">
-                  <x-jet-label>Page Orientation</x-jet-label>
-                 <select class="form-control" name="page_orientation">
-                  <option value="{{$variable->page_orientation}}">{{$variable->page_orientation}}</option>
-                  <option value="landscape">Landscape</option>
-                  <option value="potrait">Potrait</option>
-              
-                 </select>
-                  @error('page_orientation')
-                  <span class="text-danger">{{$message}}</span>  
-                  @enderror
-              </div>
+         
 
    <input type="hidden" value="{{$variable->id}}" name="id">
 
