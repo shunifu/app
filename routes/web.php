@@ -150,7 +150,7 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
     Route::get('/academic-admin/subject', [SubjectController::class,'create'])->name('subject.create');
     Route::post('/academic-admin/subject/add', [SubjectController::class,'store'])->name('subject.store');
     Route::get('/academic-admin/subject/edit/{id}', [SubjectController::class,'edit'])->name('subject.edit');
-    Route::post('/academic-admin/subject/update/', [SubjectController::class,'update'])->name('subject.update');
+    Route::post('/academic-admin/subject/update', [SubjectController::class,'update'])->name('subject.update');
     Route::get('/academic-admin/subject/delete/{id}', [SubjectController::class,'destroy'])->name('subject.destroy');
     
     //Department Routes
@@ -158,20 +158,20 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
     Route::get('/academic-admin/department/teacher', [DepartmentController::class,'add_teacher'])->name('department.teacher');
     Route::post('/academic-admin/department/add', [DepartmentController::class,'store'])->name('department.store');
     Route::get('/academic-admin/department/edit/{id}', [DepartmentController::class,'edit'])->name('department.edit');
-    Route::post('/academic-admin/department/update/', [DepartmentController::class,'update'])->name('department.update');
+    Route::post('/academic-admin/department/update', [DepartmentController::class,'update'])->name('department.update');
     Route::delete('/academic-admin/department/delete/{id}', [DepartmentController::class,'destroy'])->name('department.destroy');
     
     Route::get('/users/student/class/get/students/{id} ', [StudentController::class,'search'])->name('students.search');
     Route::get('/students/transfer/',[StudentController::class,'transfer'])->name('students.transfer');
     Route::post('/students/transfer/load',[StudentController::class,'get_students'])->name('students.gets_students');
-    Route::get('/students/transfer/process/',[StudentController::class,'transfer_students'])->name('students.transfer_students');
+    Route::get('/students/transfer/process',[StudentController::class,'transfer_students'])->name('students.transfer_students');
     
     Route::post('/student/import/',  [StudentController::class,'import'])->name('student.import');
     
     //School Routes
     Route::get('/academic-admin/school', [SchoolController::class,'create'])->name('school.create');
     Route::post('/academic-admin/school/add', [SchoolController::class,'store'])->name('school.store');
-    Route::post('/academic-admin/school/edit/', [SchoolController::class,'edit'])->name('school.edit');
+    Route::post('/academic-admin/school/edit', [SchoolController::class,'edit'])->name('school.edit');
     Route::get('/academic-admin/school/delete/{id}', [SchoolController::class,'destroy'])->name('school.destroy');
     
     //Academic Session Routes
@@ -182,7 +182,7 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
     Route::get('/academic-admin/session/delete/{id}', [AcademicSessionController::class,'destroy'])->name('sesson.destroy');
     
     Route::get('/view/terms/{id}', [TermController::class,'index'])->name('term.index');
-    Route::post('terms/add/', [TermController::class,'store'])->name('term.store');
+    Route::post('terms/add', [TermController::class,'store'])->name('term.store');
     Route::get('/terms/edit/{id}', [TermController::class,'edit'])->name('term.edit');
     Route::post('terms/update', [TermController::class,'update'])->name('term.update');
     Route::get('/terms/delete/{id}', [TermController::class,'destroy'])->name('term.destroy');
@@ -230,7 +230,7 @@ Route::post('/users/student/images/save', [StudentController::class,'student_ima
 Route::get('/users/student/get/list', [StudentController::class,'get_list'])->name('student.get_list');
 Route::get('/students/manage', [StudentController::class,'manage'])->name('student.manage');
 Route::get('/students/manage/stream/{stream_id}', [StudentController::class,'student_stream'])->name('student.student_stream');
-Route::post('/students/management/search/', [StudentController::class,'student_search'])->name('student.student_search');
+Route::post('/students/management/search', [StudentController::class,'student_search'])->name('student.student_search');
 Route::post('/students/management/search/class', [StudentController::class,'class_search'])->name('student.class_search');
 
 Route::get('/templates/spreadsheet/student-registration', [StudentController::class,'template_export'])->name('student.template');
@@ -248,13 +248,13 @@ Route::get('/students/management/stream/{id}', [StudentController::class,'studen
 Route::post('/users/student/add', [StudentController::class,'store'])->name('student.store');
 Route::post('/users/student/add/bulk', [StudentController::class,'bulk'])->name('student.bulk');
 
-Route::post('/users/student/edit/', [StudentController::class,'update'])->name('student.update');
+Route::post('/users/student/edit', [StudentController::class,'update'])->name('student.update');
 Route::post('/users/student/parent/add', [StudentController::class,'parent_update'])->name('student.parent_update');
 Route::get('/users/student/show/{id}',  [StudentController::class,'show'])->name('student.show');
 Route::get('/users/profile/student/{id}',  [StudentController::class,'profile'])->name('student.profile');
 Route::get('/users/student/delete/{id}', [StudentController::class,'destroy'])->name('student.destroy');
 Route::get('users/student/manage/password/reset/{id}',[StudentController::class,'password_reset'])->name('student.password_reset');
-Route::get('users/student/manage/removal/',[StudentController::class,'student_removal'])->name('student.removal_index');
+Route::get('users/student/manage/removal',[StudentController::class,'student_removal'])->name('student.removal_index');
 Route::get('/class/student-management',[StudentController::class,'student_issues_classteacher'])->name('student.student_issues_classteacher');
 
 
@@ -279,7 +279,7 @@ Route::post('/link/students-parents/form',  [StudentController::class,'parent_li
 Route::get('/users/teacher', [TeacherController::class,'create'])->name('teacher.create');
 Route::get('/users/teachers/manage', [TeacherController::class,'view'])->name('teacher.manage');
 
-Route::post('/teacher/import/',  [TeacherController::class,'import'])->name('teacher.import');
+Route::post('/teacher/import',  [TeacherController::class,'import'])->name('teacher.import');
 Route::get('/teacher/login/{id}',  [TeacherController::class,'login'])->name('teacher.login');
 Route::get('/undo/deactivation/{id}',  [TeacherController::class,'undo'])->name('teacher.undo');
 
@@ -405,13 +405,13 @@ Route::get('/users/student/online-learning/view/{id}', [OnlineLearningController
 
 Route::post('/users/lesson/online-learning/comments/add', [LessonCommentController::class,'store'])->name('lesson-comments.store');
 
-Route::get('/online-learning/assessement/create/', [OnlineLearningController::class,'create_assessement_teacher'])->name('online-learning.create_assessement_teacher');
+Route::get('/online-learning/assessement/create', [OnlineLearningController::class,'create_assessement_teacher'])->name('online-learning.create_assessement_teacher');
 
 Route::get('/online-learning/lessons/assessement/add/{id}', [OnlineLearningController::class,'show_assessement_teacher'])->name('online-learning.show_assessement_teacher');
 
-Route::post('/online-learning/lessons/assessement/store/', [OnlineLearningController::class,'store_assesement_teacher'])->name('online-learning.store_assesement_teacher');
+Route::post('/online-learning/lessons/assessement/store', [OnlineLearningController::class,'store_assesement_teacher'])->name('online-learning.store_assesement_teacher');
 
-Route::get('/online-learning/lessons/assessement/manage/', [OnlineLearningController::class,'manage_assesement_teacher'])->name('online-learning.manage_assesement_teacher');
+Route::get('/online-learning/lessons/assessement/manage', [OnlineLearningController::class,'manage_assesement_teacher'])->name('online-learning.manage_assesement_teacher');
 
 Route::get('/online-learning/lessons/assessement/view/{id}',[OnlineLearningController::class, 'view_assessement'])->name('online-learning.view_assessement');
 
@@ -422,7 +422,7 @@ Route::post('/online-learning/lessons/assessement/update/',[OnlineLearningContro
 Route::get('/online-learning/lessons/assessement/delete/{id}',[OnlineLearningController::class, 'delete_assessement'])->name('online-learning.delete_assessement');
 
 
-Route::get('/online-learning/assessement/assesement_feedback/', [OnlineLearningController::class,'assesement_feedback'])->name('online-learning.assesement_feedback');
+Route::get('/online-learning/assessement/assesement_feedback', [OnlineLearningController::class,'assesement_feedback'])->name('online-learning.assesement_feedback');
 
 Route::post('/users/lesson/online-learning/comments/add', [LessonCommentController::class,'store'])->name('lesson-comments.store')->middleware('auth');
 
