@@ -253,14 +253,14 @@ Route::post('/users/student/parent/add', [StudentController::class,'parent_updat
 Route::get('/users/student/show/{id}',  [StudentController::class,'show'])->name('student.show');
 Route::get('/users/profile/student/{id}',  [StudentController::class,'profile'])->name('student.profile');
 Route::get('/users/student/delete/{id}', [StudentController::class,'destroy'])->name('student.destroy');
-Route::get('users/student/manage/password/reset/{id}',[StudentController::class,'password_reset'])->name('student.password_reset');
-Route::get('users/student/manage/removal',[StudentController::class,'student_removal'])->name('student.removal_index');
+Route::get('/users/student/manage/password/reset/{id}',[StudentController::class,'password_reset'])->name('student.password_reset');
+Route::get('/users/student/manage/removal',[StudentController::class,'student_removal'])->name('student.removal_index');
 Route::get('/class/student-management',[StudentController::class,'student_issues_classteacher'])->name('student.student_issues_classteacher');
 
 
 
-Route::post('users/student/manage/removal/process',[StudentController::class,'removal_loadstudents'])->name('student.removal');
-Route::post('users/student/manage/removal/process/selection',[StudentController::class,'removal'])->name('student.removal_selection');
+Route::post('/users/student/manage/removal/process',[StudentController::class,'removal_loadstudents'])->name('student.removal');
+Route::post('/users/student/manage/removal/process/selection',[StudentController::class,'removal'])->name('student.removal_selection');
 
 Route::post('student/image/upload',[StudentController::class,'student_image'])->name('student.image');
 
