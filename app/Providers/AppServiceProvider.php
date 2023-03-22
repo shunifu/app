@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\School;
 use App\Models\User;
+
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -31,9 +32,11 @@ class AppServiceProvider extends ServiceProvider
         // JetstrapFacade::bootstrap4();
         // JetstrapFacade::useAdminLte3();
 
-        if(config('app.env') === 'production') {
-            \URL::forceScheme('https');
+      
+        if (app()->environment('remote')) {
+            URL::forceScheme('https');
         }
+        
 
         
   Schema::defaultStringLength(191);

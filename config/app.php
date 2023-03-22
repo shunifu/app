@@ -152,16 +152,18 @@ return [
     'sms_password' => '142c0016b4509263bc833bb83816a5e993be7a1cba74531567ac39700f5461ec',
     'sms_from'=>'Shunifu',
 
+    'FORCE_HTTPS'=>'true',
+
 
  
  
 
     'DB_CONNECTION' => 'mysql',
-    'DB_HOST' => "ypc8xu1divj9z5cj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    'DB_HOST' => "lin-18391-10577-mysql-primary.servers.linodedb.net",
     'DB_PORT' => '3306',
     'DB_DATABASE' => env('DB_NAME'),
-    'DB_USERNAME' => 'r9xoialesfxre2fb',
-    'DB_PASSWORD'=>'hdy7q3v7xcubgglt',
+    'DB_USERNAME' => 'linroot',
+    'DB_PASSWORD'=>'I.6zmYu0hUgWQpLD',
 
     // 'APP_DEBUG' => 'false',
     // 'APP_ENV' => 'production',
