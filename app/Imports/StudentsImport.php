@@ -78,7 +78,7 @@ class StudentsImport implements ToCollection, WithHeadingRow
                         'lastname'=>$row['lastname'],
                         'middlename'=>$row['middlename'],
                         'national_id'=>$row['pin'],
-                        'date_of_birth' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d'),
+                       'date_of_birth' => " ",
                         'user_code'=>$row['code'],
                      //   'cell_number'=>$row['student_cell'],
                        'gender'=>$row['gender'],
