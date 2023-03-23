@@ -26,7 +26,7 @@
 
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="{{ route('student.removal') }}" method="post">
+                <form action="/users/student/manage/removal/process" method="post">
                     <div class="card-body">
                         @csrf
                         <div class="form-row">
