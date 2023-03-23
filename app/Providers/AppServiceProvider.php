@@ -33,9 +33,9 @@ class AppServiceProvider extends ServiceProvider
         // JetstrapFacade::useAdminLte3();
 
       
-        if (app()->environment('remote')) {
-            URL::forceScheme('https');
-        }
+        URL::forceScheme('https');
+  
+       // Paginator::useBootstrap();
         
 
         
