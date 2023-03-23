@@ -603,23 +603,23 @@ $otp =  mt_rand(1000,9999);
     {
 
     
-    //     $mark=Mark::where('teacher_id',$id)->exists();
-    //     if($mark){
+        // $mark=Mark::where('teacher_id',$id)->exists();
+        // if($mark){
 
-    //         flash()->overlay('Caution. The teacher has marks attached to the marks table. Transfer those loads to another teacher first then this teacher will be deleted', 'Delete Teacher');
+        //     flash()->overlay('Caution. The teacher has marks attached to the marks table. Transfer those loads to another teacher first then this teacher will be deleted', 'Delete Teacher');
 
-    //     }else{
+        // }else{
            
-    //         $teacher_role_id=$getRole->id;
-    //         $teacher->detachRole($getRole);
-    //         $getTeacher=User::where('role_id', $teacher_role_id)->get();
-    //         $delete=User::find($id)->delete();
+        //     $teacher_role_id=$getRole->id;
+        //     $teacher->detachRole($getRole);
+        //     $getTeacher=User::where('role_id', $teacher_role_id)->get();
+        //     $delete=User::find($id)->delete();
 
-    //         flash()->overlay('<i class="fas fa-check-circle "></i>'.' Success.You have deleted teacher', 'Delete Teacher');
-    //     }
+        //     flash()->overlay('<i class="fas fa-check-circle "></i>'.' Success.You have deleted teacher', 'Delete Teacher');
+        // }
        
 
-    //     return Redirect::back();
+        // return Redirect::back();
 
     }
 
@@ -648,7 +648,7 @@ $otp =  mt_rand(1000,9999);
 
             flash()->overlay($teacher_name."'s has been reactivated from the system. The teacher will now be able to login again into the system. ", 'Reactivate Teacher');
 
-    
+
             return Redirect::back();
             
         } catch (DecryptException $e) {
@@ -665,6 +665,28 @@ $otp =  mt_rand(1000,9999);
          //deattach
 
         //make active =0
+
+
+        try {
+            $decrypted = Crypt::decryptString($id);
+            $user=User::find($decrypted);
+
+            $teacher_name=$user->name;
+            $deactivate=$user->active=0;
+            $user->save();
+
+
+            //if classteacher, remove from classs teachers list
+            //if has marks ???
+
+            flash()->overlay($teacher_name."'s has been removed from the system. The teacher will not be able to login again into the system. ", 'Remove Teacher');
+
+
+            return Redirect::back();
+            
+        } catch (DecryptException $e) {
+            return view('errors.unauthorized');
+        }
         
 
 
