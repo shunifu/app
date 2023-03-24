@@ -848,12 +848,29 @@ public function parent_update(Request $request){
         ->join('grades','grades_students.grade_id','=','grades.id')
         ->join('users','grades_students.student_id','=','users.id')
         ->join('academic_sessions','grades_students.academic_session','=','academic_sessions.id')
-        ->where('grade_id', $class_id)
-        ->where('academic_sessions.id', $session_id)
+        ->where('grades_students.grade_id', $class_id)
+        ->where('grades_students.academic_session', $session_id)
+        ->where('academic_sessions.id',$session_id )
+   //     ->where('grades_students.active',1 )
+     //   ->where('users.active',1 )
+     
         // ->where('grades_students.active',1)
-        ->select('users.id as user_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname','users.profile_photo_path', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class', 'users.active')->get();
-
+        ->select('users.id as user_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname','users.profile_photo_path', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class', 'users.active')->orderBy('lastname')->orderBy('name')->get();
+   
         return view('users.students.removal-management.view', compact('students', 'sessions', 'classes', 'session_id'));
+
+
+        // $data= DB::table('grades_students')
+        // ->join('users', 'users.id', '=', 'grades_students.student_id')
+        // ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        // ->join('academic_sessions','academic_sessions.id','=','grades_students.academic_session')
+        // ->select('grades.grade_name as grade_name','grades.id as grade_id','users.id as id', 'name', 'lastname', 'middlename', 'gender', 'date_of_birth',   'profile_photo_path')
+        // ->where('grades_students.grade_id', $grade_id)
+        // ->where('grades_students.academic_session', $session_id)
+        // ->where('academic_sessions.id',$session_id )
+        // ->where('grades_students.active',1 )
+        // ->where('users.active',1 )
+        // ->orderBy('lastname')->orderBy('name')->get();
 
 
     }
@@ -904,6 +921,24 @@ public function parent_update(Request $request){
                 }
  
                 $delete=User::find($student_list[$i])->delete();
+
+                //student detach
+            }
+        } 
+
+
+         
+        if ($request->btn=="partial_delete") {
+            for ($i = 0; $i <count($student_list); $i++) {
+               
+                $grade=StudentClass::where('student_id', $student_list[$i])->where('grade_id',$current_class )->first();
+        
+
+
+                if ($grade->exists()) {
+                   $grade=StudentClass::where('id',$grade->id)->delete();
+                }
+ 
 
                 //student detach
             }

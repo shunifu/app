@@ -88,8 +88,11 @@
                 <ul><li>This is used when you want to restore an archived student</li></ul>
 
                 <p></p>
-                <li>Deletion Method</li>
+                <li>Full Deletion Method</li>
                 <ul><li>This is used when you want to remove the student from system permanently</li></ul>
+                <p></p>
+                <li>Partial Deletion Method</li>
+                <ul><li>This is used when you want to remove the student from the grade he/she is in permanently</li></ul>
             </ol>
              </p>
               <p class="card-text">
@@ -158,6 +161,7 @@
       <div role="separator" class="dropdown-divider"></div>
       <button type="submit" name="btn" id="btn"  value="archive" class="btn btn-warning dropdown-item" >Archive</button>
       <button type="submit" name="btn" id="btn"  value="unarchive" class="btn btn-warning dropdown-item" >Unarchive</button>
+      <button type="submit" name="btn" id="btn"  value="partial_delete" class="btn btn-danger dropdown-item" >Partial Delete</button> 
       <button type="submit" name="btn" id="btn"  value="delete" class="btn btn-danger dropdown-item" >Delete</button> 
     </div>
  

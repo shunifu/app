@@ -271,6 +271,9 @@ public function view ($id){
         ->where('users.active',1 )
         ->orderBy('lastname')->orderBy('name')->get();
 
+
+        
+
       
 
         $grade=Grade::where('id', $grade_id)->first();

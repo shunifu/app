@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         // JetstrapFacade::useAdminLte3();
 
       
-        URL::forceScheme('https');
+    //    URL::forceScheme('https');
   
        // Paginator::useBootstrap();
         
