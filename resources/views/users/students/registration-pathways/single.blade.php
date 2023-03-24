@@ -61,7 +61,7 @@
 
                         <div class="col-md-4 form-group">
                             <x-jet-label>National ID</x-jet-label>
-                            <x-jet-input name="national_id" value="{{ old('national_id') }}"   type="number"  maxlength="13" placeholder="National ID" ></x-jet-input>
+                            <x-jet-input name="national_id" value="{{ old('national_id') }}"  readonly  type="number"  maxlength="13" placeholder="National ID" ></x-jet-input>
                             @error('national_id')
                             <span class="text-danger">{{$message}}</span>  
                             @enderror
@@ -69,7 +69,7 @@
                         
                         <div class="col-md-4 form-group">
                             <x-jet-label>Date of Birth</x-jet-label>
-                            <x-jet-input name="date_of_birth" type="date" value="{{ old('date_of_birth') }}"   ></x-jet-input>
+                            <x-jet-input name="date_of_birth" type="date" value="{{ old('date_of_birth') }}"  readonly  ></x-jet-input>
                             @error('date_of_birth')
                             <span class="text-danger">{{$message}}</span>  
                             @enderror
@@ -118,7 +118,7 @@
                         <!--contacts--->
                         <div class="col-md-6 form-group">
                         <x-jet-label>Student Cell Number <small>Optional</small></x-jet-label>
-                        <x-jet-input name="cell_number" value="{{ old('cell_number') }}"  type="number" maxlength="8"   placeholder="Cellphone Number" ></x-jet-input>
+                        <x-jet-input name="cell_number" value="{{ old('cell_number') }}" readonly  type="number" maxlength="8"   placeholder="Cellphone Number" ></x-jet-input>
                         @error('cell_number')
                         <span class="text-danger">{{$message}}</span>  
                         @enderror
@@ -126,7 +126,7 @@
 
                         <div class="col-md-6 form-group">
                         <x-jet-label>Student Email Address</x-jet-label>
-                        <x-jet-input name="email_address" type="email" value="{{ old('email_address') }}"  placeholder="Email Address" ></x-jet-input>
+                        <x-jet-input name="email_address" type="email" value="{{ old('email_address') }}" readonly  placeholder="Email Address" ></x-jet-input>
                         @error('email_address')
                         <span class="text-danger">{{$message}}</span>  
                         @enderror
@@ -136,7 +136,7 @@
 
                        <hr>
                       
-<p class="lead strong">Parent Contact Information</p>
+{{-- <p class="lead strong">Parent Contact Information</p>
 
 <div class="form-row">
 <div class="col-md-6 form-group">
@@ -157,7 +157,7 @@
     @enderror
     </div>
 
- </div>
+ </div> --}}
                                 
                 </div>
                 <!-- /.card-body -->

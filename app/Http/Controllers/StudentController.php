@@ -1421,11 +1421,11 @@ public function process_transfer($student_id,$transfer_to){
              'name'=>$request->first_name,
              'middlename'=>$request->middle_name,
              'lastname'=>$request->last_name,
-             'national_id'=>$request->national_id,
-             'date_of_birth'=>$request->date_of_birth,
+            //  'national_id'=>$request->national_id,
+            //  'date_of_birth'=>$request->date_of_birth,
              'gender'=>$request->gender,
-             'cell_number'=>$request->cell_number,
-             'email'=>$request->email_address,
+            //  'cell_number'=>$request->cell_number,
+            //  'email'=>$request->email_address,
              'password'=>Hash::make(Str::random(4)),
              'status'=>1,
              'role_id'=>$student->id,
@@ -1450,30 +1450,35 @@ public function process_transfer($student_id,$transfer_to){
 
         
 
-            if(is_null($request->parent_cell)){
-                $parent_cell='';
-            }
+        //     if(is_null($request->parent_cell)){
+              
 
-            if(is_null($request->parent_email)){
-                $parent_email='';
-            }
 
-            //add parent to users table
-            $parent = User::create([ 
-                'cell_number'=>$parent_cell,
-                'email'=>$parent_email,
-                'password'=>Hash::make(Str::random(4)),
-                'status'=>1,
-                'role_id'=>$parent_role->id,
-           ]);
-           $parent->attachRole($parent_role);
-           $parent_id=$parent->id;
+        //     }else{
+        //           //add parent to users table
+        //           $parent_cell='';
+        //     $parent = User::create([ 
+        //         'cell_number'=>$parent_cell,
+        //         'email'=>$parent_email,
+        //         'password'=>Hash::make(Str::random(4)),
+        //         'status'=>1,
+        //         'role_id'=>$parent_role->id,
+        //    ]);
+        //    $parent->attachRole($parent_role);
+        //    $parent_id=$parent->id;
 
-            //Linking parent to student:
-            $parent_student=ParentStudent::create([
-            'parent_id'=>$parent_id,
-            'student_id'=>$student_id,
-           ]);
+        //     //Linking parent to student:
+        //     $parent_student=ParentStudent::create([
+        //     'parent_id'=>$parent_id,
+        //     'student_id'=>$student_id,
+        //    ]);
+        //     }
+
+        //     if(is_null($request->parent_email)){
+        //         $parent_email='';
+        //     }
+
+          
 
         
 
