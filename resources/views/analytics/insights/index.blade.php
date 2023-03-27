@@ -103,10 +103,6 @@
                                     <option value="scoresheet">Mark Sheets</option>
                                     <option value="report_card"> Report Cards</option>
                                     <option value="analysis">Academic Performance Data</option>
-                                  
-                                
-                                   
-                                  
                                 </select>
                                 @error('outcome')
                                     <span class="text-danger">{{ $message }}</span>
@@ -116,7 +112,7 @@
 
                             <div class="col-md-3  form-group template">
                                 <x-jet-label>Report Template</x-jet-label>
-                                <select class="form-control " name="outcome" id="template">
+                                <select class="form-control " name="template" id="template">
                                     <option value="">Select Template</option>
                                   
                                    @foreach ($templates as $template)

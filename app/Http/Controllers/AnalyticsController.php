@@ -224,6 +224,8 @@ class AnalyticsController extends Controller
 
     public function generate(Request $request){
 
+        dd($request->all());
+
 
     //validation //you have to redo validation
     $validation=$request->validate([
@@ -231,7 +233,7 @@ class AnalyticsController extends Controller
         'baseline'=>'required',
         'baseline_group'=>'required',
         'category'=>'required',
-        'outcome'=>'required',
+        // 'outcome'=>'required',
 
     ]);
 
@@ -256,6 +258,8 @@ class AnalyticsController extends Controller
 
         //Beginning of Assessement Stream-Based outcomes
         if ($request->category=="stream") {
+
+         //   dd($request->all());
             
 
             //chosen stream

@@ -103,6 +103,7 @@ if ($baseline=="assessement") {
         ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
         ->where('grades.stream_id', $stream)
         ->where('grades_students.active', 1)
+        ->where('users.active', 1)
         ->get()->pluck('student_id');
       
       

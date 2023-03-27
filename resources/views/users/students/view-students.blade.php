@@ -302,7 +302,7 @@
                           <th>Name</th>
                           <th>Middlename</th>
                           <th>Class</th>
-                       
+                       <th>Image Upload</th>
                           <th>View Profile</th>
                           @role('bursar')
                           <th>Make Payment</th>
@@ -472,12 +472,12 @@
        @role('admin_teacher')
 
        $('tbody').append('<tr>\
+        <td>  <img src="" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt=""></td>\
                     <td>'+lastname+'</td>\
                     <td>'+name+'</td>\
                     <td>'+middlename+'</td>\
                     <td>'+item.grade_name+'-'+item.academic_session+'</td>\
-                    <td>'+cell+'</td>\
-                    <td> <form action="/student/image/upload" method="POST" enctype="multipart/form-data">@csrf<input id="upload" name="student_image" type="file"/> <input type="hidden" name="student_id" value='+item.id+'><button type="submit" class="btn"><i class="fa fa-check"></i></button></form></td>\
+                    <td> <form action="/student/image/upload" method="POST" enctype="multipart/form-data">@csrf<input id="upload" name="student_image" type="file"/> <input type="hidden" name="student_id" value='+item.id+'></form></td>\
                     <td><a href=/users/profile/student/'+item.id+'>Visit Profile</a></td>\
                     </tr>'  );  
 
@@ -537,6 +537,7 @@
                     <td>'+name+'</td>\
                     <td>'+middlename+'</td>\
                     <td>'+item.grade_name+'-'+item.academic_session+'</td>\
+                    <td> <form action="/student/image/upload" method="POST" enctype="multipart/form-data">@csrf<input id="upload" name="student_image" type="file"/> <input type="hidden" name="student_id" value='+item.id+'></form></td>\
                     <td><a href=/users/profile/student/'+item.id+'>Visit Profile</a></td>\
                     </tr>'  );
                 });
@@ -586,6 +587,7 @@
                     <td>'+name+'</td>\
                     <td>'+middlename+'</td>\
                     <td>'+item.grade_name+'-'+item.academic_session+'</td>\
+                    <td> <form action="/student/image/upload" method="POST" enctype="multipart/form-data">@csrf<input id="upload" name="student_image" type="file"/> <input type="hidden" name="student_id" value='+item.id+'></form></td>\
                     <td><a href=/users/profile/student/'+item.id+'>Visit Profile</a></td>\
                     @role('bursar')\
                     <td><button type="button" value="'+item.id+'" class=" '+item.id+' btn btn-secondary btn-sm" id="'+item.grade_id+'" >Quick Pay</button> </td>\

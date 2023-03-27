@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Redirect;
 use Svg\Tag\Rect;
 use App\Traits\GreetingsTrait;
 use App\Traits\MarksTrait;
+use Illuminate\Support\Facades\Schema;
 
 class MarkController extends Controller
 {
@@ -57,6 +58,15 @@ class MarkController extends Controller
              //Check if mode set
 
         //check marks mode
+
+        if (!Schema::hasTable('mark_settings')) {
+            Schema::create('mark_settings', function($table){
+                  
+                   $table->id();
+                   $table->integer('marks_mode');
+                   $table->timestamps();
+           });
+       }
 
         $checkmode=MarkSetting::first();
 
