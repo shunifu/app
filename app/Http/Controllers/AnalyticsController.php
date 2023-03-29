@@ -457,6 +457,13 @@ $isAdminTeacher= Auth::user()->hasRole('admin_teacher');
 
         //Add teachers
 
+
+        Schema::table('assessement_progress_reports', function ($table) {
+       
+            $table->float('student_average')->change();
+            
+        });
+
         if($isAdminTeacher OR $isPrincipal OR $isTeacher){
 
     
