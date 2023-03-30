@@ -1415,7 +1415,7 @@ foreach ($term_average as $student_term_data) {
                             <?php
                         
 
-$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grade_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 "));
+$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grade_teachers.academic_sessions where grade_id=".$classofstudent." AND academic_sessions.active=1 "));
 foreach ($class_t as $key_t) {
 
 echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
