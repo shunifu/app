@@ -423,7 +423,8 @@ WHERE sub.student_id=".$student.""));
                         Term: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
                         <br>
 
-                        Term Opening Date <span class="text-bold">{{$student_term_data->start_date}}</span>
+                        Term Opening Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->start_date)->format('d M y')}}</span>
+                        
                         <br>
                         Term Closing Date <span class="text-bold">{{$student_term_data->end_date}}</span>
                         <br>
@@ -923,7 +924,7 @@ SET @sql = CONCAT('SELECT
     subjects.subject_name as Subject, 
     ', @sql, ',
    
-    ROUND(student_subject_averages.ca_average) as CA,
+
     ROUND(student_subject_averages.student_average) as Average,
     
     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
