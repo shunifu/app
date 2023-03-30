@@ -428,9 +428,9 @@ WHERE sub.student_id=".$student.""));
                         <br>
                         Term Closing Date <span class="text-bold">{{$student_term_data->end_date}}</span>
                         <br>
-                        Next Term Date: <span class="text-bold">{{$student_term_data->next_term_date}}</span>
+                        {{-- Next Term Date: <span class="text-bold">{{$student_term_data->next_term_date}}</span>
 
-                        <br>
+                        <br> --}}
                         Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
                         <br>
 
