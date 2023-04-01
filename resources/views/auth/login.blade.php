@@ -22,15 +22,6 @@
 <meta name="apple-mobile-web-app-title" content="PWA">
 <link rel="apple-touch-icon" href="{{config('app.school_logo')}}">
 
-{{-- window.addEventListener('installready', function(e){
-				
-      //Show your own installation UI
-      //Include our Install Button code for best results
-      //e.detail.ios is true if the user is on Safari/iOS. 
-      //Or false if it's a native prompt (all other platforms)
-      console.log(e.detail.ios); 
-    
-}); --}}
 
 
 <script>
