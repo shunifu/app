@@ -89,7 +89,7 @@ th span {
          <th><span>Student</span></th>
          <th><span>Class</span></th>
          <th><span>Average</span></th>
-          <th><span>Ratio</span></th>
+      
          <th><span>Comment</span></th>
          <th><span>English Language</span> </th>
          <th><span>Maths</span></th>
@@ -185,6 +185,10 @@ th span {
                     </td>
 
                     <td class="align-middle p-2">
+                        {{ $student->grade_name }}
+                    </td>
+
+                    <td class="align-middle p-2">
                         @if ($student->remark =="Passed")
                         <i class="fas fa-check-circle text-success"></i> {{$student->remark}}
                             @else
@@ -194,9 +198,7 @@ th span {
                     </td> 
         
 
-                    <td class="align-middle p-2">
-                        {{ $student->grade_name }}
-                    </td>
+                 
                     
                     
                     <td class="align-middle p-2">
