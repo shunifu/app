@@ -803,7 +803,7 @@ from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=stu
             <th class="background">Subject Position</th>   
             <th class="background">Symbol</th>
             <th class="background">Comment</th>
-            <th class="background">Teacher</th>
+            {{-- <th class="background">Teacher</th> --}}
 
         </tr>
     </thead>
@@ -930,8 +930,7 @@ SET @sql = CONCAT('SELECT
     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
      (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
   
-     
-     CONCAT(users.salutation, users.lastname) Teacher
+
      from marks 
     INNER JOIN assessements ON assessements.id = marks.assessement_id
     INNER JOIN c_a__exams ON c_a__exams.assessement_id=assessements.id
