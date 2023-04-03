@@ -2164,7 +2164,7 @@ if ($request->indicator=="summary_scoresheet") {
         // dd($tie_type);
 
       if($school_data->school_type=="primary-school"){
-        return view('analytics.term-analytics.view-primary',compact('key','scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat','type_key'));
+        return view('analytics.term-analytics.view-primary-scoresheet',compact('key','scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat','type_key'));
          }else{
 
             return view('analytics.term-analytics.view',compact('scoresheet','stream_title','title', 'section_id', 'term_name', 'pass_rate', 'number_of_subjects', 'term', 'stream', 'tie_type', 'passing_subject_rule', 'indicator', 'total_passed', 'total_students', 'total_failed', 'pass_rate_percentage', 'fail_rate_percentage', 'total_progression', 'total_promoted', 'total_expelled', 'int','total_repeat','type_key'));
