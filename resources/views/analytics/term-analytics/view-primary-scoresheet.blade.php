@@ -85,34 +85,34 @@ th span {
             
            <th>Status</th> 
          @endif
-            <th><span>Position</span></th> 
-            <th><span>Student</span></th>
-            <th><span>Average</span></th>
-            <th><span>Comment</span></th>
-            <th><span>Class</span></th>
-
-            <th><span>English Language</span></th>
-            <th><span>Maths</span></th>
-            <th><span>Siswati</span></th>
-            <th><span>Science</span></th>
-            <th><span>Social Studies</span></th>
-            <th><span>RE</span></th>
-            <th><span>Agriculture</span></th>
-            <th><span>French</span></th>
-            <th><span>ICT</span></th>
-            <th><span>Consumer</span></th>
-            <th><span>PA</span></th>
-
-        
-         
-
-            @foreach (\App\Models\School::all() as $item)
-
-            @if ($item->school_code=="0563")
-            <th><span>Fine Arts</span></th>
-            <th><span>Soap Craft</span></th>
-            <th><span>Shoe Craft</span></th>
-            <th><span>Hand Craft</span></th>
+         <th><span>Position</span></th> 
+         <th><span>Student</span></th>
+         <th><span>Class</span></th>
+         <th><span>Average</span></th>
+          <th><span>Ratio</span></th>
+         <th><span>Comment</span></th>
+         <th><span>English Language</span> </th>
+         <th><span>Maths</span></th>
+         <th><span>Siswati</span></th>
+         <th><span>Religious Education</span></th>
+         <th><span>Science</span></th>
+         <th><span>Social Studies</span></th>
+         <th><span>Practical Arts</span></th>
+         <th><span>General Studies</span></th>
+         <th><span>Agriculture</span></th>
+         <th><span>Expressive Arts</span></th>
+         <th><span>ICT</span></th>
+         <th><span>ConsumerScience</span></th>
+         <th><span>HPE</span></th>
+       
+    
+         @foreach (\App\Models\School::all() as $item)
+ 
+         @if ($item->school_code=="0563")
+         <th><span>Fine Arts</span></th>
+         <th><span>Soap Craft</span></th>
+         <th><span>Shoe Craft</span></th>
+         <th><span>Hand Craft</span></th>
             @endif
             @endforeach
           
@@ -201,158 +201,148 @@ th span {
                     
                     <td class="align-middle p-2">
                         @if ($student->EnglishLanguage>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->EnglishLanguage)}} </span>
+                        <span class="text-secondary">{{ $student->EnglishLanguage}}% </span>
                        
                    
                         @elseif(is_null($student->EnglishLanguage))
                         -
                         @elseif($student->EnglishLanguage<$pass_rate )
-                        <span class="text-danger">{{round($student->EnglishLanguage)}} </span>
+                        <span class="text-danger">{{ $student->EnglishLanguage}}% </span>
                         @endif
                         
                     </td>
-
-                
-                
-            
-         
-               
+                    
                     <td class="align-middle p-2">
                        
-                        @if ($student->Maths>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->Maths)}} </span>
-                        @elseif(is_null($student->Maths))
+                        @if ($student->Mathametics>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Mathametics}}% </span>
+                        @elseif(is_null($student->Mathametics))
                         -
-                        @elseif($student->Maths<$pass_rate )
-                        <span class="text-danger">{{ round($student->Maths)}} </span>
+                        @elseif($student->Mathametics<$pass_rate )
+                        <span class="text-danger">{{ $student->Mathametics}}% </span>
                         @endif
                         
                     </td>
                     <td class="align-middle p-2">
                        
                         @if ($student->Siswati>=$pass_rate)
-                        <span class="text-secondary">{{round ($student->Siswati)}} </span>
+                        <span class="text-secondary">{{ $student->Siswati}}% </span>
                         @elseif(is_null($student->Siswati))
                         -
                         @elseif($student->Siswati<$pass_rate )
-                        <span class="text-danger">{{round($student->Siswati)}} </span>
+                        <span class="text-danger">{{ $student->Siswati}}% </span>
                         @endif
                     </td>
                     
-            
-      
-                    <td class="align-middle p-2">
-                        
-                      
-                        @if ($student->Science>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->Science)}} </span>
-                        @elseif(is_null($student->Science))
-                        -
-                        @elseif($student->Science<$pass_rate )
-                        <span class="text-danger">{{ round($student->Science)}} </span>
-                        @endif
-                    </td>
-
                 
-                    <td class="align-middle p-2">
-                        @if ($student->SocialStudies>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->SocialStudies)}} </span>
-                        @elseif(is_null($student->SocialStudies))
-                        -
-                        @elseif($student->SocialStudies<$pass_rate )
-                        <span class="text-danger">{{ round($student->SocialStudies)}} </span>
-                        @endif
-                    </td>
-                    <td class="align-middle p-2">
-                        @if ($student->Science>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->Science)}} </span>
-                        @elseif(is_null($student->Science))
-                        -
-                        @elseif($student->Science<$pass_rate )
-                        <span class="text-danger">{{ round($student->Science)}} </span>
-                        @endif
-                    </td>
-
-                    <td class="align-middle p-2">
-                        @if ($student->SocialStudies>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->SocialStudies)}} </span>
-                        @elseif(is_null($student->SocialStudies))
-                        -
-                        @elseif($student->SocialStudies<$pass_rate )
-                        <span class="text-danger">{{ round($student->SocialStudies)}} </span>
-                        @endif
-                    </td>
-
 
                     <td class="align-middle p-2">
                         @if ($student->RE>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->RE)}} </span>
+                        <span class="text-secondary">{{ $student->RE}}% </span>
                         @elseif(is_null($student->RE))
                         -
                         @elseif($student->RE<$pass_rate )
-                        <span class="text-danger">{{ round($student->RE)}} </span>
+                        <span class="text-danger">{{ $student->RE}}% </span>
                         @endif
                     </td>
-
-                  
-
                     <td class="align-middle p-2">
-                        @if ($student->Agriculture>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->Agriculture)}} </span>
-                        @elseif(is_null($student->Agriculture))
+                        @if ($student->Science>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Science}}% </span>
+                        @elseif(is_null($student->Science))
                         -
-                        @elseif($student->Agriculture<$pass_rate )
-                        <span class="text-danger">{{ round($student->Agriculture)}} </span>
+                        @elseif($student->Science<$pass_rate )
+                        <span class="text-danger">{{ $student->Science}}% </span>
                         @endif
                     </td>
-
-
-
                     <td class="align-middle p-2">
-                        @if ($student->French>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->French)}} </span>
-                        @elseif(is_null($student->French))
+                        @if ($student->SocialStudies>=$pass_rate)
+                        <span class="text-secondary">{{ $student->SocialStudies}}% </span>
+                        @elseif(is_null($student->SocialStudies))
                         -
-                        @elseif($student->French<$pass_rate )
-                        <span class="text-danger">{{ round($student->French)}} </span>
-                        @endif
-                    </td>
-
-                    <td class="align-middle p-2">
-                        @if ($student->ICT>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->ICT)}} </span>
-                        @elseif(is_null($student->ICT))
-                        -
-                        @elseif($student->ICT<$pass_rate )
-                        <span class="text-danger">{{ round($student->ICT)}} </span>
-                        @endif
-                    </td>
-
-                    <td class="align-middle p-2">
-                        @if ($student->Consumer>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->Consumer)}} </span>
-                        @elseif(is_null($student->Consumer))
-                        -
-                        @elseif($student->Consumer<$pass_rate )
-                        <span class="text-danger">{{ round($student->Consumer)}} </span>
+                        @elseif($student->SocialStudies<$pass_rate )
+                        <span class="text-danger">{{ $student->SocialStudies}}% </span>
                         @endif
                     </td>
 
                     <td class="align-middle p-2">
                         @if ($student->PracticalArts>=$pass_rate)
-                        <span class="text-secondary">{{ round($student->PracticalArts)}} </span>
+                        <span class="text-secondary">{{ $student->PracticalArts}}% </span>
                         @elseif(is_null($student->PracticalArts))
                         -
                         @elseif($student->PracticalArts<$pass_rate )
-                        <span class="text-danger">{{ round($student->PracticalArts)}} </span>
+                        <span class="text-danger">{{ $student->PracticalArts}}% </span>
                         @endif
                     </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->GeneralStudies>=$pass_rate)
+                        <span class="text-secondary">{{ $student->GeneralStudies}}% </span>
+                        @elseif(is_null($student->GeneralStudies))
+                        -
+                        @elseif($student->GeneralStudies<$pass_rate )
+                        <span class="text-danger">{{ $student->GeneralStudies}}% </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->Agriculturep>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Agriculturep}}% </span>
+                        @elseif(is_null($student->Agriculturep))
+                        -
+                        @elseif($student->Agriculturep<$pass_rate )
+                        <span class="text-danger">{{ $student->Agriculturep}}% </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->ExpressiveArts>=$pass_rate)
+                        <span class="text-secondary">{{ $student->ExpressiveArts}}% </span>
+                        @elseif(is_null($student->ExpressiveArts))
+                        -
+                        @elseif($student->ExpressiveArts<$pass_rate )
+                        <span class="text-danger">{{ $student->ExpressiveArts}}% </span>
+                        @endif
+                    </td>
+
+                    
+
+                    <td class="align-middle p-2">
+                        @if ($student->ICTp>=$pass_rate)
+                        <span class="text-secondary">{{ $student->ICTp}}% </span>
+                        @elseif(is_null($student->ICTp))
+                        -
+                        @elseif($student->ICTp<$pass_rate )
+                        <span class="text-danger">{{ $student->ICTp}}% </span>
+                        @endif
+                    </td>
+                    <td class="align-middle p-2">
+                        @if ($student->ConsumerSciencep>=$pass_rate)
+                        <span class="text-secondary">{{ $student->ConsumerSciencep}}% </span>
+                        @elseif(is_null($student->ConsumerSciencep))
+                        -
+                        @elseif($student->ConsumerSciencep<$pass_rate )
+                        <span class="text-danger">{{ $student->ConsumerSciencep}}% </span>
+                        @endif
+                    </td>
+                    
+                  
+                    <td class="align-middle p-2">
+                        @if ($student->HPE>=$pass_rate)
+                        <span class="text-secondary">{{ $student->HPE}}% </span>
+                        @elseif(is_null($student->HPE))
+                        -
+                        @elseif($student->HPE<$pass_rate )
+                        <span class="text-danger">{{ $student->HPE}}% </span>
+                        @endif
+                    </td>
+
+               
+
                    
-
-
                     @foreach (\App\Models\School::all() as $item)
 
                     @if ($item->school_code=="0563")
+                   
                     <td class="align-middle p-2">
                         @if ($student->FineArts>=$pass_rate)
                         <span class="text-secondary">{{ $student->FineArts}}% </span>
@@ -363,7 +353,7 @@ th span {
                         @endif
                     </td>
 
-              <td class="align-middle p-2">
+                    <td class="align-middle p-2">
                         @if ($student->SoapCraft>=$pass_rate)
                         <span class="text-secondary">{{ $student->SoapCraft}}% </span>
                         @elseif(is_null($student->SoapCraft))
@@ -371,27 +361,27 @@ th span {
                         @elseif($student->SoapCraft<$pass_rate )
                         <span class="text-danger">{{ $student->SoapCraft}}% </span>
                         @endif
-                </td>
-                   
+                    </td>
 
-                <td class="align-middle p-2">
-                    @if ($student->ShoeCraft>=$pass_rate)
-                    <span class="text-secondary">{{ $student->ShoeCraft}}% </span>
-                    @elseif(is_null($student->ShoeCraft))
-                    -
-                    @elseif($student->ShoeCraft<$pass_rate )
-                    <span class="text-danger">{{ $student->ShoeCraft}}% </span>
-                    @endif
-            </td>
-            <td class="align-middle p-2">
-                @if ($student->HandCraft>=$pass_rate)
-                <span class="text-secondary">{{ $student->HandCraft}}% </span>
-                @elseif(is_null($student->HandCraft))
-                -
-                @elseif($student->HandCraft<$pass_rate )
-                <span class="text-danger">{{ $student->HandCraft}}% </span>
-                @endif
-             </td>
+                    <td class="align-middle p-2">
+                        @if ($student->ShoeCraft>=$pass_rate)
+                        <span class="text-secondary">{{ $student->ShoeCraft}}% </span>
+                        @elseif(is_null($student->ShoeCraft))
+                        -
+                        @elseif($student->ShoeCraft<$pass_rate )
+                        <span class="text-danger">{{ $student->ShoeCraft}}% </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->HandCraft>=$pass_rate)
+                        <span class="text-secondary">{{ $student->HandCraft}}% </span>
+                        @elseif(is_null($student->HandCraft))
+                        -
+                        @elseif($student->HandCraft<$pass_rate )
+                        <span class="text-danger">{{ $student->HandCraft}}% </span>
+                        @endif
+                    </td>
                     @endif
                     @endforeach
            
