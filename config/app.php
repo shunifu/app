@@ -156,12 +156,12 @@ return [
  
  
 
-    // 'DB_CONNECTION' => 'mysql',
-    // 'DB_HOST' => "SG-shunifu-7434-mysql-master.servers.mongodirector.com",
-    // 'DB_PORT' => '3306',
-    // 'DB_DATABASE' => env('DB_NAME'),
-    // 'DB_USERNAME' => 'sgroot',
-    // 'DB_PASSWORD'=>'afJXY$HvTCnQ8pP4',
+    'DB_CONNECTION' => 'mysql',
+    'DB_HOST' => "SG-shunifu-7434-mysql-master.servers.mongodirector.com",
+    'DB_PORT' => '3306',
+    'DB_DATABASE' => env('DB_NAME'),
+    'DB_USERNAME' => 'sgroot',
+    'DB_PASSWORD'=>'afJXY$HvTCnQ8pP4',
 
     // 'APP_DEBUG' => 'false',
     // 'APP_ENV' => 'production',
@@ -180,12 +180,12 @@ return [
     // 'DB_PASSWORD'=>'',
 
 
-    'DB_CONNECTION' => 'mysql',
-    'DB_HOST' => "ypc8xu1divj9z5cj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-    'DB_PORT' => '3306',
-    'DB_DATABASE' => env('DB_NAME'),
-    'DB_USERNAME' => 'r9xoialesfxre2fb',
-    'DB_PASSWORD'=>'hdy7q3v7xcubgglt',
+    // 'DB_CONNECTION' => 'mysql',
+    // 'DB_HOST' => "ypc8xu1divj9z5cj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    // 'DB_PORT' => '3306',
+    // 'DB_DATABASE' => env('DB_NAME'),
+    // 'DB_USERNAME' => 'r9xoialesfxre2fb',
+    // 'DB_PASSWORD'=>'hdy7q3v7xcubgglt',
 
 'DB_CONNECTION_CENTRAL'=>'shunifu_console',
 'DB_HOST_CENTRAL'=>'127.0.0.1',
