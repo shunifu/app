@@ -434,10 +434,10 @@ WHERE sub.student_id=".$student.""));
                         Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
                         <br>
 
-                        @if ($variable->student_attendance==0)
+                      
 
                    
-                        @else
+                       
 
                         <?php
 
@@ -457,7 +457,7 @@ WHERE sub.student_id=".$student.""));
 
                 
                              
-                        @endif
+                       
       <br>
                         Report regenerated: <span class="text-bold text-italic">{{date('d F Y H:i')}}</span>
                         <br>
