@@ -931,7 +931,7 @@ SET @sql = CONCAT('SELECT
      (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
   
      
-     concat(salutation, lastname) Teacher
+     CONCAT(salutation, name) Teacher
      from marks 
     INNER JOIN assessements ON assessements.id = marks.assessement_id
     INNER JOIN c_a__exams ON c_a__exams.assessement_id=assessements.id
@@ -1129,7 +1129,7 @@ $db->close();
 @if ($report_template->report_colums=="vulamasango_template")
 @php
 
-$db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
+$db=mysqli_connect(config("app.DB_HOST"),config("app.DB_USERNAME"),config("app.DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
 $result = $db->multi_query("SET @sql = NULL;
 SET SESSION group_concat_max_len = 1000000;
     SELECT
@@ -1148,11 +1148,8 @@ SET @sql = CONCAT('SELECT
     ', @sql, ',
     
     ROUND(student_subject_averages.ca_average) as CA,
-    ROUND(student_subject_averages.ca_piece) as CA_Weight,
-    ROUND(student_subject_averages.exam_piece) as Exam_Weight,
-    ROUND(student_subject_averages.student_average) as Average,
-    
    
+
     
     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
      (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
