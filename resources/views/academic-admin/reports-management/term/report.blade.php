@@ -928,7 +928,10 @@ SET @sql = CONCAT('SELECT
     ROUND(student_subject_averages.student_average) as Average,
     
     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
-     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol
+     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
+  
+     
+     CONCAT(users.salutation, users.lastname) Teacher
      from marks 
     INNER JOIN assessements ON assessements.id = marks.assessement_id
     INNER JOIN c_a__exams ON c_a__exams.assessement_id=assessements.id
