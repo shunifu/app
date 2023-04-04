@@ -1184,11 +1184,19 @@ return view('users.students.parent-link.index',compact('streams'));
 public function  parent_link_class_teacher(Request $request){
 
     $session=AcademicSession::where('active',1)->first();
-    $streams=DB::table('grades_teachers')
-    ->join('academic_sessions','grades_teachers.academic_session','=','academic_sessions.id')
-    ->join('grades','grades_teachers.grade_id','=','grades.id')
-    ->where('grades_teachers.teacher_id', Auth::user()->id)
-    ->where('grades_teachers.academic_session', $session->id)
+    // $streams=DB::table('grades_teachers')
+    // ->join('academic_sessions','grades_teachers.academic_session','=','academic_sessions.id')
+    // ->join('grades','grades_teachers.grade_id','=','grades.id')
+    // // ->where('grades_teachers.teacher_id', Auth::user()->id)
+    // // ->where('grades_teachers.academic_session', $session->id)
+    // ->select('grades.id as grade_id', 'grades.grade_name')->get();
+
+
+       $streams=DB::table('grades')
+
+    // ->join('grades','grades_teachers.grade_id','=','grades.id')
+    // ->where('grades_teachers.teacher_id', Auth::user()->id)
+    // ->where('grades_teachers.academic_session', $session->id)
     ->select('grades.id as grade_id', 'grades.grade_name')->get();
 
     return view('users.students.parent-link.index_classteacher',compact('streams'));      
