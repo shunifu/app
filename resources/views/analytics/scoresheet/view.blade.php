@@ -101,6 +101,7 @@ th span {
         @foreach (\App\Models\School::all() as $item)
 
         @if ($item->school_type=="high-school")
+        <th><span>Computer</span> </th>
         <th><span>Eng Lang</span> </th>
         <th><span>Eng Lit</span></th>
         <th><span>Maths</span></th>
@@ -292,6 +293,19 @@ where student_id = ".$student->learner_id.""));
                     @foreach (\App\Models\School::all() as $item)
 
                     @if ($item->schoo_type=="high-school")
+
+                    <td class="align-middle p-2">
+                        @if ($student->Computer>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Computer}}% </span>
+                       
+                   
+                        @elseif(is_null($student->Computer))
+                        -
+                        @elseif($student->Computer<$pass_rate )
+                        <span class="text-danger">{{ $student->Computer}}% </span>
+                        @endif
+                        
+                    </td>
                    
                     <td class="align-middle p-2">
                         @if ($student->EnglishLanguage>=$pass_rate)
@@ -418,7 +432,7 @@ where student_id = ".$student->learner_id.""));
                         <span class="text-secondary">{{ $student->Agriculture}}% </span>
                         @elseif(is_null($student->Agriculture))
                         -
-                        @elseif($student->Agriculture<$pass_rate )
+                        @elseif($student->Agriculture<$pass_rate ) 
                         <span class="text-danger">{{ $student->Agriculture}}% </span>
                         @endif
                     </td>
