@@ -38,7 +38,7 @@
                             <select class="form-control" name="stream_id" id="stream_id">
                                 <option value="">Select Stream</option>
                                 @foreach($streams as $stream)
-                                    <option value="{{ $stream->id }}"> {{ $stream->stream_name }}</option>
+                                    <option value="{{ $stream->id }}"> {{ $stream->grade_name }}</option>
                                 @endforeach
                             </select>
                             @error('stream_id')
