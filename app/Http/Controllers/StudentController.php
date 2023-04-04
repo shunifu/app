@@ -1177,7 +1177,7 @@ public function parent_update(Request $request){
 
 
 public function  parent_link(Request $request){
-$streams=Stream::all();
+$streams=Grade::all();
 return view('users.students.parent-link.index',compact('streams'));      
 }
 
