@@ -109,6 +109,12 @@
                             <div class="col form-group">
                                 <x-jet-label> Select Channels</x-jet-label>
                               <br>
+                              @role('shunifu')
+                              <input type="checkbox" id="channel"   name="channel" value="sms">
+                              SMS
+                              <br>
+
+                              @endrole
                                 <input type="checkbox" id="channel"  disabled name="channel" value="sms">
                                 SMS
                                 <br>
