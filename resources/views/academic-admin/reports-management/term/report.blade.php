@@ -434,13 +434,10 @@ WHERE sub.student_id=".$student.""));
                         Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
                         <br>
 
-                      
-
-                   
-                       
+                          
 
                         <?php
-
+ 
                         $attendance=\DB::select(\DB::raw("SELECT number_of_absent_days FROM cummulative_attendances WHERE student_id=".$student." AND term_id=".$term.""));
                     
                         
@@ -1412,13 +1409,13 @@ foreach ($term_average as $student_term_data) {
                             <?php
                         
 
-$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 "));
-foreach ($class_t as $key_t) {
+// $class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 "));
+// foreach ($class_t as $key_t) {
 
-echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
+// echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
 
 
-}
+// }
 
 
 
