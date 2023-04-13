@@ -67,7 +67,7 @@ class JetstreamServiceProvider extends ServiceProvider
           
             
             if(!($user && Hash::check($request->password, $user->password))){
-                $request->session()->flash('error', 'Login credentials incorrect. If problem persists please consult the system administrator. Siyabonga!');
+                $request->session()->flash('error', 'Login details are incorrect. Either or username or password is wrong.  If problem persists please consult the system administrator. Siyabonga!');
                 return false;
 
             }
