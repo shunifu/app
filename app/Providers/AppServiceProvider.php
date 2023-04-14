@@ -36,9 +36,16 @@ class AppServiceProvider extends ServiceProvider
     //    URL::forceScheme('https');
   
        // Paginator::useBootstrap();
+
+
+       if (env('APP_ENV') === 'production') {
+        $this->app['request']->server->set('HTTPS','on');
+        URL::forceScheme('https');
+    }else{
         
-       $this->app['request']->server->set('HTTPS','on');
-       URL::forceScheme('https');
+    }
+        
+   
         
   Schema::defaultStringLength(191);
 

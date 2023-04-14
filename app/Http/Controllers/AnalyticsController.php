@@ -468,8 +468,8 @@ $isAdminTeacher= Auth::user()->hasRole('admin_teacher');
 
     
 
-            // flash()->overlay('<i class="fas fa-check-circle text-success"></i> Update. The Scoresheet module is undergoing an upgrade. Please check back later', 'Update Notice');
-            // return redirect()->back();
+            flash()->overlay('<i class="fas fa-check-circle text-success"></i> Update. The Scoresheet module is undergoing an upgrade. Please check back later', 'Update Notice');
+            return redirect()->back();
           //  $request->exists('class_name')
             if($request->exists('class_name')){
 
