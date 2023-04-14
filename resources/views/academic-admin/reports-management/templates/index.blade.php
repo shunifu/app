@@ -65,7 +65,7 @@
           <option value="ca_exam"> CA & Exam</option>
           <option value="term_assessements">Term Assessements</option>
           <option value="vulamasango_template">Term /w Weights Template</option>
-     
+          <option value="scoresheet">Symbol Based Scoresheet</option>
         </select>
       
           @error('report_columns')
