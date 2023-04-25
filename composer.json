@@ -52,7 +52,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "filp/whoops": "^2.15",
-        "laravel/sail": "^0.0.5",
+        "laravel/sail": "^1.21",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^6.1",
         "nunomaduro/larastan": "^2.0",
