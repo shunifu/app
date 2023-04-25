@@ -2,4 +2,4 @@
 
 @section('title', __('System Ugrade'))
 @section('code', '503')
-@section('message', __('Shunifu is currently undergoing an ugrade. Please try again later. Siyabonga'))
+@section('message', __('Shunifu is currently undergoing an upgrade. Please try again later. Siyabonga'))
