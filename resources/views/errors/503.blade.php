@@ -1,5 +1,5 @@
 @extends('errors::minimal')
 
-@section('title', __('Service Unavailable'))
+@section('title', __('System Ugrade'))
 @section('code', '503')
-@section('message', __('Service Unavailable'))
+@section('message', __('Shunifu is currently undergoing an ugrade. Please try again later. Siyabonga'))
