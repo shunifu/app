@@ -1826,7 +1826,7 @@
                 </section>
 
                 <!-- Main content -->
-                <x:notify-messages />
+                {{-- <x:notify-messages /> --}}
                 <section class="content">
                     <div class="container-fluid">
         
