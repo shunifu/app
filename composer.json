@@ -34,7 +34,7 @@
         "livewire/livewire": "^2.10",
         "maatwebsite/excel": "^3.1",
         "mavinoo/laravel-batch": "^2.2",
-        "mckenziearts/laravel-notify": "^2.1",
+        "mckenziearts/laravel-notify": "^2.4",
         "messagebird/php-rest-api": "^1.19",
         "owen-it/laravel-auditing": "^13.4",
         "php-flasher/flasher": "^1.7",
