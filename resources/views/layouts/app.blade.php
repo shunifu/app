@@ -276,47 +276,7 @@
 
             
 
-               {{-- <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-stethoscope nav-icon"></i>
-                  <p>
-                   Shunifu Health
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="{{ route('index.students') }}" class="nav-link">
-                      <i class="nav-icon fas fa-check-circle"></i>
-                      <p>Students</p>
-                    </a>
-                  </li>
-     --}}
-                  {{-- <li class="nav-item">
-                    <a href="{{ route('index.teachers') }}" class="nav-link">
-                      <i class="nav-icon fas fa-check-circle"></i>
-                      <p>Teachers</p>
-                    </a>
-                  </li> --}}
 
-                  {{-- <li class="nav-item">
-                    <a href="{{ route('index.support-staff') }}" class="nav-link">
-                      <i class="nav-icon fas fa-check-circle"></i>
-                      <p>Support Staff</p>
-                    </a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a href="{{ route('index.visitors') }}" class="nav-link">
-                      <i class="nav-icon fas fa-check-circle"></i>
-                      <p>Visitors</p>
-                    </a>
-                  </li> --}}
-    
-                
-    
-                {{-- </ul>
-              </li>  --}}
                
                @role('teacher')      
 
@@ -876,12 +836,7 @@
                   @endif
     
                   @role('teacher')
-                  {{-- <li class="nav-item">
-                    <a href="/report/openday/" class="nav-link">
-                      <i class="nav-icon fas fa-check-circle"></i>
-                      <p>OpenDay</p>
-                    </a>
-                  </li> --}}
+               
 
                   @endrole
                   
@@ -1090,6 +1045,7 @@
           </li>
 
 
+         
           @endrole
 
           @role('admin_teacher')
@@ -1416,7 +1372,205 @@
          
                 {{-- </ul> --}}
              
-          
+                <li class="nav-header">Teacher Services</li>
+
+
+                <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link">
+                    <i class="fas fa-stethoscope nav-icon"></i>
+                    <p>
+                     INSET Corner
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="{{ route('index.students') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Students</p>
+                      </a>
+                    </li>
+       
+                    <li class="nav-item">
+                      <a href="{{ route('index.teachers') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Teachers</p>
+                      </a>
+                    </li> 
+      
+                     <li class="nav-item">
+                      <a href="{{ route('index.support-staff') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Support Staff</p>
+                      </a>
+                    </li>
+      
+                    <li class="nav-item">
+                      <a href="{{ route('index.visitors') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Visitors</p>
+                      </a>
+                    </li> 
+      
+                  
+      
+                   </ul>
+                </li>  
+      
+      
+                <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link">
+                    <i class="fas fa-stethoscope nav-icon"></i>
+                    <p>
+                     TSC Services
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+
+                    <li class="nav-item">
+                      <a href="{{ route('index.teachers') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Vacancies</p>
+                      </a>
+                    </li> 
+
+
+                    <li class="nav-item">
+                      <a href="{{ route('index.students') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Cross Transfers</p>
+                      </a>
+                    </li>
+       
+                    
+      
+                     <li class="nav-item">
+                      <a href="{{ route('index.support-staff') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Queries</p>
+                      </a>
+                    </li>
+      
+                    <li class="nav-item">
+                      <a href="{{ route('index.visitors') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>My Files</p>
+                      </a>
+                    </li> 
+      
+                  
+      
+                   </ul>
+                </li> 
+      
+                <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link">
+                    <i class="fas fa-stethoscope nav-icon"></i>
+                    <p>
+                     ECESWA Corner
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="{{ route('index.students') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Apply for Marking </p>
+                      </a>
+                    </li>
+       
+                    <li class="nav-item">
+                      <a href="{{ route('index.teachers') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Candidate Registration</p>
+                      </a>
+                    </li> 
+      
+                     <li class="nav-item">
+                      <a href="{{ route('index.support-staff') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Exam Reports</p>
+                      </a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a href="{{ route('index.support-staff') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Exam Timetables</p>
+                      </a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a href="{{ route('index.support-staff') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p> Syllabus</p>
+                      </a>
+                    </li>
+      
+                    <li class="nav-item">
+                      <a href="{{ route('index.visitors') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Past Papers</p>
+                      </a>
+                    </li> 
+      
+                  
+      
+                   </ul>
+                </li> 
+      
+      
+                <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link">
+                    <i class="fas fa-stethoscope nav-icon"></i>
+                    <p>
+                     SNAT Services
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="{{ route('index.students') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Apply for Loan</p>
+                      </a>
+                    </li>
+       
+                    <li class="nav-item">
+                      <a href="{{ route('index.teachers') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Online Statements</p>
+                      </a>
+                    </li> 
+
+                    <li class="nav-item">
+                      <a href="{{ route('index.teachers') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Psycologist</p>
+                      </a>
+                    </li> 
+      
+                     <li class="nav-item">
+                      <a href="{{ route('index.support-staff') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>SNAT Eagle</p>
+                      </a>
+                    </li>
+      
+                    <li class="nav-item">
+                      <a href="{{ route('index.visitors') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>Visitors</p>
+                      </a>
+                    </li> 
+      
+                  
+      
+                   </ul>
+                </li> 
+
+
 
 
           <li class="nav-header">User Management</li>

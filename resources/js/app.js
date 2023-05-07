@@ -3,7 +3,8 @@ import _ from 'lodash';
 window._ = _;
 window.$ = window.jQuery = $;
 
-// import'jquery/dist/jquery.min.js';
+
+import'jquery/dist/jquery.min.js';
 //  import 'jquery-ui/ui/widgets/datepicker.js';
 import'admin-lte/plugins/jquery/jquery';
 import'admin-lte/plugins/bootstrap/js/bootstrap';
