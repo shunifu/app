@@ -132,6 +132,7 @@ th span {
             <th><span>Entreprenuership</span></th>
         @endif
         <th><span>COMP</span></th>
+        <th><span>Biology-Core</span></th>
         @endforeach
       
         </thead>
@@ -627,6 +628,15 @@ where student_id = ".$student->learner_id.""));
                         -
                         @elseif($student->Computer<$pass_rate )
                         <span class="text-danger">{{ $student->Computer}}% </span>
+                        @endif
+                    </td>
+                    <td class="align-middle p-2">
+                        @if ($student->Biologyy>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Biologyy}}% </span>
+                        @elseif(is_null($student->Biologyy))
+                        -
+                        @elseif($student->Biologyy<$pass_rate )
+                        <span class="text-danger">{{ $student->Biologyy}}% </span>
                         @endif
                     </td>
                     @endforeach
