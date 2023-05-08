@@ -84,7 +84,7 @@ th span {
         <th><span>Average</span></th>
          <th><span>Ratio</span></th>
         <th><span>Comment</span></th>
-        <th><span>Computer</span> </th>
+       
         <th><span>English Language</span> </th>
         <th><span>English Lit</span></th>
         <th><span>Maths</span></th>
@@ -95,7 +95,7 @@ th span {
         <th><span>Science</span></th> 
         <th><span>Consumer</span></th> 
         <th><span>BK</span></th>
-        <th><span>COMP</span></th>
+      
        
         @endif
 
@@ -131,6 +131,7 @@ th span {
             <th><span>TS</span></th>
             <th><span>Entreprenuership</span></th>
         @endif
+        <th><span>COMP</span></th>
         @endforeach
       
         </thead>
@@ -292,15 +293,7 @@ where student_id = ".$student->learner_id.""));
                     </td> 
 
 
-                    <td class="align-middle p-2">
-                        @if ($student->Computer>=$pass_rate)
-                        <span class="text-secondary">{{ $student->Computer}}% </span>
-                        @elseif(is_null($student->Computer))
-                        -
-                        @elseif($student->Computer<$pass_rate )
-                        <span class="text-danger">{{ $student->Computer}}% </span>
-                        @endif
-                    </td>
+                
 
                     <td class="align-middle p-2">
                         @if ($student->EnglishLanguage>=$pass_rate)
@@ -397,15 +390,7 @@ where student_id = ".$student->learner_id.""));
                         @endif
                     </td>
 
-                    <td class="align-middle p-2">
-                        @if ($student->Computer>=$pass_rate)
-                        <span class="text-secondary">{{ $student->Computer}}% </span>
-                        @elseif(is_null($student->Computer))
-                        -
-                        @elseif($student->Computer<$pass_rate )
-                        <span class="text-danger">{{ $student->Computer}}% </span>
-                        @endif
-                    </td>
+                   
 
                   
 
@@ -633,6 +618,17 @@ where student_id = ".$student->learner_id.""));
                     </td>
                     
                     @endif
+
+
+                    <td class="align-middle p-2">
+                        @if ($student->Computer>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Computer}}% </span>
+                        @elseif(is_null($student->Computer))
+                        -
+                        @elseif($student->Computer<$pass_rate )
+                        <span class="text-danger">{{ $student->Computer}}% </span>
+                        @endif
+                    </td>
                     @endforeach
                   
 
