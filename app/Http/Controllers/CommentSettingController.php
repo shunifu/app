@@ -81,14 +81,8 @@ class CommentSettingController extends Controller
 
 
 
-        if(Auth::user()->hasRole('admin_teacher')){
-            $user_type='1';
-        }else if(Auth::user()->hasRole('school-administrator')){
-            $user_type='2';
-        }else if(Auth::user()->hasRole('class_teacher')){
-            $user_type='0';
-        }
-
+            $user_type=$request->comment_category;
+       
     // $rangeExists=CommentSetting::where('section_id', $request->section)->where('from',$request->from)->where('to',$request->to)->where('user_type',$user_type)->exists();
     // $commentExists=CommentSetting::where('section_id', $request->section)->where('from',$request->from)->where('to',$request->to)->where('comment',$request->comment)->where('user_type',$user_type)->exists();
 

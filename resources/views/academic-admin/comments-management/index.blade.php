@@ -52,9 +52,9 @@
                   <x-jet-label>Comment Category</x-jet-label>
                   <select class="form-control" name="comment_category" id="comment_category">
                       <option value="">Select Comment Category</option>
-                      <option value="subject_comment">Subject Comments</option>
-                      <option value="principal_comment">Head-Teacher Comment</option>
-                      <option value="class_teacher_comment">Class-Teacher Comment</option>
+                      <option value="1">Subject Comments</option>
+                      <option value="3">Head-Teacher Comment</option>
+                      <option value="2">Class-Teacher Comment</option>
                   </select>
                   @error('comment_category')
                   <span class="text-danger">{{$message}}</span>  
