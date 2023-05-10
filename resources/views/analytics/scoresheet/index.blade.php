@@ -630,7 +630,11 @@ where student_id = ".$student->learner_id.""));
                         <span class="text-danger">{{ $student->Computer}}% </span>
                         @endif
                     </td>
+<<<<<<< HEAD
                  
+=======
+                  
+>>>>>>> d5b31487 (updaded)
                     @endforeach
                   
 

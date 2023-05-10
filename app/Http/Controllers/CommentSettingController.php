@@ -89,14 +89,14 @@ class CommentSettingController extends Controller
             $user_type='0';
         }
 
-    $rangeExists=CommentSetting::where('section_id', $request->section)->where('from',$request->from)->where('to',$request->to)->where('user_type',$user_type)->exists();
-    $commentExists=CommentSetting::where('section_id', $request->section)->where('from',$request->from)->where('to',$request->to)->where('comment',$request->comment)->where('user_type',$user_type)->exists();
+    // $rangeExists=CommentSetting::where('section_id', $request->section)->where('from',$request->from)->where('to',$request->to)->where('user_type',$user_type)->exists();
+    // $commentExists=CommentSetting::where('section_id', $request->section)->where('from',$request->from)->where('to',$request->to)->where('comment',$request->comment)->where('user_type',$user_type)->exists();
 
-        if($commentExists OR $rangeExists ){
-            flash()->overlay('<i class="fas fa-check-circle text-warning"></i> Error. That comment exists in the system', 'Add Comment');
+    //     if($commentExists OR $rangeExists ){
+    //         flash()->overlay('<i class="fas fa-check-circle text-warning"></i> Error. That comment exists in the system', 'Add Comment');
 
-			return redirect('/comments/');
-        }else{
+	// 		return redirect('/comments/');
+    //     }else{
 
             CommentSetting::create([
 
@@ -113,7 +113,7 @@ class CommentSettingController extends Controller
 
 			return redirect('/comments/');
 
-        }
+        // }
 
         
        
