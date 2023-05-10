@@ -77,6 +77,7 @@ class CommentSettingController extends Controller
                 'to'=>'required|numeric',
                 'symbol'=>'required',
                 'comment'=>'required',
+                'comment_category'=>'required',
         ]);
 
 
