@@ -74,6 +74,14 @@
                             <span class="text-danger">{{$message}}</span>  
                             @enderror
                         </div>
+
+                        <div class="form-group">
+                            <x-jet-label>Region</x-jet-label>
+                            <x-jet-input name="school_region" value="{{$item->school_region}}"></x-jet-input>
+                            @error('school_email')
+                            <span class="text-danger">{{$message}}</span>  
+                            @enderror
+                        </div>
             
                         
                     
