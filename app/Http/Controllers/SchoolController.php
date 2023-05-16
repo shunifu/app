@@ -14,7 +14,7 @@ class SchoolController extends Controller
 	public function create()
 	{
 
-		if (!Schema::hasColumn('school_info', 'school_stamp' OR !Schema::hasColumn('school_info', 'school_region' OR !Schema::hasColumn('school_info', 'school_inkhundla' OR !Schema::hasColumn('school_info', 'school_area')) //check the column
+		if (!Schema::hasColumn('school_info', 'school_stamp')) //check the column
 		{
 			Schema::table('school_info', function (Blueprint $table)
 			{
