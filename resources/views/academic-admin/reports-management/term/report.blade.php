@@ -9,7 +9,7 @@
           
 
             .table {
-  border: 1px solid rgb(23, 23, 23);
+  border: 0.5px solid grey;
   table-layout: fixed;
 }
 /* .table-bordered > thead > tr > th,
@@ -473,7 +473,7 @@ WHERE sub.student_id=".$student.""));
        <br>
        <br>
 <span class=" mx-auto">
-    <center><span class="mx-auto"> Academic Performance Breakdown</span> </center>
+    <center><span class="mx-auto">Breakdown of <span class="text-bold">{{$student_term_data->name}}'s </span>  Academic Performance</span> </center>
 </span>
                
 <?php
@@ -928,7 +928,7 @@ SET @sql = CONCAT('SELECT
      (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
   
      
-     (lastname) as  Teacher
+     concat(salutation, lastname) Teacher
      from marks 
     INNER JOIN assessements ON assessements.id = marks.assessement_id
     INNER JOIN c_a__exams ON c_a__exams.assessement_id=assessements.id
@@ -950,7 +950,7 @@ if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
 if ($result) {
   do {
   if ($res = $db->store_result()) {
-      echo "<table class='table table-sm table-bordered' width=100% border=1 color=black><tr>";
+      echo "<table class='table table-sm table-bordered' width=100% border=0><tr>";
 
         
       // printing table headers
