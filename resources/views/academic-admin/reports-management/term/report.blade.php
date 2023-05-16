@@ -928,7 +928,7 @@ SET @sql = CONCAT('SELECT
      (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
   
      
-     CONCAT(salutation, ' ', surname) Teacher
+     CONCAT(salutation, '.', surname) Teacher
      from marks 
     INNER JOIN assessements ON assessements.id = marks.assessement_id
     INNER JOIN c_a__exams ON c_a__exams.assessement_id=assessements.id
