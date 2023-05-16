@@ -473,7 +473,7 @@ WHERE sub.student_id=".$student.""));
        <br>
        <br>
 <span class=" mx-auto">
-    <center><span class="mx-auto">Breakdown of <span class="text-bold">{{$student_term_data->name}}'s </span>  Academic Performance</span> </center>
+    <center><span class="mx-auto"> Academic Performance Breakdown</span> </center>
 </span>
                
 <?php
