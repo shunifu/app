@@ -1009,7 +1009,7 @@ if ($result) {
         $class = 'class=text-danger text-center';
      
     } else {
-        $class = 'class=text-black text-center';
+        $class = 'class=text-black text-center align-middle';
 
        
     }
