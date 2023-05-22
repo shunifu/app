@@ -310,13 +310,13 @@ a[target='_blank']{
                 </div>
             @endif
     
-            @if (session('error'))
+            {{-- @if (session('error')) --}}
                 <div class="alert alert-danger mb-3 rounded-0" role="alert">
-                    {{ session('error') }}
-                </div>
+                 Currently undergoing upgrade. Will be available on the 1st of June 2023
+                {{-- </div> --}}
             @endif
                 <div class="panel-body p-3">
-                  <form method="POST"  action="{{ route('login') }}">
+                  <form >
                     @csrf
                         <div class="form-group ">
                             <div class="input-field">
@@ -344,13 +344,13 @@ a[target='_blank']{
                     
                         <button class="btn btn-primary btn-block mt-3 px-3 submit">Login to Shunifu</button>
                      
-                        <div class="text-center pt-4 text-muted"> <a href="/reset">Forgot Password?</a>
+                        {{-- <div class="text-center pt-4 text-muted"> <a href="/reset">Forgot Password?</a> --}}
                         </div>
                     </form>
                 </div>
                 <div class="mx-3 my-2 py-2 bordert">
                     <div class="text-center py-3">
-                      <a href="{{ url('/auth/google') }}" class="px-2">
+                      {{-- <a href="{{ url('/auth/google') }}" class="px-2"> --}}
                         <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
                             alt="">
                     </a>
