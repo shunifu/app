@@ -9,7 +9,7 @@
           
 
             .table {
-  border: 0.5px solid grey;
+  border: 1px solid rgb(35, 35, 35);
   table-layout: fixed;
 }
 .table-bordered > thead > tr > th,
@@ -18,7 +18,7 @@
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-   border: 0.5px solid rgb(35, 35, 35);
+   border: 1px solid rgb(35, 35, 35);
 }
 
             
@@ -50,6 +50,11 @@ body { margin: 0px; }
             background-color: {{$variable->column_color}} !important;
             -webkit-print-color-adjust: exact; 
             color: #FFFFFF !important;
+
+            table{
+                text-align: center;
+            }
+            
 
             
             
