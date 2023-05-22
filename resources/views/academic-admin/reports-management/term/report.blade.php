@@ -9,7 +9,7 @@
           
 
             .table {
-  border: 1px solid rgb(35, 35, 35);
+  border: 0.5px solid grey;
   table-layout: fixed;
 }
 .table-bordered > thead > tr > th,
@@ -18,7 +18,7 @@
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-   border: 1px solid rgb(35, 35, 35);
+   border: 0.3px solid rgb(35, 35, 35);
 }
 
             
@@ -50,11 +50,6 @@ body { margin: 0px; }
             background-color: {{$variable->column_color}} !important;
             -webkit-print-color-adjust: exact; 
             color: #FFFFFF !important;
-
-            #center_td{
-                text-align: center;
-            }
-            
 
             
             
@@ -478,7 +473,7 @@ WHERE sub.student_id=".$student.""));
        <br>
        <br>
 <span class=" mx-auto">
-    <center><span class="mx-auto">Breakdown of  Academic Performance</span> </center>
+    <center><span class="mx-auto">Breakdown of <span class="text-bold">{{$student_term_data->name}}'s </span>  Academic Performance</span> </center>
 </span>
                
 <?php
@@ -1006,21 +1001,18 @@ if ($result) {
      
   
         if (htmlspecialchars($value) < $pass_rate) {
-        $class = 'class=text-danger text-center';
-        $id="id=center_td";
+        $class = 'class=text-danger';
      
     } else {
-        $class = 'class=text-black text-center align-middle';
-
-       
+        $class = 'class=text-black';
     }
         
             if ($value === NULL) { $value = '-'; }
 
-            if(is_numeric($value)){$percentage="%"; }else{$percentage=" ";}
+            if(is_numeric($value)){$percentage="%";}else{$percentage=" ";}
             
          
-            echo "<td $class $id>$value"."$percentage</td>";
+            echo "<td $class>$value"."$percentage</td>";
           }
           echo "</tr>\n";
       }
