@@ -312,9 +312,9 @@ a[target='_blank']{
     
             {{-- @if (session('error')) --}}
                 <div class="alert alert-danger mb-3 rounded-0" role="alert">
-                 Currently undergoing upgrade. Will be available on the 1st of June 2023
-                {{-- </div> --}}
-            @endif
+                System is currently undergoing an upgrade. System will be available on the 1st of June 2023
+                </div>
+            {{-- @endif --}}
                 <div class="panel-body p-3">
                   <form >
                     @csrf
