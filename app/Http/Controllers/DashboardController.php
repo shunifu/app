@@ -19,6 +19,7 @@ use App\Models\StudentLesson;
 use App\Models\AssessementOnline;
 use App\Models\Department;
 use App\Models\GradeTeacher;
+use App\Models\School;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -119,7 +120,18 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
      
        // $teacher_loads=TeachingLoad::where();
 
-        return view('dashboard.admin-teacher', compact('activeSessionName','departments','class_teachers','teaching_loads','teachers','total_students','students','total_teachers', 'total_parents','my_students', 'total_classes','greetings', 'total_loads', 'total_assessements', 'total_lessons', 'total_students'));
+
+       $institution_type=School::first();
+
+       if($institution_type->school_type=="tvet"){
+        $school_type="tvet";
+       }else{
+        $school_type="";
+       }
+
+
+
+        return view('dashboard.admin-teacher', compact('school_type','activeSessionName','departments','class_teachers','teaching_loads','teachers','total_students','students','total_teachers', 'total_parents','my_students', 'total_classes','greetings', 'total_loads', 'total_assessements', 'total_lessons', 'total_students'));
 
 
 

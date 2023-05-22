@@ -43,12 +43,13 @@
                             <select class="form-control" name="school_type">
                             <option value="">Select School Type</option>
                             <option value="0">Kindergerten</option>
-                            <option value="1">Primary School</option>
+                            <option value="primary-school">Primary School</option>
                             <option value="2">Secondary School</option>
-                            <option value="3">High School</option>
-                            <option value="4">Prevocational School</option>
-                            <option value="5">College</option>
-                            <option value="6">University</option>
+                            <option value="high-school">High School</option>
+                            <option value="Prevoc">Prevocational School</option>
+                            <option value="tvet">TVET</option>
+                            <option value="college">College</option>
+                            <option value="university">University</option>
                             </select>
                             @error('school_type')
                             <span class="text-danger">{{$message}}</span>  

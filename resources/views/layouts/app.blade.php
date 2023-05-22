@@ -71,6 +71,8 @@
         
        
     </head>
+
+    @foreach (\App\Models\School::all() as $item)
     <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
      
         <div class="wrapper">
@@ -1382,39 +1384,40 @@
                   <a href="#" class="nav-link">
                     <i class="fas fa-stethoscope nav-icon"></i>
                     <p>
-                     INSET Corner
+                     INSET Services
                       <i class="fas fa-angle-left right"></i>
                     </p>
                   </a>
                   <ul class="nav nav-treeview">
                     <li class="nav-item">
-                      <a href="{{ route('index.students') }}" class="nav-link">
+                      <a href="{{ route('inset.article') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
-                        <p>Students</p>
+                        <p>Articles</p>
                       </a>
                     </li>
        
                     <li class="nav-item">
-                      <a href="{{ route('index.teachers') }}" class="nav-link">
+                      <a href="{{ route('inset.lesson') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
-                        <p>Teachers</p>
+                        <p>Lessons</p>
                       </a>
                     </li> 
       
                      <li class="nav-item">
-                      <a href="{{ route('index.support-staff') }}" class="nav-link">
+                      <a href="{{ route('inset.workshop') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
-                        <p>Support Staff</p>
+                        <p>Workshop Requests</p>
                       </a>
                     </li>
       
-                    <li class="nav-item">
-                      <a href="{{ route('index.visitors') }}" class="nav-link">
-                        <i class="nav-icon fas fa-check-circle"></i>
-                        <p>Visitors</p>
-                      </a>
-                    </li> 
+                   
       
+                    <li class="nav-item">
+                      <a href="{{ route('inset.schedule') }}" class="nav-link">
+                        <i class="nav-icon fas fa-check-circle"></i>
+                        <p>CPD Schedule</p>
+                      </a>
+                    </li>
                   
       
                    </ul>
@@ -2079,4 +2082,5 @@
 
 </div>
     </body>
+    @endforeach
 </html>

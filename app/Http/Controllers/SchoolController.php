@@ -6,6 +6,7 @@ use App\Models\School;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
@@ -161,6 +162,12 @@ class SchoolController extends Controller
 
 	
 
+		// $colum_type=Schema::getColumnType('school_info', 'school_type') ;
+
+		// if($colum_type=="enum"){
+		
+		// }
+		$check= DB::statement('ALTER TABLE school_info CHANGE school_type school_type VARCHAR(200)');
 	
 		$id=$request->id;
 	
@@ -222,6 +229,8 @@ class SchoolController extends Controller
 
 
 	$update=School::where('id',$id)->update(['school_code'=>$request->school_code, 'school_name'=>$request->school_name,'school_slogan'=>$request->school_slogan, 'school_type'=>$request->school_type,'school_email'=>$request->school_email,'school_telephone'=>$request->school_number,'school_telephone'=>$request->school_number,	'school_logo'=>$school_logo_file,'school_letter_head'=>$letterhead_file,'school_background_image'=>$background_file]);
+
+	
 
 		flash()->overlay('<i class="fas fa-check-circle text-success"></i> Congratulations. You have successfully updated school information', 'Edit School Information');
 

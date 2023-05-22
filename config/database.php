@@ -65,6 +65,29 @@ return [
             ]) : [],
         ],
 
+
+
+        'shunifuservices' => [
+            'driver' => 'mysql',
+            'url' => ENV('DATABASE_URL'),
+            'host' => config('app.DB_HOST', '127.0.0.1'),
+            'port' => config('app.DB_PORT', '3306'),
+            'database' => config('app.DB_SHUNIFU_SERVICES'),
+            'username' => config('app.DB_USERNAME', 'root'),
+            'password' => config('app.DB_PASSWORD', ''),
+            'unix_socket' => config('app.DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+
         'ihp_db' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),

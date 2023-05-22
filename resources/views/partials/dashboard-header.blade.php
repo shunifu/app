@@ -72,10 +72,28 @@
 			<div class="card-body">
 				<div class="d-flex align-items-center">
 					<div>
-						
-						<p class="mb-0 text-secondary">Total Students</p>
+						@if ($school_type=="tvet")
+
+						@php
+					$total_students_lbl="Leaners";
+					$total_teachers_lbl="Facilitators";
+					$total_parents_lbl="Regional Officers";
+					$link="/users/regional-officers/manage";
+					@endphp
+
+						@else
+
+						@php
+					$total_students_lbl="Students";
+					$total_teachers_lbl="Teachers";
+					$total_parents_lbl="Parents";
+					
+					@endphp
+							
+						@endif
+						<p class="mb-0 text-secondary">Total {{$total_students_lbl}}</p>
 						<h4 class="my-1 text-info">{{$total_students}}</h4>
-						<a href="/users/student/management"><p class="mb-0 font-13 text-info " >View Students </p></a>
+						<a href="/users/student/management"><p class="mb-0 font-13 text-info " >View {{$total_students_lbl}} </p></a>
 					</div>
 					<div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa-solid fa-users-between-lines"></i>
 					</div>
@@ -88,9 +106,9 @@
 		   <div class="card-body">
 			   <div class="d-flex align-items-center">
 				   <div>
-					   <p class="mb-0 text-secondary">Total Teachers</p>
+					   <p class="mb-0 text-secondary">Total {{$total_teachers_lbl}}</p>
 					   <h4 class="my-1 text-danger">{{$total_teachers}}</h4>
-					   <a href="/users/teachers/manage"><p class="mb-0 font-13 text-danger">View Teachers </p></a> 
+					   <a href="/users/teachers/manage"><p class="mb-0 font-13 text-danger">View {{$total_teachers_lbl}} </p></a> 
 				   </div>
 		
 				   <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i class="fas fa-user-graduate    "></i>
@@ -104,9 +122,9 @@
 		   <div class="card-body">
 			   <div class="d-flex align-items-center">
 				   <div>
-					   <p class="mb-0 text-secondary">Total Parents</p>
+					   <p class="mb-0 text-secondary">Total {{$total_parents_lbl}}</p>
 					   <h4 class="my-1 text-success">{{$total_parents}}</h4>
-					   <a href="/users/parents/manage"><p class="mb-0 font-13 text-success">View Parents </p></a> 
+					   <a href="/users/parents/manage"><p class="mb-0 font-13 text-success">View {{$total_parents_lbl}} </p></a> 
 					
 				   </div>
 				   <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class="fas fa-user-friends    "></i>

@@ -90,6 +90,8 @@ use App\Http\Controllers\AssessementSettingController;
 use App\Http\Controllers\CoronaSurvellianceController;
 use App\Http\Controllers\AssessementQuestionController;
 use App\Http\Controllers\DisciplinaryCasesController;
+use App\Http\Controllers\InsetServicesController;
+use App\Http\Controllers\InsetWorkshopController;
 use App\Http\Controllers\MarkSettingController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\PermissionsManagementController;
@@ -501,6 +503,21 @@ Route::get('/get/topics/{id}', [TopicController::class,'get_topics'])->name('top
 //     return response()->file(storage_path($file->path));
 // })->name('show-pdf');
 
+
+//INSET Services
+
+Route::get('/inset/articles', [InsetWorkshopController::class,'index'])->name('inset.article');
+Route::get('/inset/lessons/', [InsetServicesController::class,'lesson_index'])->name('inset.lesson');
+
+
+Route::get('/inset/cpd/schedule', [InsetServicesController::class,'get_topics'])->name('inset.schedule');
+
+
+Route::get('/inset/workshops/', [InsetWorkshopController::class,'index'])->name('inset.workshop');
+Route::post('/inset/workshops/save', [InsetWorkshopController::class,'store'])->name('insetworkshop.store');
+
+
+//end of INSET Services
 
 
 

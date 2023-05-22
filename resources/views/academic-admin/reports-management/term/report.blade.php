@@ -12,14 +12,14 @@
   border: 0.5px solid grey;
   table-layout: fixed;
 }
-/* .table-bordered > thead > tr > th,
+.table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
 .table-bordered > tfoot > tr > th,
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-   border: 0.3px solid grey;
-} */
+   border: 0.5px solid rgb(35, 35, 35);
+}
 
             
           input,select{
@@ -473,7 +473,7 @@ WHERE sub.student_id=".$student.""));
        <br>
        <br>
 <span class=" mx-auto">
-    <center><span class="mx-auto">Breakdown of <span class="text-bold">{{$student_term_data->name}}'s </span>  Academic Performance</span> </center>
+    <center><span class="mx-auto">Breakdown of  Academic Performance</span> </center>
 </span>
                
 <?php
@@ -903,6 +903,8 @@ $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total fro
 @if ($report_template->report_colums=="term_assessements")
 @php
 
+
+
 $db=mysqli_connect(config("app.DB_HOST"),config("app.DB_USERNAME"),config("app.DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
 $result = $db->multi_query("SET @sql = NULL;
 SET SESSION group_concat_max_len = 1000000;
@@ -921,30 +923,32 @@ SET @sql = CONCAT('SELECT
     subjects.subject_name as Subject, 
     ', @sql, ',
    
-
     ROUND(student_subject_averages.student_average) as Average,
-    
+
+   
     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
-     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
-  
-     
-     concat(salutation, lastname) Teacher
-     from marks 
+    (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
+    concat(salutation, lastname) Teacher
+    from marks 
     INNER JOIN assessements ON assessements.id = marks.assessement_id
     INNER JOIN c_a__exams ON c_a__exams.assessement_id=assessements.id
     INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
     INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
     INNER JOIN users ON users.id = marks.teacher_id
-     INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
-                  INNER JOIN report_comments 
-                   WHERE marks.student_id = ".$student." AND `c_a__exams`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id AND report_comments.user_type=1 and report_comments.section_id=".$section_id." AND student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to
+    INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
+    INNER JOIN report_comments 
+    WHERE marks.student_id = ".$student." 
+    AND `c_a__exams`.`term_id` = ".$term." 
+    AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id
+    AND report_comments.user_type=1 and report_comments.section_id=".$section_id."
+    AND student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to
+   
     GROUP BY
     marks.student_id,student_subject_averages.student_id,
-    subjects.id');
-
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;");
+    subjects.id  order by subjects.id');
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;");
 
 if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
 if ($result) {
@@ -997,10 +1001,12 @@ if ($result) {
      
   
         if (htmlspecialchars($value) < $pass_rate) {
-        $class = 'class=text-danger';
+        $class = 'class=text-danger text-center';
      
     } else {
-        $class = 'class=text-black';
+        $class = 'class=text-black text-center';
+
+       
     }
         
             if ($value === NULL) { $value = '-'; }
