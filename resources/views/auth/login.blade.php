@@ -312,7 +312,7 @@ a[target='_blank']{
     
             {{-- @if (session('error')) --}}
                 <div class="alert alert-danger mb-3 rounded-0" role="alert">
-                System is currently undergoing an upgrade. System will be available on the 1st of June 2023
+                System is currently undergoing an upgrade. System will be available on the 29th of May 2023
                 </div>
             {{-- @endif --}}
                 <div class="panel-body p-3">
@@ -354,9 +354,9 @@ a[target='_blank']{
                         <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
                             alt="">
                     </a>
-                        {{-- <a href="{{ url('/auth/facebook') }}"  class="px-2">
+                        <a href="{{ url('/auth/facebook') }}"  class="px-2">
                             <img src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt="">
-                        </a> --}}
+                        </a>
                       
 
                       
