@@ -51,7 +51,7 @@ body { margin: 0px; }
             -webkit-print-color-adjust: exact; 
             color: #FFFFFF !important;
 
-            table td{
+            #center_td{
                 text-align: center;
             }
             
@@ -1007,6 +1007,7 @@ if ($result) {
   
         if (htmlspecialchars($value) < $pass_rate) {
         $class = 'class=text-danger text-center';
+        $id="id=center_td";
      
     } else {
         $class = 'class=text-black text-center align-middle';
@@ -1016,10 +1017,10 @@ if ($result) {
         
             if ($value === NULL) { $value = '-'; }
 
-            if(is_numeric($value)){$percentage="%";}else{$percentage=" ";}
+            if(is_numeric($value)){$percentage="%"; }else{$percentage=" ";}
             
          
-            echo "<td $class>$value"."$percentage</td>";
+            echo "<td $class $id>$value"."$percentage</td>";
           }
           echo "</tr>\n";
       }
