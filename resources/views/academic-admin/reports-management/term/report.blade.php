@@ -51,7 +51,7 @@ body { margin: 0px; }
             -webkit-print-color-adjust: exact; 
             color: #FFFFFF !important;
 
-            table{
+            table td{
                 text-align: center;
             }
             
