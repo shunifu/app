@@ -98,7 +98,7 @@
                                 <x-jet-label>Select Recipient</x-jet-label>
                                 <select class="form-control"  id="recipient" name="recipient">
                                     <option value="">Select Recipient </option>
-                                    {{-- <option value="parents">Parents</option>   --}}
+                                    <option value="parents">Parents</option>  
                                     <option value="teachers">Teachers</option>   
                                 </select>
                                 @error('recipient')
