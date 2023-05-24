@@ -923,7 +923,7 @@ Route::get('/verification/otp/generate',[VerificationController::class, 'generat
 
 //Oauth
 Route::get('/auth/google', [OauthController::class, 'redirectToGoogle']);
-Route::get('auth/google/callback', [OauthController::class, 'handleGoogleCallback']);
+Route::get('/auth/google/callback', [OauthController::class, 'handleGoogleCallback']);
 
 // Route::get('/auth/facebook', [OauthController::class, 'redirectToFacebook'])->name('login');
 // Route::get('auth/callback/callback', [OauthController::class, 'handleFacebookCallback'])->name('callback');
