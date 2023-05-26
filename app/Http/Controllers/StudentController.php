@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 //ini_set('max_execution_time', 23830);
+
+use AfricasTalking\SDK\AfricasTalking;
 use Seshac\Otp\Otp;
 use App\Models\Mark;
 use App\Models\Role;
@@ -47,6 +49,30 @@ class StudentController extends Controller
     private $excel;
     public function __construct(Excel $excel){
         $this->excel=$excel;
+
+    }
+
+
+    public function send_msg(Request $request){
+
+       
+
+        $username = config('app.sms_username');
+        $apiKey   = config('app.sms_password');
+        $AT = new AfricasTalking($username, $apiKey);
+        $sms      = $AT->sms();
+
+
+            //        Use the service
+            $result   = $sms->send([
+                'to'      => '+268'.$request->parent_number,
+                'message' => $request->parent_msg,
+                'from'=>'Shunifu'
+    ]);
+
+
+    flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have sent message ', 'Send Message');
+    return Redirect::back();
 
     }
 
@@ -516,6 +542,7 @@ public function profile($id){
         ->join('users','parents_students.parent_id','=','users.id')
         ->where('parents_students.parent_id', $parent_id)
         ->first();
+
       //  dd($result_parent);
         return view('users.students.profile', compact('result_user', 'result_class', 'result_parent'));
         }else{

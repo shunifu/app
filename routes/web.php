@@ -258,6 +258,8 @@ Route::get('/users/student/delete/{id}', [StudentController::class,'destroy'])->
 Route::get('/users/student/manage/password/reset/{id}',[StudentController::class,'password_reset'])->name('student.password_reset');
 Route::get('/users/student/manage/removal',[StudentController::class,'student_removal'])->name('student.removal_index');
 Route::get('/class/student-management',[StudentController::class,'student_issues_classteacher'])->name('student.student_issues_classteacher');
+Route::post('/send/single/parent',[StudentController::class,'send_msg']);
+
 
 
 

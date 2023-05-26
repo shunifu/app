@@ -278,7 +278,7 @@ table{
                 <li class="nav-item"><a class="nav-link" href="#reports" data-toggle="tab">Report Cards</a></li>
                 <li class="nav-item"><a class="nav-link" href="#analytics" data-toggle="tab">Analytics</a></li>
                 <li class="nav-item"><a class="nav-link" href="#discipline" data-toggle="tab">Disciplinary Cases</a></li> 
-                <li class="nav-item"><a class="nav-link" href="#access_control" data-toggle="tab">Access Control</a></li> 
+                <li class="nav-item"><a class="nav-link" href="#access_control" data-toggle="tab">Communication</a></li> 
                 </ul>
             </div>
 
@@ -288,7 +288,29 @@ table{
                 <div class="tab-content ">
 
                     <div class=" tab-pane" id="access_control">
-                        access control
+                        <form action="/send/single/parent" method="post">
+                            @csrf
+                            <input type="hidden" value="{{ $result_parent->cell_number }}" name="parent_number">
+
+
+                            <div class="col-md-6 form-group">
+                                <x-jet-label>Message </x-jet-label>
+                                <textarea class="form-control" maxlength="160" name="parent_msg" id="" placeholder="parent message" cols="30" rows="10"></textarea>
+                                @error('parent_msg')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+
+            
+                            
+
+                            <div class="col-md-6 form-group">
+                                <button class="btn btn-success">Send Message</button>
+                            </div>
+
+                           
+                        </form>
                     </div>
                     <div class="active tab-pane" id="profile">
 
