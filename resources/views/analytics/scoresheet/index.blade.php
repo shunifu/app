@@ -56,14 +56,14 @@ th span {
         <div class="col-md-12 mx-auto">
 
             @foreach (\App\Models\School::all() as $item)
-            <div class="mx-auto text-center">
+            <div class="mx-auto text-center" style="display:block">
 
           
           
-                <div class="col"><img src={{$item->school_letter_head}}  /></div>
-                <div class="col">  <h4 class="text-center  text-bold lead">{{$item->school_name}}</h4></div>
+                <div class="col"><img src={{$item->school_letter_head}}  class="img-responsive" /></div>
+            
           
-            <i class="fas fa-envelope mx-2"></i> {{$item->school_email}} | <i class="fas fa-phone-square    "></i> {{$item->school_telephone}}</i>
+          
                     <p>
                         <h3 class="text-bold">{{$stream_title}}  {{$assessement_name}} Scoresheet</h3>
                     </p>
@@ -85,8 +85,8 @@ th span {
          <th><span>Ratio</span></th>
         <th><span>Comment</span></th>
        
-        <th><span>English Language</span> </th>
-        <th><span>English Lit</span></th>
+        <th><span>English Lang</span> </th>
+        <th><span> Lit</span></th>
         <th><span>Maths</span></th>
         <th><span>Siswati</span></th>
         <th><span>French</span></th>
@@ -699,17 +699,51 @@ var color = '#626262';
                 collectionLayout: 'fixed columns',
                 collectionTitle: 'Column visibility control'
             },
+
+            {
+            extend: "print",
+            title: title
+            customize: function(win)
+            {
+ 
+                var last = null;
+                var current = null;
+                var bod = [];
+
+              
+                $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', '10px' );
+                     var medias = win.document.querySelectorAll('[media="screen"]');
+                     for(var i=0; i < medias.length;i++){ medias.item(i).media="all" };
+ 
+                var css = '@page { size: landscape; }',
+                    head = win.document.head || win.document.getElementsByTagName('head')[0],
+                    style = win.document.createElement('style');
+ 
+                style.type = 'text/css';
+                style.media = 'print';
+ 
+                if (style.styleSheet)
+                {
+                  style.styleSheet.cssText = css;
+                }
+                else
+                {
+                  style.appendChild(win.document.createTextNode(css));
+                }
+ 
+                head.appendChild(style);
+         }
+      },
+
+
           {
 
-            
-
-           
-
-            extend: 'pdfHtml5',
-           
-           exportOptions: {
-                   columns: ':visible',
-                    alignment: 'center'
+        extend: 'pdfHtml5',
+        exportOptions: {
+                columns: ':visible',
+                alignment: 'center'
                },
              
                "createdRow": function( row, data, dataIndex ) {

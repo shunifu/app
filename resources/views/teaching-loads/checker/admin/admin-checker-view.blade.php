@@ -54,6 +54,9 @@
     <td> 
       <a href="{{route('teaching_loads.view-checker',$item->id)}}"><i class="fas fa-eye mr-1"></i> View Students</a> 
       <span class="m-4 "></span>
+
+      <a href="{{route('teaching_loads.view-checker',$item->id)}}"><i class="fas fa-eye mr-1"></i> Subject Register</a> 
+      <span class="m-4 "></span>
       
                         </tr>
                         

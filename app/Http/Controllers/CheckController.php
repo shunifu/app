@@ -83,6 +83,10 @@ class CheckController extends Controller
 
     }
 
+    public function subject_register(){
+        
+    }
+
     public function view_students($id){
 
         $view_loads=DB::table('student_loads')

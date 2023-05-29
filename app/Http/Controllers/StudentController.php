@@ -37,6 +37,7 @@ use App\Models\StudentSubjectAverage;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\AssessementProgressReport;
 use App\Models\GradeTeacher;
+use App\Models\School;
 use App\Models\StudentFees;
 
 // use Validator;
@@ -166,7 +167,7 @@ class StudentController extends Controller
 
         $grade_id=$request->grade_id;
 
-        
+       // dd($request->all());
 
         $students = DB::table('users')
         ->join('grades_students', 'users.id', '=', 'grades_students.student_id')
@@ -1795,6 +1796,10 @@ public function student_image(Request $request){
 
     $student_id=$request->student_id;
 
+    $school=School::first();
+    $school_code=$school->school_code;
+
+
  
     // dd($request->all());
    
@@ -1807,19 +1812,18 @@ public function student_image(Request $request){
         //     "notification_url" => "https://mysite.example.com/hooks"]);
 			
 				
-        $image = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $student_id);
+        // $image = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $school_code.'-'.$student_id);
 
-        $student_image=$image->getSecurePath();
-
-     //   dd($student_image);
+        // $student_image=$image->getSecurePath();
 
 
-        // dd($student_image);
 
         User::where('id', $student_id)->update([
 
-            'profile_photo_path'=>$student_image,
+            // 'profile_photo_path'=>$student_image,
         ]);
+
+        return Redirect::back();
 
     }else{
       

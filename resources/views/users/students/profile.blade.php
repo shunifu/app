@@ -288,7 +288,7 @@ table{
                 <div class="tab-content ">
 
                     <div class=" tab-pane" id="access_control">
-                        {{-- <form action="/send/single/parent" method="post">
+                        <form action="/send/single/parent" method="post">
                             @csrf
                             <input type="hidden" value="{{ $result_parent->cell_number }}" name="parent_number">
 
@@ -310,7 +310,7 @@ table{
                             </div>
 
                            
-                        </form> --}}
+                        </form>
                     </div>
                     <div class="active tab-pane" id="profile">
 

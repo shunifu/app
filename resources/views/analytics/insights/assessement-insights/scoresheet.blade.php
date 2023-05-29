@@ -36,7 +36,7 @@ background-color: red !important;
         <div class="mx-auto text-center">
 
       
-        <div class="row mx-auto" style="width: 300px; display:block">
+        <div class="row mx-auto" style="display:block">
             <div class="col"><img src={{$item->school_letter_head}}  /></div>
             <div class="col">  <h4 class="text-center  text-bold lead">{{$item->school_name}}</h4></div>
         </div>
