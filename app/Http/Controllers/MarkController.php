@@ -11,7 +11,9 @@ use App\Models\AssessementSetting;
 use App\Models\MarkSetting;
 use App\Models\School;
 use App\Models\StudentLoad;
+use App\Models\Subject;
 use App\Models\TeachingLoad;
+use App\Models\Term;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -326,6 +328,7 @@ $array = implode("','",$string);
         ->select('grade_name', 'subject_name', 'teaching_loads.id as teaching_load_id')
         ->get();
 
+        
         // dd($loads_description);
 
  
@@ -773,5 +776,100 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
         
 
         return redirect('marks/transfer/');
+    }
+
+
+
+    public function teacher_scoresheet_index(){
+
+        $greetings= $this->greetings();
+        $assessements= $this->assessements();
+        $teaching_loads= $this->teaching_loads();
+
+
+        $terms = DB::table('terms')
+         ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
+         ->where('academic_sessions.active', 1)
+         ->select('term_name', 'terms.id as term_id', 'academic_sessions.id as active_session')
+         ->get();
+
+        return view('academic-admin.marks-management.my-scoresheet', compact('greetings','teaching_loads','assessements', 'terms'));
+
+    }
+
+
+    public function teacher_scoresheet_view(Request $request){
+
+
+      //  dd($request->all());
+
+         $loads=$request->teaching_load;
+         $assessement=$request->assessement_id;
+
+         //check if it is the same 
+         //1. subject
+         //2. stream
+
+
+         $loads_description = DB::table('teaching_loads')
+         ->join('grades', 'teaching_loads.class_id', '=', 'grades.id')
+         ->join('subjects', 'teaching_loads.subject_id', '=', 'subjects.id')
+         ->wherein('teaching_loads.id', $loads)
+         ->where('teaching_loads.active', 1)
+         ->select('grade_name', 'subject_name', 'teaching_loads.id as teaching_load_id')
+         ->get();
+ 
+
+
+         $loads_subject = DB::table('teaching_loads')
+         ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+         ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+         ->whereIn('teaching_loads.id',$loads )
+         ->select('subjects.id as subject_id', 'grades.id as class_id')
+         ->get()->pluck('subject_id')->toArray();
+
+
+       
+
+        
+         $loads_class = DB::table('teaching_loads')
+         ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+         ->join('streams', 'streams.id', '=', 'grades.stream_id')
+         ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+         ->whereIn('teaching_loads.id',$loads )
+         ->select('subjects.id as subject_id', 'grades.id as class_id', 'streams.id as stream_id')
+         ->get()->pluck('stream_id')->toArray();
+
+        // $arr=array_unique($loads_result);
+
+        // $array[0]->data
+
+
+        $subject_description=Subject::where('id',$loads_subject[0])->first();
+
+        $pass_rate=60;
+     
+
+
+        $identical_class=(count(array_unique($loads_class)) == 1);
+        $identical_subject=(count(array_unique($loads_subject)) == 1);
+
+        $greetings= $this->greetings();
+        $assessements= $this->assessements();
+        $teaching_loads= $this->teaching_loads();
+
+        if ($identical_class AND $identical_subject) {
+         
+
+        return view('academic-admin.marks-management.show-scoresheet', compact('greetings','teaching_loads','assessements','assessement','pass_rate' ,'loads_description', 'subject_description', 'loads'));
+        }else{
+             
+     flash()->overlay('<i class="fas fa-exclamation-circle warning"></i>'.' Sorry. When you are using multiple selections, the load must be the same stream, same subject.', 'View Marks');
+        }
+         
+
+
+       
+
     }
 }

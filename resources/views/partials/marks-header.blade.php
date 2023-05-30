@@ -74,6 +74,9 @@
 <a class="nav-link bg-light" id="pills-class-analysis-tab"  href="/marks/analytics" role="tab" aria-controls="pills-class-analysis" aria-selected="false">Mark Analyis</a>
 </li>
 
+<li class="nav-item" role="presentation">
+    <a class="nav-link bg-light" id="pills-class-analysis-tab"  href="/marks/my-scoresheet" role="tab" aria-controls="pills-class-analysis" aria-selected="false">My Scoresheet</a>
+    </li>
 
 
 </ul>

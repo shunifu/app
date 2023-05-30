@@ -60,7 +60,7 @@ th span {
 
           
           
-                <div class="col"><img src={{$item->school_letter_head}}  class="img-responsive" /></div>
+                <div class="col"><img src={{$item->school_letter_head}}  class="img-responsive img-fluid" /></div>
             
           
           
@@ -702,7 +702,6 @@ var color = '#626262';
 
             {
             extend: "print",
-            title: title
             customize: function(win)
             {
  

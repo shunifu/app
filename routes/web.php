@@ -642,6 +642,8 @@ Route::get('/marks/edit/{id}',[MarkController::class,'edit'])->name('marks.edit'
 Route::patch('/marks/update',[MarkController::class,'update'])->name('marks.update');
 
 
+Route::get('/marks/my-scoresheet',[MarkController::class,'teacher_scoresheet_index'])->name('marks.teacher_scoresheet_index');
+Route::post('/marks/my-scoresheet/view',[MarkController::class,'teacher_scoresheet_view'])->name('marks.teacher_scoresheet_view');
 
 Route::get('/marks/analytics',[MarkController::class,'analysis'])->name('marks.analysis');
 Route::post('/marks/analytics/show',[MarkController::class,'analysis_store'])->name('marks.analysis_store');
