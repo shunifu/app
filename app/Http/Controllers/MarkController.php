@@ -863,16 +863,15 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
 
         if ($identical_class AND $identical_subject) {
 
-            $section=Grade::where('id',$loads_class[0])->first();
+            // $section=Grade::where('id',$loads_class[0])->first();
+
+            // dd($section->section_id);
          
-            $passrate=PassRate::where('section_id',$section->section_id)->first();
+            // $passrate=PassRate::where('section_id',$section->section_id)->first();
 
-            $pass_rate=$passrate->passing_rate;
-
-
+            $pass_rate=50;
             $variable=ReportVariable::first();
            
-
         return view('academic-admin.marks-management.show-scoresheet', compact('variable','passrate','greetings','teaching_loads','assessements','assessement','pass_rate' ,'loads_description', 'subject_description', 'loads'));
         }else{
              
