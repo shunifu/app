@@ -9,7 +9,10 @@ use App\Models\PassRate;
 use App\Models\Assessement;
 use App\Models\AssessementSetting;
 use App\Models\MarkSetting;
+use App\Models\ReportVariable;
 use App\Models\School;
+use App\Models\Section;
+use App\Models\Stream;
 use App\Models\StudentLoad;
 use App\Models\Subject;
 use App\Models\TeachingLoad;
@@ -847,7 +850,7 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
 
         $subject_description=Subject::where('id',$loads_subject[0])->first();
 
-        $pass_rate=60;
+       
      
 
 
@@ -859,12 +862,22 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
         $teaching_loads= $this->teaching_loads();
 
         if ($identical_class AND $identical_subject) {
-         
 
-        return view('academic-admin.marks-management.show-scoresheet', compact('greetings','teaching_loads','assessements','assessement','pass_rate' ,'loads_description', 'subject_description', 'loads'));
+            $section=Grade::where('id',$loads_class[0])->first();
+         
+            $passrate=PassRate::where('section_id',$section->section_id)->first();
+
+            $pass_rate=$passrate->passing_rate;
+
+
+            $variable=ReportVariable::first();
+           
+
+        return view('academic-admin.marks-management.show-scoresheet', compact('variable','passrate','greetings','teaching_loads','assessements','assessement','pass_rate' ,'loads_description', 'subject_description', 'loads'));
         }else{
              
      flash()->overlay('<i class="fas fa-exclamation-circle warning"></i>'.' Sorry. When you are using multiple selections, the load must be the same stream, same subject.', 'View Marks');
+     Redirect::back();
         }
          
 

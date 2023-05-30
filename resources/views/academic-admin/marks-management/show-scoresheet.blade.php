@@ -12,6 +12,113 @@
             }
 
         </style>
+
+
+
+<style type="text/css">
+          
+
+    .table {
+border: 0.5px solid grey;
+table-layout: fixed;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+border: 0.3px solid rgb(35, 35, 35);
+}
+
+    
+  input,select{
+    color:black;
+    }
+    #img{
+    width: 100px;
+    height:auto;
+    }
+    th {
+    background-color: {{$variable->column_color}};
+    color: rgb(255, 255, 255);
+    text-align: center;
+    } 
+    @media print {
+    tr {
+    
+    }}
+
+    @media print{
+        @page { margin: 0px; }
+body { margin: 0px; }
+    }
+
+    @media print {
+    th.background {
+        font-size: {{$variable->font_size}};
+    background-color: {{$variable->column_color}} !important;
+    -webkit-print-color-adjust: exact; 
+    color: #FFFFFF !important;
+
+    
+    
+    }
+
+    .table th#assessement {
+width: 5%;
+width: fit-content;
+}
+
+    /* .table td#fit, 
+.table th#fit {
+
+width: 6%;
+
+text-align: center;
+}
+
+.table td#ft{
+
+}
+
+.table td#f{
+white-space: nowrap;
+width: 6%;
+text-align: center;
+} */
+
+
+}
+
+    @media all {
+.page-break { display: none; }
+
+}
+
+@media print {
+.page-break { display: block; page-break-before: always; }
+}
+#signaturetitle {
+font-weight: bold;
+text-align: center;
+
+}
+
+#signature {
+width: 100%;
+border: 0px;
+border-bottom: 1px solid black;
+/* height: 30px; */
+}
+
+table tbody tr td {
+
+font-size:{{$variable->font_size}};
+}
+
+
+</style>
  
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.6/css/colReorder.bootstrap4.css"/>
@@ -19,6 +126,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap4.css"/>
 
     </x-slot>
+
+    
 
             @include('partials.marks-header')
 
@@ -29,9 +138,11 @@
 
             <div class="col-md-12 ">
                 <div class="card card-light   elevation-3">
-                    <div class="card-header">
+                    <div class="card-header d-print-none">
                         <a href="/marks/my-scoresheet">
-                            <h3 class="card-title p4"><i class="fas fa-hand-point-left mr-2"></i> Back </h3>
+                            <h3 class="card-title p4 m-3"><i class="fas fa-hand-point-left mr-2"></i> Back </h3>
+
+                            <button class="btn btn-primary" onclick="window.print()" id="print_report">Print</button>
                         </a>
                     </div>
                     <div class="card-body">
@@ -84,7 +195,9 @@ if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
 if ($result) {
   do {
   if ($res = $db->store_result()) {
-      echo "<table class='table table-sm table-bordered' width=100% border=0><tr>";
+
+
+      echo "<table  id='marks_table' class='table table-compact table-bordered table-hover table-sm table-striped '><tr>";
 
         
       // printing table headers
@@ -92,38 +205,15 @@ if ($result) {
       {
           $field = mysqli_fetch_field($res);
 
-        
           echo "<th class='background' id='assessement'>{$field->name}</th>";
       }
       echo "</tr>\n";
-
-
-     
-//       foreach ($data as $row) {
-//     // Check the value of the mark and determine the CSS class
-//     if ($row['mark'] < 50) {
-//       $class = 'mark-red';
-//     } else {
-//       $class = 'mark-green';
-//     }
-
-//     // Generate the HTML for the table row
-//     echo '<tr>';
-//     echo '<td>' . htmlspecialchars($row['student_name']) . '</td>';
-//     echo '<td class="mark ' . $class . '">' . $row['mark'] . '%</td>';
-//     echo '...';
-//     echo '</tr>';
-//   }
 
 
       // printing table rows
       while($row = $res->fetch_assoc())
       {
 
-     
-
-       
-   
     echo "<tr>";
           foreach($row as $cell=>$value) {
      
@@ -165,7 +255,7 @@ $db->close();
     </div>
     </div>
   
-   
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.js"></script>
@@ -195,9 +285,9 @@ $db->close();
     select: true,
 });
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     let table = new DataTable('#marks_table');
-// });
+document.addEventListener('DOMContentLoaded', function () {
+    let table = new DataTable('#marks_table');
+});
 
         
         $.ajaxSetup({
