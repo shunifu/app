@@ -872,7 +872,7 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
             $pass_rate=50;
             $variable=ReportVariable::first();
            
-        return view('academic-admin.marks-management.show-scoresheet', compact('variable','passrate','greetings','teaching_loads','assessements','assessement','pass_rate' ,'loads_description', 'subject_description', 'loads'));
+        return view('academic-admin.marks-management.show-scoresheet', compact('variable','greetings','teaching_loads','assessements','assessement','pass_rate' ,'loads_description', 'subject_description', 'loads'));
         }else{
              
      flash()->overlay('<i class="fas fa-exclamation-circle warning"></i>'.' Sorry. When you are using multiple selections, the load must be the same stream, same subject.', 'View Marks');
