@@ -1021,12 +1021,22 @@
                 </a>
               </li>
 
+
+              <li class="nav-item">
+                <a href="/marks/my-scoresheet"  class="nav-link">
+                  <i class="nav-icon fas fa-check-circle"></i>
+                  <p>My Scoresheet</p>
+                </a>
+              </li>
+
               <li class="nav-item">
                 <a href="/marks/analytics"  class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>Mark Analysis</p>
                 </a>
               </li>
+
+              
 
               <li class="nav-item">
                 <a href="/marks/manage"  class="nav-link">
