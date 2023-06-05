@@ -157,11 +157,11 @@ return [
  
 
     'DB_CONNECTION' => 'mysql',
-    'DB_HOST' => "SG-shunifu-7434-mysql-master.servers.mongodirector.com",
+    'DB_HOST' => "SG-lean-derby-6928-7605-mysql-master.servers.mongodirector.com",
     'DB_PORT' => '3306',
     'DB_DATABASE' => env('DB_NAME'),
     'DB_USERNAME' => 'sgroot',
-    'DB_PASSWORD'=>'afJXY$HvTCnQ8pP4',
+    'DB_PASSWORD'=>'vaDVkGWi-K47M4tg',
 
     'APP_DEBUG' => 'false',
     'APP_ENV' => 'production',

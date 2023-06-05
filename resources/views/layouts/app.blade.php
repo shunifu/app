@@ -707,6 +707,7 @@
 
               @role('admin_teacher')
 
+              @role('shunifu')
               <li class="nav-item">
                 <a href="/communication" class="nav-link">
                   <i class="fas fa-comments nav-icon"></i>
@@ -715,7 +716,7 @@
                   </p>
                 </a>
               </li>
-
+              @endrole
           
 
               <li class="nav-item">
