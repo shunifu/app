@@ -58,18 +58,18 @@ class StudentController extends Controller
 
        
 
-        $username = config('app.sms_username');
-        $apiKey   = config('app.sms_password');
-        $AT = new AfricasTalking($username, $apiKey);
-        $sms      = $AT->sms();
+    //     $username = config('app.sms_username');
+    //     $apiKey   = config('app.sms_password');
+    //     $AT = new AfricasTalking($username, $apiKey);
+    //     $sms      = $AT->sms();
 
 
-            //        Use the service
-            $result   = $sms->send([
-                'to'      => '+268'.$request->parent_number,
-                'message' => $request->parent_msg,
-                'from'=>'Shunifu'
-    ]);
+    //         //        Use the service
+    //         $result   = $sms->send([
+    //             'to'      => '+268'.$request->parent_number,
+    //             'message' => $request->parent_msg,
+    //             'from'=>'Shunifu'
+    // ]);
 
 
     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have sent message ', 'Send Message');
