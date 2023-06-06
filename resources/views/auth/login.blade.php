@@ -238,10 +238,10 @@ input[type='password']{
     box-shadow: none;
 }
 img{
-    width: 40px;
-    height: 40px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
-    border-radius: 50%;
+ 
     position: relative;
 }
 a[target='_blank']{
@@ -254,10 +254,10 @@ a[target='_blank']{
     position: relative;
 }
 .bordert:after{
-    content: "Shunifu is supported/incubated by";
+    content: "";
     position: absolute;
-    top: -13px;
-    left: 17%;
+    /* top: 50%;
+    left: 50%; */
     background-color: #fff;
     padding: 0px 8px;
 }
@@ -348,12 +348,18 @@ a[target='_blank']{
                         </div>
                     </form>
                 </div>
+            
                 <div class="mx-3 my-2 py-2 bordert">
-                    <div class="text-center py-3">
+                  
+                 <center><small>Shunifu is built through the support & incubation of <span class="text-bold">RSTP</span></small></center>
+                    <div class="text-center py-1">
 
-                        <img src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1686012733/Screenshot_2023-06-06_at_2.45.12_AM_crgk4e.png"
-                            alt=""><br>
-                            The Royal Science & Technology Park (RSTP), was created through the vision of, His Majesty, King Mswati III.
+                    
+                           <small>
+                        
+                            The Royal Science & Technology Park (RSTP), was created  to promote science, technology and innovation, in the Kingdom of Eswatini.
+                        
+                           </small> 
                         
                    
                       
