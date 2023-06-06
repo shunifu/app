@@ -351,7 +351,7 @@ a[target='_blank']{
             
                 <div class="mx-3 my-2 py-2 bordert">
                   
-                 <center><small>Shunifu is built through the support & incubation of <span class="text-bold">RSTP</span>. The Royal Science & Technology Park (RSTP), was created through the vision of, His Majesty, King Mswati III  to promote science, technology and innovation, in the Kingdom of Eswatini.</small></center>
+                 <center><small>Shunifu is built through the support & incubation of <span class="text-bold">RSTP</span>. The Royal Science & Technology Park (RSTP), was created  to promote science, technology and innovation, in the Kingdom of Eswatini.</small></center>
                     <div class="text-center py-1">
 
                     
