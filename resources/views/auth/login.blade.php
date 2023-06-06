@@ -352,7 +352,8 @@ a[target='_blank']{
                     <div class="text-center py-3">
 
                         <img src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1686012733/Screenshot_2023-06-06_at_2.45.12_AM_crgk4e.png"
-                            alt="">
+                            alt=""><br>
+                            The Royal Science & Technology Park (RSTP), was created through the vision of, His Majesty, King Mswati III.
                         
                    
                       
