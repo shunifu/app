@@ -357,7 +357,7 @@ a[target='_blank']{
                     
                            <small>
                         
-                            The Royal Science & Technology Park (RSTP), was created  to promote science, technology and innovation, in the Kingdom of Eswatini.
+                            The Royal Science & Technology Park (RSTP), was created  to promote science, technology and innovation, in  Eswatini.
                         
                            </small> 
                         
