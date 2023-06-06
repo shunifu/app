@@ -257,7 +257,7 @@ a[target='_blank']{
     content: "Shunifu is supported/incubated by";
     position: absolute;
     top: -13px;
-    left: 37%;
+    left: 17%;
     background-color: #fff;
     padding: 0px 8px;
 }
