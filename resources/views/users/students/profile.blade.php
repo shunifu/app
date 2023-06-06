@@ -290,7 +290,7 @@ table{
                     <div class=" tab-pane" id="access_control">
                         <form action="/send/single/parent" method="post">
                             @csrf
-                            <input type="hidden" value="{{ $result_parent->cell_number }}" name="parent_number">
+                            <input type="hidden" value="" name="parent_number">
 
 
                             <div class="col-md-6 form-group">
