@@ -254,7 +254,7 @@ a[target='_blank']{
     position: relative;
 }
 .bordert:after{
-    content: "or login with";
+    content: "";
     position: absolute;
     top: -13px;
     left: 37%;
