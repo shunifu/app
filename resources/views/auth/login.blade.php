@@ -351,7 +351,7 @@ a[target='_blank']{
             
                 <div class="mx-3 my-2 py-2 bordert">
                   
-                 <center><small>Shunifu is built through the support & incubation of <span class="text-bold">Royal Science & Technology Park (RSTP).</span> RSTP, was created  to promote science, technology & innovation, in Eswatini. Vist https://rstp.org.sz for more information about RSTP</small></center>
+                 <center><small>Shunifu is built through the support & incubation of Royal Science & Technology Park (RSTP). RSTP is a government entity that was created  to promote science, technology & innovation, in Eswatini. <br> Vist <a href="https://rstp.org.sz">https://rstp.org.sz</a> to know more about RSTP.</small></center>
                     <div class="text-center py-1">
 
                     
