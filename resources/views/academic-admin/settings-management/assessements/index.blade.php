@@ -761,8 +761,8 @@
                                   <small id="subjectHelp" class="form-text text-muted">Does the passing subject rule apply?  </small>
                                   <select class="form-control" name="passing_subject_rule">
                                   <option value="">Select Option</option>
-                                  <option value="1">Yes It Applies</option>
-                                  <option value="0"> No It Does Not Apply</option>
+                                  <option value="1">Yes, passing subject rule APPLIES</option>
+                                  <option value="0"> No, passing subject rule DOES NOT apply</option>
                                   </select>
                                   @error('passing_subject_rule')
                                   <span class="text-danger">{{$message}}</span>  
@@ -826,7 +826,7 @@
                               <select class="form-control" name="tie_type">
                                
                               <option value="">Select Option</option>
-                              <option value="share_n">Share same position without skiping</option>
+                         
                               <option value="share_n_+_1">Share same position but skip</option>
                               </select>
                               @error('tie_type')

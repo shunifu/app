@@ -639,6 +639,7 @@ return redirect('users/teacher/loads/view/'.$teaching_load_id)->with('Teaching L
       flash()->overlay('<i class="fas fa-check-circle text-warning "></i>'.' Warning. That teaching load has marks attached to it. Please consult with the system administrator for further assistance.', 'Delete Teaching Load');
 
       }else{
+        DB::table('student_subject_averages')->where('teaching_load_id',$id)->delete();
         DB::table('teaching_loads')->where('id',$id)->delete();
         DB::table('student_loads')->where('teaching_load_id',$id)->delete();
         DB::table('marks')->where('teaching_load_id',$id)->delete(); 

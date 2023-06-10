@@ -78,7 +78,7 @@
                                 @elseif ($passrates->passing_subject_rule==1)
                                 <option value="{{$passrates->passing_subject_rule}}">Applies</option>   
                                 @endif
-                                <option value="">---------------------</option>
+                               
                             <option value="1">Applies</option>
                             <option value="0">Does Not Apply</option>
                             </select>
@@ -91,13 +91,13 @@
                           <x-jet-label>Average Calculation Rule</x-jet-label>
                           <select class="form-control" name="average_calculation">
                           @if ($passrates->average_calculation=="default")
-                                <option value="{{$passrates->average_calculation}}">Default</option>    
+                                <option value="{{$passrates->average_calculation}}">Count all subjects</option>    
                                 @elseif ($passrates->average_calculation=="custom")
-                                <option value="{{$passrates->average_calculation}}">As Set</option>   
+                                <option value="{{$passrates->average_calculation}}">Pick best number of subjects</option>   
                                 @endif
-                                <option value="">---------------------</option>
-                                <option value="custom">As Set</option>
-                                <option value="default">Default</option>
+                             
+                                <option value="custom">Pick best number of subjects</option>
+                                <option value="default">Count all subjects</option>
                             </select>
                           @error('average_calculation')
                           <span class="text-danger">{{$message}}</span>  
@@ -107,17 +107,10 @@
                       <div class="form-group">
                         <x-jet-label> Ties </x-jet-label>
                         <select class="form-control" name="tie_type">
-                          @if ($passrates->tie_type=="share")
-                          <option value="{{$passrates->tie_type}}">Ties Share Position</option>    
-                          @elseif ($passrates->tie_type=="sequential")
-                          <option value="{{$passrates->average_calculation}}">Ties Do not share position</option>   
-                          @elseif ($passrates->tie_type=="share_n_+_1")
-                          <option value="{{$passrates->average_calculation}}">Ties share position N+1</option>  
+                          @if  ($passrates->tie_type=="share_n_+_1")
+                          <option value="{{$passrates->average_calculation}}">Ties share position but skip</option>  
                           @endif
-                        <option value="">------------------------</option>
-                        <option value="sequential">Sequential</option>
-                        <option value="share">Share (sequental) </option>
-                        <option value="share_n_+_1">Share (N+1) </option>
+                        <option value="share_n_+_1">Ties share position but skip </option>
                         </select>
                         @error('tie_type')
                         <span class="text-danger">{{$message}}</span>  
@@ -128,8 +121,8 @@
                       <x-jet-label>Term Average Type</x-jet-label>
                       <select class="form-control" name="term_average_type" id="term_average_type">
 
-                    <option value="{{$passrates->term_average_type}}">{{$passrates->term_average_type}}</option>   
-                      <option value="">-------------------</option>
+                        <option value="{{$passrates->term_average_type}}">{{$passrates->term_average_type}}</option>   
+
                       <option value="decimal">Decimal Number</option>
                       <option value="whole">Whole Number</option>
                       </select>
@@ -138,16 +131,35 @@
                       @enderror
                   </div>
 
+                  @if (($passrates->term_average_type=="decimal"))
                   <div class="form-group" id="decimal_places">
                     <x-jet-label>Number of Decimal Places</x-jet-label>
-                    <input type="number" class="form-control" id="number_of_decimal_places" name="number_of_decimal_places">
+                    <input type="number" class="form-control" id="decimal_number" value="{{$passrates->number_of_decimal_places}}" name="number_of_decimal_places">
                     @error('number_of_decimal_places')
                     <span class="text-danger">{{$message}}</span>  
                     @enderror
                 </div>
-          
-          
+                  @else
+
+                  <div class="form-group" id="decimal_places">
+                    <x-jet-label>Number of Decimal Places</x-jet-label>
+                    <input type="number" class="form-control" id="decimal_number" value="0"  readonly name="number_of_decimal_places">
+                    @error('number_of_decimal_places')
+                    <span class="text-danger">{{$message}}</span>  
+                    @enderror
+                </div>
+
+                  <input type="hidden" name="number_of_decimal_places" value="0">
+                      
+                  @endif
             
+                  {{-- <div class="form-group" id="decimal_places">
+                    <x-jet-label>Number of Decimal Places</x-jet-label>
+                    <input type="number" class="form-control" id="decimal_number" name="number_of_decimal_places">
+                    @error('number_of_decimal_places')
+                    <span class="text-danger">{{$message}}</span>  
+                    @enderror
+                </div> --}}
                 <input type="hidden" name="pass_rate_id" value="{{$passrates->id}}">
 
           </div>
@@ -195,12 +207,10 @@
         //Show list of subjects
         $('#decimal_places').show();
         
-    
-       
         
     }else{
-      $('#number_of_decimal_places').val(" ");
-        $('#decimal_places').hide();
+      $('#number_of_decimal_places').val("0");
+        $('#decimal_places').show();
     }
       
     });

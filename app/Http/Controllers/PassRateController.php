@@ -144,7 +144,7 @@ class PassRateController extends Controller
             'term_average_type'=>'required',
         ]);
 
-        // dd($request->all());
+     
         if($request->has('number_of_decimal_places')){
             $number_of_decimal_places=$request->number_of_decimal_places;
           }else{

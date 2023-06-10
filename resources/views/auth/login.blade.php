@@ -35,7 +35,7 @@
 				
 			});
 </script>
-<link rel="manifest" href="https://progressier.com/client/progressier.json?id=mRuQhHD6PyzeinPjlO9K"><script defer src="https://progressier.com/client/script.js?id=mRuQhHD6PyzeinPjlO9K"></script> 
+
 
 
 
@@ -342,24 +342,18 @@ a[target='_blank']{
                             </div>
                         </div>
                     
-                        <button class="btn btn-primary btn-block mt-3 px-3 submit">Login to Shunifu</button>
+                        <button class="btn btn-primary btn-block mt-1 px-3 submit">Login to Shunifu</button>
                      
                         <div class="text-center pt-4 text-muted"> <a href="/reset">Forgot Password?</a>
                         </div>
                     </form>
                 </div>
             
-                <div class="mx-3 my-2 py-2 bordert">
-                  
-                 <center><small>Shunifu is built through the support & incubation of the Royal Science & Technology Park (RSTP). RSTP is a government entity that was created  to promote science, technology & innovation, in Eswatini. <br> Visit <a href="https://rstp.org.sz">https://rstp.org.sz</a> to know more about RSTP.</small></center>
-                    <div class="text-center py-1">
+                <div class="mx-3 my-2 py-2 bordert ">
+                 <center><span class="text-justify text-muted small mt-3"><mark>Shunifu</mark> is built through the support & incubation of the <a href="https://rstp.org.sz">Royal Science & Technology Park</a>. RSTP is a government entity that was created  to promote science, technology & innovation and spearhead digital transformation in the Kingdom of Eswatini.</span></center>
+                    <div class="text-center ">
 
-                    
-                         
-                        
-                   
-                      
-
+        
                       
                     </div>
                 </div>
