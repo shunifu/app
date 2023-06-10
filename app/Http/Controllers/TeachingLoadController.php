@@ -640,9 +640,10 @@ return redirect('users/teacher/loads/view/'.$teaching_load_id)->with('Teaching L
 
       }else{
         DB::table('student_subject_averages')->where('teaching_load_id',$id)->delete();
-        DB::table('teaching_loads')->where('id',$id)->delete();
         DB::table('student_loads')->where('teaching_load_id',$id)->delete();
         DB::table('marks')->where('teaching_load_id',$id)->delete(); 
+        DB::table('teaching_loads')->where('id',$id)->delete();
+    
   
         flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success.You have deleted that teaching load', 'Delete Teaching Load');
 
