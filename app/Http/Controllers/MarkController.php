@@ -26,6 +26,8 @@ use App\Traits\GreetingsTrait;
 use App\Traits\MarksTrait;
 use Illuminate\Support\Facades\Schema;
 
+use function PHPUnit\Framework\isNull;
+
 class MarkController extends Controller
 {
     /**
@@ -261,6 +263,13 @@ return redirect('/marks');
         $deadline=$deadline_data->marks_deadline;
 
         $current_date=(date("Y-m-d H:i:s"));
+
+        if(empty($deadline)){
+
+            flash()->overlay('<i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i>'.' Sorry '.Auth::user()->name . '. The deadline for this assessment has not been set. Please request the school principal to attach a deadline to this assessement.', 'Add Marks');
+            return redirect('/marks');
+
+        }
        
 
 
@@ -270,6 +279,11 @@ return redirect('/marks');
           
             
             //check if current date is greater than deadline
+
+            // if(($current_date>$deadline)){
+
+            // }
+
 
             if($current_date>$deadline){
 
@@ -629,14 +643,16 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
         users.lastname,
         grades.grade_name,
         subjects.subject_name, 
-     	(SELECT COUNT(*) from student_loads WHERE  student_loads.teaching_load_id=teaching_loads.id AND teaching_loads.active=1 AND student_loads.active=1) as total_loads,
+     	(SELECT COUNT(*) from student_loads INNER JOIN users on users.id=student_loads.student_id  WHERE  student_loads.teaching_load_id=teaching_loads.id AND teaching_loads.active=1 AND student_loads.active=1 AND users.active=1) as total_loads,
     	(SELECT COUNT(*) from marks  WHERE marks.assessement_id=".$request->assessement_id." AND marks.teaching_load_id=teaching_loads.id AND marks.active=1 AND teaching_loads.active=1 ) as marks_count
-       	FROM teaching_loads
+       	FROM teaching_loads 
         INNER JOIN users ON users.id=teaching_loads.teacher_id 
         INNER JOIN subjects ON subjects.id=teaching_loads.subject_id 
         INNER JOIN grades ON grades.id=teaching_loads.class_id 
-       
+        INNER JOIN student_loads ON student_loads.teaching_load_id=teaching_loads.id 
         where teaching_loads.active=1 AND users.active=1
+
+        GROUP BY student_loads.teaching_load_id
       
         ORDER BY grades.grade_name
 "));
