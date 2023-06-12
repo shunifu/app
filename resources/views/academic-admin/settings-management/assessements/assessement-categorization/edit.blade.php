@@ -65,6 +65,7 @@
                        <option value="">---------------</option>
                        <option value="CA">Continous Assessement </option>
                        <option value="Examination">Examination</option>
+                       <option value="Informal">Informal Assessment</option>
                      </select>
                    
                     @error('assign_as')

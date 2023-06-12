@@ -256,6 +256,7 @@
                           <option value="">Select Assignment</option>
                           <option value="CA">Continuous Assessement</option>
                           <option value="Examination">Examination</option>
+                          <option value="Informal">Informal Assessement</option>
                           </select>
                           @error('assign_as')
                           <span class="text-danger">{{$message}}</span>  
