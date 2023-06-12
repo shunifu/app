@@ -645,6 +645,11 @@ Route::patch('/marks/update',[MarkController::class,'update'])->name('marks.upda
 Route::get('/marks/my-scoresheet',[MarkController::class,'teacher_scoresheet_index'])->name('marks.teacher_scoresheet_index');
 Route::post('/marks/my-scoresheet/view',[MarkController::class,'teacher_scoresheet_view'])->name('marks.teacher_scoresheet_view');
 
+
+Route::get('/marks/my-comments',[MarkController::class,'teacher_comment_index'])->name('marks.teacher_comments_index');
+Route::post('/marks/my-comments/view',[MarkController::class,'teacher_comment_view'])->name('marks.teacher_comments_view');
+Route::post('/marks/my-comments/store',[MarkController::class,'teacher_comment_store'])->name('marks.teacher_comments_store');
+
 Route::get('/marks/analytics',[MarkController::class,'analysis'])->name('marks.analysis');
 Route::post('/marks/analytics/show',[MarkController::class,'analysis_store'])->name('marks.analysis_store');
 
@@ -862,6 +867,7 @@ Route::post('/comments/delete', [CommentSettingController::class,'destroy'])->na
 
 Route::get('/comments/manage/index', [CommentSettingController::class,'show'])->name('comments.show');
 Route::post('/comments/manage/list', [CommentSettingController::class,'list'])->name('comments.list');
+Route::get('/comment/manage/delete/{id}', [CommentSettingController::class,'destroy'])->name('comments.destroy');
 Route::post('/comments/manage/update', [CommentSettingController::class,'update'])->name('comments.update');
 Route::get('/symbols', [MarkSymbolController::class,'index'])->name('symbols.index');
 Route::get('/symbols/manage', [MarkSymbolController::class,'view'])->name('symbols.manage');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MarkSetting;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
@@ -25,6 +26,15 @@ class MarkSettingController extends Controller
                    $table->timestamps();
            });
        }
+
+
+       if (!Schema::hasColumn('mark_settings', 'effort_grade_status')) {
+        
+        Schema::table('mark_settings', function (Blueprint $table) {
+
+            $table->integer('effort_grade_status')->default('0');
+        });
+    }
 
 
         $markSettings=MarkSetting::all();
@@ -53,8 +63,11 @@ class MarkSettingController extends Controller
     public function store(Request $request)
     {
 
+     //   dd($request->all());
+
         $validation=$request->validate([
             'marks_mode'=>'required',
+            'effort_grade_status'=>'required',
         ]);
      
         //Check if there is an existing value
@@ -63,12 +76,14 @@ class MarkSettingController extends Controller
        
 
         if (is_null($checkSetting)) {
-            $add_mark=MarkSetting::create([
+            MarkSetting::create([
                 'marks_mode'=>$request->marks_mode,
+                'effort_grade_status'=>$request->effort_grade_status,
             ]);
         }else{
             $update=MarkSetting::first()->update([
                 'marks_mode'=>$request->marks_mode,
+                'effort_grade_status'=>$request->effort_grade_status,
             ]);
         }
 

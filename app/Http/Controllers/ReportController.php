@@ -324,6 +324,7 @@ class ReportController extends Controller
 
      $variables=ReportVariable::all();
 
+     
    
  
 

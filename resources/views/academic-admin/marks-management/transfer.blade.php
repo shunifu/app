@@ -20,9 +20,7 @@
  
 @include('partials.marks-header')
 
-   <p>
-       If you want to transfer marks from one assessement to another, use this section.
-   </p>
+
     <div class="mb-4">
   
      
@@ -31,6 +29,10 @@
         <div class="card card-light   elevation-3">
            
             <div class="card-body">
+                <p >
+                   Use this section to transfer marks. This is helpful when you have accidentally added marks in a wrong asssessment. For example adding Test 1 marks in test 2 slot. Instead of deleting the marks and entering them again, you can just transfer them from Test 2  to Test 1
+                </p>
+                <hr>
                 <form action="{{ route('marks.transfering') }}" method="post">
 
                             @csrf

@@ -30,9 +30,9 @@
             <hr>
            
             <p class="text-gray-700 mb-1 2h-base d-print-none">{{$greetings}} {{\Spatie\Emoji\Emoji::grinningFace()}}{{Auth::user()->name}}<p>
-              </p>
+          
 
-              <p class="text-gray-700 mb-1 2h-base d-print-none">
+              {{-- <p class="text-gray-700 mb-1 2h-base d-print-none">
 
                 Use this section to add marks for students.
                 <ol>
@@ -40,7 +40,7 @@
                     <li>Select the assessement you want to add marks for.</li>
                     </ol> 
 
-              </p>
+              </p> --}}
 
         </div>
     </div>
@@ -78,10 +78,14 @@
     <a class="nav-link bg-light" id="pills-class-analysis-tab"  href="/marks/my-scoresheet" role="tab" aria-controls="pills-class-analysis" aria-selected="false">My Scoresheet</a>
     </li>
 
+    <li class="nav-item" role="presentation">
+        <a class="nav-link bg-light" id="pills-class-analysis-tab"  href="/marks/my-comments" role="tab" aria-controls="pills-class-analysis" aria-selected="false">My Comments</a>
+        </li>
+
 
 </ul>
       </div>
-</div>
+{{-- </div> --}}
 
 
     </div>

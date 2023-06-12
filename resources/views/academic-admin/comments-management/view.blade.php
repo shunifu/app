@@ -63,9 +63,9 @@
                         <td>{{$item->from}} </td>
                         <td>{{$item->to}} </td>
                        
-                        
+                       
                     
-    <td>  <a href="#"><i class="fas fa-trash mr-2"></i>Delete</a>
+    <td>  <a href="/comment/manage/delete/{{encrypt($item->id)}}"><i class="fas fa-trash mr-2"></i>Delete</a>
 </td>
                         </tr>
                       

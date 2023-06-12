@@ -44,8 +44,12 @@
                             <option value="">Select School Type</option>
                             <option value="0">Kindergerten</option>
                             <option value="primary-school">Primary School</option>
-                            <option value="2">Secondary School</option>
+                            <option value="secondary-school">Secondary School</option>
                             <option value="high-school">High School</option>
+                            <option value="sgcse-nsc-school">SGSCE-NSC School</option>
+                            <option value="ieb-school">IEB School</option>
+                      
+                            <option value="nsc-school">NSC School</option>
                             <option value="Prevoc">Prevocational School</option>
                             <option value="tvet">TVET</option>
                             <option value="college">College</option>

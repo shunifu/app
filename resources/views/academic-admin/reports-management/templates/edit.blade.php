@@ -52,6 +52,7 @@
           <option value="ca_only">CA Only</option>
           <option value="exam_only">Exam Only</option>
           <option value="ca_exam"> CA & Exam</option>
+          <option value="ieb">IEB Template</option>
           <option value="term_assessements">Term Assessements</option>
           <option value="vulamasango_template">Vulamasango Template</option>
           <option value="year_assessements">Year Assessements</option>

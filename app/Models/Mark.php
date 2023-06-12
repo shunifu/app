@@ -14,7 +14,8 @@ class Mark extends Model
         'teacher_id',
         'mark',
         'teaching_load_id',
-        'session_id'
+        'session_id',
+        'effort_grade'
     ];
 
 }

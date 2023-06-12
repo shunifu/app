@@ -6,7 +6,7 @@
       <div class="card-header">
         <h3 class="card-title"> Mark Settings</h3>
       </div>
-      <img class="card-img-top" src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_270,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_50_style_light_align_center:Report Card Variables,w_0.4,y_0.20/v1651865443/pexels-lukas-669613_oo6fno.jpg"
+      <img class="card-img-top" src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_270,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_50_style_light_align_center:Mark Settings,w_0.4,y_0.20/v1651865443/pexels-lukas-669613_oo6fno.jpg"
       alt="">
         <div class="card-body">
           <h3 class="lead">Hi, {{Auth::user()->salutation}} {{Auth::user()->lastname}}</h3>
@@ -61,6 +61,19 @@
               </div>
 
 
+              <div class="form-group">
+                <x-jet-label>Effort Grades</x-jet-label>
+                <small id="imageHelp" class="form-text text-muted">Effort grades when entering marks</small>
+                <select name="effort_grade_status" id="effort_grade_status" class="form-control">
+                  <option value="">Select Option</option>
+                  <option value="1">Show Effort Grades</option>
+                  <option value="0">Hide Effort Grades</option>
+                </select>
+                @error('effort_grade_status')
+                <span class="text-danger">{{$message}}</span>  
+                @enderror
+              </div>
+
              
         </div>
         <!-- /.card-body -->
@@ -104,6 +117,23 @@
 
                   @if ($item->marks_mode=="2")
                   Flex Mode  
+              
+               
+                @endif
+                  </span>
+               </li>
+
+
+
+               <li>Effort Grade Status: 
+                <span class="text-bold">
+                  
+                  @if ($item->effort_grade_status=="1")
+                   ON
+                  @endif
+
+                  @if ($item->effort_grade_status=="0")
+                 OFF
               
                
                 @endif

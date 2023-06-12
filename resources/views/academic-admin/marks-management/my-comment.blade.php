@@ -31,12 +31,11 @@
         <div class="card card-light   elevation-3">
            
             <div class="card-body">
-
                 <p >
-                    Use this section to view a scoresheet of your marks at teaching-load level. This is more helpful when you want to see the perfomance of your students for specific assessements. For example if you want to see how you class performed for Test 1, Test 2, Test 3 (all appearing in one scoresheet), just select the teaching load, the assessements you want to view and lastly select how you want the average to be calculated.
+                    Use this section to manage customized comments for your students. These comments will appear in the student's report card. If as a subject teacher wants to write specific comments for his/her leaners, the teacher can so through this section.
                  </p>
                  <hr>
-                <form action="{{ route('marks.teacher_scoresheet_view') }}" method="post">
+                <form action="{{ route('marks.teacher_comments_view') }}" method="post">
 
                             @csrf
                             <div class="form-row">
@@ -57,31 +56,31 @@
                                 </div>
     
                                 <div class="col-md-4 form-group">
-                                    <x-jet-label>Select Assessement</x-jet-label><br>
-                                    <select class="form-control" name="assessement_id[]" id="multiple_assessements" multiple="multiple">
-                                        <option value="">Select Assessement</option>
-                                        @foreach($assessements as $assessement)
-                                            <option value="{{ $assessement->assessement_id }}">
-                                                {{ $assessement->assessement_name }}
+                                    <x-jet-label>Select Reporting Cycle</x-jet-label><br>
+                                    <select class="form-control" name="reporting_cycle" >
+                                        <option value="">Select Reporting Cycle</option>
+                                        @foreach($terms as $term)
+                                            <option value="{{ $term->term_id }}">
+                                                {{ $term->term_name }} Reporting
                                              
                                         @endforeach
                                     </select>
-                                    @error('assessement_id')
+                                    @error('reporting_cycle')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-4 form-group">
-                                    <x-jet-label>Select AVG Settings</x-jet-label><br>
-                                    <select class="form-control" name="settings" id="settings" >
-                                        <option value="">Select Settings</option>
-                                        <option value="0"> AVG of selected assessements</option>
+                                    <x-jet-label>Select Report Type</x-jet-label><br>
+                                    <select class="form-control" name="report_type" id="report_type" >
+                                        <option value="">Select Report Type</option>
+                                        <option value="mid-term">Mid-Term Report</option>
+                                        <option value="term-end-report">End of Term Report</option>
+                                        <option value="progress-report">Progress Report</option>
 
-                                        @foreach ($terms as $term_item)
-                                        <option value="{{$term_item->term_id}}">{{$term_item->term_name}} settings</option>
-                                        @endforeach
+                                     
                                     </select>
-                                    @error('assessement_id')
+                                    @error('report_type')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -89,7 +88,7 @@
                             </div>
 
                         <div class="card-footer col-auto">
-                            <x-jet-button id="btnSelector">Show Load-Based Scoresheet</x-jet-button>
+                            <x-jet-button id="btnSelector">Show Students</x-jet-button>
                         </div>
                 </form>
        
@@ -123,4 +122,4 @@
 
 
     
-</x-app-layout>
+</x-app-layout>''

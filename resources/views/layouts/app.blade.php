@@ -779,12 +779,7 @@
                   @endrole
 
                   @if (Auth::user()->hasRole(['admin_teacher', 'school-administrator']))
-                 {{-- <li class="nav-item">
-                     <a href="/report/assessement-based/" class="nav-link">
-                      <i class="nav-icon fas fa-check-circle"></i>
-                      <p>Assessement Based</p>
-                    </a>
-                  </li>   --}}
+               
 
                   <li class="nav-item has-treeview">
                   
@@ -797,8 +792,7 @@
                     </a>
 
                     <ul class="nav nav-treeview">
-                      {{-- <a href="/report/term-based/" class="nav-link"> --}}
-                        {{-- /report/term-based/class --}}
+               
                       <li class="nav-item">
                         <a href="/report/term-based/" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
@@ -820,21 +814,71 @@
                     </ul>
                   </li>
 
-                
 
-                  <li class="nav-item">
+
+                  <li class="nav-item has-treeview">
+                  
                     <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-check-circle"></i>
-                      <p>Past Reports</p>
+                      <i class="nav-icon fas fa-chart-line"></i>
+                      <p>
+                        Mid-term Reports
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
                     </a>
+
+                    <ul class="nav nav-treeview">
+               
+                      <li class="nav-item">
+                        <a href="/report/term-based/" class="nav-link">
+                          <i class="nav-icon fas fa-chevron-circle-right"></i>
+                          <p>Stream Based</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/report/term-based/class" class="nav-link">
+                          <i class="nav-icon fas fa-chevron-circle-right"></i>
+                          <p>Class Based</p>
+                        </a>
+                      </li>
+                    
+                    </ul>
                   </li>
 
-                   <li class="nav-item">
+
+
+                  <li class="nav-item has-treeview">
+                  
                     <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-check-circle"></i>
-                      <p>Transcripts</p>
+                      <i class="nav-icon fas fa-chart-line"></i>
+                      <p>
+                        Progress Reports
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
                     </a>
-                  </li>   
+
+                    <ul class="nav nav-treeview">
+               
+                      <li class="nav-item">
+                        <a href="/report/term-based/" class="nav-link">
+                          <i class="nav-icon fas fa-chevron-circle-right"></i>
+                          <p>Stream Based</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/report/term-based/class" class="nav-link">
+                          <i class="nav-icon fas fa-chevron-circle-right"></i>
+                          <p>Class Based</p>
+                        </a>
+                      </li>
+                    
+                    </ul>
+                  </li>
+
+                
+
+             
+
+                 
 
                   @endif
     
@@ -969,6 +1013,87 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-building"></i>
               <p>
+                My Comments
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+
+
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-building"></i>
+                  <p>
+                    Subject Comments
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="/class/student-attendance" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p>Daily Attendance</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/class/student-attendance/cumulative" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p>Cummulative Attendance</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="/class/student-attendance/manage" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p>Manage Attendance</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="/class/student-attendance/history" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p> Attendance History</p>
+                    </a>
+                  </li>
+
+
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a href="/class/student-management" class="nav-link">
+                  <i class="nav-icon fas fa-check-circle"></i>
+                  <p>Student Management</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="/class/student-management/link-parents" class="nav-link">
+                  <i class="nav-icon fas fa-check-circle"></i>
+                  <p>Link Parents</p>
+                </a>
+              </li>
+            
+
+              <li class="nav-item">
+                <a href="/class/class-noticeboard" class="nav-link">
+                  <i class="nav-icon fas fa-check-circle"></i>
+                  <p>Class Noticeboard</p>
+                </a>
+              </li>
+          
+
+              
+            
+
+            </ul>
+          </li>
+
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-building"></i>
+              <p>
                 Check Center
                 <i class="fas fa-angle-left right"></i>
               </p>
@@ -1047,9 +1172,9 @@
               </li>
 
               <li class="nav-item">
-                <a href="/marks/transfer"  class="nav-link">
+                <a href="/marks/my-comments"  class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
-                  <p>Transfer Marks</p>
+                  <p>My Comments</p>
                 </a>
               </li>
 

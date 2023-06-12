@@ -873,7 +873,7 @@ $insert=AssessementProgressReport::upsert(collect($student_average)->map(functio
      MAX(CASE WHEN subjects.subject_code=119 THEN mark END) AS 'TechnicalStudies', 
      MAX(CASE WHEN subjects.subject_code=712 THEN mark END) AS 'ConsumerSciencep',
      MAX(CASE WHEN subjects.subject_code=121 THEN mark END) AS 'Entreprenuership',
-     MAX(CASE WHEN subjects.subject_code=6884 THEN mark END) AS 'Biologyy'
+     MAX(CASE WHEN subjects.subject_code=6884 THEN mark END) AS 'Biocore'
        
     FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id
     INNER JOIN subjects ON teaching_loads.subject_id=subjects.id
@@ -934,7 +934,8 @@ $insert=AssessementProgressReport::upsert(collect($student_average)->map(functio
      MAX(CASE WHEN subjects.subject_code=118 THEN mark END) AS 'FoodTextileTechnology',
      MAX(CASE WHEN subjects.subject_code=119 THEN mark END) AS 'TechnicalStudies', 
      MAX(CASE WHEN subjects.subject_code=712 THEN mark END) AS 'ConsumerSciencep',
-     MAX(CASE WHEN subjects.subject_code=121 THEN mark END) AS 'Entreprenuership'
+     MAX(CASE WHEN subjects.subject_code=121 THEN mark END) AS 'Entreprenuership',
+     MAX(CASE WHEN subjects.subject_code=6884 THEN mark END) AS 'Biocore'
        FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id
        INNER JOIN subjects ON teaching_loads.subject_id=subjects.id
        INNER JOIN users ON users.id=marks.student_id
@@ -967,10 +968,11 @@ $base64=$school_data->base64;
 
 
 
+
 if($school_data->school_type=="primary-school"){
     return view('analytics.scoresheet.primary',compact('scoresheet','stream_title', 'section_id', 'assessement_name','assessement_id', 'tie_type', 'streamofstudent', 'assessement_id', 'base64', 'pass_rate','key', 'classofstudent', 'term_average_rule', 'number_of_subjects', 'passing_subject_rule', 'passing_subject_name'));   
 }else{
-    return view('analytics.scoresheet.index',compact('scoresheet','stream_title', 'section_id', 'assessement_name','assessement_id', 'tie_type', 'streamofstudent', 'assessement_id', 'base64', 'pass_rate', 'key', 'classofstudent', 'term_average_rule', 'number_of_subjects', 'passing_subject_rule', 'passing_subject_name'));   
+    return view('analytics.scoresheet.index',compact('scoresheet','stream_title','number_of_subjects','passing_subject_rule','term_average_rule', 'section_id', 'assessement_name','assessement_id', 'tie_type', 'streamofstudent', 'assessement_id', 'base64', 'pass_rate', 'key', 'classofstudent', 'term_average_rule', 'number_of_subjects', 'passing_subject_rule', 'passing_subject_name'));   
 }
 
 

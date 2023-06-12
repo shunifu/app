@@ -67,7 +67,24 @@ th span {
                     <p>
                         <h3 class="text-bold">{{$stream_title}}  {{$assessement_name}} Scoresheet</h3>
                     </p>
-                Student Average calculation exludes Computer Studies
+                Student Average calculation criteria
+                <ul>
+                    <li>
+                        Passing Subject Rule: @if ($passing_subject_rule==1)
+                            Passing Subject Rule APPLIES
+                        @else
+                        Passing Subject Rule DOES NOT APPLY 
+                        @endif 
+
+                        <li>
+                           Student Average: @if ($term_average_rule=="default")
+                               Average of ALL Subjects
+                            @else
+                           Best {{$number_of_subjects}} subjects @if($passing_subject_rule==1)including English  @endif
+                            @endif 
+                        </li>
+                    </li>
+                </ul>
             </div>
            
             @endforeach
@@ -116,6 +133,7 @@ th span {
         @endif
         <th><span>AMaths</span></th>
         <th><span>D&T</span></th>
+    
         @foreach (\App\Models\School::all() as $item)
 
         @if ($item->school_code=="0083" OR $item->school_code=="1037")
@@ -132,7 +150,7 @@ th span {
             <th><span>Entreprenuership</span></th>
         @endif
         <th><span>COMP</span></th>
-      
+        <th><span>Biocore</span></th>
         @endforeach
       
         </thead>
@@ -628,6 +646,16 @@ where student_id = ".$student->learner_id.""));
                         -
                         @elseif($student->Computer<$pass_rate )
                         <span class="text-danger">{{ $student->Computer}}% </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->Biocore>=$pass_rate)
+                        <span class="text-secondary">{{ $student->Biocore}}% </span>
+                        @elseif(is_null($student->Biocore))
+                        -
+                        @elseif($student->Biocore<$pass_rate )
+                        <span class="text-danger">{{ $student->Biocore}}% </span>
                         @endif
                     </td>
 

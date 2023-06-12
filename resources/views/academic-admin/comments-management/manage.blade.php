@@ -55,6 +55,7 @@
                       <option value="1">Subject Comments</option>
                       <option value="2">Headteacher Comments</option>
                       <option value="3">Classteacher Comments</option>
+                      <option value="4">Effort Grade Comments</option>
                   </select>
                   @error('comment_category')
                   <span class="text-danger">{{$message}}</span>  

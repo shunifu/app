@@ -30,34 +30,28 @@
             <div class="col-md-12 ">
                 <div class="card card-light   elevation-3">
                     <div class="card-header">
-                        <a href="/marks/">
+                        <a href="/marks/my-comments">
                             <h3 class="card-title p4"><i class="fas fa-hand-point-left mr-2"></i> Back </h3>
                         </a>
                     </div>
                     <div class="card-body">
                         <p class="text-gray-700 mb-1 2h-base">
-                           {{\Spatie\Emoji\Emoji::waving_hand()}}{{ Auth::user()->name }}.  You are adding <span class="text-bold">{{ $loads_description['0']->subject_name }} {{ $assessement_description->assessement_name }}</span> marks for students in the following class(es).
+                           {{\Spatie\Emoji\Emoji::waving_hand()}}{{ Auth::user()->name }}.  You are adding <span class="text-bold">{{ $loads_description['0']->subject_name }} </span> comments for students in the following class(es).
                             <ul>
                             @foreach ($loads_description as $item)
                             <li><span class="text-bold">{{ $item->grade_name }}</span></li>
                             @endforeach
                          
                             </ul>
-                       {{-- //    .text-gray-700 mb-1 2h-base --}}
+                     
 
                             <hr>
 
                              <p class="text-gray-700 mb-1 2h-base">
                                 <strong>Important Note:</strong><br>
                                 <ul>
-
-                     <li>         
-                    Please ensure that the data you are entering reflects the data in your official scheme book. 
-                    Siyabonga  {{\Spatie\Emoji\Emoji::hugging_face()}}
-                </li>  
-<p></p> 
                 <li>
-                    If you want to <span class="text-bold">CHANGE or edit a mark </span> , click on the green button. After clicking on the green button a pop up will show where you will be able to change/edit the mark of the student.
+                    If you want to <span class="text-bold">CHANGE or edit a comment </span> , click on the green button. After clicking on the green button a pop up will show where you will be able to change/edit the comment of the student.
                 </li>
                 </ul>
              
@@ -67,9 +61,9 @@
                             
                             <div class="table-responsive">
 
-                                <form action="{{ route('marks.store') }}" method="post" id="marksform">
+                                <form action="{{ route('mycomments.store') }}" method="post" id="marksform">
                                     @csrf
-                                    <table class="table table-sm table-hover mx-auto table-bordered col-sm " id="marks_table">
+                                    <table class="table table-sm table-hover mx-auto table-bordered " id="marks_table">
 
                                         <thead class="thead-light hidden-md-up">
 
@@ -77,7 +71,6 @@
                                             <th>Surname</th>
                                             <th>Name</th>
                                             <th>Mark</th>
-                                            <th>Effort Grade</th>
 
                                         </thead>
                                         <tbody>
@@ -100,10 +93,10 @@
                                                             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                                                           </svg></td> --}}
 
-                                                          <td class="align-middle">
+                                                          <td class="align-middle p-2">
                                                             {{ $student->lastname }} 
                                                           </td>
-                                                            <td class="align-middle">
+                                                            <td class="align-middle p-2">
                                                             
                            {{ $student->name }}
                             {{ $student->middlename }} 
@@ -111,7 +104,7 @@
                                                             </td>
 
 
-<td class="align-middle ">
+<td class="align-middle">
    @if (is_null($student->mark))
    <div class="input-group">
     <input type="number" min="0" max="100" {{$mode_value}}   id="marks" class="form-control" placeholder="Mark" name="marks[]">  
@@ -133,31 +126,6 @@
    @endif
 
 </td>
-
-
-<td class="align-middle">
-    @if (is_null($student->effort_grade))
-    <div class="input-group">
-     <input type="number" min="0" max="2"   id="effort_grade" class="form-control" placeholder="Effort Grade" name="effort_grade[]">  
-    <div class="input-group-append">
-     </div>  
- </div>
-    @else
- <div class="input-group">
- <input type="number" readonly  min="0" max="2"  id="effort_grade" class="form-control" placeholder="Effort Grade" name="effort_grade[]" value="{{$student->effort_grade}}"> 
- <div class="input-group-append">
- <button class="btn btn-success edit_effort_grade" id="{{$student->mark_id}}" type="button"> <i class="fas fa-edit"></i></button>
- </div>
- {{-- <div class="input-group-append">
-     <button class="btn btn-danger remove_student" id="{{$student->student_id}}" type="button"> <i class="fas fa-user-times"></i></button>
-     
-     </div>  --}}
- </div>
-   
-    @endif
- 
- </td>
-
 </td>
 </tr>
                                             @empty

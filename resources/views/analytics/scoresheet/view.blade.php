@@ -133,6 +133,7 @@ th span {
         @endif
         <th><span>Add Maths</span></th>
         <th><span>D&T</span></th>
+        <th><span>BioCore</span></th>
         @foreach (\App\Models\School::all() as $item)
 
         @if ($item->school_code=="0083")
@@ -553,6 +554,16 @@ where student_id = ".$student->learner_id.""));
                         -
                         @elseif($student->DesignTechnology<$pass_rate )
                         <span class="text-danger">{{ $student->DesignTechnology}}% </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->BioCore>=$pass_rate)
+                        <span class="text-secondary">{{ $student->BioCore}}% </span>
+                        @elseif(is_null($student->BioCore))
+                        -
+                        @elseif($student->BioCore<$pass_rate )
+                        <span class="text-danger">{{ $student->BioCore}}% </span>
                         @endif
                     </td>
 
