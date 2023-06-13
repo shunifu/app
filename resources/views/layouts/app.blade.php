@@ -1862,13 +1862,13 @@
                   <p>Class Teacher</p>
                 </a>
               </li>
-
+{{-- 
               <li class="nav-item">
                 <a href="/users/teacher/assign/classtutor" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Class Tutor</p>
                 </a>
-              </li>
+              </li> --}}
 
               <li class="nav-item">
                 <a href="/academic-admin/department" class="nav-link">
