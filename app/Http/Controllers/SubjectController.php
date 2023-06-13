@@ -54,7 +54,7 @@ class SubjectController extends Controller
             'subject_name'=>'required',
             'subject_type'=>'required',
             'subject_section'=>'required',
-            'subject_code'=>'required',
+            // 'subject_code'=>'required',
         ]);
         
         $subject_name=$request->input('subject_name');
@@ -139,27 +139,27 @@ return redirect()->back();
         $id=$request->subject_id;
         $subject_data=Subject::find($id);
 
-        $code=$request->subject_code;
+        // $code=$request->subject_code;
 
         
 
-        $subjectCodeExists=Subject::where('subject_code', $code)->exists();
-        if($subjectCodeExists){
+        // $subjectCodeExists=Subject::where('subject_code', $code)->exists();
+        // if($subjectCodeExists){
 
-            flash()->overlay(''.' Warning. ECESWA Code already exists', 'Update Subject');
-            return redirect('academic-admin/subject');
+        //     flash()->overlay(''.' Warning. ECESWA Code already exists', 'Update Subject');
+        //     return redirect('academic-admin/subject');
 
-        }else{
+        // }else{
             $subject_data->subject_name = $request->subject_name;
             $subject_data->subject_type = $request->subject_type;
             $subject_data->section_level = $request->subject_level;
-            $subject_data->subject_code = $request->subject_code;
+            // $subject_data->subject_code = $request->subject_code;
             $subject_data->save();
 
     flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Success. You have updated subject', 'Update Subject');
     return redirect('academic-admin/subject');
 
-        }
+        // }
    
   
    
