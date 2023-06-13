@@ -957,6 +957,27 @@
               </li>
 
               <li class="nav-item">
+                <a href="/class/classteacher/comments" class="nav-link">
+                  <i class="nav-icon fas fa-check-circle"></i>
+                  <p>Class Teacher Comments</p>
+                </a>
+              </li>
+
+              @role('class_tutor')
+              <li class="nav-item">
+                <a href="/class/classtutor/comments" class="nav-link">
+                  <i class="nav-icon fas fa-check-circle"></i>
+                  <p>Class Tutor Comments</p>
+                </a>
+              </li>
+
+              @endrole
+
+              
+
+            
+
+              <li class="nav-item">
                 <a href="/class/student-management" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>Student Management</p>
@@ -1009,7 +1030,7 @@
          
           @role('teacher')
 
-          <li class="nav-item has-treeview">
+          {{-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-building"></i>
               <p>
@@ -1088,7 +1109,7 @@
             
 
             </ul>
-          </li>
+          </li> --}}
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -1314,13 +1335,15 @@
    
     <ul class="nav nav-treeview">
       <li class="nav-item">
-      <a href="{{route('timetable.index')}}" class="nav-link">
+        {{-- <a href="{{route('timetable.index')}}" class="nav-link"> --}}
+      <a href="#" class="nav-link">
            <i class="nav-icon fas fa-chevron-circle-right"></i>
           <p>Add Timetable</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{route('timetable.show')}}" class="nav-link">
+        {{-- <a href="{{route('timetable.show')}}" class="nav-link"> --}}
+        <a href="#" class="nav-link">
              <i class="nav-icon fas fa-chevron-circle-right"></i>
             <p>Manage Timetable</p>
           </a>
@@ -1837,6 +1860,13 @@
                 <a href="/users/teacher/assign/classteacher" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Class Teacher</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="/users/teacher/assign/classtutor" class="nav-link">
+                  <i class="nav-icon fas fa-chevron-circle-right"></i>
+                  <p>Class Tutor</p>
                 </a>
               </li>
 

@@ -357,8 +357,25 @@ Route::get('/class/class-list', [TeacherController::class,'class_list'])->name('
 Route::get('/users/teacher/assign/classteacher', [TeacherController::class,'class_teacher'])->name('teacher.class_teacher');
 Route::post('/users/teacher/assign/assign_classteacher', [TeacherController::class,'assign_classteacher'])->name('teacher.assign_classteacher');
 
+Route::get('/users/teacher/assign/classtutor', [TeacherController::class,'class_tutor'])->name('teacher.class_tutor');
+Route::post('/users/teacher/assign/assign_classtutor', [TeacherController::class,'assign_classtutor'])->name('teacher.assign_classtutor');
+
 Route::get('/users/teacher/class-teacher/edit/{id}', [TeacherController::class,'class_teacher_edit'])->name('teacher.class_teacher');
 Route::post('/users/teacher/class-teacher/update', [TeacherController::class,'class_teacher_update'])->name('teacher.update_class_teacher');
+
+Route::get('/users/teacher/class-tutor/edit/{id}', [TeacherController::class,'class_tutor_edit'])->name('teacher.class_teacher');
+Route::post('/users/teacher/class-tutor/update', [TeacherController::class,'class_tutor_update'])->name('teacher.update_class_teacher');
+
+
+
+Route::get('/class/classteacher/comments', [TeacherController::class,'classteacher_comments_index'])->name('class_teacher.comments');
+
+Route::get('/class/classtutor/comments', [TeacherController::class,'classtutor_comments_index'])->name('class_teacher.comments');
+
+Route::post('/users/teacher/assign/assign_classteacher', [TeacherController::class,'assign_classteacher'])->name('teacher.assign_classteacher');
+
+
+
 //End of Class Teacher Management
 
 

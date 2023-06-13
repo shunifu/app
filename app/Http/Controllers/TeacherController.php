@@ -22,6 +22,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use AfricasTalking\SDK\AfricasTalking;
 use App\Models\RoleUser;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\Schema\Blueprint;
@@ -696,6 +697,14 @@ $otp =  mt_rand(1000,9999);
 
     public function class_teacher(){
 
+        if (!Schema::hasColumn('grades_teachers', 'class_manager_status')) {
+        
+            Schema::table('grades_teachers', function (Blueprint $table) {
+    
+                $table->integer('class_manager_status')->nullable();
+            });
+        }
+
         //Get current session
         $getRole=Role::where('name', 'teacher')->first();
         $teacher_role_id=$getRole->id;
@@ -709,7 +718,7 @@ $otp =  mt_rand(1000,9999);
             ->join('grades','grades_teachers.grade_id','=','grades.id')
             ->join('users','grades_teachers.teacher_id','=','users.id')
             ->join('academic_sessions','grades_teachers.academic_session','=','academic_sessions.id')
-            ->select('grades.grade_name', 'users.name','users.lastname', 'users.salutation', 'academic_sessions.academic_session', 'grades_teachers.id')
+            ->select('grades.grade_name', 'users.name','users.lastname', 'users.salutation', 'academic_sessions.academic_session', 'grades_teachers.id', 'class_manager_status')
             ->where('grades_teachers.academic_session', $session_id)
             ->orderBy('grades.grade_name','asc')
             ->get();
@@ -717,7 +726,49 @@ $otp =  mt_rand(1000,9999);
 return view('users.teachers.classteacher', compact('getTeacher', 'classes', 'session', 'result'));
     }
 
+
+
+//     public function class_tutor(){
+
+//         if (!Schema::hasTable('class_tutors')) {
+//             Schema::create('class_tutors', function($table){
+                  
+//                    $table->id();
+//                    $table->integer('teacher_id');
+//                    $table->integer('class_id');
+//                    $table->integer('academic_session');
+//                    $table->timestamps();
+//            });
+
+           
+//        }
+
+
+//         //Get current session
+//         $getRole=Role::where('name', 'teacher')->first();
+//         $teacher_role_id=$getRole->id;
+//         $getTeacher=User::where('role_id', $teacher_role_id)->orderBy('name')->get();
+
+//         $classes=Grade::all();
+//         $session=AcademicSession::where('active', 1)->get();
+//        $session_id=$session[0]->id;
+
+//         $result=DB::table('class_tutors')
+//             ->join('grades','class_tutors.class_id','=','grades.id')
+//             ->join('users','class_tutors.teacher_id','=','users.id')
+//             ->join('academic_sessions','class_tutors.academic_session','=','academic_sessions.id')
+//             ->select('grades.grade_name', 'users.name','users.lastname', 'users.salutation', 'academic_sessions.academic_session', 'class_tutors.id')
+//             ->where('class_tutors.academic_session', $session_id)
+//             ->orderBy('grades.grade_name','asc')
+//             ->get();
+
+// return view('users.teachers.classtutor', compact('getTeacher', 'classes', 'session', 'result'));
+//     }
+
     public function assign_classteacher(Request $request){
+
+
+    //    dd($request->all());
 
 
         //validation
@@ -751,17 +802,34 @@ return view('users.teachers.classteacher', compact('getTeacher', 'classes', 'ses
 
     $teacherExists=GradeTeacher::where('teacher_id', $request->teacher_id)->where('academic_session', $request->academic_session)->exists();
 
-    if($teacherExists){
+    // if($teacherExists){
 
-        flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Teacher already assigned for the year', 'Add Class Teacher');
+    //     flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Teacher already assigned for the year', 'Add Class Teacher');
 
     
-        return Redirect::back();
+    //     return Redirect::back();
 
-    }else{
+    // }else{
 
  
 
+  $classtutorexists=Role::where('name','class_tutor')->exists();
+
+//   dd($classtutorexists);
+if($classtutorexists){
+
+
+
+    $getClassTutorRole=Role::where('name', 'class_tutor')->first();
+    $class_tutor_role_id=$getClassTutorRole->id;
+    
+}else{
+    Role::create([
+        'name' => 'class_tutor', 
+    ]);
+}
+
+    
 
     //end of check
 
@@ -769,12 +837,97 @@ return view('users.teachers.classteacher', compact('getTeacher', 'classes', 'ses
             'teacher_id'=>$request->teacher_id,
             'grade_id'=>$request->grade_id,
             'academic_session'=>$request->academic_session,
+           'class_manager_status'=>$request->manager_type,
        ]);
       
        $user=User::find($request->teacher_id);
-       $user->detachRole($class_teacher_role);
-      $user->attachRole($class_teacher_role);
+
+
+       if ($request->manager_type=="1") {
+        # class teacher
+        $user->detachRole($class_teacher_role);
+        $user->attachRole($class_teacher_role);
+      
+       }else{
+        $user->attachRole($class_tutor_role_id);
+ 
+       }
+
+
+       if ($request->manager_type=="1") {
+        flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully added a class teacher', 'Add Class Teacher');
+       }else{
+        flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully added a class tutor', 'Add Class Tutor');
+       }
+
+
+
+
+       return Redirect::back();
+      
+
+    // }
+}
+
+
+public function assign_classtutor(Request $request){
+
+
+    //validation
+       $this->validate($request,[
+            'grade_id'=>'required',
+            'academic_session'=>'required',
+            'teacher_id'=>'required',
+         
+           ]);
+
+
+    Schema::table('grades_teachers', function (Blueprint $table) {
+
+    $index_exists = collect(DB::select("SHOW INDEXES FROM grades_teachers"))->pluck('Key_name')->contains('grades_teachers_teacher_id_unique');
     
+    if ($index_exists) {
+    $table->dropForeign(['teacher_id']);
+    $table->dropUnique(['teacher_id']);
+    
+    }
+
+});
+
+$class_teacher_role=Role::where('name', 'class_tutor')->first();
+
+
+$class_teacher_name=$class_teacher_role->id;
+
+
+//Check if teacher is already assigned in same class, same year
+
+$teacherExists=GradeTeacher::where('teacher_id', $request->teacher_id)->where('academic_session', $request->academic_session)->exists();
+
+if($teacherExists){
+
+    flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Teacher already assigned for the year', 'Add Class Teacher');
+
+
+    return Redirect::back();
+
+}else{
+
+
+
+
+//end of check
+
+    $classteacher = GradeTeacher::create([ 
+        'teacher_id'=>$request->teacher_id,
+        'grade_id'=>$request->grade_id,
+        'academic_session'=>$request->academic_session,
+   ]);
+  
+   $user=User::find($request->teacher_id);
+   $user->detachRole($class_teacher_role);
+  $user->attachRole($class_teacher_role);
+
 
 //        $classteacher = RoleUser::create([ 
 //         'role_id'=>$class_teacher_role->id,
@@ -784,12 +937,12 @@ return view('users.teachers.classteacher', compact('getTeacher', 'classes', 'ses
 //    ]);
 
 
-       flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully added a class teacher', 'Add Class Teacher');
+   flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully added a class teacher', 'Add Class Teacher');
 
-       return Redirect::back();
-      
+   return Redirect::back();
+  
 
-    }
+}
 }
 
 
@@ -948,6 +1101,74 @@ public function class_teacher_update(Request $request){
 
     }
 
+    public function classteacher_comments_index(){
+    
+        $classteacher_list=DB::table('grades_teachers')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_teachers.academic_session')
+        ->join('grades', 'grades.id', '=', 'grades_teachers.grade_id')
+        ->join('users', 'users.id', '=', 'grades_teachers.teacher_id')
+        ->where('academic_sessions.active', 1)
+        ->where('grades_teachers.teacher_id', Auth::user()->id)
+        ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name')
+        ->first();
+        //  dd($classteacher_list);
+        $date= Carbon::now()->format('Y-m-d');
+
+        $terms = DB::table('terms')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
+        ->where('academic_sessions.active', 1)
+        ->select('terms.id as id', 'academic_sessions.id as session_id', 'terms.term_name')
+        ->get();
+
+
+        $student_list=DB::table('grades_students')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
+        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        ->join('users', 'users.id', '=', 'grades_students.student_id')
+        ->where('academic_sessions.active', 1)
+        ->where('grades_students.grade_id', $classteacher_list->grade_id)
+        ->select('users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_students.student_id', 'grades.grade_name')
+        ->get();
+
+        return view('academic-admin.comments-management.custom.index', compact('classteacher_list', 'date', 'student_list', 'terms'));
+
+
+    }
+
+    public function classtutor_comments_index(){
+
+
+        $classteacher_list=DB::table('grades_teachers')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_teachers.academic_session')
+        ->join('grades', 'grades.id', '=', 'grades_teachers.grade_id')
+        ->join('users', 'users.id', '=', 'grades_teachers.teacher_id')
+        ->where('academic_sessions.active', 1)
+        ->where('grades_teachers.teacher_id', Auth::user()->id)
+        ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name')
+        ->first();
+        //  dd($classteacher_list);
+        $date= Carbon::now()->format('Y-m-d');
+
+        $terms = DB::table('terms')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
+        ->where('academic_sessions.active', 1)
+        ->select('terms.id as id', 'academic_sessions.id as session_id', 'terms.term_name')
+        ->get();
+
+
+        $student_list=DB::table('grades_students')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
+        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        ->join('users', 'users.id', '=', 'grades_students.student_id')
+        ->where('academic_sessions.active', 1)
+        ->where('grades_students.grade_id', $classteacher_list->grade_id)
+        ->select('users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_students.student_id', 'grades.grade_name')
+        ->get();
+
+        return view('academic-admin.comments-management.custom.index-tutor', compact('classteacher_list', 'date', 'student_list', 'terms'));
+
+
+    }
    
 }
 

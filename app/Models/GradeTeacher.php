@@ -16,6 +16,7 @@ class GradeTeacher extends Model
         'academic_session',
         'teacher_id',
         'grade_id',
+        'class_manager_status'
 
     ];
 

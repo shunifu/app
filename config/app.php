@@ -149,7 +149,7 @@ return [
 
 
     'sms_username' => 'shunifu-sms',
-    'sms_password' => '142c0016b4509263bc833bb83816a5e993be7a1cba74531567ac39700f5461ec',
+    'sms_password' => '142c0016b4509263bc833bb83816a5e993be7a1cba74531567ac397ec',
     'sms_from'=>'Shunifu',
 
 

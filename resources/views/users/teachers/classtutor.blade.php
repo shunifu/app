@@ -54,11 +54,11 @@
         <div class="col-md-4">
           <div class="card card-light">
               <div class="card-header">
-                <h3 class="card-title">Assign Class Manager</h3>
+                <h3 class="card-title">Assign Class Tutor</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="{{route('teacher.assign_classteacher')}}" method="post">
+              <form action="{{route('teacher.assign_classtutor')}}" method="post">
                 <div class="card-body">
                       @csrf
                       <div class="form-group">
@@ -76,9 +76,9 @@
                         </div>
 
                         <div class="form-group">
-                            <x-jet-label> Class Manager Name</x-jet-label>
+                            <x-jet-label> Class Tutor Name</x-jet-label>
                            <select class="form-control" name="teacher_id">
-                            <option value="">Select Class Teacher</option>
+                            <option value="">Select Class Tutor</option>
                             @foreach ($getTeacher as $teacher_item)
                             <option value="{{$teacher_item->id}}"> {{$teacher_item->name }} {{$teacher_item->middlename }} {{$teacher_item->lastname }}</option>
                             @endforeach
@@ -87,22 +87,6 @@
                             <span class="text-danger">{{$message}}</span>  
                             @enderror
                             </div>
-
-                            <div class="form-group">
-                              <x-jet-label> Class Manager Type</x-jet-label>
-                             <select class="form-control" name="manager_type">
-                              <option value="">Select Type</option>
-                              <option value="1">Class Teacher/Home Room</option>
-                              <option value="">----------------------------</option>
-                              <option value="2">Class Tutor</option>
-                            
-                        
-                            
-                             </select>
-                              @error('teacher_id')
-                              <span class="text-danger">{{$message}}</span>  
-                              @enderror
-                              </div>
 
                             <div class="form-group">
                                 <x-jet-label> Academic Year</x-jet-label>
@@ -116,13 +100,11 @@
                                 <span class="text-danger">{{$message}}</span>  
                                 @enderror
                                 </div>
-
-
                 </div>
                 <!-- /.card-body -->
       
                 <div class="card-footer">
-                  <x-jet-button>Assign Class Teacher</x-jet-button>
+                  <x-jet-button>Assign Class Tutor</x-jet-button>
                 </div>
             </form>
             </div>
@@ -147,8 +129,7 @@
                   <thead class="thead-light">
                     <tr>
                       <th>Class</th>
-                      <th> Teacher</th>
-                      <th>Type</th>
+                      <th>Class Tutor</th>
                       <th>Academic Year</th>
                       <th>Manage</th>
                     </tr>
@@ -161,19 +142,10 @@
             <tr>
             <td>{{$result_item->grade_name}}</td>
             <td>{{$result_item->salutation}} {{$result_item->lastname}} {{$result_item->name}}</td>
-            <td>
-              
-              @if (is_null($result_item->class_manager_status))
-                  Class Teacher/Home Room
-              @else
-             Class Tutor
-              @endif
-              
-              </td>
             <td>{{$result_item->academic_session}}</td>
             <td class="text-left py-0 align-middle">
               <div class="btn-group btn-group-sm">
-                <a href="/users/teacher/class-teacher/edit/{{encrypt($result_item->id)}}"><button type="button" value="{{$result_item->id}}" class="btn btn-primary edit"><i class="fas fa-edit mr-1"></i>Edit</button></a>
+                <a href="/users/teacher/class-tutor/edit/{{encrypt($result_item->id)}}"><button type="button" value="{{$result_item->id}}" class="btn btn-primary edit"><i class="fas fa-edit mr-1"></i>Edit</button></a>
                 <button type="button" value="{{$result_item->id}}" class="btn btn-danger delete"><i class="fas fa-trash mr-1"></i>Delete</button>
               </div>
             </td>

@@ -73,14 +73,14 @@ th span {
                         Passing Subject Rule: @if ($passing_subject_rule==1)
                             Passing Subject Rule APPLIES
                         @else
-                        Passing Subject Rule DOES NOT APPLY 
+                        <strong>Passing Subject Rule DOES NOT APPLY </strong>
                         @endif 
 
                         <li>
                            Student Average: @if ($term_average_rule=="default")
-                               Average of ALL Subjects
+                             <strong>  Average of ALL Subjects</strong>
                             @else
-                           Best {{$number_of_subjects}} subjects @if($passing_subject_rule==1)including English  @endif
+                          Best {{$number_of_subjects}} subjects @if($passing_subject_rule==1)including English  @endif
                             @endif 
                         </li>
                     </li>
