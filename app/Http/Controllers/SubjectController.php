@@ -62,12 +62,12 @@ class SubjectController extends Controller
         $subject_code=$request->input('subject_code');
         $subject_section=$request->input('subject_section');
 
-$codeExists=Subject::where('subject_code', $subject_code)->exists();
+// $codeExists=Subject::where('subject_code', $subject_code)->exists();
 
-if ($codeExists) {
-    flash()->overlay(''.' Warning. ECESWA Code already exists', 'Update Subject');
-            return redirect('academic-admin/subject');
-}else{
+// if ($codeExists) {
+//     flash()->overlay(''.' Warning. ECESWA Code already exists', 'Update Subject');
+//             return redirect('academic-admin/subject');
+// }else{
     Subject::create([
         'subject_name' => $subject_name,
         'subject_type' => $subject_type,
@@ -78,7 +78,7 @@ if ($codeExists) {
     flash()->overlay('<i class="fas fa-check-circle text-success "></i> Congratulations. You have successfully added subject', 'Add Subject');
 
 return redirect()->back();
-}
+// }
 
     
 
