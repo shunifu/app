@@ -698,6 +698,21 @@ $otp =  mt_rand(1000,9999);
 
     public function class_teacher(){
 
+
+        if (!Schema::hasTable('custom_comments')) {
+            Schema::create('custom_comments', function($table){
+                  
+                   $table->id();
+                   $table->integer('student_id');
+                   $table->integer('term_id');
+                   $table->integer('class_id');
+                   $table->longText('comment');
+                   $table->integer('teacher_id');
+                   $table->integer('manager_type');
+                   $table->timestamps();
+           });
+       }
+
         if (!Schema::hasColumn('grades_teachers', 'class_manager_status')) {
         
             Schema::table('grades_teachers', function (Blueprint $table) {
