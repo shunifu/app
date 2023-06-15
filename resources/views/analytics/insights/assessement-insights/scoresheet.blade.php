@@ -1,19 +1,27 @@
 <x-app-layout>
   <x-slot name="header">
       <style>
- table, tr, td, th {
-border: 1px solid #000;
-position: relative;
-padding: 16px;
+
+.table {
+  border: 0.5px solid grey;
+  table-layout: fixed;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+   border: 0.3px solid rgb(35, 35, 35);
 }
 
-th span {
+/* th span {
   position: absolute;
 top: 100%;
 left: 50%;
 transform: rotate(-90deg) translateY(-50%);
 transform-origin: 0 0;
-}
+} */
 .red {
 background-color: red !important;
 }
@@ -29,7 +37,7 @@ background-color: red !important;
 
   </x-slot>
  
-  <table class="table table-sm table-hover mx-auto table-bordered " style="width:100%" id="customers">
+
     <div class="col-md-12 mx-auto">
 
         @foreach (\App\Models\School::all() as $item)
@@ -40,9 +48,9 @@ background-color: red !important;
             <div class="col"><img src={{$item->school_letter_head}}  /></div>
             <div class="col">  <h4 class="text-center  text-bold lead">{{$item->school_name}}</h4></div>
         </div>
-        <i class="fas fa-envelope mx-2"></i> {{$item->school_email}} | <i class="fas fa-phone-square    "></i> {{$item->school_telephone}}</i>
+    
                 <p>
-                    <h3 class="text-bold">{{$stream}}  Scoresheet</h3>
+                    <h3 class="text-bold">Mark Sheet for {{$stream}}  </h3>
                 </p>
             
         </div>
@@ -50,11 +58,11 @@ background-color: red !important;
         @endforeach
       
         </div>
-  </table>       
+    
 
 @php
 
-$db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
+$db=mysqli_connect(config("app.DB_HOST"),config("app.DB_USERNAME"),config("app.DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
 
 
 // $tie_type=$pass_rate->tie_type;
@@ -89,7 +97,8 @@ where student_id = marks.student_id) as position,
 
         grades.grade_name as Grade,
        
-        CONCAT(users.lastname,users.name) as Name,
+        CONCAT(users.lastname, ''  '',users.name) as Name,
+  
       
         assessement_progress_reports.student_average as Average,
       
@@ -129,28 +138,33 @@ DEALLOCATE PREPARE stmt;
       <div class="card-body">
 
         <div class='table-responsive'>
-          <table class="table table-sm table-hover mx-auto table-bordered " style="width:100%" id="customers">
+          <table class="table table-sm table-bordered' table-hover mx-auto table-bordered " style="width:100%" id="customers">
            
 
   @php
-
+$pass_rate="60";
 
 if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
 
 if ($result) {
   do {
-  //  dd($res = $db->store_result());
 
   if ($res = $db->store_result()) {
      
-
-    echo "<thead class='head-light hidden-md-up'></tr>\n";
+    echo "<table class='table table-sm table-bordered' width=100% border=0><tr>";
       for($i=0; $i<mysqli_num_fields($res); $i++)
       
       {
           $field = mysqli_fetch_field($res);
+
+          if ($field->name=="Name") {
+            $design=$field->name;
+          } else {
+            $design='<span>'.$field->name.'</span>';
+          }
+          
        
-          echo '<th class="thead-light"><span>'.$field->name.'</span></th>';
+          echo '<th>'.$design.'</th>';
       }
       echo "</tr></thead>\n";
     
@@ -159,14 +173,24 @@ if ($result) {
       while($row = $res->fetch_row())
       {
           echo "<tr>";
-          foreach($row as $cell) {
-          //  dd($row[0]);
-            if ($cell === NULL) { $cell = '-'; }
-            
-            
-            echo "<td class='align-middle'>".$cell."</td>";
+          foreach($row as $cell=>$value) {
+         
+
+            if (htmlspecialchars($value) < $pass_rate) {
+        $class = 'class=text-danger';
+     
+    } else {
+        $class = 'class=text-black';
+    }
+
+
+
+            if ($value === NULL) { $value = '-'; }
+            if(is_numeric($value)){$percentage="%";}else{$percentage=" ";}
+            echo "<td $class>$value</td>";
+
           }
-          echo "</tr>";
+          echo "</tr>\n";
       }
       $res->free();
       

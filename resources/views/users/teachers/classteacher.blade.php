@@ -163,7 +163,7 @@
             <td>{{$result_item->salutation}} {{$result_item->lastname}} {{$result_item->name}}</td>
             <td>
               
-              @if (is_null($result_item->class_manager_status))
+              @if (is_null($result_item->class_manager_status)OR ($result_item->class_manager_status==1))
                   Class Teacher/Home Room
               @else
              Class Tutor

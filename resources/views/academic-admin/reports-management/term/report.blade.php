@@ -171,6 +171,7 @@ table tbody tr td {
 <?php
          $term_average=\DB::select(\DB::raw("SELECT
         users.name,
+        users.id as leaner_id,
         users.lastname,
         users.middlename,
         users.profile_photo_path,
@@ -420,15 +421,15 @@ WHERE sub.student_id=".$student.""));
                         </td>
 
                         <td>
-                        Term: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
+                        {{$period}}: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
                         <br>
 
-                        Term Opening Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->start_date)->format('d F Y')}}</span>
+                        {{$period}} Start Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->start_date)->format('d F Y')}}</span>
                         
                         <br>
-                        Term Closing Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->end_date)->format('d F Y')}}</span>
+                        {{$period}} End Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->end_date)->format('d F Y')}}</span>
                         <br>
-                        Next Term Date: <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->next_term_date)->format('d F Y')}}</span>
+                        Next {{$period}} Date: <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->next_term_date)->format('d F Y')}}</span>
                         
                         <br>
                         Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
@@ -443,7 +444,7 @@ WHERE sub.student_id=".$student.""));
                         
                   
                         foreach ($attendance as $attendance_key) {
-                       echo 'Days Absent: '.$attendance_key->number_of_absent_days.' '.'out of 58 Days';
+                       echo 'Days Absent: '.$attendance_key->number_of_absent_days.' '.'Days';
                      
                          }
                   
@@ -488,6 +489,7 @@ grades.stream_id,
     student_subject_averages.student_average,
     student_subject_averages.ca_average,
     student_subject_averages.exam_mark,
+    student_subject_averages.effort_grade,
     subjects.subject_name, 
     subjects.subject_type, 
     subjects.id as subject_id,
@@ -795,16 +797,28 @@ from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=stu
     <thead >
         <tr class="hope">
             <th class="background">Subject Name</th> 
-            <th class="background">Continuous Assessment</th>   
-            <th class="background">Subject Average</th>   
-            <th class="background">Subject Position</th>   
-            <th class="background">Symbol</th>
-            <th class="background">Comment</th>
+            @if ($school_is->school_type=="ieb-school")
+<th class="background">Attained Mark</th>    
+@else
+<th class="background">Continuous Assessment</th>   
+@endif
+          
+      
+           
+            @if ($school_is->school_type=="ieb-school")
+            <th class="background">Effort Grade</th>
+            <th class="background">Effort Description</th>
+@else
+<th class="background">Symbol</th>
+<th class="background">Comment</th>
+@endif
+            
             <th class="background">Teacher</th>
 
         </tr>
     </thead>
 
+ 
  
 
    
@@ -815,15 +829,7 @@ from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=stu
       
        
       
-        <td> 
-            @if (is_null($item2->ca_average))
-            -
-            @elseif (($item2->ca_average<$pass_rate))
-            <span class="text-danger">{{round(($item2->ca_average))}}%</span>
-            @else
-            {{round(($item2->ca_average),2)}}%
-            @endif
-        </td>   
+  
         
 
     
@@ -836,52 +842,52 @@ from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=stu
         </td> 
   
 
-             <td>
-
-            <?php
-           
- $sub_position=\DB::select(\DB::raw("select t.*
-from (select student_subject_averages.student_id,student_subject_averages.student_average, rank() over (order by student_subject_averages.student_average  desc) as student_position
-from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." AND  student_subject_averages.student_class IN(SELECT teaching_loads.class_id  FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id  where teaching_loads.teacher_id=".$item2->teacher_id."  and grades.stream_id=".$item2->stream_id.") ) t
-where student_id =".$student.""));
-
-$total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads WHERE student_loads.teaching_load_id IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id." AND student_loads.active=1)"));
-
- foreach ($sub_position as $key_position) {
-   
-        foreach($total as $subtotal){
-            echo $key_position->student_position.' / '.$subtotal->total;
-        }
-       
-    
-    
-      }
-?>
-        </td>
-         
-        <td>
-            @foreach ($comments as $comment_symbol)
-              
-            @if(in_array(round($item2->student_average), range($comment_symbol->from,$comment_symbol->to, 0.01)) ) 
-            
-              {{$comment_symbol->symbol }}
-               
-               @endif
-
-               @endforeach
-              
-            </td>
-
+                   
+            @if ($school_is->school_type=="ieb-school")
+            <td>   {{($item2->effort_grade)}}</td>
             <td>
-                @foreach ($comments as $comment)
+
+                @foreach ($efforts as $effort_description)
+      
+                @if(in_array(round($item2->effort_grade), range($effort_description->from,$effort_description->to, 0.01)) ) 
                 
-                
-                @if( in_array(round($item2->student_average), range($comment->from,$comment->to)) ) 
-                {{$comment->comment}}
-                
-                @endif
-                @endforeach
-                </td>
+                  {{$effort_description->comment }}
+                   
+                   @endif
+            
+                   @endforeach
+
+            </td>
+@else
+<td>
+    @foreach ($comments as $comment_symbol)
+      
+    @if(in_array(round($item2->student_average), range($comment_symbol->from,$comment_symbol->to, 0.01)) ) 
+    
+      {{$comment_symbol->symbol }}
+       
+       @endif
+
+       @endforeach
+      
+    </td>
+
+    <td>
+        @foreach ($comments as $comment)
+        
+        
+        @if( in_array(round($item2->student_average), range($comment->from,$comment->to)) ) 
+        {{$comment->comment}}
+        
+        @endif
+        @endforeach
+        </td>
+@endif
+
+        
+           
+         
+    
 
                 <td>
                     {{$item2->salutation}} {{substr($item2->name, 0, 1)}}. {{$item2->lastname}}
@@ -898,6 +904,8 @@ $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total fro
 </table> 
 
 @endif
+
+
 
 
 @if ($report_template->report_colums=="term_assessements")
@@ -951,8 +959,10 @@ SET @sql = CONCAT('SELECT
     DEALLOCATE PREPARE stmt;");
 
 if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
+
 if ($result) {
   do {
+
   if ($res = $db->store_result()) {
       echo "<table class='table table-sm table-bordered' width=100% border=0><tr>";
 
@@ -968,21 +978,6 @@ if ($result) {
       echo "</tr>\n";
 
 
-//       foreach ($data as $row) {
-//     // Check the value of the mark and determine the CSS class
-//     if ($row['mark'] < 50) {
-//       $class = 'mark-red';
-//     } else {
-//       $class = 'mark-green';
-//     }
-
-//     // Generate the HTML for the table row
-//     echo '<tr>';
-//     echo '<td>' . htmlspecialchars($row['student_name']) . '</td>';
-//     echo '<td class="mark ' . $class . '">' . $row['mark'] . '%</td>';
-//     echo '...';
-//     echo '</tr>';
-//   }
 
 
       // printing table rows
@@ -994,11 +989,7 @@ if ($result) {
    
     echo "<tr>";
           foreach($row as $cell=>$value) {
-        //   foreach ($cell as $key => $value) {
-        
-        //   }
-
-     
+      
   
         if (htmlspecialchars($value) < $pass_rate) {
         $class = 'class=text-danger';
@@ -1372,8 +1363,11 @@ foreach ($term_average as $student_term_data) {
             @if ($school_is->school_type=="ieb-school")
             <th class="background">Home Room Teacher's Comment</th>    
             @endif
-           
-            <th class="background">Head Teacher's Comment</th>    
+            @if ($school_is->school_type=="ieb-school")
+                @else
+                <th class="background">Head Teacher's Comment</th>  
+            @endif
+        
          
         </tr>
     </thead>
@@ -1381,23 +1375,62 @@ foreach ($term_average as $student_term_data) {
     <tbody>
         <tr>
             <td>
-                @foreach ($class_teacher_comments as $teacher_comment)
-                   
-                @if (in_array(number_format($student_term_data->student_average), range($teacher_comment->from,$teacher_comment->to,  0.01)) )
-               {{$teacher_comment->comment}}
-                    
+
+                @if ($school_is->school_type=="ieb-school")
+               
+                <?php
+                        
+
+                $teacher_2 =\DB::select(\DB::raw('SELECT custom_comments.comment FROM custom_comments where manager_type=2  AND student_id='.$student_term_data->leaner_id.''));
+                foreach ($teacher_2 as $teacher_comment) {
+                
+                echo '<span class="font-italic font-weight-light">'.$teacher_comment->comment.' </span>';
+                
+                
+                }
+                
+                                            ?>
+
+
+                @else
+
+
                 @endif
-                @endforeach
-            </td>
+             
+            </td>                                                                                                                  
 
             <td>
-                @foreach ($headteacher_comments  as $headteacher_comment)
-                @if (in_array(number_format($student_term_data->student_average), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
-                {{$headteacher_comment->comment}}
+
+                @if ($school_is->school_type=="ieb-school")
                     
+                <?php
+                        
+
+                $teacher_1 =\DB::select(\DB::raw('SELECT custom_comments.comment FROM custom_comments where manager_type=1  AND student_id='.$student_term_data->leaner_id.''));
+                foreach ($teacher_1 as $teacher_comment) {
+                
+                echo '<span class="font-italic font-weight-light">'.$teacher_comment->comment.' </span>';
+                
+                
+                }
+                
+                                            ?>
+
+                @else
+                
+                    @foreach ($headteacher_comments  as $headteacher_comment)
+                    @if (in_array(number_format($student_term_data->student), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
+                    {{$headteacher_comment->comment}}
+                        
+                    @endif
+                    @endforeach   
+               
+
                 @endif
-                @endforeach   
+             
             </td>
+
+          
         </tr>
     </tbody>
 
@@ -1430,7 +1463,7 @@ foreach ($term_average as $student_term_data) {
                             <?php
                         
 
-$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 "));
+$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 AND class_manager_status=2" ));
 foreach ($class_t as $key_t) {
 
 echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
@@ -1456,7 +1489,18 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                           </div>
                           <div class="text-center">
 
-                         
+                            <?php
+                        
+
+                            $class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 AND class_manager_status=1 " ));
+                            foreach ($class_t as $key_t) {
+                            
+                            echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
+                            
+                            
+                            }
+                            
+                                                        ?>
               
                           </div>
 
@@ -1468,23 +1512,7 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
 
                        
 
-                    
-                       <div class="col">
-                        <div id="signaturetitle">
-                           Headteacher's Signature:
-                          </div>
-                          <div class="text-center">
-                          @if ($variable->principal_signature==1)
-                         
-                            <img class="img-fluid " width="140" height="140" src="{{$school_is->base64}} " alt="">
-                               @else       
-                               <img class="img-fluid " width="120" height="120" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">            
-                          @endif
-                         
-                        </div>
-
-                       
-                    </div>
+                   
 
                   
 
@@ -1548,15 +1576,19 @@ School Stamp
                             <ul>
                             
                                 @if ($calculation_type=="default")
-                                <li> Average of  all subjects  excluding {{$non_value_subject_name}} 
-                                </li> 
+                                <li> Average of  all subjects  excluding   @foreach ($non_value_subject_name as $non_value)
+                                    {{$non_value->subject_name}}
+                                @endforeach</li>
+                                
                                    @endif
                                
 
                                    @if ($calculation_type=="custom")
                                   
                                 <li> Average of  <strong>best {{$number_of_subjects}} subjects </strong>@if ($passing_subject_rule==1)
-                                    inclusive of  <span class="text-bold">English Language</span>@endif  excluding {{$non_value_subject_name }}</li>
+                                    inclusive of  <span class="text-bold">English Language</span>@endif  excluding @foreach ($non_value_subject_name as $non_value)
+                                        $non_value->subject_name
+                                    @endforeach</li>
                                 </li> 
                                     
                                 @endif

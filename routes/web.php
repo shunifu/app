@@ -369,6 +369,8 @@ Route::post('/users/teacher/class-tutor/update', [TeacherController::class,'clas
 
 
 Route::get('/class/classteacher/comments', [TeacherController::class,'classteacher_comments_index'])->name('class_teacher.comments');
+Route::post('/class/classteacher/comments/view', [TeacherController::class,'classteacher_comments_view'])->name('custom-comment-class.view');
+Route::post('/class/classteacher/comments/store', [TeacherController::class,'classteacher_comments_store'])->name('custom-comment-class.store');
 
 Route::get('/class/classtutor/comments', [TeacherController::class,'classtutor_comments_index'])->name('class_teacher.comments');
 

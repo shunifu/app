@@ -254,7 +254,7 @@ th span {
            
         @if ($indicator=="summary_scoresheet")
         <th><span>Select</span></th>
-        <th><span> Status</span></th> 
+        <th><span> Comment</span></th> 
          @endif
         <th><span>Stream Position</span></th> 
         <th><span>Class Position</span></th> 

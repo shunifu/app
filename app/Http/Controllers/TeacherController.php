@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use AfricasTalking\SDK\AfricasTalking;
+use App\Models\CustomComment;
 use App\Models\RoleUser;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
@@ -705,6 +706,17 @@ $otp =  mt_rand(1000,9999);
             });
         }
 
+        $classtutorexists=Role::where('name','class_tutor')->exists();
+
+        if($classtutorexists){
+
+        }else{
+            Role::create([
+                'name' => 'class_tutor', 
+            ]);
+        }
+        
+
         //Get current session
         $getRole=Role::where('name', 'teacher')->first();
         $teacher_role_id=$getRole->id;
@@ -813,21 +825,13 @@ return view('users.teachers.classteacher', compact('getTeacher', 'classes', 'ses
 
  
 
-  $classtutorexists=Role::where('name','class_tutor')->exists();
-
-//   dd($classtutorexists);
-if($classtutorexists){
 
 
 
     $getClassTutorRole=Role::where('name', 'class_tutor')->first();
     $class_tutor_role_id=$getClassTutorRole->id;
     
-}else{
-    Role::create([
-        'name' => 'class_tutor', 
-    ]);
-}
+
 
     
 
@@ -848,14 +852,15 @@ if($classtutorexists){
         $user->detachRole($class_teacher_role);
         $user->attachRole($class_teacher_role);
       
-       }else{
+       }  elseif ($request->manager_type=="2") {
+        $user->detachRole($class_tutor_role_id);
         $user->attachRole($class_tutor_role_id);
  
        }
 
 
        if ($request->manager_type=="1") {
-        flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully added a class teacher', 'Add Class Teacher');
+        flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully added a class teacher/Home room', 'Add Class Teacher');
        }else{
         flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully added a class tutor', 'Add Class Tutor');
        }
@@ -1108,11 +1113,13 @@ public function class_teacher_update(Request $request){
         ->join('grades', 'grades.id', '=', 'grades_teachers.grade_id')
         ->join('users', 'users.id', '=', 'grades_teachers.teacher_id')
         ->where('academic_sessions.active', 1)
+        // ->where('class_manager_status', '1')
+        // ->orWhere('class_manager_status', NULL)
+        
         ->where('grades_teachers.teacher_id', Auth::user()->id)
         ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name')
         ->first();
-        //  dd($classteacher_list);
-        $date= Carbon::now()->format('Y-m-d');
+     
 
         $terms = DB::table('terms')
         ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
@@ -1121,21 +1128,94 @@ public function class_teacher_update(Request $request){
         ->get();
 
 
-        $student_list=DB::table('grades_students')
-        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
-        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-        ->join('users', 'users.id', '=', 'grades_students.student_id')
-        ->where('academic_sessions.active', 1)
-        ->where('grades_students.grade_id', $classteacher_list->grade_id)
-        ->select('users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_students.student_id', 'grades.grade_name')
-        ->get();
 
-        return view('academic-admin.comments-management.custom.index', compact('classteacher_list', 'date', 'student_list', 'terms'));
+      
+    
+      
+
+        return view('academic-admin.comments-management.custom.index', compact('classteacher_list', 'terms'));
 
 
     }
 
+
     public function classtutor_comments_index(){
+    
+        $classteacher_list=DB::table('grades_teachers')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_teachers.academic_session')
+        ->join('grades', 'grades.id', '=', 'grades_teachers.grade_id')
+        ->join('users', 'users.id', '=', 'grades_teachers.teacher_id')
+        ->where('academic_sessions.active', 1)
+        // ->where('class_manager_status', '1')
+        // ->orWhere('class_manager_status', NULL)
+        
+        ->where('grades_teachers.teacher_id', Auth::user()->id)
+        ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name')
+        ->first();
+     
+
+        $terms = DB::table('terms')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
+        ->where('academic_sessions.active', 1)
+        ->select('terms.id as id', 'academic_sessions.id as session_id', 'terms.term_name')
+        ->get();
+
+
+
+      
+    
+      
+
+        return view('academic-admin.comments-management.custom.index-tutor', compact('classteacher_list', 'terms'));
+
+
+    }
+
+    // public function classtutor_comments_index(){
+
+
+    //     $classteacher_list=DB::table('grades_teachers')
+    //     ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_teachers.academic_session')
+    //     ->join('grades', 'grades.id', '=', 'grades_teachers.grade_id')
+    //     ->join('users', 'users.id', '=', 'grades_teachers.teacher_id')
+    //     ->where('academic_sessions.active', 1)
+    //     ->where('grades_teachers.teacher_id', Auth::user()->id)
+    //     ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name')
+    //     ->first();
+    //     //  dd($classteacher_list);
+    //     $date= Carbon::now()->format('Y-m-d');
+
+    //     $terms = DB::table('terms')
+    //     ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
+    //     ->where('academic_sessions.active', 1)
+    //     ->select('terms.id as id', 'academic_sessions.id as session_id', 'terms.term_name')
+    //     ->get();
+
+
+
+
+    //     return view('academic-admin.comments-management.custom.index-tutor', compact('classteacher_list', 'date', 'student_list', 'terms'));
+
+
+    // }
+
+    public function classteacher_comments_view(Request $request){
+       
+      
+
+        $teacher_id=$request->teacher_id;
+        $term=$request->term;
+        $grade_id=$request->grade_id;
+        $manger_type=$request->type;
+
+          $student_list=DB::table('grades_students')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
+        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        ->join('users', 'users.id', '=', 'grades_students.student_id')
+        ->where('academic_sessions.active', 1)
+        ->where('grades_students.grade_id', $grade_id)
+        ->select('users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_students.student_id', 'grades.grade_name')
+        ->get();
 
 
         $classteacher_list=DB::table('grades_teachers')
@@ -1143,11 +1223,12 @@ public function class_teacher_update(Request $request){
         ->join('grades', 'grades.id', '=', 'grades_teachers.grade_id')
         ->join('users', 'users.id', '=', 'grades_teachers.teacher_id')
         ->where('academic_sessions.active', 1)
+        ->where('class_manager_status', '1')
+        ->orWhere('class_manager_status', NULL)
         ->where('grades_teachers.teacher_id', Auth::user()->id)
         ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name')
         ->first();
-        //  dd($classteacher_list);
-        $date= Carbon::now()->format('Y-m-d');
+
 
         $terms = DB::table('terms')
         ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
@@ -1155,18 +1236,71 @@ public function class_teacher_update(Request $request){
         ->select('terms.id as id', 'academic_sessions.id as session_id', 'terms.term_name')
         ->get();
 
+       
 
-        $student_list=DB::table('grades_students')
-        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
-        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-        ->join('users', 'users.id', '=', 'grades_students.student_id')
-        ->where('academic_sessions.active', 1)
-        ->where('grades_students.grade_id', $classteacher_list->grade_id)
-        ->select('users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_students.student_id', 'grades.grade_name')
-        ->get();
+        return view('academic-admin.comments-management.custom.view', compact('classteacher_list',  'student_list', 'terms', 'teacher_id','term','grade_id','manger_type'));
 
-        return view('academic-admin.comments-management.custom.index-tutor', compact('classteacher_list', 'date', 'student_list', 'terms'));
+    }
 
+
+    public function classteacher_comments_store(Request $request){
+
+      //  dd($request->all());
+
+        if (!Schema::hasTable('custom_comments')) {
+            Schema::create('custom_comments', function($table){
+                  
+                   $table->id();
+                   $table->integer('student_id');
+                   $table->integer('term_id');
+                   $table->integer('class_id');
+                   $table->longText('comment');
+                   $table->integer('teacher_id');
+                   $table->integer('manager_type');
+                   $table->timestamps();
+           });
+       }
+
+
+        //validation
+
+        $validation=$request->validate([
+          
+            'comment'=>'required',
+           
+        ]);
+
+        $students=$request->student_id;
+        $term=$request->term;
+        $grade_id=$request->grade_id;
+        $comment=$request->comment;
+        $teacher=$request->teacher_id;
+        $type=$request->manager_type;
+
+
+     //   dd($comment);
+        
+       
+
+        //You should use update or create
+   
+        for($i = 0; $i <count($students); $i++) {
+      
+          //  dd($comment[$i]);
+            $attendance=CustomComment::updateOrCreate([
+            'student_id'=>$students[$i],
+            'teacher_id'=>$teacher[$i],
+            'term_id'=>$term[$i],
+            'class_id'=>$grade_id[$i],
+            'manager_type'=>$type[$i],
+            'comment'=>$comment[$i],
+            ], ['comment'=>$comment[$i]]);
+        
+         }
+
+         flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added student comment'.' '.'</span> '.'into the comment bank .', 'Attendence Data');
+ 
+         return redirect('/class/classteacher/comments');
 
     }
    
