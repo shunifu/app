@@ -175,8 +175,11 @@ from marks  INNER JOIN assessements ON assessements.id=marks.assessement_id
   WHERE assessements.id IN (".implode(",",$assessement).");
 SET @sql = CONCAT('SELECT 
     users.lastname as Surname,  users.name as Name,  users.middlename as Middlename, 
+  
     ', @sql, ',
-      ROUND(AVG(marks.mark)) as Average
+      ROUND(AVG(marks.mark)) as Average,
+      marks.effort_grade as EffortGrade,
+      marks.id as code
     from marks 
     INNER JOIN assessements ON assessements.id = marks.assessement_id
     INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
@@ -197,9 +200,10 @@ if ($result) {
   if ($res = $db->store_result()) {
 
 
-      echo "<table  id='marks_table' class='table table-compact table-bordered table-hover table-sm table-striped '><tr>";
+      echo "<form action='/update/marks-data'   csrf_field('post') ><table  id='marks_table' class='table table-compact table-bordered table-hover table-sm table-striped '> <tr>";
 
-        
+        ;
+    
       // printing table headers
       for($i=0; $i<mysqli_num_fields($res); $i++)
       {
@@ -218,24 +222,42 @@ if ($result) {
           foreach($row as $cell=>$value) {
      
 
+        
   
+
+
         if (htmlspecialchars($value) < $pass_rate) {
         $class = 'class=text-danger';
      
     } else {
         $class = 'class=text-black';
     }
+         if ($cell === "EffortGrade") {echo '<input type="hidden" value="'.$row['code'].'"  name="code[]">';  $value = '<input type="text" value="'.$value.'" class="form-control"  min="0" max="2" name="effort_grade[]">'; }
+
+         if($cell==="code"){
+
+            $value= ' ';
+
+         }
+
+    
         
             if ($value === NULL) { $value = '-'; }
 
+
             if(is_numeric($value)){$percentage="%";}else{$percentage=" ";}
-            
+             
             echo "<td $class>$value"."$percentage</td>";
           }
           echo "</tr>\n";
       }
       $res->free();
+
       echo "</table>";
+      echo " <div class='card-footer'> <button type='submit' class='btn btn-success'>Update Marks Data</button></div>";
+      echo "</form>";
+
+      
 
     }
   } while ($db->more_results() && $db->next_result());

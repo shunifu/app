@@ -75,13 +75,13 @@
                                     <x-jet-label>Select AVG Settings</x-jet-label><br>
                                     <select class="form-control" name="settings" id="settings" >
                                         <option value="">Select Settings</option>
-                                        <option value="0"> AVG of selected assessements</option>
+                                        <option value="0"> Average of selected assessements</option>
 
                                         @foreach ($terms as $term_item)
                                         <option value="{{$term_item->term_id}}">{{$term_item->term_name}} settings</option>
                                         @endforeach
                                     </select>
-                                    @error('assessement_id')
+                                    @error('settings')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>

@@ -663,6 +663,7 @@ Route::patch('/marks/update',[MarkController::class,'update'])->name('marks.upda
 
 Route::get('/marks/my-scoresheet',[MarkController::class,'teacher_scoresheet_index'])->name('marks.teacher_scoresheet_index');
 Route::post('/marks/my-scoresheet/view',[MarkController::class,'teacher_scoresheet_view'])->name('marks.teacher_scoresheet_view');
+Route::get('/update/marks-data',[MarkController::class,'edit_marks_data'])->name('marks.edit_marks_data');
 
 
 Route::get('/marks/my-comments',[MarkController::class,'teacher_comment_index'])->name('marks.teacher_comments_index');

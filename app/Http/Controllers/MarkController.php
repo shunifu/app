@@ -1012,11 +1012,51 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
         }
    
        
-
+ 
 
 
        
     
+    
+    }
+
+    public function edit_marks_data(Request $request){
+
+
+$code=$request->code;   
+$effort_grade=$request->effort_grade;
+
+//sdd(array_replace_recursive($code, $effort_grade));
+
+//$result = array_merge_recursive_distinct($code, $effort_grade);
+//dd($result);
+
+//  dd($request->all());//  dd($request->code);
+
+
+
+        foreach ($code as $key => $value) {
+
+           
+   
+
+            $mark_id=$code[$key];
+            $effort_grade_new=$effort_grade[$key];
+
+          
+  
+
+          $update=Mark::where('id',$mark_id)->update([ 'effort_grade'=>$effort_grade_new]);
+        
+         
+        }
+
+        flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have updated marks data.', 'Update Marks');
+        return redirect('/marks/my-scoresheet');
+
+        }
+
+
     
     }
 
@@ -1027,4 +1067,4 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
 
 
 
-}
+
