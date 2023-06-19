@@ -151,6 +151,7 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
     //Subject Routes
     Route::get('/academic-admin/subject', [SubjectController::class,'create'])->name('subject.create');
     Route::post('/academic-admin/subject/add', [SubjectController::class,'store'])->name('subject.store');
+    Route::post('/subject/modify', [SubjectController::class,'modify'])->name('subject.modify');
     Route::get('/academic-admin/subject/edit/{id}', [SubjectController::class,'edit'])->name('subject.edit');
     Route::post('/academic-admin/subject/update', [SubjectController::class,'update'])->name('subject.update');
     Route::get('/academic-admin/subject/delete/{id}', [SubjectController::class,'destroy'])->name('subject.destroy');

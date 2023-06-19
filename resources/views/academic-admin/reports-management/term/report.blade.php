@@ -194,6 +194,7 @@ table tbody tr td {
         grades.grade_name,
         grades.id as grade_id,
         streams.stream_name,
+        streams.id as stream_id,
         sections.section_name,
         academic_sessions.academic_session, 
         academic_sessions.id as session_id
@@ -409,7 +410,20 @@ WHERE sub.student_id=".$student.""));
  Resolution: <span class=" text-bold">{{$student_term_data->final_term_status}}  </span>   
 @endif
 
+{{$student_term_data->grade_name}} Average: <span class=" text-bold">
+    <?php
 
+
+$grade_average=\DB::select(\DB::raw("SELECT AVG(term_averages.student_average) as grade_average  FROM term_averages  WHERE term_averages.student_class=".$student_term_data->grade_id.""));
+foreach ($grade_average as $grade_average_key) {
+ 
+    echo round($grade_average_key->grade_average).'%';
+
+}
+
+
+    ?>
+</span>    
 
 
 
@@ -518,7 +532,7 @@ grades.stream_id,
     WHERE student_subject_averages.student_id = ".$student." AND `student_subject_averages`.`term_id` = ".$term." 
     GROUP BY
     student_subject_averages.student_id,
-    subjects.id ORDER BY subjects.id ASC"));
+    subjects.id ORDER BY subjects.order ASC"));
 
 ?>
 

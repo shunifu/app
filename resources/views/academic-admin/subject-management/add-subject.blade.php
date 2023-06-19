@@ -23,7 +23,7 @@
 
 
     
-  <div class="col-md-4">
+  <div class="col-md-3">
 
     <div class="card card-light">
         <div class="card-header">
@@ -95,7 +95,7 @@
 
   </div>
 
-  <div class="col-md-8">
+  <div class="col-md-9">
 
     <div class="card card-light">
       <div class="card-header">
@@ -105,12 +105,15 @@
       <!-- form start -->
       
         <div class="card-body">
-          
+          <form action="/subject/modify" method="POST">
+            @csrf
           <table class="table table-bordered table table-hover table-responsive-md ">
             <thead class="thead-light">
               <tr>
-                <th>Subject Name</th>
-                <th>ECESWA Code</th>
+                <th >Rank </th>
+                <th style="width: 10px">Subject Name</th>
+                <th>Abreviation </th>
+                <th>Subject Code </th>
                 <th>Subject Type</th>
                 <th>Level</th>
                 <th>Manage</th>
@@ -118,9 +121,13 @@
             </thead>
             <tbody>
               <tr>
+           
                @foreach ($collection_subject as $subject_item)
                <tr>
+                <td ><input type="text" name="order[]" required class="form-control" value="{{$subject_item->order}}"></td>
+                <input type="hidden" name="subject_id[]" value="{{$subject_item->id}}" >
                    <td>{{$subject_item->subject_name}}</td>
+                   <td>{{$subject_item->abbreviation}}</td>
                    <td>{{$subject_item->subject_code}}</td>
                    <td>{{$subject_item->subject_type}}</td>
                 
@@ -145,10 +152,14 @@
                
                
                @endforeach
+
+             
               </tr>
               
             </tbody>
           </table>
+          <input type="submit" class="btn btn-primary" value="Modify Subject Data">
+        </form>
         </div>
 
      

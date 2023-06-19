@@ -7,6 +7,9 @@ use App\Models\Section;
 use App\Models\Subject;
 use App\Models\TeachingLoad;
 use App\Models\TermAverage;
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -30,16 +33,104 @@ class SubjectController extends Controller
      */
     public function create()
     {
+
+
+      
+
+        if (!Schema::hasColumn('subjects', 'order')) //check the column
+		{
+			Schema::table('subjects', function (Blueprint $table)
+			{
+			   
+				$table->integer('order')->nullable();
+              
+			});
+		}
+
+        if (!Schema::hasColumn('subjects', 'abbreviation')) //check the column
+		{
+			Schema::table('subjects', function (Blueprint $table)
+			{
+			   
+				$table->integer('abbreviation')->nullable();
+              
+			});
+		}
        
         $collection_subject=DB::table('subjects')
         ->leftjoin('sections','sections.id','=','subjects.section_level')
-        ->select('subjects.id as id', 'sections.section_name', 'subjects.subject_name','subjects.subject_type','section_level', 'subjects.subject_code')
+        ->select('subjects.id as id','subjects.order','abbreviation' ,'sections.section_name', 'subjects.subject_name','subjects.subject_type','section_level', 'subjects.subject_code')
         ->get();
 
         $sections=Section::all();
 
 
         return view('academic-admin.subject-management.add-subject', compact('collection_subject','sections'));
+    }
+
+
+
+    public function modify(Request $request){
+
+        $subject_id=$request->subject_id;
+        $order=$request->order;
+
+    foreach ($subject_id as $key => $value) {
+
+      $subject_identifier=$subject_id[$key];
+      $subject_order=$order[$key];
+
+        
+       $update=Subject::where('id', $subject_identifier)->update([
+
+        'order'=>$subject_order,
+
+
+       ]);
+
+
+
+    //    $code=$request->code;   
+    //   $effort_grade=$request->effort_grade;
+
+
+
+
+        // foreach ($code as $key => $value) {
+
+           
+   
+
+        //     $mark_id=$code[$key];
+        //     $effort_grade_new=$effort_grade[$key];
+
+          
+  
+
+        //   $update=Mark::where('id',$mark_id)->update([ 'effort_grade'=>$effort_grade_new]);
+        
+         
+        // }
+
+      
+
+        }
+       
+
+       $collection_subject=DB::table('subjects')
+       ->leftjoin('sections','sections.id','=','subjects.section_level')
+       ->select('subjects.id as id','subjects.order','abbreviation' ,'sections.section_name', 'subjects.subject_name','subjects.subject_type','section_level', 'subjects.subject_code')
+       ->get();
+
+       $sections=Section::all();
+
+          flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have updated subjects data.', 'Modify Subject Data');
+     
+
+       return view('academic-admin.subject-management.add-subject', compact('collection_subject','sections'));
+
+    
+
     }
 
     /**
