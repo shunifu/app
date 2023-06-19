@@ -1396,7 +1396,7 @@ foreach ($term_average as $student_term_data) {
                 $teacher_2 =\DB::select(\DB::raw('SELECT custom_comments.comment FROM custom_comments where manager_type=2  AND student_id='.$student_term_data->leaner_id.''));
                 foreach ($teacher_2 as $teacher_comment) {
                 
-                echo '<span class="font-italic font-weight-light">'.$teacher_comment->comment.' </span>';
+                echo '<span ">'.$teacher_comment->comment.' </span>';
                 
                 
                 }
@@ -1421,7 +1421,7 @@ foreach ($term_average as $student_term_data) {
                 $teacher_1 =\DB::select(\DB::raw('SELECT custom_comments.comment FROM custom_comments where manager_type=1  AND student_id='.$student_term_data->leaner_id.''));
                 foreach ($teacher_1 as $teacher_comment) {
                 
-                echo '<span class="font-italic font-weight-light">'.$teacher_comment->comment.' </span>';
+                echo '<span >'.$teacher_comment->comment.' </span>';
                 
                 
                 }
