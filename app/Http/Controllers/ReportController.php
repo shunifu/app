@@ -448,18 +448,9 @@ class ReportController extends Controller
         $non_value_exists=Subject::where('subject_type','non-value')->exists();
 
         if($non_value_exists){
-            $subject_non_value=Subject::where('subject_type','non-value')->get()->pluck('id')->toArray();
-
-           // dd(array($subject_non_value[]));
-
-         
+            $subject_non_value=Subject::where('subject_type','non-value')->get()->pluck('id')->toArray();         
             $nonvalue_subjects_id = implode(',',$subject_non_value);
-            // $nonvalue_subjects_name=Subject::whereIn('id',collect($nonvalue_subjects_id))->get()->pluck('subject_name')->toArray();
-       
-
-            //  exit();
-
-
+           
         }else{
             $non_value_subject=0;
         }
@@ -662,11 +653,15 @@ subjects.id"));
 
         $total_subjects = DB::table('student_loads')
         ->join('teaching_loads', 'student_loads.teaching_load_id', '=', 'teaching_loads.id')
+        ->join('subjects', 'teaching_loads.subject_id', '=', 'subjects.id')
         ->join('academic_sessions', 'academic_sessions.id', '=', 'teaching_loads.session_id')
         ->where('student_loads.student_id', $student)
+        ->where('subjects.subject_type', '<>','non-value')
         ->where('student_loads.active', 1)
         ->where('academic_sessions.academic_session',$get_academic_session->academic_session )//scoping to current academic 
         ->get()->count();
+
+     //   dd($total_subjects);
         //This ($total_subjects) query will retrieve only the number of student loads for the active session
 
 
@@ -762,7 +757,9 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
             ->where('student_loads.active', 1)
             ->get()->count();
 
-          //  dd($total_subjects, $student);
+
+
+     
 
           if($term_average_type=="decimal"){
             $avg_calculation="ROUND(SUM(t.mark) /".$total_subjects.", $number_of_decimal_places )";

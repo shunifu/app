@@ -224,7 +224,7 @@ class AnalyticsController extends Controller
 
     public function generate(Request $request){
 
-        dd($request->all());
+      //  dd($request->all());
 
 
     //validation //you have to redo validation
@@ -510,15 +510,15 @@ $subject=Subject::where('subject_type','passing_subject')->first();
 $passing_subject=$subject->id;
 $passing_subject_name=$subject->subject_name;
 
-$non_contributing=Subject::where('subject_type','non-value')->first();
-if(is_null($non_contributing)){
+$non_value_exists=Subject::where('subject_type','non-value')->exists();
 
-    $non_contributing_subject="0";
-    
+if($non_value_exists){
+    $subject_non_value=Subject::where('subject_type','non-value')->get()->pluck('id')->toArray();         
+    $nonvalue_subjects_id = implode(',',$subject_non_value);
+   
 }else{
-    $non_contributing_subject=$non_contributing->id;
+    $non_value_subject=0;
 }
-
 
 
 
@@ -571,11 +571,11 @@ if($criteria->average_calculation=="custom" ){
         INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id
         INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
         INNER JOIN grades ON grades.id=teaching_loads.class_id
-        where marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1 AND marks.active=1 
+        where marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id." AND subject_id NOT IN (".$nonvalue_subjects_id.") AND student_loads.active=1 AND marks.active=1 
         GROUP BY subject_id
         order by (subject_id =".$passing_subject.") desc, mark desc
                     LIMIT ".$number_of_subjects.") t, 
-                    (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id   WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject."  AND marks.active=1  order by  mark desc
+                    (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id   WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id NOT IN (".$nonvalue_subjects_id.")  AND marks.active=1  order by  mark desc
                    ) nps, 
                    (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id = ".$student." AND marks.assessement_id = ".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id=".$passing_subject." ) prm,
 
@@ -602,11 +602,11 @@ if($criteria->average_calculation=="custom" ){
                             INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
                             INNER JOIN grades ON grades.id=teaching_loads.class_id
                             INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id
-                            where marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1
+                            where marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND subject_id NOT IN (".$nonvalue_subjects_id.") AND student_loads.active=1
                         GROUP BY subject_id
                         order by  mark desc
                         LIMIT ".$number_of_subjects.") t, 
-                         (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id   WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject."  AND marks.active=1  order by  mark desc
+                         (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id   WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id NOT IN (".$nonvalue_subjects_id.")  AND marks.active=1  order by  mark desc
                          ) nps, 
                        (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id = ".$student." AND marks.assessement_id = ".$assessement_id." AND marks.mark>=".$pass_rate." AND subject_id=".$passing_subject." ) prm,
 
@@ -637,7 +637,7 @@ if($criteria->average_calculation=="custom" ){
     ->where('teaching_loads.active', 1)
     ->where('student_loads.student_id', $student)
     ->where('student_loads.active', 1)
-    ->where('subjects.subject_type','<>', 'non-value')
+     ->whereNotIn('subjects.id', array($nonvalue_subjects_id))
     ->where('academic_sessions.active', 1)//Scoping to active academic year. 
     ->get()->count();
     
@@ -648,7 +648,7 @@ if($criteria->average_calculation=="custom" ){
     ->where('teaching_loads.active', 1)
     ->where('marks.student_id', $student)
     ->where('marks.active', 1)
-    ->where('subjects.subject_type','<>', 'non-value')
+     ->whereNotIn('subjects.id', array($nonvalue_subjects_id))
     ->where('marks.session_id', $activeYear)//Scoping to active academic year. 
     ->get()->count();
 
@@ -738,10 +738,10 @@ INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id
 INNER JOIN student_loads ON student_loads.teaching_load_id=marks.teaching_load_id
 INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
 INNER JOIN grades ON grades.id=teaching_loads.class_id
-where marks.student_id =".$student." AND marks.assessement_id=".$assessement_id." AND subject_id <> ".$non_contributing_subject." AND student_loads.active=1 AND marks.active=1
+where marks.student_id =".$student." AND marks.assessement_id=".$assessement_id." AND subject_id NOT IN (".$nonvalue_subjects_id.") AND student_loads.active=1 AND marks.active=1
           GROUP BY marks.id 
         ) t, 
-        (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id   WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id <> ".$non_contributing_subject."  AND marks.active=1  order by  mark desc
+        (SELECT count(marks.mark) as number_of_passed_subjects FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id   WHERE  marks.student_id = ".$student." AND marks.assessement_id=".$assessement_id."  AND marks.mark>=".$pass_rate." AND subject_id NOT IN (".$nonvalue_subjects_id.")  AND marks.active=1  order by  mark desc
                    ) nps, 
              (SELECT COUNT(marks.mark) as passing_subject_status FROM marks INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id INNER JOIN subjects ON subjects.id = teaching_loads.subject_id WHERE marks.student_id =".$student."  AND marks.assessement_id =".$assessement_id." AND marks.mark>=".$pass_rate."  AND subject_id=".$passing_subject.") prm,
 
@@ -817,7 +817,69 @@ $insert=AssessementProgressReport::upsert(collect($student_average)->map(functio
         WHERE assessement_progress_reports.student_stream=".$student_stream." AND marks.assessement_id=".$request->assessement." AND assessement_progress_reports.assessement_id=".$request->assessement." AND teaching_loads.active=1 AND grades.stream_id=assessement_progress_reports.student_stream AND grades.id=assessement_progress_reports.student_class AND grades_students.active=1
         GROUP BY marks.student_id  
         ORDER BY assessement_progress_reports.student_average DESC";
+
      }
+
+
+
+     $school_data=School::first();
+$base64=$school_data->base64;
+
+
+     if ($school_data->school_code=="1025") {
+       
+
+
+
+
+        if ($criteria->passing_subject_rule=="1") {
+            $scoresheet=DB::select(DB::raw("SELECT 
+        marks.student_id,
+        grades.grade_name,
+        users.name,
+        users.middlename,
+        users.lastname,
+        users.id as learner_id,
+        assessement_progress_reports.student_average,   
+        loads_count, 
+        marks_count,
+        CASE WHEN assessement_progress_reports.number_of_passed_subjects>=".$number_of_subjects." AND assessement_progress_reports.passing_subject_status<>0 AND assessement_progress_reports.student_average>=".$pass_rate." THEN 'Passed' ELSE 'Failed' END AS 'remark',
+         MAX(CASE WHEN subjects.id=2 THEN mark END) AS 'EnglishLanguage',
+         MAX(CASE WHEN subjects.id=5 THEN mark END) AS 'Geography',
+         MAX(CASE WHEN subjects.id=6 THEN mark END) AS 'Mathametics',
+         MAX(CASE WHEN subjects.id=10 THEN mark END) AS 'Siswati',
+         MAX(CASE WHEN subjects.id=12 THEN mark END) AS 'PhysicalScience',
+         MAX(CASE WHEN subjects.id=13 THEN mark END) AS 'Biology',
+         MAX(CASE WHEN subjects.id=14 THEN mark END) AS 'NaturalScience',
+         MAX(CASE WHEN subjects.id=15 THEN mark END) AS 'French',
+         MAX(CASE WHEN subjects.id=16 THEN mark END) AS 'ConsumerStudies',
+         MAX(CASE WHEN subjects.id=18 THEN mark END) AS 'BusinessStudies',
+         MAX(CASE WHEN subjects.id=21 THEN mark END) AS 'Accounting',
+         MAX(CASE WHEN subjects.id=22 THEN mark END) AS 'Economics',
+         MAX(CASE WHEN subjects.id=23 THEN mark END) AS 'Agriculture',
+         MAX(CASE WHEN subjects.id=24 THEN mark END) AS 'FS_Maths',
+         MAX(CASE WHEN subjects.id=25 THEN mark END) AS 'ComputerStudies',
+         MAX(CASE WHEN subjects.id=27 THEN mark END) AS 'History',
+         MAX(CASE WHEN subjects.id=28 THEN mark END) AS 'ICT',
+         MAX(CASE WHEN subjects.id=29 THEN mark END) AS 'FS_CS',
+         MAX(CASE WHEN subjects.id=34 THEN mark END) AS 'EGT',
+         MAX(CASE WHEN subjects.id=36 THEN mark END) AS 'QR',
+         MAX(CASE WHEN subjects.id=37 THEN mark END) AS 'EMS',
+         MAX(CASE WHEN subjects.id=38 THEN mark END) AS 'ActiveCitizenry',
+         MAX(CASE WHEN subjects.id=39 THEN mark END) AS 'FS_English',
+         MAX(CASE WHEN subjects.id=40 THEN mark END) AS 'Music'
+           
+        FROM marks INNER JOIN teaching_loads ON teaching_loads.id=marks.teaching_load_id
+        INNER JOIN subjects ON teaching_loads.subject_id=subjects.id
+        INNER JOIN users ON users.id=marks.student_id
+        INNER JOIN grades_students ON grades_students.student_id=marks.student_id
+        INNER JOIN assessement_progress_reports ON assessement_progress_reports.student_id=marks.student_id".$sql_piece.""));
+
+        }
+     } else {
+        
+     
+     
 
     if ($criteria->passing_subject_rule=="1") {
         $scoresheet=DB::select(DB::raw("SELECT 
@@ -943,6 +1005,7 @@ $insert=AssessementProgressReport::upsert(collect($student_average)->map(functio
        INNER JOIN assessement_progress_reports ON assessement_progress_reports.student_id=marks.student_id".$sql_piece.""));
 
     }
+}
     
     
 
@@ -963,8 +1026,7 @@ $insert=AssessementProgressReport::upsert(collect($student_average)->map(functio
 
 
 
-$school_data=School::first();
-$base64=$school_data->base64;
+
 
 
 
@@ -972,7 +1034,13 @@ $base64=$school_data->base64;
 if($school_data->school_type=="primary-school"){
     return view('analytics.scoresheet.primary',compact('scoresheet','stream_title', 'section_id', 'assessement_name','assessement_id', 'tie_type', 'streamofstudent', 'assessement_id', 'base64', 'pass_rate','key', 'classofstudent', 'term_average_rule', 'number_of_subjects', 'passing_subject_rule', 'passing_subject_name'));   
 }else{
-    return view('analytics.scoresheet.index',compact('scoresheet','stream_title','number_of_subjects','passing_subject_rule','term_average_rule', 'section_id', 'assessement_name','assessement_id', 'tie_type', 'streamofstudent', 'assessement_id', 'base64', 'pass_rate', 'key', 'classofstudent', 'term_average_rule', 'number_of_subjects', 'passing_subject_rule', 'passing_subject_name'));   
+
+    if ($school_data->school_code=="1025") {
+        return view('analytics.scoresheet.index_sisekelo',compact('scoresheet','stream_title','number_of_subjects','passing_subject_rule','term_average_rule', 'section_id', 'assessement_name','assessement_id', 'tie_type', 'streamofstudent', 'assessement_id', 'base64', 'pass_rate', 'key', 'classofstudent', 'term_average_rule', 'number_of_subjects', 'passing_subject_rule', 'passing_subject_name')); 
+    }else{
+        return view('analytics.scoresheet.index',compact('scoresheet','stream_title','number_of_subjects','passing_subject_rule','term_average_rule', 'section_id', 'assessement_name','assessement_id', 'tie_type', 'streamofstudent', 'assessement_id', 'base64', 'pass_rate', 'key', 'classofstudent', 'term_average_rule', 'number_of_subjects', 'passing_subject_rule', 'passing_subject_name')); 
+    }
+    
 }
 
 
@@ -1442,12 +1510,11 @@ $passing_subject=$subject->id;
 $non_value_exists=Subject::where('subject_type','non-value')->exists();
 
 if($non_value_exists){
- $subject_non_value=Subject::where('subject_type','non-value')->first();
- $non_value_subject=$subject_non_value->id;
- $non_value_subject_name=$subject_non_value->subject_name;
-
+    $subject_non_value=Subject::where('subject_type','non-value')->get()->pluck('id')->toArray();         
+    $nonvalue_subjects_id = implode(',',$subject_non_value);
+   
 }else{
- $non_value_subject=0;
+    $non_value_subject=0;
 }
 
 //Getting Academic Year
@@ -1676,7 +1743,7 @@ $student_average[]=DB::select(DB::raw("SELECT student_id, ".$avg_calculation." A
 INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
 INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
 INNER JOIN grades ON grades.id=student_subject_averages.student_class
-where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
+where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
 GROUP BY student_subject_averages.subject_id
 ORDER BY (student_subject_averages.subject_id =".$passing_subject.") desc, mark desc
 LIMIT ".$number_of_subjects.") t, 
@@ -1685,7 +1752,7 @@ LIMIT ".$number_of_subjects.") t,
  FROM
  student_subject_averages
  WHERE
- student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
+ student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
  ORDER BY
  student_average
  DESC
@@ -1707,7 +1774,7 @@ ORDER BY round((SUM(t.mark))/".$number_of_subjects.") DESC"));
          INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
          INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
          INNER JOIN grades ON grades.id=student_subject_averages.student_class
-         where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
+         where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
          GROUP BY student_subject_averages.subject_id
          ORDER BY  mark desc
          LIMIT ".$number_of_subjects.") t, 
@@ -1716,7 +1783,7 @@ ORDER BY round((SUM(t.mark))/".$number_of_subjects.") DESC"));
                  FROM
                  student_subject_averages
                  WHERE
-                 student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
+                 student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
                  ORDER BY
                  student_average
                  DESC
@@ -1742,7 +1809,7 @@ ORDER BY round((SUM(t.mark))/".$number_of_subjects.") DESC"));
  ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
  ->where('teaching_loads.active', 1)
  ->where('student_loads.student_id', $student)
- ->where('subjects.subject_type','<>', 'non-value')
+ ->whereNotIn('subjects.id', array($nonvalue_subjects_id))
  ->where('academic_sessions.active', 1)//Scoping to active academic year. 
  ->where('student_loads.active', 1)
  ->get()->count();
@@ -1774,7 +1841,7 @@ if($term_average_type=="decimal"){
  student_subject_averages
  INNER JOIN teaching_loads ON teaching_loads.id = student_subject_averages.teaching_load_id
  INNER JOIN grades ON grades.id = student_subject_averages.student_class
- WHERE student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id = ".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
+ WHERE student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id = ".$term." AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
  GROUP BY
  student_subject_averages.id
 ) t,
@@ -1784,7 +1851,7 @@ if($term_average_type=="decimal"){
  FROM
  student_subject_averages
  WHERE
- student_subject_averages.student_id =".$student." AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >= ".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
+ student_subject_averages.student_id =".$student." AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >= ".$pass_rate." AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
  ORDER BY
  student_average
  DESC
@@ -2210,6 +2277,7 @@ $grades = DB::table('grades_students')
 ->where('grades_students.student_id','=', $student_id)
 ->where('grades_students.active','=', 1)
 ->first();//remeber to add acaademic year
+
 
 
 $non_contributing=Subject::where('subject_type', 'non-value')->first();
