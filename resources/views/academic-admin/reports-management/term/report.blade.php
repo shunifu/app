@@ -1481,7 +1481,7 @@ foreach ($class_t as $key_t) {
 echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
 
 echo '<br>';
-echo '<img src='.$key_t->avatar.' >';
+echo '<img class="img-fluid" width="30px" height="30px" src='.$key_t->avatar.' >';
 
 
 }
@@ -1507,10 +1507,12 @@ echo '<img src='.$key_t->avatar.' >';
                             <?php
                         
 
-                            $class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 AND class_manager_status=1 " ));
-                            foreach ($class_t as $key_t) {
+                            $class_hr=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 AND class_manager_status=1 " ));
+                            foreach ($class_hr as $key_hr) {
                             
-                            echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
+                            echo '<span class="font-italic font-weight-light">'.substr($key_hr->name, 0, 1).'  '.$key_hr->lastname.' </span>';
+
+                            echo '<img class="img-fluid" width="30px" height="30px" src='.$key_hr->avatar.' >';
                             
                             
                             }
