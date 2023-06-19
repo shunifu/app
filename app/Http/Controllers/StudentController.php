@@ -1823,7 +1823,7 @@ public function student_image(Request $request){
             'profile_photo_path'=>$student_image,
         ]);
 
-        return Redirect::back();
+     //   return Redirect::back();
 
     }else{
       

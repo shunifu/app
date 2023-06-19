@@ -222,7 +222,7 @@ echo '<h3 class="text-center lead text-bold">'.$student_term_data->lastname.' '.
                     <thead>
                         <tr>
                             <th class="background text-center">Student Details</th>
-                            <th class="background text-center">Student Photo</th>
+                            <th class="background text-center" style="width:400px" >Student Photo</th>
                             <th class="background text-center">Term Details</th>
 
                         </tr>
@@ -415,15 +415,15 @@ WHERE sub.student_id=".$student.""));
 
                         </td>
                                                    
-   
+
             
-                        <td>
+                        <td >
                             <center>
 
                                 @if (is_null($student_term_data->profile_photo_path))
                                 <img class="user-image img-fluid elevation-1 mx-auto d-block" width="120" height="120" src="https://ui-avatars.com/api/?name={{$student_term_data->name}}+&amp;color=7F9CF5&amp;background=EBF4FF" alt={{$student_term_data->name}} />
                                 @else
-                                <img class="user-image img-circle elevation-1 " width="120" height="120"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
+                                <img class="user-image img-circle elevation-1 " width="180px" height="120px"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
                                 @endif
                                
                                 

@@ -50,8 +50,8 @@
                 <tr>
                
                     <th class="col-3">Student Name </th>
-                    {{-- <th>Term Average </th>
-                    <th>Status </th> --}}
+                    <th>Term Average </th>
+               
                     <th>Comment </th>
                 </tr>
             </thead>
@@ -60,7 +60,7 @@
  
                 <tr>
                   <td>{{$student_item->lastname}} {{$student_item->middlename}} {{$student_item->name}}</td>
-                  {{-- <td>{{$student_item->student_average}}%</td> --}}
+                  <td>{{$student_item->student_average}}%</td>
    
                   <td>
                     <div class="row" id="comment_data">
