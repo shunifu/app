@@ -752,7 +752,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
             ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
             ->where('teaching_loads.active', 1)
             ->where('student_loads.student_id', $student)
-            ->whereNotIn('subjects.id', array($nonvalue_subjects_id))
+            ->where('subjects.subject_type','<>','non-value')
             ->where('academic_sessions.active', 1)//Scoping to active academic year. 
             ->where('student_loads.active', 1)
             ->get()->count();
