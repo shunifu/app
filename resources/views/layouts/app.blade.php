@@ -585,29 +585,29 @@
      {{-- end of logged in class-teacher Performance link --}}
 
 
-                    @if (Auth::user()->hasRole(['admin_teacher', 'school_administrator', 'class_teacher']))
-                    <li class="nav-item">
+                    @if (Auth::user()->hasRole(['admin_teacher', 'school_administrator', 'class_teacher', 'class_tutor']))
+                    {{-- <li class="nav-item">
                       <a href="/insights" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Academic Insights</p>
                       </a>
-                    </li>
+                    </li> --}}
 
                     
 
-                     <li class="nav-item">
+                     {{-- <li class="nav-item">
                       <a href="/insights/subject" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Subject Insights</p>
                       </a>
-                    </li>
+                    </li> --}}
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                       <a href="/insights/teacher" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Teacher Insights</p>
                       </a>
-                    </li> 
+                    </li>  --}}
 
                      {{-- <li class="nav-item">
                       <a href="/analytics/assessement-based" class="nav-link">
@@ -644,7 +644,7 @@
                     </ul>
                     </li>
 
-
+{{-- 
                      <li class="nav-item has-treeview">
                       <a href="#" class="nav-link">
                         <i class="fas fa-chart-bar nav-icon"></i>
@@ -672,7 +672,7 @@
                         </li> 
   
                       </ul> 
-                      </li>
+                      </li> --}}
 
                   
 
