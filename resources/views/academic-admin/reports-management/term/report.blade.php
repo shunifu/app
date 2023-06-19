@@ -1638,7 +1638,7 @@ School Stamp
                     <div class="col">
                         <div id="signaturetitle">
 
-                 
+                            <img src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1687176660/Screenshot_2023-06-19_at_2.10.18_PM_ek6ppo.png" width="60px" height="60px" class="img-fluid " alt="">
                     
                     </div>
                     </div>
