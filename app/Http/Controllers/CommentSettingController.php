@@ -170,11 +170,11 @@ $name="Subject Comments";
        
         $grades=Grade::all();
 
-      //  dd($grades);
+     //  dd($terms);
 
 
      
-        return view('academic-admin.comments-management.custom.admin.view-custom',compact('terms', 'grades'));
+        return view('academic-admin.comments-management.custom.admin.index',compact('terms', 'grades'));
 
     }
 
@@ -190,7 +190,7 @@ $name="Subject Comments";
        
         $grades=Grade::all();
 
-        dd($grades);
+    //    dd($grades);
 
 
      

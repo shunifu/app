@@ -31,7 +31,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form action="{{route('comments.admin_view')}}" method="post">
+        <form action="{{route('custom-comment-class.view')}}" method="post">
           <div class="card-body">
             
                 @csrf
@@ -42,10 +42,10 @@
                     <div class="col">
                         <div class="form-group">
                             <x-jet-label>Select Term</x-jet-label>
-                            <select class="form-control" name="section" >
+                            <select class="form-control" name="term" >
                                 <option value="">Select Term</option>
                                 @foreach ($terms as $term)
-                                <option value="{{$term->id}}">{{$term->term_name}}</option>
+                                <option value="{{$term->term_id}}">{{$term->term_name}}</option>
                                 @endforeach
                             </select>
                             @error('term')
@@ -58,14 +58,15 @@
                     <div class="col">
                         <div class="form-group">
                             <x-jet-label>Class </x-jet-label>
-                            <select class="form-control" name="class" id="class">
+                            <select class="form-control" name="grade_id" id="grade_id">
+                                <option value="">Select Class</option>
                               @foreach ($grades as $grade)
           
                               <option value="{{$grade->id}}">{{$grade->grade_name}}</option>
                                   
                               @endforeach
                             </select>
-                            @error('class')
+                            @error('grade_id')
                             <span class="text-danger">{{$message}}</span>  
                             @enderror
                             </div>
