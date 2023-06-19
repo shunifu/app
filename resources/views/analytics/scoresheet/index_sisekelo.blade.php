@@ -284,7 +284,7 @@ where student_id = ".$student->learner_id.""));
 
                 
 
-                    {{-- <td class="align-middle p-2">
+                    <td class="align-middle p-2">
                         @if ($student->EnglishLanguage>=$pass_rate)
                         <span class="text-secondary">{{ $student->EnglishLanguage}}% </span>
                        
@@ -310,7 +310,7 @@ where student_id = ".$student->learner_id.""));
                         
                     </td>
                   
-                        
+                      <td>  
                       
                         @if ($student->NaturalScience>=$pass_rate)
                         <span class="text-secondary">{{ $student->NaturalScience}}% </span>
@@ -536,7 +536,7 @@ where student_id = ".$student->learner_id.""));
                         @elseif($student->Music<$pass_rate )
                         <span class="text-danger">{{ $student->Music}}% </span>
                         @endif
-                    </td> --}}
+                    </td>
 
 
                   

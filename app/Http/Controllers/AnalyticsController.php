@@ -637,7 +637,7 @@ if($criteria->average_calculation=="custom" ){
     ->where('teaching_loads.active', 1)
     ->where('student_loads.student_id', $student)
     ->where('student_loads.active', 1)
-     ->whereNotIn('subjects.id', array($nonvalue_subjects_id))
+     ->where('subjects.subject_type','<>','non-value')
     ->where('academic_sessions.active', 1)//Scoping to active academic year. 
     ->get()->count();
     
@@ -648,7 +648,7 @@ if($criteria->average_calculation=="custom" ){
     ->where('teaching_loads.active', 1)
     ->where('marks.student_id', $student)
     ->where('marks.active', 1)
-     ->whereNotIn('subjects.id', array($nonvalue_subjects_id))
+    ->where('subjects.subject_type','<>','non-value')
     ->where('marks.session_id', $activeYear)//Scoping to active academic year. 
     ->get()->count();
 
