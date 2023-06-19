@@ -305,32 +305,32 @@ WHERE sub.student_id=".$student.""));
                             @if ($passing_subject_rule==1)
                             @if ($student_term_data->student_average>=$pass_rate AND $student_term_data->number_of_passed_subjects>=$number_of_subjects  AND $student_term_data->passing_subject_status==1)
                                 
-                            <span class="text-success text-bold">Passed</span> <i class="fas fa-check-circle text-success"></i> 
+                           {{$student_term_data->name}} <span class="text-success">has met all</span> the passing criteria for  this cycle.
                             
                             @else
                             
-                            <span class="text-danger text-bold">Failed</span> 
+                            {{$student_term_data->name}} <span class="text-danger">has not met all</span> the passing criteria for  this cycle.
                                                             <br>
                                                         
                             
-                            Why {{ $student_term_data->name }} failed:<span class="text-bold"></span>
+                            {{-- Why {{ $student_term_data->name }} failed:<span class="text-bold"></span> --}}
                             
-                            <ul>
+                            {{-- <ul> --}}
                             
-                                @if ($student_term_data->student_average<$pass_rate)
+                                {{-- @if ($student_term_data->student_average<$pass_rate)
                                 <li>
                                    Below Average 
                                 </li>
-                                @endif
+                                @endif --}}
                             
                                
-                                @if ($student_term_data->number_of_passed_subjects==0)
+                                {{-- @if ($student_term_data->number_of_passed_subjects==0)
                                 <li>
                                     Failed <span class="text-danger">all</span> subjects
                                  </li>
                             
-                                 @endif
-                                 @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
+                                 @endif --}}
+                                 {{-- @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
                                  <li>
                                    Passed only <span class="text-danger">{{$student_term_data->number_of_passed_subjects}}</span>
                                    @if ($student_term_data->number_of_passed_subjects==1)
@@ -340,23 +340,23 @@ WHERE sub.student_id=".$student.""));
                                    @endif
                                   
                                 </li>
-                                @endif
+                                @endif --}}
                                
-                            @if ($student_term_data->passing_subject_status<1)
+                            {{-- @if ($student_term_data->passing_subject_status<1)
                             <li>
                               Failed Passing Subject
                             </li>
-                            @endif   
+                            @endif    --}}
                             
-                            </ul>
+                            {{-- </ul> --}}
                             
-                            @endif
+                            {{-- @endif --}}
                             {{-- End of condition within passing subject --}}
 
-                            @else
+                            {{-- @else --}}
                             {{-- if passing subject rule is 0 --}}
 
-                            @if ($student_term_data->student_average>=$pass_rate AND $student_term_data->number_of_passed_subjects>=$number_of_subjects )
+                            {{-- @if ($student_term_data->student_average>=$pass_rate AND $student_term_data->number_of_passed_subjects>=$number_of_subjects )
                                 
                             <span class="text-success text-bold">Passed</span> <i class="fas fa-check-circle text-success"></i> 
                             <br>
@@ -375,16 +375,16 @@ WHERE sub.student_id=".$student.""));
                                 <li>
                                    Below Average 
                                 </li>
-                                @endif
+                                @endif --}}
                             
                                
-                                @if ($student_term_data->number_of_passed_subjects==0)
+                                {{-- @if ($student_term_data->number_of_passed_subjects==0)
                                 <li>
                                     Failed <span class="text-danger">all</span> subjects
                                  </li>
                             
-                                 @endif
-                                 @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
+                                 @endif --}}
+                                 {{-- @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
                                  <li>
                                    Passed only <span class="text-danger">{{$student_term_data->number_of_passed_subjects}}</span>
                                    @if ($student_term_data->number_of_passed_subjects==1)
@@ -394,7 +394,7 @@ WHERE sub.student_id=".$student.""));
                                    @endif
                                   
                                 </li>
-                                @endif
+                                @endif --}}
                                
                             
                             </ul>
@@ -1651,7 +1651,7 @@ School Stamp
                 </div>
 
                    <center>
-                  
+                  <hr>
                     
                     <small>&copy; Report generated by the <strong>Shunifu School Management  Platform</strong></small></center>
                   
