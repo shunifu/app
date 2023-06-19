@@ -12,6 +12,12 @@
   border: 0.5px solid grey;
   table-layout: fixed;
 }
+
+
+td #center{
+            padding: 5px;
+            text-align: center;
+        }
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
 .table-bordered > tfoot > tr > th,
@@ -78,6 +84,8 @@ body { margin: 0px; }
     text-align: center;
 } */
    
+
+
         
         }
 
@@ -201,6 +209,7 @@ table tbody tr td {
            term_averages.student_id =".$student." AND term_averages.term_id =".$term.""));
 
 
+        //   dd($term_average);
             
                     foreach ($term_average as $student_term_data) {
              
@@ -223,6 +232,9 @@ echo '<h3 class="text-center lead text-bold">'.$student_term_data->lastname.' '.
                         <td>
                         <?php $classofstudent=$student_term_data->grade_id; ?>
                             Student Name: <span class="text-bold">{{$student_term_data->name}} {{$student_term_data->middlename}} {{$student_term_data->lastname}} </span>
+                            <br>
+                             
+                            Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
                             <br>
                             Student Average: <span class="text-bold">{{$student_term_data->student_average}}%</span>
                            
@@ -409,9 +421,9 @@ WHERE sub.student_id=".$student.""));
                             <center>
 
                                 @if (is_null($student_term_data->profile_photo_path))
-                                <img class="user-image img-fluid elevation-1 mx-auto d-block" width="200" height="200" src="https://ui-avatars.com/api/?name={{$student_term_data->name}}+&amp;color=7F9CF5&amp;background=EBF4FF" alt={{$student_term_data->name}} />
+                                <img class="user-image img-fluid elevation-1 mx-auto d-block" width="120" height="120" src="https://ui-avatars.com/api/?name={{$student_term_data->name}}+&amp;color=7F9CF5&amp;background=EBF4FF" alt={{$student_term_data->name}} />
                                 @else
-                                <img class="user-image img-circle elevation-1 " width="220" height="220"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
+                                <img class="user-image img-circle elevation-1 " width="120" height="120"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
                                 @endif
                                
                                 
@@ -421,6 +433,7 @@ WHERE sub.student_id=".$student.""));
                         </td>
 
                         <td>
+                         
                         {{$period}}: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
                         <br>
 
@@ -431,8 +444,7 @@ WHERE sub.student_id=".$student.""));
                         <br>
                         Next {{$period}} Date: <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->next_term_date)->format('d F Y')}}</span>
                         
-                        <br>
-                        Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
+                     
                         <br>
 
                           
@@ -457,7 +469,7 @@ WHERE sub.student_id=".$student.""));
                              
                        
       <br>
-                        Report regenerated: <span class="text-bold text-italic">{{date('d F Y H:i')}}</span>
+                        Report generated on: <span class="text-bold text-italic">{{date('d F Y H:i')}}</span>
                         <br>
 
 
@@ -506,7 +518,7 @@ grades.stream_id,
     WHERE student_subject_averages.student_id = ".$student." AND `student_subject_averages`.`term_id` = ".$term." 
     GROUP BY
     student_subject_averages.student_id,
-    subjects.id ORDER BY student_average DESC"));
+    subjects.id ORDER BY subjects.id ASC"));
 
 ?>
 
@@ -798,7 +810,7 @@ from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=stu
         <tr class="hope">
             <th class="background">Subject Name</th> 
             @if ($school_is->school_type=="ieb-school")
-<th class="background">Attained Mark</th>    
+<th class="background" style="width:110px">Attained Mark</th>    
 @else
 <th class="background">Continuous Assessment</th>   
 @endif
@@ -806,8 +818,8 @@ from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=stu
       
            
             @if ($school_is->school_type=="ieb-school")
-            <th class="background">Effort Grade</th>
-            <th class="background">Effort Description</th>
+            <th class="background" style="width:110px">Effort Grade</th>
+            <th class="background" style="width:180px">Effort Description</th>
 @else
 <th class="background">Symbol</th>
 <th class="background">Comment</th>
@@ -833,7 +845,7 @@ from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=stu
         
 
     
-         <td> 
+         <td style="text-align:center"> 
             @if (($item2->student_average<$pass_rate))
             <span class="text-danger">{{($item2->student_average)}}%</span>
             @else
@@ -844,8 +856,8 @@ from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=stu
 
                    
             @if ($school_is->school_type=="ieb-school")
-            <td>   {{($item2->effort_grade)}}</td>
-            <td>
+            <td style="text-align:center">    {{($item2->effort_grade)}}</td>
+            <td> 
 
                 @foreach ($efforts as $effort_description)
       
@@ -1541,6 +1553,7 @@ School Stamp
                         <tr class="hope">
                             <th class="background">Passing Criteria</th>
                             <th class="background">Subject Average Calculation</th>    
+                            {{-- <th class="background">Categorization Of Assessements</th>     --}}
                             <th class="background">Term Average Calculation</th>   
                         
                 
@@ -1553,7 +1566,7 @@ School Stamp
                              In order for a student to pass, she/he must at least get.
                             <ul>
                               
-                              <li>A minimum average of at least <span class="text-bold">{{$pass_rate}}%</span></li> 
+                              <li>A minimum term average of at least <span class="text-bold">{{$pass_rate}}%</span></li> 
                               {{-- 2. language and number of subjects --}}
                               <li>An average of <span class="text-bold">{{$pass_rate}}% or more </span> in at least {{$number_of_subjects}} subjects 
                                   
@@ -1571,6 +1584,8 @@ School Stamp
                             </ul>
                         
                         </td>
+
+                        {{-- <td>kjfkjdf</td> --}}
                 
                         <td> {{$student_term_data->name}}'s term average was calculated based on the following criterion;
                             <ul>
@@ -1594,47 +1609,46 @@ School Stamp
                                 @endif
 
                             
-                            </ul></td>
+                            </ul>
+                        </td>
                 
-                       
+                     
                 
                       </tr>
                     
             
                 </table> 
+
+                <div class="row col-12 mt-2">
+                    <div class="col">
+                        <div id="signaturetitle">
+
+                        <img src="https://www.ieb.co.za/upload/media/Blog/fzyztwtpk.jpg" width="60px" height="60px" class="img-fluid " alt="">
                     
-
-                   <center><small>&copy; Report generated by the <strong>Shunifu Platform</strong>-Developed by <strong>Innovazania,</strong>  established following a partnership between <strong>Royal Science & Technology Park</strong>, <strong>Standard Bank</strong> & <strong> United Nations Developement Program</strong> 7689 0726 | 2517 9448</small></center>
-                  
-                   {{-- <center><span class="text-center text-bold">SHUNIFU is supported by:</span> 
-                    <div class="row align-items-center" style="padding: 10px 0px 0px 40px;">
-
-                        <div class="col">
-                           
-                                <img width="70" height="50" src="https://i0.wp.com/swaziaidsprogram.org/wp-content/uploads/2016/03/COAT-OF-ARMS-lite.jpg" alt="">  
-                            
-                        </div>
-                        <div class="col">
-                           
-                                <img class="img-fluid " width="30" height="30" src="https://rstp.org.sz/wp-content/uploads/2021/05/logo.png" alt="">  
-                            
-                        </div>
-
-                        <div class="col">
-                           
-                                <img class="img-fluid " width="50" height="50" src="https://scontent.fmts2-2.fna.fbcdn.net/v/t39.30808-6/271723633_230907602550991_1404130140181354290_n.jpg?_nc_cat=102&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=cnm8aDqhXu4AX9raYhM&_nc_ht=scontent.fmts2-2.fna&oh=00_AfCysYK7VbWwo8Nd0na6Hi9oVQ4XR5X7LQ47__TdVeErJQ&oe=647439B3" alt="">  
-                           
-                        </div>
-
-                        <div class="col">
-                         
-                                <img class="img-fluid " width="60" height="60" src="https://scontent.fmts2-1.fna.fbcdn.net/v/t39.30808-6/326057008_893819222037625_8604329256953122806_n.jpg?_nc_cat=111&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=MMtAmtKF_ZAAX_dgjsx&_nc_ht=scontent.fmts2-1.fna&oh=00_AfB70tQ2_fpgKd426OwnqpeDHcyWySgJ0pBl4Xqf7xvGJg&oe=64748EAE" alt="">  
-                            
-                        </div>
-
                     </div>
+                    </div>
+
+                    <div class="col">
+                        <div id="signaturetitle">
+
+                 
                     
-                </center> --}}
+                    </div>
+                    </div>
+
+                    <div class="col">
+                        <div id="signaturetitle">
+                        <img src="https://nikkibush.com/wp-content/uploads/2020/07/isasa-logo.png.webp" width="100px" height="100px" class="img-fluid "  alt="" srcset="">
+                    </div>
+                   </div>   
+                </div>
+
+                   <center>
+                  
+                    
+                    <small>&copy; Report generated by the <strong>Shunifu Platform</strong>-Developed by <strong>Innovazania,</strong>  established following a partnership between <strong>Royal Science & Technology Park</strong>, <strong>Standard Bank</strong> & <strong> United Nations Developement Program </strong> Email: info@shunifu.app</small></center>
+                  
+             
                
     
 

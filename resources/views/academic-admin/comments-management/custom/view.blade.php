@@ -14,6 +14,14 @@
                   <h2 class="lead text-bold">Hi, {{Auth::user()->name}}</h3>
                  <div class="text-muted">
       <p class="card-text"> Please use this section to manage student comments for your <span class="text-bold">{{$classteacher_list->grade_name}} class</span> <br>
+        Your current role: @if ($classteacher_list->class_manager_status=="1")
+            <span class="text-bold">Home Room Teacher</span>
+        @else
+        <span class="text-bold">Class Tutor</span>
+            
+        @endif
+
+       
                   
                     </p>
                   
@@ -21,63 +29,17 @@
                 
                 </div>
                 
-              
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form action="{{route('custom-comment-class.view')}}" method="post">
+          
+    
                 <div class="card-body">
                       @csrf
                       <input type="hidden" name="teacher_id"  value="{{$classteacher_list->teacher_id}}">
-                      <div class="form-row">
-{{-- 
-                        <div class="col-md-4 form-group">
-                            <x-jet-label> Period</x-jet-label>
-                           <select class="form-control" name="term_view">   
-                            <option value="">Select Period</option>
-                            @foreach ($terms as $term)
-                            <option value="{{$term->id}}">{{$term->term_name}}</option> 
-                            @endforeach         
-                           </select>
-                            @error('term')
-                            <span class="text-danger">{{$message}}</span>  
-                            @enderror
-                            </div> --}}
-                    <div class="col-md-6 form-group">
-                    <x-jet-label> Class Name</x-jet-label>
-                    <select class="form-control" name="grade_id">            
-                    <option value="{{$classteacher_list->grade_id}}">{{$classteacher_list->grade_name}}</option>
-                    </select>
-                    @error('grade_id')
-                    <span class="text-danger">{{$message}}</span>  
-                    @enderror
-                    </div>
-
-                    <div class="col-md-6 form-group">
-                        <x-jet-label> Class Manager Type</x-jet-label>
-                        <select class="form-control" name="type">        
-                              
-                        {{-- <option value="1">Class Teacher/ Home Room</option> --}}
-                        </select>
-                        @error('type')
-                        <span class="text-danger">{{$message}}</span>  
-                        @enderror
-                        </div>
-
-
-                </div>
+               
 
 
          
              
-              
-                </div>
-                <!-- /.card-body -->
-      
-                <div class="card-footer">
-                  {{-- <x-jet-button>Load   {{$classteacher_list->grade_name}} Comment Bank </x-jet-button> --}}
-                </div>
-            </form>
-            </div>
+        
       
       
     
@@ -87,8 +49,9 @@
             <thead class="thead-light">
                 <tr>
                
-                    <th>Student Name </th>
-                    {{-- <th>Term Average </th> --}}
+                    <th class="col-3">Student Name </th>
+                    {{-- <th>Term Average </th>
+                    <th>Status </th> --}}
                     <th>Comment </th>
                 </tr>
             </thead>
@@ -96,15 +59,12 @@
                 @foreach ($student_list as $key=>$student_item)
  
                 <tr>
-              
-                
-                    <td>{{$student_item->lastname}} {{$student_item->middlename}} {{$student_item->name}}</td>
-
-                    {{-- <td>{{$student_item->student_average}}%</td> --}}
+                  <td>{{$student_item->lastname}} {{$student_item->middlename}} {{$student_item->name}}</td>
+                  {{-- <td>{{$student_item->student_average}}%</td> --}}
    
                   <td>
                     <div class="row" id="comment_data">
-                <textarea name="comment[]" class="form-control" id="" cols="30" rows="10" required></textarea>
+                <textarea name="comment[]" class="form-control  text-area small" id="" cols="10" rows="10"  required>{{$student_item->comment}}</textarea>
                     
                      <input type="hidden" name="student_id[{{$key}}]" value="{{$student_item->student_id}}">
                      <input type="hidden" name="manager_type[{{$key}}]" value="{{$manger_type}}">
@@ -135,6 +95,8 @@
 
             
           </div>  
+        </div>
+    </div>
     
 </x-app-layout>
 

@@ -880,90 +880,12 @@ return view('users.teachers.classteacher', compact('getTeacher', 'classes', 'ses
         flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully added a class tutor', 'Add Class Tutor');
        }
 
-
-
-
        return Redirect::back();
-      
-
-    // }
-}
-
-
-public function assign_classtutor(Request $request){
-
-
-    //validation
-       $this->validate($request,[
-            'grade_id'=>'required',
-            'academic_session'=>'required',
-            'teacher_id'=>'required',
-         
-           ]);
-
-
-    Schema::table('grades_teachers', function (Blueprint $table) {
-
-    $index_exists = collect(DB::select("SHOW INDEXES FROM grades_teachers"))->pluck('Key_name')->contains('grades_teachers_teacher_id_unique');
     
-    if ($index_exists) {
-    $table->dropForeign(['teacher_id']);
-    $table->dropUnique(['teacher_id']);
-    
-    }
-
-});
-
-$class_teacher_role=Role::where('name', 'class_tutor')->first();
-
-
-$class_teacher_name=$class_teacher_role->id;
-
-
-//Check if teacher is already assigned in same class, same year
-
-$teacherExists=GradeTeacher::where('teacher_id', $request->teacher_id)->where('academic_session', $request->academic_session)->exists();
-
-if($teacherExists){
-
-    flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Teacher already assigned for the year', 'Add Class Teacher');
-
-
-    return Redirect::back();
-
-}else{
-
-
-
-
-//end of check
-
-    $classteacher = GradeTeacher::create([ 
-        'teacher_id'=>$request->teacher_id,
-        'grade_id'=>$request->grade_id,
-        'academic_session'=>$request->academic_session,
-   ]);
-  
-   $user=User::find($request->teacher_id);
-   $user->detachRole($class_teacher_role);
-  $user->attachRole($class_teacher_role);
-
-
-//        $classteacher = RoleUser::create([ 
-//         'role_id'=>$class_teacher_role->id,
-//         'user_id'=>$request->teacher_id,
-//         'academic_session'=>$request->academic_session,
-//       //  'user_type'=>"App\Models\User",
-//    ]);
-
-
-   flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully added a class teacher', 'Add Class Teacher');
-
-   return Redirect::back();
-  
-
 }
-}
+
+
+
 
 
 public function class_teacher_edit($id){
@@ -1040,7 +962,9 @@ public function class_teacher_update(Request $request){
 
     public function classteacher_delete($id){
         $getRole=Role::where('name', 'class_teacher')->first();
+        $getClassTutorRole=Role::where('name', 'class_tutor')->first();
         $classteacher_role_id=$getRole->id;
+        $classtutor_role_id=$getRole->id;
         
 
     if(Auth::user()->hasRole('admin_teacher')){
@@ -1052,6 +976,7 @@ public function class_teacher_update(Request $request){
 
     //remove class_teacher role
     $teacher->detachRole($getRole);
+    $teacher->detachRole($getClassTutorRole);
 
     //delete teacher
     $delete=$user->delete();
@@ -1218,19 +1143,47 @@ public function class_teacher_update(Request $request){
        
       
 
+
+
         $teacher_id=$request->teacher_id;
         $term=$request->term;
         $grade_id=$request->grade_id;
         $manger_type=$request->type;
 
-          $student_list=DB::table('grades_students')
-        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
-        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-        ->join('users', 'users.id', '=', 'grades_students.student_id')
-        ->where('academic_sessions.active', 1)
-        ->where('grades_students.grade_id', $grade_id)
-        ->select('users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_students.student_id', 'grades.grade_name')
-        ->get();
+
+        $student_list=DB::select(DB::raw("SELECT
+         grades_students.student_id,
+        users.name,
+        users.id as student_id,
+        users.salutation,
+        users.middlename,
+        users.lastname,
+       (SELECT custom_comments.comment from custom_comments INNER JOIN grades_students b ON b.student_id=custom_comments.student_id  WHERE custom_comments.class_id=".$grade_id." AND custom_comments.manager_type=".$manger_type." AND custom_comments.teacher_id=".$teacher_id." AND b.active=1 AND grades_students.student_id=custom_comments.student_id) as comment,
+       grades.id as grade_id,
+        grades.grade_name,
+        term_averages.student_average,
+        term_averages.number_of_passed_subjects,
+        term_averages.passing_subject_status,
+        term_averages.updated_at as last_updated
+       
+       FROM
+           grades_students
+           INNER JOIN users ON users.id=grades_students.student_id
+           INNER JOIN term_averages ON term_averages.student_id=grades_students.student_id
+           INNER JOIN grades ON grades.id=grades_students.grade_id
+          WHERE grades_students.grade_id =".$grade_id." AND grades_students.active=1   AND term_averages.term_id=".$term."  AND users.active=1 
+       ORDER BY `users`.`lastname`, `users`.`name` ASC"));
+
+    //    dd($students);
+
+    //       $student_list=DB::table('grades_students')
+    //     ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
+    //     ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+    //     ->join('users', 'users.id', '=', 'grades_students.student_id')
+    //     ->where('academic_sessions.active', 1)
+    //     ->where('grades_students.grade_id', $grade_id)
+    //     ->select('users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_students.student_id', 'grades.grade_name')
+    //     ->get();
 
 
         $classteacher_list=DB::table('grades_teachers')
@@ -1238,10 +1191,10 @@ public function class_teacher_update(Request $request){
         ->join('grades', 'grades.id', '=', 'grades_teachers.grade_id')
         ->join('users', 'users.id', '=', 'grades_teachers.teacher_id')
         ->where('academic_sessions.active', 1)
-        ->where('class_manager_status', '1')
-        ->orWhere('class_manager_status', NULL)
+        ->where('class_manager_status', $manger_type)
+    //    ->orWhere('class_manager_status', NULL)
         ->where('grades_teachers.teacher_id', Auth::user()->id)
-        ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name')
+        ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name', 'grades_teachers.class_manager_status')
         ->first();
 
 
@@ -1260,7 +1213,7 @@ public function class_teacher_update(Request $request){
 
     public function classteacher_comments_store(Request $request){
 
-      //  dd($request->all());
+     //  dd($request->all());
 
         if (!Schema::hasTable('custom_comments')) {
             Schema::create('custom_comments', function($table){
@@ -1292,6 +1245,8 @@ public function class_teacher_update(Request $request){
         $teacher=$request->teacher_id;
         $type=$request->manager_type;
 
+        //dd($type);
+
 
      //   dd($comment);
         
@@ -1308,14 +1263,21 @@ public function class_teacher_update(Request $request){
             'term_id'=>$term[$i],
             'class_id'=>$grade_id[$i],
             'manager_type'=>$type[$i],
-            'comment'=>$comment[$i],
+         //   'comment'=>$comment[$i],
             ], ['comment'=>$comment[$i]]);
-        
+
          }
 
-         flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added student comment'.' '.'</span> '.'into the comment bank .', 'Attendence Data');
+         flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added student comments'.' '.'</span> '.'into the comment bank .', 'Add Comments');
+
+
+         if($type==1){
+            return redirect('/class/classteacher/comments');
+         }else{
+            return redirect('/class/classtutor/comments');
+         }
  
-         return redirect('/class/classteacher/comments');
+       
 
     }
    

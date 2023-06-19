@@ -9,6 +9,8 @@ use App\Models\CommentSetting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ReportCommentController;
+use App\Models\Grade;
+use App\Models\Term;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -152,6 +154,54 @@ $name="Subject Comments";
 
         $comments=CommentSetting::where('user_type', $request->comment_category)->where('section_id', $request->section)->orderByDesc('from')->get();
         return view('academic-admin.comments-management.view',compact('comments', 'section', 'name'));
+    }
+
+
+
+
+    public function index_custom_admin(){
+
+
+        $terms = DB::table('terms')
+       ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
+       ->select('terms.id as term_id', 'academic_sessions.academic_session as session', 'terms.term_name')
+        ->orderByDesc('academic_sessions.id')->orderBy('term_name')->get();
+
+       
+        $grades=Grade::all();
+
+      //  dd($grades);
+
+
+     
+        return view('academic-admin.comments-management.custom.admin.view-custom',compact('terms', 'grades'));
+
+    }
+
+
+    public function show_custom_admin(){
+
+
+        $terms = DB::table('terms')
+       ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
+       ->select('terms.id as term_id', 'academic_sessions.academic_session as session', 'terms.term_name')
+        ->orderByDesc('academic_sessions.id')->orderBy('term_name')->get();
+
+       
+        $grades=Grade::all();
+
+        dd($grades);
+
+
+     
+        return view('academic-admin.comments-management.view-custom',compact('terms', 'grades'));
+
+    }
+
+    public function store_custom_admin(Request $request){
+
+        dd($request->all());
+
     }
 
 

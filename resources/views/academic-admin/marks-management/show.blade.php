@@ -143,16 +143,16 @@
      </div>  
  </div>
     @else
- <div class="input-group">
+ {{-- <div class="input-group"> --}}
  <input type="number" readonly  min="0" max="2"  id="effort_grade" class="form-control" placeholder="Effort Grade" name="effort_grade[]" value="{{$student->effort_grade}}"> 
- <div class="input-group-append">
+ {{-- <div class="input-group-append">
  <button class="btn btn-success edit_effort_grade" id="{{$student->mark_id}}" type="button"> <i class="fas fa-edit"></i></button>
- </div>
+ </div> --}}
  {{-- <div class="input-group-append">
      <button class="btn btn-danger remove_student" id="{{$student->student_id}}" type="button"> <i class="fas fa-user-times"></i></button>
      
      </div>  --}}
- </div>
+ {{-- </div> --}}
    
     @endif
  
@@ -239,16 +239,10 @@
                     <!-- Modal Header -->
                     <div class="modal-header">
                     
-                     <h5 class=" text-muted lead">Update Student Mark Details</h5>
+                     <h5 class=" text-muted lead">Update Student Mark</h5>
                     </div>
               
                     <!-- Modal body -->
-
-                    <div class="row">
-                        <div class="col-xs-1-12">
-                            
-                        </div>
-                    </div>
                    <div class="modal-body">
                     
                         You are about to change  <span class="text-bold" id="name"> </span>'s   <span id="subject"> </span> <span id="assessement"> </span> mark. To continue to change the current mark, enter the new mark in new mark field and then click update.
@@ -272,10 +266,8 @@
                       <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                           <button type="button" class="btn btn-primary" id="update">Update</button>
-                        
               
                       </div>
-                   </div>
                   
               </form>
                   </div>
@@ -283,54 +275,6 @@
                 </div>
               </div>
         </div>
-
-
-
-
-        <div class=" modal fade" id="editData">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <form action="#" method="POST" id="updateForm">
-                    @csrf
-                <!-- Modal Header -->
-                <div class="modal-header">
-                
-                 <h5 class=" text-muted lead">Update Effort Grade</h5>
-                </div>
-          
-                <!-- Modal body -->
-               <div class="modal-body">
-                
-                    You are about to change  <span class="text-bold" id="name"> </span>'s   <span id="subject"> </span> <span id="assessement"> </span> mark. To continue to change the current mark, enter the new mark in new mark field and then click update.
-                    <hr>
-                 {{-- <div id="info_update" class="text-bold"> --}}
-                     <label class="label-control">Current Effort Grade</label>
-                    <input type="text" class="form-control" id="old_effort_grade" name="old_effort_grade"  readonly placeholder="New Mark">
-
-                 {{-- </div> --}}
-                 <p></p>
-                 
-                 
-                    <label class="label-control">New Mark</label>
-                    <input type="number" class="form-control" id="new_effort_grade" name="new_effort_grade" required placeholder="Enter New Effort Grade">
-
-
-                    <input type="hidden" id="mark_id" name="id">
-               
-
-          
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary" id="update">Update Effort Grade</button>
-          
-                  </div>
-              
-          </form>
-              </div>
-          
-            </div>
-          </div>
-    </div>
 
     </div>
     </div>
@@ -439,41 +383,6 @@
              .done(function(data) {
               //   alert(data.id);
             $("#old_mark").val(data.mark);
-            $("#mark_id").val(data.mark_id);
-            $("#name").html(data.name);
-            $("#subject").html(data.subject_name);
-            $("#assessement").html(data.assessement_name);
-            $("#info_update").html(data);
-            $("#editData").modal('toggle');
-          
-             })
-             .fail(function(data) {
-                 console.log(data);
-             })
-             .always(function() {
-                 console.log("complete");
-             });
-             
-        });
-
-
-        $(document).on('click', '.edit_effort_grade', function(event) {
-            event.preventDefault();
-        //    var token = $('meta[name="csrf-token"]').attr('content');
-             var  edit_id=$(this).attr('id');
-     
-             $.ajax({
-                 url: '/marks/edit/effort_grade/'+edit_id,
-
-                 type: 'GET',
-        //          header:{
-        //   'X-CSRF-TOKEN': token
-        // },
-                 data: {edit_id:edit_id},
-             })
-             .done(function(data) {
-              //   alert(data.id);
-           // $("#old_mark").val(data.mark);
             $("#mark_id").val(data.mark_id);
             $("#name").html(data.name);
             $("#subject").html(data.subject_name);

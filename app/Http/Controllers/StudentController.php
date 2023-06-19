@@ -1812,15 +1812,15 @@ public function student_image(Request $request){
         //     "notification_url" => "https://mysite.example.com/hooks"]);
 			
 				
-        // $image = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $school_code.'-'.$student_id);
+        $image = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $school_code.'-'.$student_id);
 
-        // $student_image=$image->getSecurePath();
+        $student_image=$image->getSecurePath();
 
 
 
         User::where('id', $student_id)->update([
 
-            // 'profile_photo_path'=>$student_image,
+            'profile_photo_path'=>$student_image,
         ]);
 
         return Redirect::back();

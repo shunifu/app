@@ -30,6 +30,7 @@
                   <thead class="thead-light">
                     <tr>
                       <th>No.</th>
+                      <th>Current Image</th>
                       <th>Student Surname</th>
                       <th>Student Names</th>
                       <th>Manage</th>
@@ -44,6 +45,7 @@
                               {{$loop->iteration}}
                           
                             </td>
+                            <td><img src="{{$item->profile_photo_path}}" class="profile-user-img img-responsive img-circle img-small" alt="">  </td>
                             <td>{{$item->lastname}}  </td>
                             <td>{{$item->name}} {{$item->middlename}}</td>
                         <td>

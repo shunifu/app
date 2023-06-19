@@ -886,6 +886,11 @@ Route::get('/comments/edit', [CommentSettingController::class,'edit'])->name('co
 Route::post('/comments/delete', [CommentSettingController::class,'destroy'])->name('comments.destroy');
 
 Route::get('/comments/manage/index', [CommentSettingController::class,'show'])->name('comments.show');
+
+Route::get('/comments/admin/custom/index', [CommentSettingController::class,'index_custom_admin'])->name('comments.index_custom_admin');
+Route::get('/comments/admin/custom/view', [CommentSettingController::class,'show_custom_admin'])->name('comments.show_custom_admin');
+Route::post('/comments/admin/custom/view', [CommentSettingController::class,'store_custom_admin'])->name('comments.store_custom_admin');
+
 Route::post('/comments/manage/list', [CommentSettingController::class,'list'])->name('comments.list');
 Route::get('/comment/manage/delete/{id}', [CommentSettingController::class,'destroy'])->name('comments.destroy');
 Route::post('/comments/manage/update', [CommentSettingController::class,'update'])->name('comments.update');

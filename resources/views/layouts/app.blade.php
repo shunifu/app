@@ -964,6 +964,11 @@
               </li>
 
               @role('class_tutor')
+
+
+              
+
+              
               <li class="nav-item">
                 <a href="/class/classtutor/comments" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
@@ -1140,8 +1145,6 @@
                   <p>Marks Checker</p>
                 </a>
               </li>
-
-            
 
             </ul>
           </li>
@@ -1463,21 +1466,17 @@
                   <li class="nav-item">
                     <a href="{{route('comments.show')}}" class="nav-link">
                       <i class="nav-icon fas fa-chevron-circle-right"></i>
-                      <p>Manage Comments</p>
+                      <p>Automated Comments</p>
                     </a>
                   </li>
-                  {{-- <li class="nav-item">
-                    <a href="{{route('session.create')}}" class="nav-link">
+
+                  <li class="nav-item">
+                    <a href="{{route('comments.index_custom_admin')}}" class="nav-link">
                       <i class="nav-icon fas fa-chevron-circle-right"></i>
-                      <p>Symbols Management</p>
+                      <p>Custom Comments</p>
                     </a>
-                  </li> --}}
-                  {{-- <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-chevron-circle-right"></i>
-                      <p>Comment Types</p>
-                    </a>
-                  </li> --}}
+                  </li>
+                
                 </ul>
               </li>
              
