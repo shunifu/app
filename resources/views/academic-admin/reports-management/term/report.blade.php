@@ -1481,7 +1481,7 @@ foreach ($class_t as $key_t) {
 echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
 
 echo '<br>';
-echo '<img class="img-fluid" width="30px" height="30px" src='.$key_t->avatar.' >';
+echo '<img class="img-fluid" width="90px" height="90px" src='.$key_t->avatar.' >';
 
 
 }
@@ -1514,7 +1514,7 @@ echo '<img class="img-fluid" width="30px" height="30px" src='.$key_t->avatar.' >
 
                             echo '<br>';
 
-                            echo '<img class="img-fluid" width="30px" height="30px" src='.$key_hr->avatar.' >';
+                            echo '<img class="img-fluid" width="90px" height="90px" src='.$key_hr->avatar.' >';
                             
                             
                             }
