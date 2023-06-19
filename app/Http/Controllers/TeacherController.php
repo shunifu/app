@@ -1142,7 +1142,7 @@ public function class_teacher_update(Request $request){
     public function classteacher_comments_view(Request $request){
        
       
-        dd($request->all());
+     //   dd($request->all());
 
 
 
