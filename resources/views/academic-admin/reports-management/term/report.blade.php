@@ -1512,6 +1512,8 @@ echo '<img class="img-fluid" width="30px" height="30px" src='.$key_t->avatar.' >
                             
                             echo '<span class="font-italic font-weight-light">'.substr($key_hr->name, 0, 1).'  '.$key_hr->lastname.' </span>';
 
+                            echo '<br>';
+
                             echo '<img class="img-fluid" width="30px" height="30px" src='.$key_hr->avatar.' >';
                             
                             
