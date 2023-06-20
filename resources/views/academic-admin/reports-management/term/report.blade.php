@@ -194,6 +194,7 @@ table tbody tr td {
         grades.grade_name,
         grades.id as grade_id,
         streams.stream_name,
+        streams.id as stream_id,
         sections.section_name,
         academic_sessions.academic_session, 
         academic_sessions.id as session_id
@@ -222,7 +223,7 @@ echo '<h3 class="text-center lead text-bold">'.$student_term_data->lastname.' '.
                     <thead>
                         <tr>
                             <th class="background text-center">Student Details</th>
-                            {{-- <th class="background text-center" style="width:400px" >Student Photo</th> --}}
+                            {{-- <th class="background text-center">Student Photo</th> --}}
                             <th class="background text-center">Term Details</th>
 
                         </tr>
@@ -235,6 +236,22 @@ echo '<h3 class="text-center lead text-bold">'.$student_term_data->lastname.' '.
                             <br>
                              
                             Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
+                            <br>
+
+                            {{$student_term_data->grade_name}} Average: <span class=" text-bold">
+                                <?php
+                            
+                            
+                            $grade_average=\DB::select(\DB::raw("SELECT AVG(term_averages.student_average) as grade_average  FROM term_averages  WHERE term_averages.student_class=".$student_term_data->grade_id.""));
+                            foreach ($grade_average as $grade_average_key) {
+                             
+                                echo round($grade_average_key->grade_average).'%';
+                            
+                            }
+                            
+                            
+                                ?>
+                            </span>  
                             <br>
                             Student Average: <span class="text-bold">{{$student_term_data->student_average}}%</span>
                            
@@ -305,32 +322,32 @@ WHERE sub.student_id=".$student.""));
                             @if ($passing_subject_rule==1)
                             @if ($student_term_data->student_average>=$pass_rate AND $student_term_data->number_of_passed_subjects>=$number_of_subjects  AND $student_term_data->passing_subject_status==1)
                                 
-                            <span class="text-success text-bold">Passed</span> <i class="fas fa-check-circle text-success"></i> 
+                           {{$student_term_data->name}} <span class="text-success">has met all</span> the passing criteria for  this cycle.
                             
                             @else
                             
-                            <span class="text-danger text-bold">Failed</span> 
+                            {{$student_term_data->name}} <span class="text-danger">has not met all</span> the passing criteria for  this cycle.
                                                             <br>
                                                         
                             
-                            Why {{ $student_term_data->name }} failed:<span class="text-bold"></span>
+                            {{-- Why {{ $student_term_data->name }} failed:<span class="text-bold"></span> --}}
                             
-                            <ul>
+                            {{-- <ul> --}}
                             
-                                @if ($student_term_data->student_average<$pass_rate)
+                                {{-- @if ($student_term_data->student_average<$pass_rate)
                                 <li>
                                    Below Average 
                                 </li>
-                                @endif
+                                @endif --}}
                             
                                
-                                @if ($student_term_data->number_of_passed_subjects==0)
+                                {{-- @if ($student_term_data->number_of_passed_subjects==0)
                                 <li>
                                     Failed <span class="text-danger">all</span> subjects
                                  </li>
                             
-                                 @endif
-                                 @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
+                                 @endif --}}
+                                 {{-- @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
                                  <li>
                                    Passed only <span class="text-danger">{{$student_term_data->number_of_passed_subjects}}</span>
                                    @if ($student_term_data->number_of_passed_subjects==1)
@@ -340,23 +357,23 @@ WHERE sub.student_id=".$student.""));
                                    @endif
                                   
                                 </li>
-                                @endif
+                                @endif --}}
                                
-                            @if ($student_term_data->passing_subject_status<1)
+                            {{-- @if ($student_term_data->passing_subject_status<1)
                             <li>
                               Failed Passing Subject
                             </li>
-                            @endif   
+                            @endif    --}}
                             
-                            </ul>
+                            {{-- </ul> --}}
                             
-                            @endif
+                            {{-- @endif --}}
                             {{-- End of condition within passing subject --}}
 
-                            @else
+                            {{-- @else --}}
                             {{-- if passing subject rule is 0 --}}
 
-                            @if ($student_term_data->student_average>=$pass_rate AND $student_term_data->number_of_passed_subjects>=$number_of_subjects )
+                            {{-- @if ($student_term_data->student_average>=$pass_rate AND $student_term_data->number_of_passed_subjects>=$number_of_subjects )
                                 
                             <span class="text-success text-bold">Passed</span> <i class="fas fa-check-circle text-success"></i> 
                             <br>
@@ -375,16 +392,16 @@ WHERE sub.student_id=".$student.""));
                                 <li>
                                    Below Average 
                                 </li>
-                                @endif
+                                @endif --}}
                             
                                
-                                @if ($student_term_data->number_of_passed_subjects==0)
+                                {{-- @if ($student_term_data->number_of_passed_subjects==0)
                                 <li>
                                     Failed <span class="text-danger">all</span> subjects
                                  </li>
                             
-                                 @endif
-                                 @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
+                                 @endif --}}
+                                 {{-- @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
                                  <li>
                                    Passed only <span class="text-danger">{{$student_term_data->number_of_passed_subjects}}</span>
                                    @if ($student_term_data->number_of_passed_subjects==1)
@@ -394,7 +411,7 @@ WHERE sub.student_id=".$student.""));
                                    @endif
                                   
                                 </li>
-                                @endif
+                                @endif --}}
                                
                             
                             </ul>
@@ -409,7 +426,7 @@ WHERE sub.student_id=".$student.""));
  Resolution: <span class=" text-bold">{{$student_term_data->final_term_status}}  </span>   
 @endif
 
-
+  
 
 
 
@@ -417,13 +434,13 @@ WHERE sub.student_id=".$student.""));
                                                    
 
             
-                        {{-- <td >
+                        {{-- <td>
                             <center>
 
                                 @if (is_null($student_term_data->profile_photo_path))
                                 <img class="user-image img-fluid elevation-1 mx-auto d-block" width="120" height="120" src="https://ui-avatars.com/api/?name={{$student_term_data->name}}+&amp;color=7F9CF5&amp;background=EBF4FF" alt={{$student_term_data->name}} />
                                 @else
-                                <img class="user-image  elevation-1 " width="160px" height="180px"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
+                                <img class="user-image img-circle elevation-1 " width="180" height="120"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
                                 @endif
                                
                                 
@@ -518,7 +535,7 @@ grades.stream_id,
     WHERE student_subject_averages.student_id = ".$student." AND `student_subject_averages`.`term_id` = ".$term." 
     GROUP BY
     student_subject_averages.student_id,
-    subjects.id ORDER BY subjects.id ASC"));
+    subjects.id ORDER BY subjects.order ASC"));
 
 ?>
 
@@ -1543,7 +1560,7 @@ School Stamp
                         </div>
                         <div class="text-center">
                             @if ($variable->school_stamp==1)
-                            <img class="img-fluid " width="180" height="180" src="{{$school_is->school_stamp}} " alt="">  
+                            <img class="img-fluid " width="220" height="220" src="{{$school_is->school_stamp}} " alt="">  
                             @else
                             <img class="img-fluid " width="140" height="140" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">
                             @endif
@@ -1630,7 +1647,7 @@ School Stamp
                     <div class="col">
                         <div id="signaturetitle">
 
-                        <img src="https://www.ieb.co.za/upload/media/Blog/fzyztwtpk.jpg" width="60px" height="60px" class="img-fluid " alt="">
+                        <img src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1687180151/Screenshot_2023-06-19_at_3.08.55_PM_bjljsd.png" width="120px" height="120px" class="img-fluid " alt="">
                     
                     </div>
                     </div>
@@ -1638,7 +1655,7 @@ School Stamp
                     <div class="col">
                         <div id="signaturetitle">
 
-                 
+                            <img src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1687176660/Screenshot_2023-06-19_at_2.10.18_PM_ek6ppo.png" width="60px" height="60px" class="img-fluid " alt="">
                     
                     </div>
                     </div>
@@ -1650,7 +1667,10 @@ School Stamp
                    </div>   
                 </div>
 
-                   <center><small>&copy; Report generated by the <strong>Shunifu Platform</strong></center>
+                   <center>
+                  <hr>
+                    
+                    <small>&copy; Report generated by the <strong>Shunifu School Management  Platform</strong></small></center>
                   
              
                
@@ -1672,4 +1692,3 @@ School Stamp
    
        
 </x-app-layout>
-
