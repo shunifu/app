@@ -1196,7 +1196,10 @@ public function class_teacher_update(Request $request){
     //    ->orWhere('class_manager_status', NULL)
         ->where('grades_teachers.teacher_id', Auth::user()->id)
         ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name', 'grades_teachers.class_manager_status')
-        ->first();
+        ->get();
+
+      //  dd($classteacher_list);
+        
 
 
         $terms = DB::table('terms')
