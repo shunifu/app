@@ -237,6 +237,22 @@ echo '<h3 class="text-center lead text-bold">'.$student_term_data->lastname.' '.
                              
                             Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
                             <br>
+
+                            {{$student_term_data->grade_name}} Average: <span class=" text-bold">
+                                <?php
+                            
+                            
+                            $grade_average=\DB::select(\DB::raw("SELECT AVG(term_averages.student_average) as grade_average  FROM term_averages  WHERE term_averages.student_class=".$student_term_data->grade_id.""));
+                            foreach ($grade_average as $grade_average_key) {
+                             
+                                echo round($grade_average_key->grade_average).'%';
+                            
+                            }
+                            
+                            
+                                ?>
+                            </span>  
+                            <br>
                             Student Average: <span class="text-bold">{{$student_term_data->student_average}}%</span>
                            
                             <?php
@@ -410,20 +426,7 @@ WHERE sub.student_id=".$student.""));
  Resolution: <span class=" text-bold">{{$student_term_data->final_term_status}}  </span>   
 @endif
 
-{{$student_term_data->grade_name}} Average: <span class=" text-bold">
-    <?php
-
-
-$grade_average=\DB::select(\DB::raw("SELECT AVG(term_averages.student_average) as grade_average  FROM term_averages  WHERE term_averages.student_class=".$student_term_data->grade_id.""));
-foreach ($grade_average as $grade_average_key) {
- 
-    echo round($grade_average_key->grade_average).'%';
-
-}
-
-
-    ?>
-</span>    
+  
 
 
 
