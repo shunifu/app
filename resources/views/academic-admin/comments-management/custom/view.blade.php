@@ -13,8 +13,8 @@
                 <div class="card-body">
                   <h2 class="lead text-bold">Hi, {{Auth::user()->name}}</h3>
                  <div class="text-muted">
-      <p class="card-text"> Please use this section to manage student comments for your <span class="text-bold">{{$classteacher_list->grade_name}} class</span> <br>
-        Your current role: @if ($classteacher_list->class_manager_status=="1")
+      <p class="card-text"> Please use this section to manage student comments for your <span class="text-bold">{{$classteacher_list['0']->grade_name}} class</span> <br>
+        Your current role: @if ($classteacher_list['0']->class_manager_status=="1")
             <span class="text-bold">Home Room Teacher</span>
         @else
         <span class="text-bold">Class Tutor</span>
@@ -33,7 +33,7 @@
     
                 <div class="card-body">
                       @csrf
-                      <input type="hidden" name="teacher_id"  value="{{$classteacher_list->teacher_id}}">
+                      <input type="hidden" name="teacher_id"  value="{{$classteacher_list['0']->teacher_id}}">
                
 
 
@@ -89,7 +89,7 @@
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <x-jet-button>Add {{$classteacher_list->grade_name}} Comment </x-jet-button>
+            <x-jet-button>Add {{$classteacher_list['0']->grade_name}} Comment </x-jet-button>
           </div>
       </form>
 

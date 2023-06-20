@@ -1053,11 +1053,11 @@ public function class_teacher_update(Request $request){
         ->join('grades', 'grades.id', '=', 'grades_teachers.grade_id')
         ->join('users', 'users.id', '=', 'grades_teachers.teacher_id')
         ->where('academic_sessions.active', 1)
-        // ->where('class_manager_status', '1')
+         ->where('class_manager_status', '1')
         // ->orWhere('class_manager_status', NULL)
         
         ->where('grades_teachers.teacher_id', Auth::user()->id)
-        ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name')
+        ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name', 'class_manager_status')
         ->get();
      
 
@@ -1070,7 +1070,7 @@ public function class_teacher_update(Request $request){
 
 
       
-    
+   // dd($classteacher_list);
       
 
         return view('academic-admin.comments-management.custom.index', compact('classteacher_list', 'terms'));
@@ -1142,7 +1142,7 @@ public function class_teacher_update(Request $request){
     public function classteacher_comments_view(Request $request){
        
       
-     //  dd($request->all());
+   //    dd($request->all());
 
 
 

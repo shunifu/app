@@ -163,8 +163,8 @@ return [
     'DB_USERNAME' => 'sgroot',
     'DB_PASSWORD'=>'Wo835nKf@TS4aE04',
 
-    'APP_DEBUG' => 'false',
-    'APP_ENV' => 'production',
+    // 'APP_DEBUG' => 'false',
+    // 'APP_ENV' => 'production',
  
     
     
@@ -172,7 +172,13 @@ return [
     //     // The environment is local
     // }
 
-   
+    // 'DB_CONNECTION' => 'mysql',
+    // 'DB_HOST' => "127.0.0.1",
+    // 'DB_PORT' => '3306',
+    // 'DB_DATABASE' => env('DB_NAME'),
+    // 'DB_USERNAME' => 'root',
+    // 'DB_PASSWORD'=>'',
+
 
     // 'DB_CONNECTION' => 'shunifuservices',
     // 'DB_SHUNIFU_SERVICES' => 'shunifuservices',
