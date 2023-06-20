@@ -1091,7 +1091,7 @@ public function class_teacher_update(Request $request){
         
         ->where('grades_teachers.teacher_id', Auth::user()->id)
         ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name')
-        ->first();
+        ->get();
      
 
         $terms = DB::table('terms')
@@ -1102,7 +1102,7 @@ public function class_teacher_update(Request $request){
 
 
 
-      
+   //   dd($classteacher_list);
     
       
 
@@ -1142,7 +1142,7 @@ public function class_teacher_update(Request $request){
     public function classteacher_comments_view(Request $request){
        
       
-     //   dd($request->all());
+     //  dd($request->all());
 
 
 
@@ -1175,7 +1175,7 @@ public function class_teacher_update(Request $request){
           WHERE grades_students.grade_id =".$grade_id." AND grades_students.active=1   AND term_averages.term_id=".$term."  AND users.active=1 
        ORDER BY `users`.`lastname`, `users`.`name` ASC"));
 
-    //    dd($students);
+   //    dd($student_list);
 
     //       $student_list=DB::table('grades_students')
     //     ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')

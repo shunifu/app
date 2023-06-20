@@ -13,7 +13,8 @@
               <div class="card-body">
                 <h2 class="lead text-bold">Hi, {{Auth::user()->name}}</h3>
                <div class="text-muted">
-    <p class="card-text"> Please use this section to manage student comments for your <span class="text-bold">{{$classteacher_list->grade_name}} class</span> <br>
+    <p class="card-text"> Please use this section to manage student comments for classes <span class="text-bold">
+     </span> <br>
                 
                   </p>
                 
@@ -27,7 +28,7 @@
             <form action="{{route('custom-comment-class.view')}}" method="post">
               <div class="card-body">
                     @csrf
-                    <input type="hidden" name="teacher_id"  value="{{$classteacher_list->teacher_id}}">
+                    <input type="hidden" name="teacher_id"  value="{{$classteacher_list['0']->teacher_id}}">
                     <div class="form-row">
 
                       <div class="col-md-4 form-group">
@@ -42,10 +43,18 @@
                           <span class="text-danger">{{$message}}</span>  
                           @enderror
                           </div>
+
+                          <?php
+
+
+?>
                   <div class="col-md-4 form-group">
                   <x-jet-label> Class Name</x-jet-label>
-                  <select class="form-control" name="grade_id">            
-                  <option value="{{$classteacher_list->grade_id}}">{{$classteacher_list->grade_name}}</option>
+                  <select class="form-control" name="grade_id">        
+                    @foreach ($classteacher_list as $class_teacher_item)
+                    <option value="{{$class_teacher_item->grade_id}}">{{$class_teacher_item->grade_name}}</option>
+                    @endforeach    
+                 
                   </select>
                   @error('grade_id')
                   <span class="text-danger">{{$message}}</span>  
@@ -74,7 +83,7 @@
               <!-- /.card-body -->
     
               <div class="card-footer">
-                <x-jet-button>Load   {{$classteacher_list->grade_name}} Comment Bank </x-jet-button>
+                <x-jet-button>Load    Comment Bank </x-jet-button>
               </div>
           </form>
           </div>
