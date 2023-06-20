@@ -1058,7 +1058,7 @@ public function class_teacher_update(Request $request){
         
         ->where('grades_teachers.teacher_id', Auth::user()->id)
         ->select('users.id as teacher_id', 'users.name', 'users.middlename', 'users.lastname', 'users.salutation', 'grades_teachers.teacher_id', 'grades_teachers.grade_id', 'grades.grade_name')
-        ->first();
+        ->get();
      
 
         $terms = DB::table('terms')
