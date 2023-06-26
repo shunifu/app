@@ -119,8 +119,40 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
     Route::group(['middleware' => ['auth', 'CheckPassword']], function() {
     Route::get('/dashboard' ,'App\Http\Controllers\DashboardController@index')->name('dashboard');
 
+
+
+
+    //class teacher routes
+
+    Route::group([ 'middleware' => ['role:class_teacher']], function() {
+
+    Route::get('/class/student-management',[StudentController::class,'student_issues_classteacher'])->name('student.student_issues_classteacher');
+    // Route::get('/class/student-management',[StudentController::class,'fetchAllClassStudents'])->name('fetchAllClassStudents');
+    Route::post('/class/student-management/view',[StudentController::class,'classteacher_student_view'])->name('student.class_teacher_view');
+    
+    // Route::post('/users/student/manage/removal/process',[StudentController::class,'removal_loadstudents'])->name('student.removal');
+
+    //Attendence Route
+// Route::get('/class/attendence', [AttendenceController::class,'create'])->name('attendence.create');
+Route::get('/class/attendance/edit/{id}', [ParentController::class,'manage'])->name('attendence.edit');
+Route::get('/class/attendance/search/{id}', [ParentController::class,'search'])->name('attendence.search');
+Route::get('/kids/data/performance/{id}', [ParentController::class,'performance'])->name('kids.performance');
+
+//Beginning of Class Teacher
+Route::get('/class/student-attendance', [StudentAttendanceController::class,'index']); 
+Route::get('/class/student-attendance/cumulative', [StudentAttendanceController::class,'create']);
+Route::post('/class/student-attendance/cummulative-store', [StudentAttendanceController::class,'cummulative_store'])->name('attendance.cummulative_store');
+Route::post('/class/student-attendance/mark-attendance', [StudentAttendanceController::class,'store'])->name('attendance.store');
+Route::get('/class/student-attendance/manage', [StudentAttendanceController::class,'show']);
+Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit']);
+
+
+//End of Class Teacher
+
+});
    
 //Admin Routes
+
     Route::group([ 'middleware' => ['role:admin_teacher']], function() {
      
     //Secton Routes
@@ -258,7 +290,7 @@ Route::get('/users/profile/student/{id}',  [StudentController::class,'profile'])
 Route::get('/users/student/delete/{id}', [StudentController::class,'destroy'])->name('student.destroy');
 Route::get('/users/student/manage/password/reset/{id}',[StudentController::class,'password_reset'])->name('student.password_reset');
 Route::get('/users/student/manage/removal',[StudentController::class,'student_removal'])->name('student.removal_index');
-Route::get('/class/student-management',[StudentController::class,'student_issues_classteacher'])->name('student.student_issues_classteacher');
+
 Route::post('/send/single/parent',[StudentController::class,'send_msg']);
 
 
@@ -746,22 +778,7 @@ Route::post('/promotions/processing', [ProgressionStatusController::class,'proce
 
 //Promotions Management
 
-//Attendence Route
-// Route::get('/class/attendence', [AttendenceController::class,'create'])->name('attendence.create');
-Route::get('/class/attendance/edit/{id}', [ParentController::class,'manage'])->name('attendence.edit');
-Route::get('/class/attendance/search/{id}', [ParentController::class,'search'])->name('attendence.search');
-Route::get('/kids/data/performance/{id}', [ParentController::class,'performance'])->name('kids.performance');
 
-//Beginning of Class Teacher
-Route::get('/class/student-attendance', [StudentAttendanceController::class,'index']); 
-Route::get('/class/student-attendance/cumulative', [StudentAttendanceController::class,'create']);
-Route::post('/class/student-attendance/cummulative-store', [StudentAttendanceController::class,'cummulative_store'])->name('attendance.cummulative_store');
-Route::post('/class/student-attendance/mark-attendance', [StudentAttendanceController::class,'store'])->name('attendance.store');
-Route::get('/class/student-attendance/manage', [StudentAttendanceController::class,'show']);
-Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit']);
-
-
-//End of Class Teacher
 
 
 //Beginning of Disciplinary Cases

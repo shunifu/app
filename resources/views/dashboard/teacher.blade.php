@@ -102,7 +102,7 @@ Welcome back to Shunifu, <span class="text-bold">Eswatini's leading school manag
       
         <div class="col">
           <img class="card-img-top"
-          src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_190,w_970/b_rgb:000000,e_gradient_fade,y_-0.0/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_100_style_light_align_center:{{Auth::user()->name}},w_0.0,y_0.0/v1613303961/shunifu_header_1_h8yy55.png"
+          src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1673585910/Manage_Teachers_1_sxccuv.png"
           alt="">
           <div class="bg-white shadow rounded overflow-hidden cover">
           

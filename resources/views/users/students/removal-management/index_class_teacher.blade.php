@@ -5,35 +5,23 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card card-light  ">
-                <div class="card-header">
-                    <h3 class="card-title">Sort Student Issues</h3>
-                </div>
-
                 <img class="card-img-top"
-                    src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_220,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_30_style_light_align_center:Sort Student Issues ,w_0.3,y_0.28/v1613303961/pexels-photo-5212359_ukdzdz.jpg"
+                    src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1687620219/shunifu_header_4_ve76m9.png"
                     alt="">
                 <div class="card-body">
                     <h3 class="lead">Hi, {{ Auth::user()->name }}</h3>
-                    <div class="text-muted">
-                        <p class="card-text"> Use this section to sort-out  student Issues. <br>
+                    <span class="text-muted"> Use this section to manage data for students in your class </span>
 
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- /.card-header -->
+                <hr>
                 <!-- form start -->
-                <form action="{{ route('student.removal') }}" method="post">
-                    <div class="card-body">
+                <form action="{{ route('student.class_teacher_view') }}" method="post">
+                
                         @csrf
                         <div class="form-row">
                             <div class="col form-group">
                                 <x-jet-label> Class Name</x-jet-label>
                                 <select class="form-control" name="grade_id">
-                                    <option value="">Select Class</option>
+                              
                                     @foreach($classes as $class)
                                         <option value="{{ $class->id }}">{{ $class->grade_name }}</option>
 
@@ -47,7 +35,7 @@
                             <div class="col form-group">
                                 <x-jet-label> Academic Year</x-jet-label>
                                 <select class="form-control" name="academic_session">
-                            <option value="">Select Academic Year</option>
+                          
                                     @foreach($sessions as $session)
                                
                         <option value="{{ $session->id }}">{{ $session->academic_session }}</option>

@@ -26,7 +26,6 @@ use App\Models\StudentSubjectAverage;
 use Illuminate\Support\Facades\Schema;
 use App\Models\AssessementProgressReport;
 use App\Models\CA_Exam;
-use App\Models\CustomComment;
 use App\Models\ReportTemplate;
 use App\Models\ReportVariable;
 use Google\Service\CloudAsset\Asset;
@@ -228,16 +227,6 @@ class ReportController extends Controller
 			});
 		}
 
-        if (!Schema::hasColumn('student_subject_averages', 'effort_grade')) //check the column
-		{
-			Schema::table('student_subject_averages', function (Blueprint $table)
-			{
-			   
-				$table->integer('effort_grade')->nullable();
-               
-			});
-		}
-
 
 
         //Check Variables
@@ -335,7 +324,6 @@ class ReportController extends Controller
 
      $variables=ReportVariable::all();
 
-     
    
  
 
@@ -348,7 +336,7 @@ class ReportController extends Controller
      
      if (!($term_checker)) {
       //if it does not exist
-      flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Please update terms. Make the 3rd Term final term ');
+      flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Please update term. Make sure that you set TERM 2 to final term & do not forget to delete  Term 3 ');
       return redirect()->back();
      }
 
@@ -448,9 +436,10 @@ class ReportController extends Controller
         $non_value_exists=Subject::where('subject_type','non-value')->exists();
 
         if($non_value_exists){
-            $subject_non_value=Subject::where('subject_type','non-value')->get()->pluck('id')->toArray();         
-            $nonvalue_subjects_id = implode(',',$subject_non_value);
-           
+            $subject_non_value=Subject::where('subject_type','non-value')->first();
+            $non_value_subject=$subject_non_value->id;
+            $non_value_subject_name=$subject_non_value->subject_name;
+
         }else{
             $non_value_subject=0;
         }
@@ -585,8 +574,7 @@ teaching_loads.id as teaching_load_id,
 (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN marks.mark END))AS ca,
 (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN marks.mark END))AS exam,
 (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN (marks.mark)*".$ca_weight." END))AS ca_weight,
-(AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN (marks.mark)*".$exam_weight." END)) as exam_weight,
-(CASE WHEN  c_a__exams.term_id=".$term."  THEN marks.effort_grade END)AS effort_grade
+(AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN (marks.mark)*".$exam_weight." END)) as exam_weight
 FROM
 marks
 INNER JOIN c_a__exams ON c_a__exams.assessement_id = marks.assessement_id
@@ -599,7 +587,6 @@ marks.student_id,
 subjects.id"));
 
 
-// dd($subject_average);
 
 }
 
@@ -620,12 +607,11 @@ subjects.id"));
             'exam_mark' =>$item->exam,
             'ca_piece' =>$item->ca_weight,
             'exam_piece' =>$item->exam_weight,
-            'effort_grade' =>$item->effort_grade,
             'student_average' =>(round(($item->ca_weight)+($item->exam_weight))),
             'student_class'  =>$item->student_class,
             'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
                 ];
-            })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average','effort_grade','position','student_class']);
+            })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average', 'position','student_class']);
         }
     
     }
@@ -653,15 +639,11 @@ subjects.id"));
 
         $total_subjects = DB::table('student_loads')
         ->join('teaching_loads', 'student_loads.teaching_load_id', '=', 'teaching_loads.id')
-        ->join('subjects', 'teaching_loads.subject_id', '=', 'subjects.id')
         ->join('academic_sessions', 'academic_sessions.id', '=', 'teaching_loads.session_id')
         ->where('student_loads.student_id', $student)
-        ->where('subjects.subject_type', '<>','non-value')
         ->where('student_loads.active', 1)
         ->where('academic_sessions.academic_session',$get_academic_session->academic_session )//scoping to current academic 
         ->get()->count();
-
-     //   dd($total_subjects);
         //This ($total_subjects) query will retrieve only the number of student loads for the active session
 
 
@@ -684,7 +666,7 @@ subjects.id"));
     INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
     INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
     INNER JOIN grades ON grades.id=student_subject_averages.student_class
-    where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
+    where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
     GROUP BY student_subject_averages.subject_id
     ORDER BY (student_subject_averages.subject_id =".$passing_subject.") desc, mark desc
     LIMIT ".$number_of_subjects.") t, 
@@ -693,7 +675,7 @@ subjects.id"));
             FROM
             student_subject_averages
             WHERE
-            student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
+            student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
             ORDER BY
             student_average
             DESC
@@ -715,9 +697,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
                     INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id
                     INNER JOIN subjects ON subjects.id=teaching_loads.subject_id
                     INNER JOIN grades ON grades.id=student_subject_averages.student_class
-                    where student_subject_averages.student_id = ".$student." 
-                    AND student_subject_averages.term_id=".$term." 
-                    AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
+                    where student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
                     GROUP BY student_subject_averages.subject_id
                     ORDER BY  mark desc
                     LIMIT ".$number_of_subjects.") t, 
@@ -726,7 +706,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
                             FROM
                             student_subject_averages
                             WHERE
-                            student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
+                            student_subject_averages.student_id =".$student."  AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >=".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
                             ORDER BY
                             student_average
                             DESC
@@ -752,14 +732,10 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
             ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
             ->where('teaching_loads.active', 1)
             ->where('student_loads.student_id', $student)
-            ->where('subjects.subject_type','<>','non-value')
+            ->where('subjects.subject_type','<>', 'non-value')
             ->where('academic_sessions.active', 1)//Scoping to active academic year. 
             ->where('student_loads.active', 1)
             ->get()->count();
-
-
-
-     
 
           if($term_average_type=="decimal"){
             $avg_calculation="ROUND(SUM(t.mark) /".$total_subjects.", $number_of_decimal_places )";
@@ -788,7 +764,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
             student_subject_averages
             INNER JOIN teaching_loads ON teaching_loads.id = student_subject_averages.teaching_load_id
             INNER JOIN grades ON grades.id = student_subject_averages.student_class
-            WHERE student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id = ".$term." AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
+            WHERE student_subject_averages.student_id = ".$student." AND student_subject_averages.term_id = ".$term." AND student_subject_averages.subject_id <> ".$non_value_subject."
             GROUP BY
             student_subject_averages.id
         ) t,
@@ -798,7 +774,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
             FROM
             student_subject_averages
             WHERE
-            student_subject_averages.student_id =".$student." AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >= ".$pass_rate." AND student_subject_averages.subject_id NOT IN (".$nonvalue_subjects_id.")
+            student_subject_averages.student_id =".$student." AND student_subject_averages.term_id =".$term." AND student_subject_averages.student_average >= ".$pass_rate." AND student_subject_averages.subject_id <> ".$non_value_subject."
             ORDER BY
             student_average
             DESC
@@ -862,11 +838,9 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
       
           
     $school_info=School::all();
-    $getSchoolInfo=School::first();
     $comments = DB::table('report_comments')->where('section_id',$section_id)->where('user_type', 1)->get();
     $class_teacher_comments = DB::table('report_comments')->where('section_id',$section_id)->where('user_type', 2)->get();   
-    $headteacher_comments = DB::table('report_comments')->where('section_id',$section_id)->where('user_type', 3)->get();      
-    $efforts = DB::table('report_comments')->where('section_id',$section_id)->where('user_type', 4)->get();    
+    $headteacher_comments = DB::table('report_comments')->where('section_id',$section_id)->where('user_type', 3)->get();          
         
     $examExists=AssessementWeight::where('term_id', $term)->where('exam_percentage', '<>', '0')->where('stream_id',$stream )->exists();
     $caExists=AssessementWeight::where('term_id', $term)->where('ca_percentage', '<>', '0')->where('stream_id',$stream )->exists();
@@ -877,30 +851,9 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
 
     $calculation_type=$criteria->average_calculation;
 
-    
-    $non_value_subject_name=Subject::where('subject_type','non-value')->get();
-
-  //  dd($non_value_subject_name);
-
- 
-
-  if($getSchoolInfo->school_type=="ieb-school"){
-
-
-    $period="Cycle";
-
-    $class_tutor_comments=CustomComment::where('manager_type', 2)->get();
-    $homeroom_comments=CustomComment::where('manager_type', 1)->get();
-
-  }else{
-    $period="Term";
-
-    $class_tutor_comments="";
-    $homeroom_comments="";
-  }
 
     
-return view('academic-admin.reports-management.term.report', compact('report','period', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','efforts','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight', 'calculation_type', 'non_value_subject_name', 'report_template', 'section_id','variables','get_academic_session', 'class_tutor_comments','homeroom_comments'));   
+return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight', 'calculation_type', 'non_value_subject_name', 'report_template', 'section_id','variables','get_academic_session'));   
  }
 
 

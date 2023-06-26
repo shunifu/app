@@ -38,7 +38,12 @@
     {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}">  --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" integrity="sha512-9YHSK59/rjvhtDcY/b+4rdnl0V4LPDWdkKceBl8ZLF5TB6745ml1AfluEU6dFWqwDw9lPvnauxFgpKvJqp7jiQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/regular.min.css" integrity="sha512-WidMaWaNmZqjk3gDE6KBFCoDpBz9stTsTZZTeocfq/eDNkLfpakEd7qR0bPejvy/x0iT0dvzIq4IirnBtVer5A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" integrity="sha512-yDUXOUWwbHH4ggxueDnC5vJv4tmfySpVdIcN1LksGZi8W8EVZv4uKGrQc0pVf66zS7LDhFJM7Zdeow1sw1/8Jw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href=' https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
          
@@ -906,7 +911,8 @@
         
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-building"></i>
+     
+              <i class="nav-icon fa-solid fa-chalkboard-user"></i>
               <p>
                 My Class
                 <i class="fas fa-angle-left right"></i>
@@ -918,9 +924,44 @@
 
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-building"></i>
+                  <i class="nav-icon fa-solid fa-users"></i>
                   <p>
-                    Attendance Management
+                    Manage Students
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="/class/student-management" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p>Student Data</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/class/class-list" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p>Class Lists</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="/class/student-management/link-parents" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p>Link Parents</p>
+                    </a>
+                  </li>
+
+               
+
+                </ul>
+              </li>
+
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+              
+                  <i class="nav-icon fa-solid fa-clipboard-user"></i>
+                  <p>
+                     Manage Attendance
                     <i class="fas fa-angle-left right"></i>
                   </p>
                 </a>
@@ -928,13 +969,13 @@
                   <li class="nav-item">
                     <a href="/class/student-attendance" class="nav-link">
                       <i class="nav-icon fas fa-check-circle"></i>
-                      <p>Daily Attendance</p>
+                      <p>Daily </p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="/class/student-attendance/cumulative" class="nav-link">
                       <i class="nav-icon fas fa-check-circle"></i>
-                      <p>Cummulative Attendance</p>
+                      <p>Cummulative </p>
                     </a>
                   </li>
 
@@ -956,9 +997,44 @@
                 </ul>
               </li>
 
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fa-solid fa-chart-line"></i>
+                  <p>
+                    Class Insights
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="/class/class-performance" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p>Performance Data</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/class/scoresheet" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p>Class Scoresheets</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="/stream/performance-data" class="nav-link">
+                      <i class="nav-icon fas fa-check-circle"></i>
+                      <p>Stream Analytics</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
+
+
               <li class="nav-item">
                 <a href="/class/classteacher/comments" class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
+            
+                  <i class="nav-icon fa-solid fa-comments"></i>
                   <p>Class Teacher Comments</p>
                 </a>
               </li>
@@ -982,50 +1058,11 @@
 
             
 
-              <li class="nav-item">
-                <a href="/class/student-management" class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
-                  <p>Student Management</p>
-                </a>
-              </li>
+          
 
-              <li class="nav-item">
-                <a href="/class/student-management/link-parents" class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
-                  <p>Link Parents</p>
-                </a>
-              </li>
-            
+           
 
-              <li class="nav-item">
-                <a href="/class/class-noticeboard" class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
-                  <p>Class Noticeboard</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/class/class-list" class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
-                  <p>Class List</p>
-                </a>
-              </li>
-            
-
-              <li class="nav-item">
-                <a href="/class/class-performance" class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
-                  <p>Class Performance</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                {{-- /report/term-based/class/teacher --}}
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
-                  <p>Class Report</p>
-                </a>
-              </li>
-
-            
+  
 
             </ul>
           </li>
@@ -1118,7 +1155,7 @@
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-building"></i>
+              <i class="nav-icon fa-solid fa-eye"></i>
               <p>
                 Check Center
                 <i class="fas fa-angle-left right"></i>

@@ -16,6 +16,7 @@
         "cloudinary-labs/cloudinary-laravel": "2.0.0",
         "cloudinary/cloudinary_php": "^2.9",
         "doctrine/dbal": "^3.6",
+        "dompdf/dompdf": "^2.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "graham-campbell/exceptions": "^17.0",
