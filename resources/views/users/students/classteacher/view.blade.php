@@ -2,18 +2,26 @@
     <x-slot name="header">
       <link rel="stylesheet" type="text/css"
       href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/cr-1.5.3/r-2.2.7/datatables.min.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
 
       
     </x-slot>
-    
+   
     <div class="row">
-      
+        @if (\Session::has('success'))
+        <div class="alert alert-success">
+            <ul>
+                <li>{!! \Session::get('success') !!}</li>
+            </ul>
+        </div>
+    @endif
         <div class="col-md-12 mt-4">
 
           <div class="card bg-white">
            
-         
+  
+                             
 
               <img class="card-img-top"
                   src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1687624917/shunifu_header_5_yjwlrl.png"
@@ -27,9 +35,9 @@
 
                 <hr>
                 <!-- form start -->
-
-                <form action="{{ route('student.removal_selection') }}"  method="POST" enctype="multipart/form-data" >  
-                  @csrf
+                <img id="preview-image" width="300px">
+             
+                 
              
                         <div class="table-responsive">
                         
@@ -51,42 +59,59 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            
-              @foreach ($students as $item)
-            <input type="hidden" name="session" value="{{$item->academic_session_id}}">
-              <tr>
-              {{-- <td><input type="checkbox" class="students" name="students[]" value="{{$item->user_id}}" ></td> --}}
-              <td>  
-                {{-- <span style="display:block;width:60px; height:30px;" onclick="document.getElementById('getFile').click()">Image</span>
-                <input type='file' id="getFile" style="display:none"> --}}
-
-                <img src="" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
-            </td> 
-              {{-- <td>
-                @if ($item->active==1)
-                    <span class="bg-success">Active</span>
-                    @else
-                    <span class="bg-danger">Inactive</span>
-                @endif
-                
-              </td> --}}
             
-              <td><input type="text" name="lastname[]" class="form-control" value="{{$item->lastname}}"/> </td>
-              <td> <input type="text" name="name[]" class="form-control" value="{{$item->name}}"/>  </td>
-              <td><input type="text" name="name[]" class="form-control" value="{{$item->middlename}} "/> </td>
-              <td> <input type="text" name="name[]" class="form-control" value="{{$item->national_id}}"/> </td>
-              <td>{{$item->gender}}</td>
           
-              <td><a href="/users/profile/student/{{$item->user_id}}">Check Profile</a></td>
-              <input type="hidden" name="current_class" value="{{$item->current_class}}">
+                                            
+            @foreach ($students as $item)
+        
+         
+              <tr>
+                <form action="{{ route('student.store_student_updates') }}"  id="{{$item->user_id}}" method="post"  enctype="multipart/form-data" >  
+                    @csrf
+              <td>  
+       
+                    @if (is_null($item->profile_photo_path))
+                    <img id="icon" class="img-responsive img-rounded" style="max-height: 50px; max-width: 50px;" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1687803676/Screenshot_2023-06-26_at_8.20.45_PM_xc7daq.png">   
+                    @else
+                    <img  class="img-responsive img-rounded" style="max-height: 50px; max-width: 50px;" src="{{$item->profile_photo_path}}">
+                    @endif
+                  
+                 
+                  <input id="fileInput" type="file" class="inputImage"  name="student_image">
+                  <span class="text-danger" id="image-input-error"></span>
+            </td> 
+            <input type="hidden" name="student_i" value="{{$item->user_id}}" id="student_i">
+              <input type="hidden" name="student_id" value="{{$item->user_id}}" id="student_id">
+              <input type="hidden" name="class_id" value="{{$item->current_class}}" id="class_id">
+              <input type="hidden" name="academic_session" value="{{$session_id}}" id="academic_session">
+            
+              <td><input type="text" name="lastname" class="form-control" value="{{$item->lastname}}"/> </td>
+              <td> <input type="text" name="name" class="form-control" value="{{$item->name}}"/>  </td>
+              <td><input type="text" name="middlename" class="form-control" value="{{$item->middlename}} "/> </td>
+              <td> <input type="text" name="national_id" class="form-control" value="{{$item->national_id}}"/> </td>
+              <td>
+              
+                <select class="form-control" name="gender" id="gender">
+                  <option>{{$item->gender}}</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </td>
+          
+               <td><button type="submit"  id="image-upload" class="btn btn-secondary btn-sm">Update</button></td> 
+            </form>  
               </tr>
+          
               @endforeach
                                               
-                                                
+                                        
                                             
                                             </tbody>
                                         </table>
                         </div>
+                    
+               
+              
                                           
                                         </div>
                                         <!-- /.card-body -->
@@ -96,8 +121,8 @@
         
         
     
-<hr> 
-<div class="input-group mb-3">
+{{-- <hr>  --}}
+{{-- <div class="input-group mb-3">
 
     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Select Action</button>
     <div class="dropdown-menu">
@@ -109,7 +134,7 @@
       <button type="submit" name="btn" id="btn"  value="delete" class="btn btn-danger dropdown-item" >Delete</button> 
     </div>
  
-</div>
+</div> --}}
 {{-- <div class="row">
   <div class="col">
     <button type="submit" name="btn" id="btn"  value="archive" class="btn btn-warning" >Archive</button>
@@ -120,7 +145,7 @@
 </div>
 </div> --}}
 
-
+{{-- 
 <div class="form-group transfer_div">
  
   <label for="">Transfer To</label>
@@ -131,9 +156,9 @@
     @endforeach
   </select>
 
-<button type="submit" value="transfer" name="btn" class="btn btn-secondary">Transfer</button>
 
-</div>
+
+</div> --}}
              
             </form>
             </div>
@@ -158,32 +183,6 @@
       $.noConflict();
 
 
-      $(".transfer_div").hide();
-
-      $("#btn_transfer").click(function (e) { 
-      e.preventDefault();
-      
-        $(".transfer_div").show();
-      });
-
-
-     
-      $('#select_all').change(function() {
-
-
-$('.students').prop("checked", this.checked);
-
-});
-
-$('.students').change(function() {
-
-if ($('input:checkbox:checked.students').length === $("input:checkbox.students").length) {
-  $('#select_all').prop("checked", true);
-} else {
-  $('#select_all').prop("checked", false);
-}
-
-})
 
       $('#customers').DataTable({
           // scrollY:auto,
@@ -193,9 +192,50 @@ if ($('input:checkbox:checked.students').length === $("input:checkbox.students")
           info: true,
           dom: 'Bfrtip',
           select: true,
+          "info": false
       });
 
   
+      $(window).scrollTop($(window).height()/2);
+    $(window).scrollLeft($(window).width()/2);
+ //   $(document).scrollTop(100);
+
+    
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  
+  
+  
+    $("#").submit(function(e) {
+           e.preventDefault();
+           let formData = new FormData(this);
+
+          
+           $('#image-input-error').text('');
+  
+           $.ajax({
+              type:'POST',
+              url: "{{ route('student.store_student_updates') }}",
+               data: formData,
+               contentType: false,
+               processData: false,
+               success: (response) => {
+                 if (response) {
+                   this.reset();
+                   alert('Image has been uploaded successfully');
+                 }
+               },
+               error: function(response){
+                    $('#image-input-error').text(response.responseJSON.message);
+               }
+           });
+    });
+      
+
+
 
   })
 

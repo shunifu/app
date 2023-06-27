@@ -32,7 +32,7 @@
               <div class="table-responsive">
 <div class="col-md-12 mx-auto">
   @foreach ($school_info as $school_data)
-  <img src={{asset('storage/'.$school_data->school_letter_head) }}  class="mx-auto d-block img-fluid img-thumbnail" />
+  <img src={{$school_data->school_letter_head}}  class="mx-auto d-block img-fluid img-thumbnail" />
   @endforeach
 </div>
 <hr>

@@ -95,6 +95,7 @@ use App\Http\Controllers\InsetWorkshopController;
 use App\Http\Controllers\MarkSettingController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\PermissionsManagementController;
+use App\Http\Controllers\ShunifuServiceController;
 use App\Http\Controllers\TimetableController;
 
 Route::get('/', function () {
@@ -129,6 +130,8 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
     Route::get('/class/student-management',[StudentController::class,'student_issues_classteacher'])->name('student.student_issues_classteacher');
     // Route::get('/class/student-management',[StudentController::class,'fetchAllClassStudents'])->name('fetchAllClassStudents');
     Route::post('/class/student-management/view',[StudentController::class,'classteacher_student_view'])->name('student.class_teacher_view');
+
+    Route::post('/class/student-management/save',[StudentController::class,'store_student_updates'])->name('student.store_student_updates');
     
     // Route::post('/users/student/manage/removal/process',[StudentController::class,'removal_loadstudents'])->name('student.removal');
 
@@ -680,6 +683,9 @@ Route::post('/assessements/pass-rates/update',[PassRateController::class,'update
 
 // Route::get('/assessements/pass-rates/update/',[PassRateController::class,'edit'])->name('pass-rates.edit');
 //End of Assessement Settings
+
+
+Route::get('/rstp',[ShunifuServiceController::class,'rstp_index'])->name('rstp.index');
 
 //Marks Management
 Route::get('/marks',[MarkController::class,'create'])->name('marks.create');

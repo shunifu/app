@@ -37,8 +37,15 @@ use App\Models\StudentSubjectAverage;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\AssessementProgressReport;
 use App\Models\GradeTeacher;
+use App\Models\Intervention;
 use App\Models\School;
 use App\Models\StudentFees;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use FontLib\Table\Type\name;
+use Illuminate\Support\Facades\Session as Fas;
+use Image;
+use ImageOptimizer;
+
 
 // use Validator;
 
@@ -75,6 +82,102 @@ class StudentController extends Controller
     flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have sent message ', 'Send Message');
     return Redirect::back();
 
+    }
+
+
+    public function store_student_updates(Request $request){
+
+
+   //     dd($request->all());
+
+        $school=School::first();
+        $code=$school->school_code;
+        $student_id=$request->student_id;
+      
+        $name=$request->name;
+        $middlename=$request->middlename;
+        $lastname=$request->lastname;
+        $national_id=$request->national_id;
+        $gender=$request->gender;
+        $images = $request->student_image;
+        $image=$request->file('student_image');
+
+
+        $class_id=$request->class_id;
+  
+        $classes=Grade::all();
+        $sessions=AcademicSession::where('active', 1)->get();
+
+        
+        $sesh=AcademicSession::where('active', 1)->first();
+        $session_id=$sesh->id;
+
+    
+
+ 
+     
+       // $allUploadApiReponse = array();
+        if ($request->hasFile('student_image')) {
+            $image = $request->file('student_image');
+          //  Image::make($image->getRealPath())->resize(150, 150);
+
+          $image_new=ImageOptimizer::optimize($image);
+
+            $image_new = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $code.'-'.$student_id);
+
+            $student_image=$image_new->getSecurePath();
+    
+    
+    
+            User::where('id', $student_id)->update([
+    
+                'name'=>$name,
+                'middlename'=>$middlename,
+                'lastname'=>$lastname,
+                'national_id'=>$national_id,
+                'gender'=>$gender,
+                'profile_photo_path'=>$student_image,
+            ]);
+  
+    
+    }else{
+
+        User::where('id',$student_id)->update([
+
+            'name'=>$name,
+            'middlename'=>$middlename,
+            'lastname'=>$lastname,
+            'national_id'=>$national_id,
+            'gender'=>$gender,
+            // 'profile_photo_path'=>"",
+        
+           ]);
+        
+
+    }
+        
+
+  
+
+$students=DB::table('grades_students')
+->join('grades','grades_students.grade_id','=','grades.id')
+->join('users','grades_students.student_id','=','users.id')
+->join('academic_sessions','grades_students.academic_session','=','academic_sessions.id')
+->where('grades_students.grade_id', $class_id)
+->where('grades_students.academic_session', $session_id)
+->where('academic_sessions.id',$session_id )
+
+->select('users.id as user_id','users.profile_photo_path','national_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class', 'users.active')->orderBy('lastname')->orderBy('name')->get();
+
+
+Fas::flash('message', "Updated");
+
+return view('users.students.classteacher.view', compact('students', 'sessions', 'classes', 'session_id'));
+
+
+
+
+//
     }
 
 
@@ -906,7 +1009,7 @@ public function parent_update(Request $request){
 
 
     public function classteacher_student_view(Request $request){
-      //   dd($request->all());
+   //     dd($request->all());
 
         $classes=Grade::all();
         $sessions=AcademicSession::where('active', 1)->get();
@@ -922,26 +1025,10 @@ public function parent_update(Request $request){
         ->where('grades_students.grade_id', $class_id)
         ->where('grades_students.academic_session', $session_id)
         ->where('academic_sessions.id',$session_id )
-   //     ->where('grades_students.active',1 )
-     //   ->where('users.active',1 )
-     
-        // ->where('grades_students.active',1)
+
         ->select('users.id as user_id','users.profile_photo_path','national_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class', 'users.active')->orderBy('lastname')->orderBy('name')->get();
    
         return view('users.students.classteacher.view', compact('students', 'sessions', 'classes', 'session_id'));
-
-
-        // $data= DB::table('grades_students')
-        // ->join('users', 'users.id', '=', 'grades_students.student_id')
-        // ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-        // ->join('academic_sessions','academic_sessions.id','=','grades_students.academic_session')
-        // ->select('grades.grade_name as grade_name','grades.id as grade_id','users.id as id', 'name', 'lastname', 'middlename', 'gender', 'date_of_birth',   'profile_photo_path')
-        // ->where('grades_students.grade_id', $grade_id)
-        // ->where('grades_students.academic_session', $session_id)
-        // ->where('academic_sessions.id',$session_id )
-        // ->where('grades_students.active',1 )
-        // ->where('users.active',1 )
-        // ->orderBy('lastname')->orderBy('name')->get();
 
 
     }

@@ -74,10 +74,10 @@
                                         <thead class="thead-light hidden-md-up">
 
                                             {{-- <th width="3px">Remove</th> --}}
-                                            <th>Surname</th>
-                                            <th>Name</th>
-                                            <th>Mark</th>
-                                            <th>Effort Grade</th>
+                                            <th style="width: 8px;"> Surname</th>
+                                            <th style="width: 10px;">Name</th>
+                                            <th style="width: 10px;" >Mark</th>
+                                         
 
                                         </thead>
                                         <tbody>
@@ -100,7 +100,7 @@
                                                             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                                                           </svg></td> --}}
 
-                                                          <td class="align-middle">
+                                                          <td class="align-middle" style="width: 10px;" >
                                                             {{ $student->lastname }} 
                                                           </td>
                                                             <td class="align-middle">
@@ -135,16 +135,16 @@
 </td>
 
 
-<td class="align-middle">
+{{-- <td class="align-middle">
     @if (is_null($student->effort_grade))
     <div class="input-group">
      <input type="number" min="0" max="2"   id="effort_grade" class="form-control" placeholder="Effort Grade" name="effort_grade[]">  
     <div class="input-group-append">
      </div>  
  </div>
-    @else
+    @else --}}
  {{-- <div class="input-group"> --}}
- <input type="number" readonly  min="0" max="2"  id="effort_grade" class="form-control" placeholder="Effort Grade" name="effort_grade[]" value="{{$student->effort_grade}}"> 
+ {{-- <input type="number" readonly  min="0" max="2"  id="effort_grade" class="form-control" placeholder="Effort Grade" name="effort_grade[]" value="{{$student->effort_grade}}">  --}}
  {{-- <div class="input-group-append">
  <button class="btn btn-success edit_effort_grade" id="{{$student->mark_id}}" type="button"> <i class="fas fa-edit"></i></button>
  </div> --}}
@@ -154,11 +154,11 @@
      </div>  --}}
  {{-- </div> --}}
    
-    @endif
+    {{-- @endif --}}
  
- </td>
+ {{-- </td> --}}
 
-</td>
+{{-- </td> --}}
 </tr>
                                             @empty
                                               No mark

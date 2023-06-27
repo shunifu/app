@@ -899,7 +899,13 @@
             <!---end of reports-----> 
 
  
+            <li class="nav-item">
+              <a href="/rstp" class="nav-link">
 
+            <i class=" nav-icon fa-solid fa-circle-info"></i>
+                <p>RSTP Hub</p>
+              </a>
+            </li>
 
 
    <!-----End of Promotions Management------------->
@@ -1007,20 +1013,20 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="/class/class-performance" class="nav-link">
+                    <a href="#" class="nav-link">
                       <i class="nav-icon fas fa-check-circle"></i>
                       <p>Performance Data</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="/class/scoresheet" class="nav-link">
+                    <a href="#" class="nav-link">
                       <i class="nav-icon fas fa-check-circle"></i>
                       <p>Class Scoresheets</p>
                     </a>
                   </li>
 
                   <li class="nav-item">
-                    <a href="/stream/performance-data" class="nav-link">
+                    <a href="#" class="nav-link">
                       <i class="nav-icon fas fa-check-circle"></i>
                       <p>Stream Analytics</p>
                     </a>
@@ -1032,7 +1038,7 @@
 
 
               <li class="nav-item">
-                <a href="/class/classteacher/comments" class="nav-link">
+                <a href="#" class="nav-link">
             
                   <i class="nav-icon fa-solid fa-comments"></i>
                   <p>Class Teacher Comments</p>

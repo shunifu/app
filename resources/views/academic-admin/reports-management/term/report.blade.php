@@ -12,6 +12,12 @@
   border: 0.5px solid grey;
   table-layout: fixed;
 }
+
+
+td #center{
+            padding: 5px;
+            text-align: center;
+        }
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
 .table-bordered > tfoot > tr > th,
@@ -78,6 +84,8 @@ body { margin: 0px; }
     text-align: center;
 } */
    
+
+
         
         }
 
@@ -171,6 +179,7 @@ table tbody tr td {
 <?php
          $term_average=\DB::select(\DB::raw("SELECT
         users.name,
+        users.id as leaner_id,
         users.lastname,
         users.middlename,
         users.profile_photo_path,
@@ -185,6 +194,7 @@ table tbody tr td {
         grades.grade_name,
         grades.id as grade_id,
         streams.stream_name,
+        streams.id as stream_id,
         sections.section_name,
         academic_sessions.academic_session, 
         academic_sessions.id as session_id
@@ -200,6 +210,7 @@ table tbody tr td {
            term_averages.student_id =".$student." AND term_averages.term_id =".$term.""));
 
 
+        //   dd($term_average);
             
                     foreach ($term_average as $student_term_data) {
              
@@ -212,7 +223,7 @@ echo '<h3 class="text-center lead text-bold">'.$student_term_data->lastname.' '.
                     <thead>
                         <tr>
                             <th class="background text-center">Student Details</th>
-                            <th class="background text-center">Student Photo</th>
+                            {{-- <th class="background text-center">Student Photo</th> --}}
                             <th class="background text-center">Term Details</th>
 
                         </tr>
@@ -222,6 +233,25 @@ echo '<h3 class="text-center lead text-bold">'.$student_term_data->lastname.' '.
                         <td>
                         <?php $classofstudent=$student_term_data->grade_id; ?>
                             Student Name: <span class="text-bold">{{$student_term_data->name}} {{$student_term_data->middlename}} {{$student_term_data->lastname}} </span>
+                            <br>
+                             
+                            Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
+                            <br>
+
+                            {{$student_term_data->grade_name}} Average: <span class=" text-bold">
+                                <?php
+                            
+                            
+                            $grade_average=\DB::select(\DB::raw("SELECT AVG(term_averages.student_average) as grade_average  FROM term_averages  WHERE term_averages.student_class=".$student_term_data->grade_id.""));
+                            foreach ($grade_average as $grade_average_key) {
+                             
+                                echo round($grade_average_key->grade_average).'%';
+                            
+                            }
+                            
+                            
+                                ?>
+                            </span>  
                             <br>
                             Student Average: <span class="text-bold">{{$student_term_data->student_average}}%</span>
                            
@@ -292,32 +322,32 @@ WHERE sub.student_id=".$student.""));
                             @if ($passing_subject_rule==1)
                             @if ($student_term_data->student_average>=$pass_rate AND $student_term_data->number_of_passed_subjects>=$number_of_subjects  AND $student_term_data->passing_subject_status==1)
                                 
-                            <span class="text-success text-bold">Passed</span> <i class="fas fa-check-circle text-success"></i> 
+                           {{$student_term_data->name}} <span class="text-success">has met all</span> the passing criteria for  this cycle.
                             
                             @else
                             
-                            <span class="text-danger text-bold">Failed</span> 
+                            {{$student_term_data->name}} <span class="text-danger">has not met all</span> the passing criteria for  this cycle.
                                                             <br>
                                                         
                             
-                            Why {{ $student_term_data->name }} failed:<span class="text-bold"></span>
+                            {{-- Why {{ $student_term_data->name }} failed:<span class="text-bold"></span> --}}
                             
-                            <ul>
+                            {{-- <ul> --}}
                             
-                                @if ($student_term_data->student_average<$pass_rate)
+                                {{-- @if ($student_term_data->student_average<$pass_rate)
                                 <li>
                                    Below Average 
                                 </li>
-                                @endif
+                                @endif --}}
                             
                                
-                                @if ($student_term_data->number_of_passed_subjects==0)
+                                {{-- @if ($student_term_data->number_of_passed_subjects==0)
                                 <li>
                                     Failed <span class="text-danger">all</span> subjects
                                  </li>
                             
-                                 @endif
-                                 @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
+                                 @endif --}}
+                                 {{-- @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
                                  <li>
                                    Passed only <span class="text-danger">{{$student_term_data->number_of_passed_subjects}}</span>
                                    @if ($student_term_data->number_of_passed_subjects==1)
@@ -327,23 +357,23 @@ WHERE sub.student_id=".$student.""));
                                    @endif
                                   
                                 </li>
-                                @endif
+                                @endif --}}
                                
-                            @if ($student_term_data->passing_subject_status<1)
+                            {{-- @if ($student_term_data->passing_subject_status<1)
                             <li>
                               Failed Passing Subject
                             </li>
-                            @endif   
+                            @endif    --}}
                             
-                            </ul>
+                            {{-- </ul> --}}
                             
-                            @endif
+                            {{-- @endif --}}
                             {{-- End of condition within passing subject --}}
 
-                            @else
+                            {{-- @else --}}
                             {{-- if passing subject rule is 0 --}}
 
-                            @if ($student_term_data->student_average>=$pass_rate AND $student_term_data->number_of_passed_subjects>=$number_of_subjects )
+                            {{-- @if ($student_term_data->student_average>=$pass_rate AND $student_term_data->number_of_passed_subjects>=$number_of_subjects )
                                 
                             <span class="text-success text-bold">Passed</span> <i class="fas fa-check-circle text-success"></i> 
                             <br>
@@ -362,16 +392,16 @@ WHERE sub.student_id=".$student.""));
                                 <li>
                                    Below Average 
                                 </li>
-                                @endif
+                                @endif --}}
                             
                                
-                                @if ($student_term_data->number_of_passed_subjects==0)
+                                {{-- @if ($student_term_data->number_of_passed_subjects==0)
                                 <li>
                                     Failed <span class="text-danger">all</span> subjects
                                  </li>
                             
-                                 @endif
-                                 @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
+                                 @endif --}}
+                                 {{-- @if ($student_term_data->number_of_passed_subjects<$number_of_subjects)
                                  <li>
                                    Passed only <span class="text-danger">{{$student_term_data->number_of_passed_subjects}}</span>
                                    @if ($student_term_data->number_of_passed_subjects==1)
@@ -381,7 +411,7 @@ WHERE sub.student_id=".$student.""));
                                    @endif
                                   
                                 </li>
-                                @endif
+                                @endif --}}
                                
                             
                             </ul>
@@ -396,42 +426,42 @@ WHERE sub.student_id=".$student.""));
  Resolution: <span class=" text-bold">{{$student_term_data->final_term_status}}  </span>   
 @endif
 
-
+  
 
 
 
                         </td>
                                                    
-   
+
             
-                        <td>
+                        {{-- <td>
                             <center>
 
                                 @if (is_null($student_term_data->profile_photo_path))
-                                <img class="user-image img-fluid elevation-1 mx-auto d-block" width="200" height="200" src="https://ui-avatars.com/api/?name={{$student_term_data->name}}+&amp;color=7F9CF5&amp;background=EBF4FF" alt={{$student_term_data->name}} />
+                                <img class="user-image img-fluid elevation-1 mx-auto d-block" width="120" height="120" src="https://ui-avatars.com/api/?name={{$student_term_data->name}}+&amp;color=7F9CF5&amp;background=EBF4FF" alt={{$student_term_data->name}} />
                                 @else
-                                <img class="user-image img-circle elevation-1 " width="220" height="220"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
+                                <img class="user-image img-circle elevation-1 " width="180" height="120"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
                                 @endif
                                
                                 
                                
                             </center>
 
-                        </td>
+                        </td> --}}
 
                         <td>
-                        Term: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
+                         
+                        {{$period}}: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
                         <br>
 
-                        Term Opening Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->start_date)->format('d F Y')}}</span>
+                        {{$period}} Start Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->start_date)->format('d F Y')}}</span>
                         
                         <br>
-                        Term Closing Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->end_date)->format('d F Y')}}</span>
+                        {{$period}} End Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->end_date)->format('d F Y')}}</span>
                         <br>
-                        Next Term Date: <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->next_term_date)->format('d F Y')}}</span>
+                        Next {{$period}} Date: <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->next_term_date)->format('d F Y')}}</span>
                         
-                        <br>
-                        Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
+                     
                         <br>
 
                           
@@ -443,7 +473,7 @@ WHERE sub.student_id=".$student.""));
                         
                   
                         foreach ($attendance as $attendance_key) {
-                       echo 'Days Absent: '.$attendance_key->number_of_absent_days.' '.'out of 58 Days';
+                       echo 'Days Absent: '.$attendance_key->number_of_absent_days.' '.'Days';
                      
                          }
                   
@@ -456,7 +486,7 @@ WHERE sub.student_id=".$student.""));
                              
                        
       <br>
-                        Report regenerated: <span class="text-bold text-italic">{{date('d F Y H:i')}}</span>
+                        Report generated on: <span class="text-bold text-italic">{{date('d F Y H:i')}}</span>
                         <br>
 
 
@@ -488,6 +518,7 @@ grades.stream_id,
     student_subject_averages.student_average,
     student_subject_averages.ca_average,
     student_subject_averages.exam_mark,
+    student_subject_averages.effort_grade,
     subjects.subject_name, 
     subjects.subject_type, 
     subjects.id as subject_id,
@@ -504,7 +535,7 @@ grades.stream_id,
     WHERE student_subject_averages.student_id = ".$student." AND `student_subject_averages`.`term_id` = ".$term." 
     GROUP BY
     student_subject_averages.student_id,
-    subjects.id ORDER BY student_average DESC"));
+    subjects.id ORDER BY subjects.order ASC"));
 
 ?>
 
@@ -795,16 +826,28 @@ from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=stu
     <thead >
         <tr class="hope">
             <th class="background">Subject Name</th> 
-            <th class="background">Continuous Assessment</th>   
-            <th class="background">Subject Average</th>   
-            <th class="background">Subject Position</th>   
-            <th class="background">Symbol</th>
-            <th class="background">Comment</th>
+            @if ($school_is->school_type=="ieb-school")
+<th class="background" style="width:110px">Attained Mark</th>    
+@else
+<th class="background">Continuous Assessment</th>   
+@endif
+          
+      
+           
+            @if ($school_is->school_type=="ieb-school")
+            <th class="background" style="width:110px">Effort Grade</th>
+            <th class="background" style="width:180px">Effort Description</th>
+@else
+<th class="background">Symbol</th>
+<th class="background">Comment</th>
+@endif
+            
             <th class="background">Teacher</th>
 
         </tr>
     </thead>
 
+ 
  
 
    
@@ -815,19 +858,11 @@ from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=stu
       
        
       
-        <td> 
-            @if (is_null($item2->ca_average))
-            -
-            @elseif (($item2->ca_average<$pass_rate))
-            <span class="text-danger">{{round(($item2->ca_average))}}%</span>
-            @else
-            {{round(($item2->ca_average),2)}}%
-            @endif
-        </td>   
+  
         
 
     
-         <td> 
+         <td style="text-align:center"> 
             @if (($item2->student_average<$pass_rate))
             <span class="text-danger">{{($item2->student_average)}}%</span>
             @else
@@ -836,52 +871,52 @@ from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=stu
         </td> 
   
 
-             <td>
+                   
+            @if ($school_is->school_type=="ieb-school")
+            <td style="text-align:center">    {{($item2->effort_grade)}}</td>
+            <td> 
 
-            <?php
-           
- $sub_position=\DB::select(\DB::raw("select t.*
-from (select student_subject_averages.student_id,student_subject_averages.student_average, rank() over (order by student_subject_averages.student_average  desc) as student_position
-from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." AND  student_subject_averages.student_class IN(SELECT teaching_loads.class_id  FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id  where teaching_loads.teacher_id=".$item2->teacher_id."  and grades.stream_id=".$item2->stream_id.") ) t
-where student_id =".$student.""));
-
-$total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads WHERE student_loads.teaching_load_id IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id." AND student_loads.active=1)"));
-
- foreach ($sub_position as $key_position) {
-   
-        foreach($total as $subtotal){
-            echo $key_position->student_position.' / '.$subtotal->total;
-        }
-       
-    
-    
-      }
-?>
-        </td>
-         
-        <td>
-            @foreach ($comments as $comment_symbol)
-              
-            @if(in_array(round($item2->student_average), range($comment_symbol->from,$comment_symbol->to, 0.01)) ) 
+                @foreach ($efforts as $effort_description)
+      
+                @if(in_array(round($item2->effort_grade), range($effort_description->from,$effort_description->to, 0.01)) ) 
+                
+                  {{$effort_description->comment }}
+                   
+                   @endif
             
-              {{$comment_symbol->symbol }}
-               
-               @endif
+                   @endforeach
 
-               @endforeach
-              
             </td>
+@else
+<td>
+    @foreach ($comments as $comment_symbol)
+      
+    @if(in_array(round($item2->student_average), range($comment_symbol->from,$comment_symbol->to, 0.01)) ) 
+    
+      {{$comment_symbol->symbol }}
+       
+       @endif
 
-            <td>
-                @foreach ($comments as $comment)
-                
-                
-                @if( in_array(round($item2->student_average), range($comment->from,$comment->to)) ) 
-                {{$comment->comment}}
-                
-                @endif
-                @endforeach
-                </td>
+       @endforeach
+      
+    </td>
+
+    <td>
+        @foreach ($comments as $comment)
+        
+        
+        @if( in_array(round($item2->student_average), range($comment->from,$comment->to)) ) 
+        {{$comment->comment}}
+        
+        @endif
+        @endforeach
+        </td>
+@endif
+
+        
+           
+         
+    
 
                 <td>
                     {{$item2->salutation}} {{substr($item2->name, 0, 1)}}. {{$item2->lastname}}
@@ -898,6 +933,8 @@ $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total fro
 </table> 
 
 @endif
+
+
 
 
 @if ($report_template->report_colums=="term_assessements")
@@ -951,8 +988,10 @@ SET @sql = CONCAT('SELECT
     DEALLOCATE PREPARE stmt;");
 
 if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
+
 if ($result) {
   do {
+
   if ($res = $db->store_result()) {
       echo "<table class='table table-sm table-bordered' width=100% border=0><tr>";
 
@@ -968,21 +1007,6 @@ if ($result) {
       echo "</tr>\n";
 
 
-//       foreach ($data as $row) {
-//     // Check the value of the mark and determine the CSS class
-//     if ($row['mark'] < 50) {
-//       $class = 'mark-red';
-//     } else {
-//       $class = 'mark-green';
-//     }
-
-//     // Generate the HTML for the table row
-//     echo '<tr>';
-//     echo '<td>' . htmlspecialchars($row['student_name']) . '</td>';
-//     echo '<td class="mark ' . $class . '">' . $row['mark'] . '%</td>';
-//     echo '...';
-//     echo '</tr>';
-//   }
 
 
       // printing table rows
@@ -994,11 +1018,7 @@ if ($result) {
    
     echo "<tr>";
           foreach($row as $cell=>$value) {
-        //   foreach ($cell as $key => $value) {
-        
-        //   }
-
-     
+      
   
         if (htmlspecialchars($value) < $pass_rate) {
         $class = 'class=text-danger';
@@ -1361,32 +1381,85 @@ foreach ($term_average as $student_term_data) {
 <table class="table table-sm table-bordered">
     <thead >
         <tr class="hope">
+        
+
+            @if ($school_is->school_type=="ieb-school")
+            <th class="background">Class Tutor's Comment</th>    
+            @else
             <th class="background">Class Teacher's Comment</th>
-            <th class="background">Head Teacher's Comment</th>    
-           
+            @endif
+
+            @if ($school_is->school_type=="ieb-school")
+            <th class="background">Home Room Teacher's Comment</th>    
+            @endif
+            @if ($school_is->school_type=="ieb-school")
+                @else
+                <th class="background">Head Teacher's Comment</th>  
+            @endif
+        
+         
         </tr>
     </thead>
 
     <tbody>
         <tr>
             <td>
-                @foreach ($class_teacher_comments as $teacher_comment)
-                   
-                @if (in_array(number_format($student_term_data->student_average), range($teacher_comment->from,$teacher_comment->to,  0.01)) )
-               {{$teacher_comment->comment}}
-                    
+
+                @if ($school_is->school_type=="ieb-school")
+               
+                <?php
+                        
+
+                $teacher_2 =\DB::select(\DB::raw('SELECT custom_comments.comment FROM custom_comments where manager_type=2  AND student_id='.$student_term_data->leaner_id.''));
+                foreach ($teacher_2 as $teacher_comment) {
+                
+                echo '<span ">'.$teacher_comment->comment.' </span>';
+                
+                
+                }
+                
+                                            ?>
+
+
+                @else
+
+
                 @endif
-                @endforeach
-            </td>
+             
+            </td>                                                                                                                  
 
             <td>
-                @foreach ($headteacher_comments  as $headteacher_comment)
-                @if (in_array(number_format($student_term_data->student_average), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
-                {{$headteacher_comment->comment}}
+
+                @if ($school_is->school_type=="ieb-school")
                     
+                <?php
+                        
+
+                $teacher_1 =\DB::select(\DB::raw('SELECT custom_comments.comment FROM custom_comments where manager_type=1  AND student_id='.$student_term_data->leaner_id.''));
+                foreach ($teacher_1 as $teacher_comment) {
+                
+                echo '<span >'.$teacher_comment->comment.' </span>';
+                
+                
+                }
+                
+                                            ?>
+
+                @else
+                
+                    @foreach ($headteacher_comments  as $headteacher_comment)
+                    @if (in_array(number_format($student_term_data->student), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
+                    {{$headteacher_comment->comment}}
+                        
+                    @endif
+                    @endforeach   
+               
+
                 @endif
-                @endforeach   
+             
             </td>
+
+          
         </tr>
     </tbody>
 
@@ -1405,7 +1478,13 @@ foreach ($term_average as $student_term_data) {
 
                     <div class="col">
                         <div id="signaturetitle">
-                          Class Teacher Signature
+
+                            @if ($school_is->school_type=="ieb-school")
+                            Class Tutor Signature 
+                            @else
+                            Class Teacher Signature 
+                            @endif
+                         
                           </div>
                           <div class="text-center">
 
@@ -1413,39 +1492,63 @@ foreach ($term_average as $student_term_data) {
                             <?php
                         
 
-$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 "));
+$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname, users.avatar FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 AND class_manager_status=2" ));
 foreach ($class_t as $key_t) {
 
 echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
 
+echo '<br>';
+echo '<img class="img-fluid" width="90px" height="90px" src='.$key_t->avatar.' >';
+
 
 }
-
-
-
 
                             ?>
                           </div>
 
                        </div>
 
-                    
+
+                       @if ($school_is->school_type=="ieb-school")
+
                        <div class="col">
                         <div id="signaturetitle">
-                           Headteacher's Signature:
+
+                           
+                            Home Room Teacher Signature 
+                         
+                         
                           </div>
                           <div class="text-center">
-                          @if ($variable->principal_signature==1)
-                         
-                            <img class="img-fluid " width="140" height="140" src="{{$school_is->base64}} " alt="">
-                               @else       
-                               <img class="img-fluid " width="120" height="120" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">            
-                          @endif
-                         
-                        </div>
+
+                            <?php
+                        
+
+                            $class_hr=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname, users.avatar FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 AND class_manager_status=1 " ));
+                            foreach ($class_hr as $key_hr) {
+                            
+                            echo '<span class="font-italic font-weight-light">'.substr($key_hr->name, 0, 1).'  '.$key_hr->lastname.' </span>';
+
+                            echo '<br>';
+
+                            echo '<img class="img-fluid" width="90px" height="90px" src='.$key_hr->avatar.' >';
+                            
+                            
+                            }
+                            
+                                                        ?>
+              
+                          </div>
+
+                       </div>
+                      
+                       @else
+                     
+                       @endif
 
                        
-                    </div>
+
+                   
 
                   
 
@@ -1457,7 +1560,7 @@ School Stamp
                         </div>
                         <div class="text-center">
                             @if ($variable->school_stamp==1)
-                            <img class="img-fluid " width="140" height="140" src="{{$school_is->school_stamp}} " alt="">  
+                            <img class="img-fluid " width="220" height="220" src="{{$school_is->school_stamp}} " alt="">  
                             @else
                             <img class="img-fluid " width="140" height="140" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">
                             @endif
@@ -1474,6 +1577,7 @@ School Stamp
                         <tr class="hope">
                             <th class="background">Passing Criteria</th>
                             <th class="background">Subject Average Calculation</th>    
+                            {{-- <th class="background">Categorization Of Assessements</th>     --}}
                             <th class="background">Term Average Calculation</th>   
                         
                 
@@ -1486,7 +1590,7 @@ School Stamp
                              In order for a student to pass, she/he must at least get.
                             <ul>
                               
-                              <li>A minimum average of at least <span class="text-bold">{{$pass_rate}}%</span></li> 
+                              <li>A minimum term average of at least <span class="text-bold">{{$pass_rate}}%</span></li> 
                               {{-- 2. language and number of subjects --}}
                               <li>An average of <span class="text-bold">{{$pass_rate}}% or more </span> in at least {{$number_of_subjects}} subjects 
                                   
@@ -1504,66 +1608,71 @@ School Stamp
                             </ul>
                         
                         </td>
+
+                        {{-- <td>kjfkjdf</td> --}}
                 
                         <td> {{$student_term_data->name}}'s term average was calculated based on the following criterion;
                             <ul>
                             
                                 @if ($calculation_type=="default")
-                                <li> Average of  all subjects  excluding {{$non_value_subject_name}} 
-                                </li> 
+                                <li> Average of  all subjects  excluding   @foreach ($non_value_subject_name as $non_value)
+                                    {{$non_value->subject_name}}
+                                @endforeach</li>
+                                
                                    @endif
                                
 
                                    @if ($calculation_type=="custom")
                                   
                                 <li> Average of  <strong>best {{$number_of_subjects}} subjects </strong>@if ($passing_subject_rule==1)
-                                    inclusive of  <span class="text-bold">English Language</span>@endif  excluding {{$non_value_subject_name }}</li>
+                                    inclusive of  <span class="text-bold">English Language</span>@endif  excluding @foreach ($non_value_subject_name as $non_value)
+                                        $non_value->subject_name
+                                    @endforeach</li>
                                 </li> 
                                     
                                 @endif
 
                             
-                            </ul></td>
+                            </ul>
+                        </td>
                 
-                       
+                     
                 
                       </tr>
                     
             
                 </table> 
+
+                <div class="row col-12 mt-2">
+                    <div class="col">
+                        <div id="signaturetitle">
+
+                        <img src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1687180151/Screenshot_2023-06-19_at_3.08.55_PM_bjljsd.png" width="120px" height="120px" class="img-fluid " alt="">
                     
-
-                   <center><small>&copy; Report generated by the <strong>Shunifu Platform</strong>-Developed by <strong>Innovazania</strong> based at the <strong>Royal Science & Technology Park</strong>  7689 0726 | 2517 9448</small></center>
-                  
-                   {{-- <center><span class="text-center text-bold">SHUNIFU is supported by:</span> 
-                    <div class="row align-items-center" style="padding: 10px 0px 0px 40px;">
-
-                        <div class="col">
-                           
-                                <img width="70" height="50" src="https://i0.wp.com/swaziaidsprogram.org/wp-content/uploads/2016/03/COAT-OF-ARMS-lite.jpg" alt="">  
-                            
-                        </div>
-                        <div class="col">
-                           
-                                <img class="img-fluid " width="30" height="30" src="https://rstp.org.sz/wp-content/uploads/2021/05/logo.png" alt="">  
-                            
-                        </div>
-
-                        <div class="col">
-                           
-                                <img class="img-fluid " width="50" height="50" src="https://scontent.fmts2-2.fna.fbcdn.net/v/t39.30808-6/271723633_230907602550991_1404130140181354290_n.jpg?_nc_cat=102&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=cnm8aDqhXu4AX9raYhM&_nc_ht=scontent.fmts2-2.fna&oh=00_AfCysYK7VbWwo8Nd0na6Hi9oVQ4XR5X7LQ47__TdVeErJQ&oe=647439B3" alt="">  
-                           
-                        </div>
-
-                        <div class="col">
-                         
-                                <img class="img-fluid " width="60" height="60" src="https://scontent.fmts2-1.fna.fbcdn.net/v/t39.30808-6/326057008_893819222037625_8604329256953122806_n.jpg?_nc_cat=111&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=MMtAmtKF_ZAAX_dgjsx&_nc_ht=scontent.fmts2-1.fna&oh=00_AfB70tQ2_fpgKd426OwnqpeDHcyWySgJ0pBl4Xqf7xvGJg&oe=64748EAE" alt="">  
-                            
-                        </div>
-
                     </div>
+                    </div>
+
+                    <div class="col">
+                        <div id="signaturetitle">
+
+                            <img src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1687176660/Screenshot_2023-06-19_at_2.10.18_PM_ek6ppo.png" width="60px" height="60px" class="img-fluid " alt="">
                     
-                </center> --}}
+                    </div>
+                    </div>
+
+                    <div class="col">
+                        <div id="signaturetitle">
+                        <img src="https://nikkibush.com/wp-content/uploads/2020/07/isasa-logo.png.webp" width="100px" height="100px" class="img-fluid "  alt="" srcset="">
+                    </div>
+                   </div>   
+                </div>
+
+                   <center>
+                  <hr>
+                    
+                    <small>&copy; Report generated by the <strong>Shunifu School Management  Platform</strong></small></center>
+                  
+             
                
     
 

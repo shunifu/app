@@ -18,7 +18,7 @@
 // $name="St Francis High";
 // }
 
-
+use Illuminate\Support\Facades\Facade;
 
 return [
 
@@ -246,7 +246,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         \Yajra\Datatables\DataTablesServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
         
+     
 
         /*
          * Package Service Providers...
@@ -327,6 +329,10 @@ return [
         'Clickatell' => Clickatell\ClickatellFacade::class,
         'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
         'LaravelPwa' => \Ladumor\LaravelPwa\LaravelPwa::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+        'aliases' => Facade::defaultAliases()->merge([
+            'Image' => \Intervention\Image\Facades\Image::class,
+        ])->toArray(),
 
     ],
 
