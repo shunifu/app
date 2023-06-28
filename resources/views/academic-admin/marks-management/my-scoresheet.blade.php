@@ -31,11 +31,6 @@
         <div class="card card-light   elevation-3">
            
             <div class="card-body">
-
-                <p >
-                    Use this section to view a scoresheet of your marks at teaching-load level. This is more helpful when you want to see the perfomance of your students for specific assessements. For example if you want to see how you class performed for Test 1, Test 2, Test 3 (all appearing in one scoresheet), just select the teaching load, the assessements you want to view and lastly select how you want the average to be calculated.
-                 </p>
-                 <hr>
                 <form action="{{ route('marks.teacher_scoresheet_view') }}" method="post">
 
                             @csrf
@@ -75,13 +70,13 @@
                                     <x-jet-label>Select AVG Settings</x-jet-label><br>
                                     <select class="form-control" name="settings" id="settings" >
                                         <option value="">Select Settings</option>
-                                        <option value="0"> Average of selected assessements</option>
+                                        <option value="0"> AVG of selected assessements</option>
 
                                         @foreach ($terms as $term_item)
                                         <option value="{{$term_item->term_id}}">{{$term_item->term_name}} settings</option>
                                         @endforeach
                                     </select>
-                                    @error('settings')
+                                    @error('assessement_id')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
