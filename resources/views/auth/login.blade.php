@@ -37,7 +37,7 @@
 </script>
 
 
-
+<link rel="manifest" href="https://progressier.com/client/progressier.json?id=mRuQhHD6PyzeinPjlO9K"><script defer src="https://progressier.com/client/script.js?id=mRuQhHD6PyzeinPjlO9K"></script> 
 
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">

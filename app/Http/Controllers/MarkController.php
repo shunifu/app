@@ -24,10 +24,7 @@ use Illuminate\Support\Facades\Redirect;
 use Svg\Tag\Rect;
 use App\Traits\GreetingsTrait;
 use App\Traits\MarksTrait;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
-use function PHPUnit\Framework\isNull;
 
 class MarkController extends Controller
 {
@@ -74,26 +71,7 @@ class MarkController extends Controller
                    $table->integer('marks_mode');
                    $table->timestamps();
            });
-
-           
        }
-
-       if (!Schema::hasColumn('mark_settings', 'effort_grade_status')) {
-        
-        Schema::table('mark_settings', function (Blueprint $table) {
-
-            $table->integer('effort_grade_status')->default('0');
-        });
-    }
-
-
-    if (!Schema::hasColumn('marks', 'effort_grade')) {
-        
-        Schema::table('marks', function (Blueprint $table) {
-
-            $table->integer('effort_grade')->nullable();
-        });
-    }
 
         $checkmode=MarkSetting::first();
 
@@ -123,7 +101,6 @@ class MarkController extends Controller
     public function store(Request $request)
     {
 
-     //   dd($request->all());
         //Insert or ignore
 
         $activeSession=AcademicSession::where('active', 1)->first();
@@ -138,13 +115,12 @@ for($i = 0; $i < count($request->student_id); $i++) {
     $load_id=$request->teaching_load_id[$i];
     $teacher_id=$request->teacher_id[$i];
     $assessement_id=$request->assessement_id[$i];
-    $effort_grade=$request->effort_grade[$i];
     
 
     //Delete duplicates
 
     
-   if(is_null($request->marks[$i]) AND is_null($effort_grade)){
+   if(is_null($request->marks[$i])){
 
 
 
@@ -154,7 +130,6 @@ for($i = 0; $i < count($request->student_id); $i++) {
         ['student_id'=>$students,
         'teaching_load_id'=>$load_id,
         'mark'=>$request->marks[$i],
-        'effort_grade'=>$effort_grade,
         'teacher_id'=>$teacher_id,
         'assessement_id'=>$assessement_id, 
         'session_id'=>$session_id
@@ -270,9 +245,6 @@ return redirect('/marks');
         $checkmode=MarkSetting::first();
 
         $mark_mode=$checkmode->marks_mode;
-        $effort_grade_status=$checkmode->effort_grade_status;
-
-
 
         if($mark_mode==1){
             //if marks mode = Strict Mode
@@ -283,22 +255,12 @@ return redirect('/marks');
             
         }
 
-
-        //if effort
-
         //Deadline Checker
 
         $deadline_data=Assessement::where('id', $assessement_id)->first();
         $deadline=$deadline_data->marks_deadline;
 
         $current_date=(date("Y-m-d H:i:s"));
-
-        if(empty($deadline)){
-
-            flash()->overlay('<i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i>'.' Sorry '.Auth::user()->name . '. The deadline for this assessment has not been set. Please request the school principal to attach a deadline to this assessement.', 'Add Marks');
-            return redirect('/marks');
-
-        }
        
 
 
@@ -308,11 +270,6 @@ return redirect('/marks');
           
             
             //check if current date is greater than deadline
-
-            // if(($current_date>$deadline)){
-
-            // }
-
 
             if($current_date>$deadline){
 
@@ -344,7 +301,6 @@ $array = implode("','",$string);
             grades.grade_name,
             grades.id as grade_id,
             (SELECT marks.mark from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1)  AS mark,
-            (SELECT marks.effort_grade from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1)  AS effort_grade,
             (SELECT marks.id from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1) AS mark_id
            FROM
                student_loads
@@ -379,7 +335,7 @@ $array = implode("','",$string);
         // dd($loads_description);
 
  
-    return view('academic-admin.marks-management.show', compact('greetings', 'teaching_loads', 'assessements', 'students', 'assessement_id', 'loads_description', 'assessement_description', 'mode_value', 'effort_grade_status'));      
+    return view('academic-admin.marks-management.show', compact('greetings', 'teaching_loads', 'assessements', 'students', 'assessement_id', 'loads_description', 'assessement_description', 'mode_value'));      
 
     }
 }
@@ -673,16 +629,14 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
         users.lastname,
         grades.grade_name,
         subjects.subject_name, 
-     	(SELECT COUNT(*) from student_loads INNER JOIN users on users.id=student_loads.student_id  WHERE  student_loads.teaching_load_id=teaching_loads.id AND teaching_loads.active=1 AND student_loads.active=1 AND users.active=1) as total_loads,
+     	(SELECT COUNT(*) from student_loads WHERE  student_loads.teaching_load_id=teaching_loads.id AND teaching_loads.active=1 AND student_loads.active=1) as total_loads,
     	(SELECT COUNT(*) from marks  WHERE marks.assessement_id=".$request->assessement_id." AND marks.teaching_load_id=teaching_loads.id AND marks.active=1 AND teaching_loads.active=1 ) as marks_count
-       	FROM teaching_loads 
+       	FROM teaching_loads
         INNER JOIN users ON users.id=teaching_loads.teacher_id 
         INNER JOIN subjects ON subjects.id=teaching_loads.subject_id 
         INNER JOIN grades ON grades.id=teaching_loads.class_id 
-        INNER JOIN student_loads ON student_loads.teaching_load_id=teaching_loads.id 
+       
         where teaching_loads.active=1 AND users.active=1
-
-        GROUP BY student_loads.teaching_load_id
       
         ORDER BY grades.grade_name
 "));
@@ -921,8 +875,8 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
         return view('academic-admin.marks-management.show-scoresheet', compact('variable','greetings','teaching_loads','assessements','assessement','pass_rate' ,'loads_description', 'subject_description', 'loads'));
         }else{
              
-            flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i>'.' Sorry. When you are using multiple teaching loads, the classes must be within the same stream, and the subjects be the same .', 'View Scoresheet');
-     return Redirect::back();
+     flash()->overlay('<i class="fas fa-exclamation-circle warning"></i>'.' Sorry. When you are using multiple selections, the load must be the same stream, same subject.', 'View Marks');
+     Redirect::back();
         }
          
 
@@ -930,141 +884,4 @@ return view('academic-admin.marks-management.check-marks', compact('check','asse
        
 
     }
-
-
-
-    public function teacher_comment_index(){
-
-        $greetings= $this->greetings();
-        $assessements= $this->assessements();
-        $teaching_loads= $this->teaching_loads();
-
-
-        $terms = DB::table('terms')
-         ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
-         ->where('academic_sessions.active', 1)
-         ->select('term_name', 'terms.id as term_id', 'academic_sessions.id as active_session')
-         ->get();
-
-        return view('academic-admin.marks-management.my-comment', compact('greetings','teaching_loads','assessements', 'terms'));
-
-    }
-
-
-    public function teacher_comment_view( Request $request){
-             // Validation
-             $validator=$request->validate([
-                'teaching_load'=>'required',
-                'reporting_cycle'=>'required',
-                'report_type'=>'required',
-               
-            ]);
-
-
-            $loads=$request->teaching_load;
-            $greetings= $this->greetings();
-            $assessements= $this->assessements();
-            $teaching_loads= $this->teaching_loads();
-
-
-            $loads_description = DB::table('teaching_loads')
-            ->join('grades', 'teaching_loads.class_id', '=', 'grades.id')
-            ->join('subjects', 'teaching_loads.subject_id', '=', 'subjects.id')
-            ->wherein('teaching_loads.id', $loads)
-            ->where('teaching_loads.active', 1)
-            ->select('grade_name', 'subject_name', 'teaching_loads.id as teaching_load_id')
-            ->get();
-
-
-            $loads_subject = DB::table('teaching_loads')
-            ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
-            ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
-            ->whereIn('teaching_loads.id',$loads )
-            ->select('subjects.id as subject_id', 'grades.id as class_id')
-            ->get()->pluck('subject_id')->toArray();
-   
-   
-            $loads_class = DB::table('teaching_loads')
-            ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
-            ->join('streams', 'streams.id', '=', 'grades.stream_id')
-            ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
-            ->whereIn('teaching_loads.id',$loads )
-            ->select('subjects.id as subject_id', 'grades.id as class_id', 'streams.id as stream_id')
-            ->get()->pluck('stream_id')->toArray();
-   
-         
-
-           $subject_description=Subject::where('id',$loads_subject[0])->first();
-   
-          
-           $identical_class=(count(array_unique($loads_class)) == 1);
-           $identical_subject=(count(array_unique($loads_subject)) == 1);
-
-          
-        if ($identical_class AND $identical_subject) {
-
-        return view('academic-admin.marks-management.show-my-comments', compact('greetings','teaching_loads','loads_description', 'subject_description', 'loads'));
-        }else{
-             
-        flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i>'.' Sorry. When you are using multiple teaching loads, the classes must be within the same stream, and the subjects be the same .', 'View Comments');
-        return Redirect::back();
-
-        }
-   
-       
- 
-
-
-       
-    
-    
-    }
-
-    public function edit_marks_data(Request $request){
-
-
-$code=$request->code;   
-$effort_grade=$request->effort_grade;
-
-//sdd(array_replace_recursive($code, $effort_grade));
-
-//$result = array_merge_recursive_distinct($code, $effort_grade);
-//dd($result);
-
-//  dd($request->all());//  dd($request->code);
-
-
-
-        foreach ($code as $key => $value) {
-
-           
-   
-
-            $mark_id=$code[$key];
-            $effort_grade_new=$effort_grade[$key];
-
-          
-  
-
-          $update=Mark::where('id',$mark_id)->update([ 'effort_grade'=>$effort_grade_new]);
-        
-         
-        }
-
-        flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have updated marks data.', 'Update Marks');
-        return redirect('/marks/my-scoresheet');
-
-        }
-
-
-    
-    }
-
-
-
-
-
-
-
-
-
+}
