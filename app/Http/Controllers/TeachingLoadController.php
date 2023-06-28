@@ -516,33 +516,41 @@ return Redirect::back();
 
    public function transfer_loads_step2_some(Request $request){
 
-    dd($request->all());
+ //   dd($request->all());
 
 
 $teaching_load_id=$request->teaching_load;
 $transfer_to=$request->teacher_id;
 $students=$request->students;
 
-$teaching_load_details=TeachingLoad::where('teaching_load_id')->first();
+
+
+
+$teaching_load_details=TeachingLoad::where('id',$teaching_load_id )->first();
+// dd($teaching_load_details);
 $subject_id=$teaching_load_details->subject_id;
-$grade_id=$teaching_load_details->grade_id;
+$grade_id=$teaching_load_details->class_id;
 $transfer_from=$teaching_load_details->teacher_id;
-$academic_session=$teaching_load_details->academic_session;
+$academic_session=$teaching_load_details->session_id;
 
 //Logic
 
 //1. First check if the teaching load exists
-$teachingLoadExists=TeachingLoad::where('teacher_id', $transfer_to)->where('subject_id',$subject_id)->where('active', 1)->where('class_id',$grade_id)->exists();
+$teachingLoadExists=TeachingLoad::where('teacher_id', $transfer_to)->where('subject_id',$subject_id)->where('session_id',$academic_session)->where('active', 1)->where('class_id',$grade_id)->exists();
 
 if ($teachingLoadExists) {
   //2. If it exists then do not create teaching load
   //but attach students to that load
 
+  //Get new teachers teaching load
+  $existingLoadID=TeachingLoad::where('teacher_id', $transfer_to)->where('subject_id',$subject_id)->where('session_id',$academic_session)->where('active', 1)->where('class_id',$grade_id)->first();
+  $new_load_id=$existingLoadID->id;
+
  //teaching_loads-change teacher_id to to_transfer
-$update_student_load=StudentLoad::where('id',$teaching_load_id)->whereIn('student_id',$students)->update(["teacher_id"=>$transfer_to]);
+$update_student_load=StudentLoad::where('teaching_load_id',$teaching_load_id)->whereIn('student_id',$students)->update(["teaching_load_id"=>$new_load_id]);
 
 //marks-change teacher_id
-$update_marks=Mark::where('teaching_load_id',$teaching_load_id)->whereIn('student_id',$students)->update(["teacher_id"=>$transfer_to]);
+$update_marks=Mark::where('teaching_load_id',$teaching_load_id)->whereIn('student_id',$students)->update(["teaching_load_id"=>$new_load_id, "teacher_id"=>$transfer_to]);
   
 
 
@@ -562,11 +570,13 @@ $update_marks=Mark::where('teaching_load_id',$teaching_load_id)->whereIn('studen
 
 //Attach students to new teaching load
 
+
+
 //teaching_loads-change teacher_id to to_transfer
-$update_student_load=StudentLoad::where('id',$createTeachingLoad->id)->whereIn('student_id',$students)->update(["teacher_id"=>$transfer_to]);
+$update_student_load=StudentLoad::where('teaching_load_id',$teaching_load_id)->whereIn('student_id',$students)->update(["teaching_load_id"=>$createTeachingLoad->id]);
 
 //marks-change teacher_id
-$update_marks=Mark::where('teaching_load_id',$createTeachingLoad->id)->whereIn('student_id',$students)->update(["teacher_id"=>$transfer_to]);
+$update_marks=Mark::where('teaching_load_id',$teaching_load_id)->whereIn('student_id',$students)->update(["teaching_load_id"=>$createTeachingLoad->id,"teacher_id"=>$transfer_to]);
 
 
 
