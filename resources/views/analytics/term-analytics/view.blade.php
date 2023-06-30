@@ -161,7 +161,7 @@ th span {
         <th><span>TechStudies</span></th>
         <th><span>Entrep</span></th>
         <th><span>AgcriTech</span></th>
-        <th><span>AS</span></th>
+        {{-- <th><span>AS</span></th> --}}
         <th><span>BA</span></th>
         @endif
         @endforeach
@@ -600,7 +600,7 @@ th span {
                         <span class="text-danger">{{ $student->AgiculturalTechnology}}% </span>
                         @endif
                     </td>  
-                    <td class="align-middle p-2">
+                    {{-- <td class="align-middle p-2">
                         @if ($student->AS>=$pass_rate)
                         <span class="text-secondary">{{ $student->AS}}% </span>
                         @elseif(is_null($student->AS))
@@ -608,7 +608,7 @@ th span {
                         @elseif($student->AS<$pass_rate )
                         <span class="text-danger">{{ $student->AS}}% </span>
                         @endif
-                    </td> 
+                    </td>  --}}
 
                     <td class="align-middle p-2">
                         @if ($student->BusinessAccounting>=$pass_rate)
