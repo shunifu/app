@@ -71,9 +71,9 @@
               <td>  
        
                     @if (is_null($item->profile_photo_path))
-                    <img id="icon" class="img-responsive img-rounded" style="max-height: 50px; max-width: 50px;" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1687803676/Screenshot_2023-06-26_at_8.20.45_PM_xc7daq.png">   
+                    <img id="icon" class="img-responsive img-rounded" style="max-height: 100px; max-width: 100px;" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1687803676/Screenshot_2023-06-26_at_8.20.45_PM_xc7daq.png">   
                     @else
-                    <img  class="img-responsive img-rounded" style="max-height: 50px; max-width: 50px;" src="{{$item->profile_photo_path}}">
+                    <img  class="img-responsive img-rounded" style="max-height: 100px; max-width: 100px;" src="{{$item->profile_photo_path}}">
                     @endif
                   
                  

@@ -178,7 +178,7 @@ SET @sql = CONCAT('SELECT
   
     ', @sql, ',
       ROUND(AVG(marks.mark)) as Average,
-      marks.effort_grade as EffortGrade,
+    
       marks.id as code
     from marks 
     INNER JOIN assessements ON assessements.id = marks.assessement_id

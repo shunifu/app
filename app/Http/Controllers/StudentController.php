@@ -121,11 +121,15 @@ class StudentController extends Controller
             $image = $request->file('student_image');
           //  Image::make($image->getRealPath())->resize(150, 150);
 
-          $image_new=ImageOptimizer::optimize($image);
+$student_image = cloudinary()->upload($request->file('student_image')->getRealPath(), [ 'folder' => 'shunifu', 'transformation' => [ 'quality' => 85,'fetch_format' => true
+	 ]
+])->getSecurePath();
 
-            $image_new = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $code.'-'.$student_id);
+        //   $image_new=ImageOptimizer::optimize($image);
 
-            $student_image=$image_new->getSecurePath();
+        //     $image_new = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $code.'-'.$student_id);
+
+        //     $student_image=$image_new->getSecurePath();
     
     
     
