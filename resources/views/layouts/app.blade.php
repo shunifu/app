@@ -338,6 +338,9 @@
  
           </li>
 
+
+          
+
          @endrole
 
 @role('parent')
@@ -1278,6 +1281,59 @@
                   </p>
                 </a>
               </li>
+
+
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-book-reader"></i>
+                  <p>
+                   Stands Management 
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+               
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('teacher.teaching_loads')}}" class="nav-link">
+                       <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Add  Strands</p>
+                    </a>
+                  </li>
+                </ul>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('teaching_loads.show')}}" class="nav-link">
+                       <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Manage Strands</p>
+                    </a>
+                  </li>
+                </ul>
+    
+    
+           
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('admin_check.loads') }}" class="nav-link">
+                       <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Strands Management</p>
+                    </a>
+                  </li>
+                </ul>
+            
+    
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="/teaching-loads/transfer/" class="nav-link">
+                       <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Transfer Loads</p>
+                    </a>
+                  </li>
+                </ul>
+     
+     
+              </li>
+    
+
               <li class="nav-item">
                 <a href="{{ route('allocation.create') }}" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
