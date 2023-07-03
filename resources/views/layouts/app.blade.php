@@ -1877,34 +1877,34 @@
                 </a>
               </li>
 
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{route('student.images')}}" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Student Images</p>
                 </a>
-              </li>
+              </li> --}}
 
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="/students/online-registrations" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Online Registration</p>
                 </a>
-              </li> 
+              </li>  --}}
             
              
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ route('student.manage')}}" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Class List</p>
                 </a>
-              </li> 
+              </li>  --}}
 
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="/testimonial/create" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>Testimonial</p>
                 </a>
-              </li> 
+              </li>  --}}
               <li class="nav-item">
                 <a href="/link/students-parents/" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
