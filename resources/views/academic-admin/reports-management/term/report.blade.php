@@ -421,14 +421,14 @@ WHERE sub.student_id=".$student.""));
 
                         <td>
                         Term: <span class="text-bold">{{$student_term_data->term_name}} {{$student_term_data->academic_session}}</span>
-                        <br>
+                        {{-- <br>
 
-                        Term Opening Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->start_date)->format('d F Y')}}</span>
+                        Term Opening Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->start_date)->format('d F Y')}}</span> --}}
                         
-                        <br>
+                        {{-- <br>
                         Term Closing Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->end_date)->format('d F Y')}}</span>
                         <br>
-                        Next Term Date: <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->next_term_date)->format('d F Y')}}</span>
+                        Next Term Date: <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->next_term_date)->format('d F Y')}}</span> --}}
                         
                         <br>
                         Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
