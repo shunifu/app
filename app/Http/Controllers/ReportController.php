@@ -499,6 +499,8 @@ class ReportController extends Controller
             ->get()->pluck('student_id');
         }
 
+     //   dd($students);
+
         //List of students in the stream
        
 //end of stream based

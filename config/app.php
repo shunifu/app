@@ -180,8 +180,8 @@ return [
     'DB_PASSWORD'=>'',
 
 
-    'DB_CONNECTION' => 'shunifuservices',
-    'DB_SHUNIFU_SERVICES' => 'shunifuservices',
+    // 'DB_CONNECTION' => 'shunifuservices',
+    // 'DB_SHUNIFU_SERVICES' => 'shunifuservices',
    
 
 
