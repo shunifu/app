@@ -502,12 +502,7 @@ class ReportController extends Controller
             ->get()->pluck('student_id');
 
 
-            $activeYear=AcademicSession::where('active',1)->first();
-            $activeYearIs=$activeYear->academic_session;
-
-            $Remove = StudentClass::where('active', 1)->where('academic_session','!=',$activeYearIs)->update([
-                "active"=>'0',
-            ]);
+           
         }
         if($p_key=="class_based"){
             $students = DB::table('grades_students')
