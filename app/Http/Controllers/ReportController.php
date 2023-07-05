@@ -483,11 +483,9 @@ class ReportController extends Controller
         $activeYear=AcademicSession::where('active',1)->first();
         $activeYearIs=$activeYear->id;
 
-        $Remove = StudentClass::where('active', 0)->where('academic_session','=',$activeYearIs)->update([
-            "active"=>'1',
+        $Remove = StudentClass::where('active', 1)->where('academic_session','!=',$activeYearIs)->update([
+            "active"=>'0',
         ]);
-
-        
         
         //if stream based
         if($p_key=="stream_based"){
@@ -502,7 +500,6 @@ class ReportController extends Controller
             ->get()->pluck('student_id');
 
 
-           
         }
         if($p_key=="class_based"){
             $students = DB::table('grades_students')
