@@ -486,6 +486,8 @@ class ReportController extends Controller
         $Remove = StudentClass::where('active', 1)->where('academic_session','!=',$activeYearIs)->update([
             "active"=>'0',
         ]);
+
+        
         
         //if stream based
         if($p_key=="stream_based"){
