@@ -28,6 +28,7 @@ use App\Models\AssessementProgressReport;
 use App\Models\CA_Exam;
 use App\Models\ReportTemplate;
 use App\Models\ReportVariable;
+use App\Models\StudentClass;
 use Google\Service\CloudAsset\Asset;
 use Illuminate\Database\Schema\Blueprint;
 use Maatwebsite\Excel\Concerns\ToArray;
@@ -487,7 +488,16 @@ class ReportController extends Controller
             ->where('grades.stream_id', $stream)
             ->where('grades_students.active', 1)
             ->where('users.active', 1)
+            ->where('academic_session.active',1)
             ->get()->pluck('student_id');
+
+
+            $activeYear=AcademicSession::where('active',1)->first();
+            $activeYearIs=$activeYear->academic_session;
+
+            $Remove = StudentClass::where('active', 1)->where('academic_session','!=',$activeYearIs)->update([
+                "active"=>'0',
+            ]);
         }
         if($p_key=="class_based"){
             $students = DB::table('grades_students')
@@ -496,6 +506,7 @@ class ReportController extends Controller
             ->where('grades_students.grade_id', $classofstudent)
             ->where('grades_students.active', 1)
             ->where('users.active', 1)
+            ->where('academic_session.active',1)
             ->get()->pluck('student_id');
         }
 
