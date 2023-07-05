@@ -480,12 +480,12 @@ class ReportController extends Controller
         //end of subject average calculation
 
 
-        $activeYear=AcademicSession::where('active',1)->first();
-        $activeYearIs=$activeYear->id;
+        // $activeYear=AcademicSession::where('active',1)->first();
+        // $activeYearIs=$activeYear->id;
 
-        $Remove = StudentClass::where('active', 1)->where('academic_session','!=',$activeYearIs)->update([
-            "active"=>'0',
-        ]);
+        // $Remove = StudentClass::where('active', 1)->where('academic_session','!=',$activeYearIs)->update([
+        //     "active"=>'0',
+        // ]);
         
         //if stream based
         if($p_key=="stream_based"){
