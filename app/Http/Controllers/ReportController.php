@@ -483,8 +483,8 @@ class ReportController extends Controller
         $activeYear=AcademicSession::where('active',1)->first();
         $activeYearIs=$activeYear->id;
 
-        $Remove = StudentClass::where('active', 1)->where('academic_session','!=',$activeYearIs)->update([
-            "active"=>'0',
+        $Remove = StudentClass::where('active', 0)->where('academic_session','=',$activeYearIs)->update([
+            "active"=>'1',
         ]);
 
         
