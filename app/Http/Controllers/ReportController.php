@@ -488,7 +488,7 @@ class ReportController extends Controller
             ->where('grades.stream_id', $stream)
             ->where('grades_students.active', 1)
             ->where('users.active', 1)
-            ->where('academic_session.active',1)
+            ->where('academic_sessions.active',1)
             ->get()->pluck('student_id');
 
 
