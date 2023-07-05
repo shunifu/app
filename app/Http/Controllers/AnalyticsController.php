@@ -259,7 +259,7 @@ class AnalyticsController extends Controller
         //Beginning of Assessement Stream-Based outcomes
         if ($request->category=="stream") {
 
-         //   dd($request->all());
+           dd($request->all());
             
 
             //chosen stream
