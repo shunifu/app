@@ -1343,7 +1343,19 @@ $streams=Grade::all();
 return view('users.students.parent-link.index',compact('streams'));      
 }
 
+
 public function  parent_link_class_teacher(Request $request){
+    $session=AcademicSession::where('active',1)->first();
+    $class=DB::table('grades_teachers')
+    ->join('academic_sessions','grades_teachers.academic_session','=','academic_sessions.id')
+    ->join('grades','grades_teachers.grade_id','=','grades.id')
+    ->where('grades_teachers.teacher_id', Auth::user()->id)
+    ->where('grades_teachers.academic_session', $session->id)
+    ->select('grades.id as grade_id', 'grades.grade_name')->get();
+    return view('users.students.parent-link.classteacher.index_classteacher',compact('class'));      
+    }
+
+public function  parent_link_admin(Request $request){
 
     $session=AcademicSession::where('active',1)->first();
     // $streams=DB::table('grades_teachers')
@@ -1385,6 +1397,27 @@ ORDER BY `grades`.`grade_name`,`users`.`lastname`  ASC"));
 return view('users.students.parent-link.list',compact('students'));
 
 }
+
+public function classteacher_parent_link_show(Request $request){
+
+    $students=DB::select(DB::raw("SELECT 
+    users.id as student_id,
+    users.name,
+    users.middlename,
+    users.lastname,
+    p.cell_number as cell_number,
+    grades.grade_name,
+    (SELECT parents_students.parent_id as parent_id from parents_students WHERE parents_students.student_id=users.id ) as parent_id
+     from grades_students
+     INNER JOIN users ON grades_students.student_id=users.id  
+    LEFT JOIN parents_students on parents_students.student_id=users.id
+    LEFT JOIN users p ON p.id=parents_students.parent_id
+    INNER JOIN grades on grades.id=grades_students.grade_id
+    WHERE grades.id=$request->class_id
+    ORDER BY `grades`.`grade_name`,`users`.`lastname`  ASC"));
+    return view('users.students.parent-link.classteacher.list',compact('students'));
+    
+    }
 
 // public function increase_time_limit(int $seconds): bool
 // {
@@ -1482,6 +1515,108 @@ public function parent_link_store(Request $request){
   return redirect('/link/students-parents/');
          
 }
+
+
+
+public function store_parent_cell(Request $request){
+ 
+    $parent_role=Role::where('name', 'parent')->first();
+    $parent_role_id=$parent_role->id;
+    $parent_role_name=$parent_role->name;
+
+
+    for($i = 0; $i < count($request->parent_cell); $i++) {
+        $students=$request->student_id[$i];
+        $parents=($request->parent_id[$i]);
+        $parent_cell=$request->parent_cell[$i];
+    
+        $CellExists=User::where('cell_number',$parent_cell);
+    
+        if($CellExists->exists()=="true"){
+    
+      // User::where('cell_number',$parent_cell)->update(['cell_number'=>$request->parent_cell[$i]]);
+
+        $parentID=User::where('cell_number',$parent_cell)->first();
+        
+        //check if there is a combination of both parent_students
+        //if there is a match then do not add
+
+    $parent_exists_in_parents_table=ParentStudent::where('student_id', $students)->exists();
+      // dd($parent_exists_in_parents_table);
+
+      if($parent_exists_in_parents_table){
+      }else{
+          if(is_null($parent_cell)){
+
+          }else{
+            $student_db=DB::table('parents_students')->upsert([
+                [
+                    'student_id' => $students, 
+                    'parent_id' => $parentID->id,   
+                ]
+            ], ['student_id', 'id'], ['parent_id']);
+
+          }
+     
+      }
+           
+        }else{
+    
+        $ifCellExists=User::where('cell_number',$request->parent_cell[$i])->whereNull('cell_number')->exists();
+                    
+        if($ifCellExists){
+    
+     User::where('cell_number',$request->parent_cell[$i])->update(['cell'=>$request->parent_cell[$i]]);
+        }else{
+        $newParent= User::create([
+            'cell_number' =>$request->parent_cell[$i],
+           'password' => Hash::make(Str::random(5)),
+           'status' => 0,
+           'role_id'=>$parent_role_id,
+           'user_code'=>Str::random(5),
+     ]);
+
+     $newParent_id=$newParent->id;
+     
+     $newParent->attachRole($parent_role_id);
+   
+
+     $studentParentExists=ParentStudent::where('student_id',$students)->exists();
+     if($studentParentExists){
+
+        //Student exists
+        //1 Do nothing
+
+     }else{
+        $parent_student=ParentStudent::create([
+            'parent_id'=>$newParent_id,
+            'student_id'=>$students,
+           ]);
+
+     }
+    
+     }
+     }
+    }
+     
+  flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added Parents Data.', 'Add Parents Cell Numbers');
+            
+  return redirect('/class/student-management/link-parents');
+         
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 public function transfer(){

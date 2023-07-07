@@ -125,7 +125,7 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
 
     //class teacher routes
 
-    Route::group([ 'middleware' => ['role:class_teacher']], function() {
+    Route::group([ 'middleware' => ['role:class_teacher'],['role:admin_teacher']], function() {
 
     Route::get('/class/student-management',[StudentController::class,'student_issues_classteacher'])->name('student.student_issues_classteacher');
     // Route::get('/class/student-management',[StudentController::class,'fetchAllClassStudents'])->name('fetchAllClassStudents');
@@ -134,6 +134,16 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
     Route::post('/class/student-management/save',[StudentController::class,'store_student_updates'])->name('student.store_student_updates');
     
     // Route::post('/users/student/manage/removal/process',[StudentController::class,'removal_loadstudents'])->name('student.removal');
+
+
+ 
+    Route::get('/class/student-management/link-parents',  [StudentController::class,'parent_link_class_teacher'])->name('parent_link.index_class_teacher');
+    Route::post('/class/student-management/show-parents',  [StudentController::class,'classteacher_parent_link_show'])->name('classteacher_parent_link_show');
+  Route::post('/class/student-management/add-parents',  [StudentController::class,'store_parent_cell'])->name('classteacher_parent_link.store');
+    
+
+// Route::post('/link/students-parents/list',  [StudentController::class,'classteacher_parent_link_show'])->name('classteacher_parent_link.show');
+
 
     //Attendence Route
 // Route::get('/class/attendence', [AttendenceController::class,'create'])->name('attendence.create');
@@ -311,7 +321,7 @@ Route::get('/student/my-subjects', [StudentController::class,'my_subjects'])->na
 
 
 Route::get('/link/students-parents/',  [StudentController::class,'parent_link'])->name('parent_link.index');
-Route::get('/class/student-management/link-parents',  [StudentController::class,'parent_link_class_teacher'])->name('parent_link.index_class_teacher');
+Route::get('student-management/link-parents',  [StudentController::class,'parent_link_admin'])->name('parent_link.index_admin');
 Route::post('/link/students-parents/list',  [StudentController::class,'parent_link_show'])->name('parent_link.show');
 Route::post('/link/students-parents/form',  [StudentController::class,'parent_link_store'])->name('parent_link.store');
 

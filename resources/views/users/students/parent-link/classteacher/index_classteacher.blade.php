@@ -28,20 +28,20 @@
         <div class="card card-light   elevation-3">
 
             <div class="card-body">
-                <form action="{{ route('parent_link.show') }}" method="post">
+                <form action="{{ route('classteacher_parent_link_show') }}" method="post">
 
                     @csrf
                     <div class="form-row">
 
                         <div class="col-md-12 form-group">
                             <x-jet-label>Select Class</x-jet-label>
-                            <select class="form-control" name="stream_id" id="stream_id">
-                                <option value="">Select Class</option>
-                                @foreach($streams as $item)
-                                    <option value="{{ $item->grade_id }}"> {{ $item->grade_name }}</option>
+                            <select class="form-control" name="class_id" id="class_id">
+                                <option value="">Select My Class</option>
+                                @foreach($class as $myclass)
+                                    <option value="{{ $myclass->grade_id }}"> {{ $myclass->grade_name }}</option>
                                 @endforeach
                             </select>
-                            @error('stream_id')
+                            @error('class_id')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>

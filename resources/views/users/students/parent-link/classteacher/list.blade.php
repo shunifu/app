@@ -28,24 +28,26 @@
     <div class="col-md-12 ">
         <div class="card card-light   elevation-3">
             <div class="card-header">
-                <a href="/marks/">
+                <a href="/class/student-management/link-parents">
                     <h3 class="card-title p4"><i class="fas fa-hand-point-left mr-2"></i> Back </h3>
                 </a>
             </div>
             <div class="card-body">
                 <p class="text-gray-700 mb-1 2h-base">
+                    kgkjhkhjkjhj
 
                     <div class="table-responsive">
 
-                        <form action="{{ route('parent_link.store') }}" method="post">
+                        <form action="{{ route('classteacher_parent_link.store') }}" method="post">
                             @csrf
-                            <table class="table table-sm table-hover mx-auto " id="customers">
+                            <table class="table table-sm table-hover mx-auto table-bordered " id="customers">
 
                                 <thead class="thead-light hidden-md-up">
 
-                                    <th style="width: 3px;">Student</th>
-                                    <th style="width: 3px;">Class</th>
-                                    <th class="col-6">Parent Cell</th>
+                                    <th class="col-3">Student</th>
+                                
+                                    <th style="5px">Parent Cell</th>
+                                    <th style="5px">Parent Email Address</th>
 
                                 </thead>
                                 <tbody>
@@ -57,13 +59,11 @@
                                                 value="{{ $student->student_id }} ">
                                             <input type="hidden" name="parent_id[]" value="{{ $student->parent_id }}">
 
-                                            <td class="align-middle" style="width: 3px;">
+                                            <td class="align-middle p-2">
                                                 {{ $student->lastname }} {{ $student->name }}
                                                 {{ $student->middlename }}
                                             </td>
-                                            <td class="align-middle p-2">
-                                                {{ $student->grade_name }}
-                                            </td>
+                                         
 
 
                                             <td class="align-middle">
@@ -85,6 +85,28 @@
                                                 @endif
 
                                             </td>
+
+
+                                            <td class="align-middle">
+                                                @if($student->cell_number==NULL)
+                                                    <input type="email" id="parent_email" class="form-control"
+                                                        placeholder="Parent Email" name="parent_cell[]">
+                                                @else
+                                                    <div class="input-group">
+                                                        <input type="email" readonly id="parent_email"
+                                                            class="form-control" placeholder="Enter Parent Email"
+                                                            name="parent_cell[]" value="{{ $student->cell_number }}">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-success edit_cell"
+                                                                id="{{ $student->cell_number }}" type="button"> <i
+                                                                    class="fas fa-edit"></i></button>
+                                                        </div>
+                                                    </div>
+
+                                                @endif
+
+                                            </td>
+
                                             </td>
                                         </tr>
                                     @empty

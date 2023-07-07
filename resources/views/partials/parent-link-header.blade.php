@@ -40,16 +40,17 @@
 
 </div>
 <li class="nav-item" role="presentation">
-<a class="nav-link active bg-light" id="pills-mark-tab" href="/parent-li" role="tab" aria-controls="pills-add-mark" aria-selected="true">Add Parent</a>
+<a class="nav-link active bg-light" id="pills-mark-tab" href="#" role="tab" aria-controls="pills-add-mark" aria-selected="true"> Parent Cell Numbers</a>
 </li>
+<li class="nav-item" role="presentation">
+    <a class="nav-link active bg-light" id="pills-mark-tab" href="/class/student-management/link-parents/email-address" role="tab" aria-controls="pills-add-mark" aria-selected="true"> Parent Email Addresses</a>
+    </li>
 
 <li class="nav-item" role="presentation">
-<a class="nav-link bg-light" id="pills-section_analysis-tab"  href="/verification/otp/generate/" role="tab" aria-controls="pills-section_analysis" aria-selected="false">Send OTP</a>
+<a class="nav-link bg-light" id="pills-section_analysis-tab"  href="/class/student-management/link-parents/manage-parents" role="tab" aria-controls="pills-section_analysis" aria-selected="false"> Manage Parents</a>
 </li>
 
-{{-- <li class="nav-item" role="presentation">
-<a class="nav-link bg-light" id="pills-class-analysis-tab"  href="/marks/analytics" role="tab" aria-controls="pills-class-analysis" aria-selected="false">Mark Analyis</a>
-</li> --}}
+
 
 
 
