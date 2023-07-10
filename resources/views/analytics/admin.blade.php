@@ -3,15 +3,13 @@
     
   </x-slot>
   <div class="card card-light  ">
-    <div class="card-header">
-      <h3 class="card-title">View Analytics</h3>
-    </div>
+    
 
-      <img class="card-img-top"  src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_290,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_32_style_light_align_center:Assessement-Based Analytics,w_0.3,y_0.20/v1617555284/carlos-muza-hpjSkU2UYSU-unsplash_l61hlq.jpg" alt="">
+      <img class="card-img-top"  src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1688775481/svhjdlprotnl9ei8tvif.png" alt="">
       <div class="card-body">
         <h3 class="lead">Hi, {{Auth::user()->name}}</h3>
        <div class="text-muted">
-          <p class="card-text"> Use this section to view analytics <br>
+          <p class="card-text"> Use this section to view assessement based analytics <br>
         
           </p>
         
@@ -70,12 +68,12 @@
 </div>
 
 <div class="col form-group">
-  <x-jet-label>Indicator</x-jet-label>
+  <x-jet-label>Data Indicator</x-jet-label>
  <select class="form-control" name="analysis_indicator" id="analysis_indicator">
-  <option value="">Select Indicator</option>
+  <option value="">Select Data Indicator</option>
   <option value="stream_scoresheet">Stream Scoresheet</option>
   <option value="subject_analysis">Subject Analysis</option>
-  <option value="stream_summary">Stream Summary</option>
+  <option value="stream_summary">Stream Performance Analysis</option>
 
   <option value="pass_analysis">Pass Analysis</option><!---1---->
   <option value="failure_analysis">Failure Analysis</option><!---2---->

@@ -34,11 +34,12 @@
          {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js'])  --}}
          {{-- @vite(['resources/css/app.css', 'resources/js/app.js'])
   
+      
    
     {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}">  --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet">
-
+    <script src="https://code.highcharts.com/highcharts.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" integrity="sha512-9YHSK59/rjvhtDcY/b+4rdnl0V4LPDWdkKceBl8ZLF5TB6745ml1AfluEU6dFWqwDw9lPvnauxFgpKvJqp7jiQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -578,28 +579,16 @@
                     </li>                   
                     @endrole
 
-   {{-- Logged in Class teacher Performance link --}} 
-                 @role('class_teacher')
-                  
-
-                     {{-- <li class="nav-item">
-                      <a href="/analytics/class-based/" class="nav-link">
-                        <i class="nav-icon fas fa-check-circle"></i>
-                        <p>Class Insights</p>
-                      </a>
-                    </li> --}}
-
-                    @endrole
-     {{-- end of logged in class-teacher Performance link --}}
+ 
 
 
                     @if (Auth::user()->hasRole(['admin_teacher', 'school_administrator', 'class_teacher', 'class_tutor']))
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                       <a href="/insights" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Academic Insights</p>
                       </a>
-                    </li>
+                    </li> --}}
 
                     
 
@@ -901,11 +890,64 @@
                 
             <!---end of reports-----> 
 
+
+            @role('teacher')
+
+           
+
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class=" nav-icon fa-solid fa-person-chalkboard"></i>
+                <p>
+                INSET Services
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('inset.article') }}" class="nav-link">
+                    <i class="nav-icon fas fa-check-circle"></i>
+                    <p>Articles</p>
+                  </a>
+                </li>
+   
+                <li class="nav-item">
+                  <a href="{{ route('inset.lesson') }}" class="nav-link">
+                    <i class="nav-icon fas fa-check-circle"></i>
+                    <p>Lessons</p>
+                  </a>
+                </li> 
+  
+                 <li class="nav-item">
+                  <a href="{{ route('inset.workshop') }}" class="nav-link">
+                    <i class="nav-icon fas fa-check-circle"></i>
+                    <p>Workshop Requests</p>
+                  </a>
+                </li>
+  
+               
+  
+                <li class="nav-item">
+                  <a href="{{ route('inset.schedule') }}" class="nav-link">
+                    <i class="nav-icon fas fa-check-circle"></i>
+                    <p>CPD Schedule</p>
+                  </a>
+                </li>
+              
+  
+               </ul>
+            </li>  
+   
+                
+
+            @endrole
  
             <li class="nav-item">
               <a href="/rstp" class="nav-link">
 
-            <i class=" nav-icon fa-solid fa-circle-info"></i>
+         
+            <i class="nav-icon fa-solid fa-lightbulb"></i>
                 <p>RSTP Hub</p>
               </a>
             </li>
@@ -2336,13 +2378,64 @@
 <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=a6e3def3-7f61-499f-8bac-dadabdeddd69"> </script>
 <!-- End of innovazaniahelp Zendesk Widget script --> --}}
 
-<script>
+{{-- <script>
 	window.fwSettings={
 	'widget_id':151000001568
 	};
 	!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
 </script>
-<script type='text/javascript' src='https://widget.freshworks.com/widgets/151000001568.js' async defer></script>
+<script type='text/javascript' src='https://widget.freshworks.com/widgets/151000001568.js' async defer></script> --}}
+{{-- <script>
+	window.fwSettings={
+	'widget_id':151000001568
+	};
+	!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
+</script>
+<script type='text/javascript' src='https://widget.freshworks.com/widgets/151000001568.js' async defer></script> --}}
+
+<script type="text/javascript" async src="https://cdn.reamaze.com/assets/reamaze.js"></script>
+<script type="text/javascript">
+  var _support = _support || { 'ui': {}, 'user': {} };
+  _support['account'] = 'innovazania';
+</script>
+
+{{-- <script type="text/javascript" async src="https://cdn.reamaze.com/assets/reamaze.js"></script>
+<script type="text/javascript">
+  var _support = _support || { 'ui': {}, 'user': {} };
+  _support['account'] = 'innovazania';
+  _support['ui']['contactMode'] = 'mixed';
+  _support['ui']['enableKb'] = 'true';
+  _support['ui']['styles'] = {
+    widgetColor: 'rgba(16, 162, 197, 1)',
+    gradient: true,
+  };
+  _support['ui']['shoutboxFacesMode'] = 'default';
+  _support['ui']['shoutboxHeaderLogo'] = true;
+  _support['ui']['lightbox_mode'] = 'kb';
+  _support['ui']['widget'] = {
+    icon: 'chat',
+    displayOn: 'all',
+    fontSize: 'default',
+    allowBotProcessing: true,
+    label: {
+      text: 'Let us know if you have any questions! &#128522;',
+      mode: "prompt-3",
+      delay: 3,
+      duration: 30,
+    },
+    position: 'bottom-right',
+    mobilePosition: 'bottom-right'
+  };
+  _support['apps'] = {
+    faq: {"enabled":true},
+    recentConversations: {},
+    orders: {}
+  };
+</script>
+
+<script type="text/javascript">
+  _support['ui']['lightbox_mode'] = "kb";
+  </script> --}}
 
 </div>
     </body>

@@ -7,7 +7,7 @@
         <h3 class="card-title">View Analytics</h3>
       </div>
   
-        <img class="card-img-top"  src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_290,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_32_style_light_align_center:Assessement-Based Analytics,w_0.3,y_0.20/v1617555284/carlos-muza-hpjSkU2UYSU-unsplash_l61hlq.jpg" alt="">
+        <img class="card-img-top"  src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1688775481/svhjdlprotnl9ei8tvif.png" alt="">
         <div class="card-body">
           <h3 class="lead">Hi, {{Auth::user()->name}}</h3>
          <div class="text-muted">

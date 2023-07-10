@@ -259,10 +259,10 @@ class AnalyticsController extends Controller
         //Beginning of Assessement Stream-Based outcomes
         if ($request->category=="stream") {
 
-           dd($request->all());
+         //if assessement category is stream based then get assessement data for stream
             
 
-            //chosen stream
+            //get stream
             $stream=$request->category_result;
             $group="stream";
 
@@ -274,9 +274,35 @@ class AnalyticsController extends Controller
                 
                 $data= $this->assessementCalculations($stream, $session, $assessement_id, $outcome, $baseline,$group);
 
+              $stream_data=Stream::find($stream);
+              $stream_title=$stream_data->stream_name;
+
+
+              $grades=Grade::where('stream_id',$stream )->first();
+
+              $section_id=$grades->section_id;
+
+              $assessement_data=Assessement::find($assessement_id);
+              $assessement_name=$assessement_data->assessement_name;
+
+               //Get pass_rate
+      $criteria=PassRate::where('section_id', $section_id)->first();
+         
+      //Pass rate variables
+      $pass_rate=$criteria->passing_rate;
+      $number_of_subjects=$criteria->number_of_subjects;
+      $passing_subject_rule=$criteria->passing_subject_rule;
+      $term_average_rule=$criteria->average_calculation; //average calculation
+      $subject_average_rule=$criteria->subject_average_calculation; //subject average calculation
+      $term_average_type=$criteria->term_average_type;//average type
+      $number_of_decimal_places=$criteria->number_of_decimal_places;// number of decimal places
+      $tie_type=$criteria->tie_type;// number of decimal places
+      $school=School::first();
+
+
              
 
-                return view('analytics.insights.assessement-insights.scoresheet', compact('data', 'assessement_id', 'stream'));
+                return view('analytics.insights.assessement-insights.scoresheet', compact('data', 'assessement_id', 'stream','stream_title', 'assessement_name', 'passing_subject_rule','term_average_rule','number_of_subjects'));
               
             }
 
@@ -1244,10 +1270,6 @@ if($request->analysis_indicator=='subject_analysis'){
    
 
 
-
-public function term_based_12(Request $request){
-}
-
 public function term_based(Request $request){
 
     Schema::table('student_subject_averages', function ($table) {
@@ -1576,21 +1598,6 @@ $students = DB::table('grades_students')
 }
 
 
- 
-
-
-
-//List of students in the stream
-
-//end of stream based
-
-
-//if class based
-
-
-
-
-//end of classbased
 
 
 $subject_average=[];

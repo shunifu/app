@@ -385,6 +385,8 @@ $otp =  mt_rand(1000,9999);
     public function login($id){
 
         //if teacher admin teacher pr deputy or principal do not login into that account
+
+
         //flush out session first and then login
 
         if (Auth::user()->hasRole('admin_teacher')) {
@@ -393,13 +395,31 @@ $otp =  mt_rand(1000,9999);
                 $user_data=User::find($decrypted);
 
                 //if user is also an admin disable login
+
                 // if ($user_data->active==1) {
                 // }
 
-                $userIs=$user_data->update([
-                    'status'=>1,
-                ]);
+                $isAdmin = $user_data->hasRole('admin_teacher'); 
+                $isPrincipal=$user_data->hasRole('principal'); 
+                $isVicePrincipal=$user_data->hasRole('vice_principal');
+                 
+                $isShunifuAdmin=Auth::user()->id=="28";
 
+                if($isAdmin or $isPrincipal or $isVicePrincipal){
+
+                    flash()->overlay($user_data->name."'s admin profile cannot be accessed by another admin. Cannot login into that account.", 'Login into Account');
+                    return Redirect::back();
+                    exit();
+
+                }else{
+
+
+
+                    $userIs=$user_data->update([
+
+                        'status'=>1,
+                    ]);
+    
 
 
                 if ($user_data->active==1) {
@@ -411,9 +431,13 @@ $otp =  mt_rand(1000,9999);
                     return Redirect::back();
 
                 }
+
+            }
             } catch (DecryptException $e) {
                 return view('errors.unauthorized');
+            
             }
+        
         }else{
             return view('errors.unauthorized'); 
         }

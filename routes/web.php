@@ -573,7 +573,8 @@ Route::get('/get/topics/{id}', [TopicController::class,'get_topics'])->name('top
 
 //INSET Services
 
-Route::get('/inset/articles', [InsetWorkshopController::class,'index'])->name('inset.article');
+Route::get('/inset/articles', [InsetWorkshopController::class,'article_index'])->name('inset.article');
+Route::get('/inset/article/view/1', [InsetWorkshopController::class,'article_view'])->name('inset.article_view');
 Route::get('/inset/lessons/', [InsetServicesController::class,'lesson_index'])->name('inset.lesson');
 
 

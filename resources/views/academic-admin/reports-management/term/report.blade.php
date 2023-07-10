@@ -1362,13 +1362,17 @@ foreach ($term_average as $student_term_data) {
     <thead >
         <tr class="hope">
             <th class="background">Class Teacher's Comment</th>
-            <th class="background">Head Teacher's Comment</th>    
+            <th class="background">Class Coordinator's Comment</th>
+          
            
         </tr>
     </thead>
 
     <tbody>
         <tr>
+
+
+
             <td>
                 @foreach ($class_teacher_comments as $teacher_comment)
                    
@@ -1379,14 +1383,25 @@ foreach ($term_average as $student_term_data) {
                 @endforeach
             </td>
 
+
             <td>
+                @foreach ($class_teacher_comments as $teacher_comment)
+                   
+                @if (in_array(number_format($student_term_data->student_average), range($teacher_comment->from,$teacher_comment->to,  0.01)) )
+               {{$teacher_comment->comment}}
+                    
+                @endif
+                @endforeach
+            </td>
+
+            {{-- <td>
                 @foreach ($headteacher_comments  as $headteacher_comment)
                 @if (in_array(number_format($student_term_data->student_average), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
                 {{$headteacher_comment->comment}}
                     
                 @endif
                 @endforeach   
-            </td>
+            </td> --}}
         </tr>
     </tbody>
 
@@ -1413,7 +1428,31 @@ foreach ($term_average as $student_term_data) {
                             <?php
                         
 
-$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 "));
+$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 AND class_manager_status=1 OR class_manager_status IS NULL "));
+foreach ($class_t as $key_t) {
+
+echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
+
+
+}
+
+                            ?>
+                          </div>
+
+                       </div>
+
+
+                       <div class="col">
+                        <div id="signaturetitle">
+                          Class Coordinator Signature
+                          </div>
+                          <div class="text-center">
+
+                         
+                            <?php
+                        
+
+$class_c=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 AND class_manager_status=2"));
 foreach ($class_t as $key_t) {
 
 echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';

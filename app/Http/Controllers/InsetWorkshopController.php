@@ -19,6 +19,21 @@ class InsetWorkshopController extends Controller
         return view('shunifu-services.inset.workshops.index', compact('ourschool'));
     }
 
+
+    public function article_index()
+    {
+
+        $ourschool=School::first();
+        return view('shunifu-services.inset.cpd.articles.index', compact('ourschool'));
+    }
+
+    public function article_view()
+    {
+
+        $ourschool=School::first();
+        return view('shunifu-services.inset.cpd.articles.view', compact('ourschool'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

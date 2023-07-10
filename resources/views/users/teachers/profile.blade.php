@@ -224,6 +224,20 @@
                         </div>
                         <input type="hidden" value="{{$result_user->id}}" name="id">
             
+                       
+
+                        @role('principal')
+                        <div class="col-md-6 form-group">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="make_admin" id="make_admin" value="1" >
+                           Make System Admin
+                          </label>
+                        </div>
+                        </div>
+
+                        @endrole
+                        <hr>
            
                         </div> 
                     <x-jet-button>Update Teacher</x-jet-button>

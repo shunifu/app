@@ -58,7 +58,7 @@
                             <img class="user-image img-circle " width="63" height="64" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1613141854/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300_urpxk5.jpg" alt="{{ $item->name }}" />
                           
                             @else
-                            <img class="user-image img-circle " width="64" height="64" src="/storage/{{ $item->profile_photo_path }}" alt="{{ $item->name }}" /> 
+                            <img class="user-image img-circle " width="64" height="64" src="{{ $item->profile_photo_path }}" alt="{{ $item->name }}" /> 
                          
                             @endif
                           </td>

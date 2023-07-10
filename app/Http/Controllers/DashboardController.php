@@ -214,7 +214,7 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
             //3 mESSAGES
 
             //Children
-            $children = 
+          //  $children = "";
 
             $mychildren = DB::table('parents_students')
             ->join('users', 'users.id', '=', 'parents_students.student_id')
@@ -230,8 +230,16 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
             ->get();
     
 
+        
+            $completeDetails=User::where('id',Auth::user()->id)->first();
+            if(is_null($completeDetails->name)){
+                $status=0;
+            }else{
+                $status=1;
+            }
 
-  return view('dashboard.parent', compact('children','mychildren', 'greetings', 'assessements'));
+
+  return view('dashboard.parent', compact('mychildren', 'greetings', 'assessements', 'status'));
 
         }
         
