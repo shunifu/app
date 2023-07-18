@@ -48,15 +48,20 @@ return $assessements;
 
         }
 
-        // public function assessement_description(){
-        //     $assessement_description=DB::table('assessements')
-        //     ->join('terms','terms.id','=','assessements.term_id')
-        //     ->join('assessement_types','assessement_types.id','=','assessements.assessement_type')
-        //     ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
-        //     ->where('academic_sessions.active', 1 )
-        //     ->select('assessements.id as assessement_id','terms.term_name', 'assessement_name', 'assessement_type_name')
-        //     ->get();
-        // }
+
+        public function terms(){
+
+            $terms=DB::table('academic_sessions')
+            ->join('terms','terms.academic_session','=','academic_sessions.id')
+            ->where('academic_sessions.active', 1 )//
+            ->select('terms.term_name','terms.id as term_id')
+            ->get();
+
+            return $terms;
+
+        }
+
+       
 
     }
 

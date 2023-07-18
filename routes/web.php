@@ -96,6 +96,7 @@ use App\Http\Controllers\MarkSettingController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\PermissionsManagementController;
 use App\Http\Controllers\ShunifuServiceController;
+use App\Http\Controllers\StrandController;
 use App\Http\Controllers\TimetableController;
 
 Route::get('/', function () {
@@ -200,6 +201,14 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
     Route::get('/academic-admin/subject/edit/{id}', [SubjectController::class,'edit'])->name('subject.edit');
     Route::post('/academic-admin/subject/update', [SubjectController::class,'update'])->name('subject.update');
     Route::get('/academic-admin/subject/delete/{id}', [SubjectController::class,'destroy'])->name('subject.destroy');
+
+       //Strands Routes
+       Route::get('/academic-admin/strands-bank', [StrandController::class,'create'])->name('strands.create');
+       Route::post('/academic-admin/strands/add', [StrandController::class,'store'])->name('strands.store');
+       Route::post('/subject/modify', [StrandController::class,'modify'])->name('subject.modify');
+       Route::get('/academic-admin/subject/edit/{id}', [SubjectController::class,'edit'])->name('subject.edit');
+       Route::post('/academic-admin/subject/update', [SubjectController::class,'update'])->name('subject.update');
+       Route::get('/academic-admin/subject/delete/{id}', [SubjectController::class,'destroy'])->name('subject.destroy');
     
     //Department Routes
     Route::get('/academic-admin/department', [DepartmentController::class,'create'])->name('department.create');
@@ -700,7 +709,9 @@ Route::get('/rstp',[ShunifuServiceController::class,'rstp_index'])->name('rstp.i
 
 //Marks Management
 Route::get('/marks',[MarkController::class,'create'])->name('marks.create');
+Route::get('/marks/cbe',[MarkController::class,'create_cbe'])->name('marks.create_cbe');
 Route::post('/marks/students/show',[MarkController::class,'show'])->name('marks.show');
+Route::post('/marks/students/show/cbe',[MarkController::class,'show_cbe'])->name('marks.show_cbe');
 Route::post('/marks/save',[MarkController::class,'store'])->name('marks.store');
 Route::get('/marks/manage',[MarkController::class,'manage'])->name('marks.manage');
 Route::post('/marks/show',[MarkController::class,'show_marks'])->name('marks.show_marks');

@@ -63,6 +63,10 @@
 </li>
 
 <li class="nav-item" role="presentation">
+    <a class="nav-link active bg-light" id="pills-mark-tab" href="/marks/cbe" role="tab" aria-controls="pills-add-mark" aria-selected="true">CBE Grades</a>
+    </li>
+
+<li class="nav-item" role="presentation">
 <a class="nav-link bg-light" id="pills-section_analysis-tab"  href="/marks/manage" role="tab" aria-controls="pills-section_analysis" aria-selected="false">Delete Marks</a>
 </li>
 

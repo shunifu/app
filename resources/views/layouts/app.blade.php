@@ -943,14 +943,14 @@
 
             @endrole
  
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="/rstp" class="nav-link">
 
          
             <i class="nav-icon fa-solid fa-lightbulb"></i>
                 <p>RSTP Hub</p>
               </a>
-            </li>
+            </li> --}}
 
 
    <!-----End of Promotions Management------------->
@@ -1259,6 +1259,13 @@
                 </a>
               </li>
 
+              <li class="nav-item">
+                <a href="/marks/CBE"  class="nav-link">
+                  <i class="nav-icon fas fa-check-circle"></i>
+                  <p>CBE Grades</p>
+                </a>
+              </li>
+
 
               <li class="nav-item">
                 <a href="/marks/my-scoresheet"  class="nav-link">
@@ -1336,7 +1343,7 @@
                
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="{{ route('teacher.teaching_loads')}}" class="nav-link">
+                    <a href="/academic-admin/strands-bank" class="nav-link">
                        <i class="nav-icon fas fa-chevron-circle-right"></i>
                       <p>Add  Strands</p>
                     </a>

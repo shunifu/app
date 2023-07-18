@@ -92,6 +92,56 @@ class MarkController extends Controller
        
     }
 
+    public function create_cbe(){
+
+        $greetings= $this->greetings();
+        $terms= $this->terms();
+        $teaching_loads= $this->teaching_loads();
+
+
+        // $school_code=School::first();
+        // if($school_code->school_code=="0238"){
+        //   
+        // }else{
+
+
+             //Check if mode set
+
+        //check marks mode
+
+        if (!Schema::hasTable('cbe_marks')) {
+            Schema::create('cbe_marks', function($table){
+                  
+                   $table->id();
+                   $table->unsignedBigInteger('teacher_id');
+                   $table->unsignedBigInteger('student_id');
+                   $table->unsignedBigInteger('teaching_load_id');
+                   $table->unsignedBigInteger('strand_id');
+                   $table->unsignedBigInteger('term_id');
+                   $table->string('grade')->nullable();
+           
+                   $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
+                   $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
+                   $table->foreign('teaching_load_id')->references('id')->on('teaching_loads')->onDelete('cascade');
+                   $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
+                   $table->foreign('strand_id')->references('id')->on('strands')->onDelete('cascade');
+                   $table->timestamps();
+           });
+       }
+
+        $checkmode=MarkSetting::first();
+
+        if (is_null($checkmode)) {
+            flash()->overlay('<i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i>'.' Sorry '.Auth::user()->name . ' Please request your school system administrator to set Marks Mode in Mark Settings.', 'Add Marks');
+              return redirect('/dashboard');
+        }else{
+            return view('academic-admin.marks-management.cbe.index', compact('greetings','teaching_loads','terms'));
+            
+        }
+
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -339,6 +389,124 @@ $array = implode("','",$string);
 
     }
 }
+
+
+
+
+public function show(Mark $mark, Request $request)
+{
+
+    //dd($request->all());
+   
+     // Validation
+    $validator=$request->validate([
+        'teaching_load'=>'required',
+        'term_id'=>'required',
+       
+    ]);
+    $term_id=$request->term_id;
+
+    $greetings=$this->greetings();
+    $teaching_loads=$this->teaching_loads();
+    $assessements=$this->assessements();
+
+    // $teaching_load_description=Assessement::find($assessement_id);
+
+  
+    $string=$request->teaching_load;
+    //dd($string);
+
+    $checkmode=MarkSetting::first();
+
+    $mark_mode=$checkmode->marks_mode;
+
+    if($mark_mode==1){
+        //if marks mode = Strict Mode
+        $mode_value="required";
+
+    }else{
+        $mode_value="";
+        
+    }
+
+    //Deadline Checker
+
+    $deadline_data=Assessement::where('id', $assessement_id)->first();
+    $deadline=$deadline_data->marks_deadline;
+
+    $current_date=(date("Y-m-d H:i:s"));
+   
+
+
+ 
+
+
+      
+        
+        //check if current date is greater than deadline
+
+        if($current_date>$deadline){
+
+            //failed to meet the deadline
+
+            flash()->overlay('<i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i>'.' Sorry '.Auth::user()->name . ' You failed to meet the deadline for this assessement. To get an extension please  go to the school  administrator and politely request for a deadline extension.', 'Add Marks');
+            return redirect('/marks');
+
+        
+
+
+
+    }elseif(is_null($deadline) OR ($deadline>=$current_date)){
+
+  
+// $array=array_map('intval', explode(',', $string));
+$array = implode("','",$string);
+
+    
+    $students=DB::select(DB::raw("SELECT
+        student_loads.student_id,
+        users.name,
+        users.id as student_id,
+
+        users.middlename,
+        users.lastname,
+        student_loads.teaching_load_id,
+        subjects.subject_name,
+        grades.grade_name,
+        grades.id as grade_id,
+        (SELECT marks.mark from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1)  AS mark,
+        (SELECT marks.id from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1) AS mark_id
+       FROM
+           student_loads
+           INNER JOIN users ON users.id=student_loads.student_id
+           INNER JOIN grades_students ON grades_students.student_id=student_loads.student_id
+           INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id
+           INNER JOIN grades ON grades.id=teaching_loads.class_id
+           INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  
+           WHERE student_loads.teaching_load_id IN ('".$array."') AND grades_students.active=1 AND teaching_loads.active=1 AND users.active=1
+       ORDER BY `users`.`lastname`, `users`.`name` ASC"));
+
+    $loads_description = DB::table('teaching_loads')
+    ->join('grades', 'teaching_loads.class_id', '=', 'grades.id')
+    ->join('subjects', 'teaching_loads.subject_id', '=', 'subjects.id')
+    ->wherein('teaching_loads.id', $string)
+    ->where('teaching_loads.active', 1)
+    ->select('grade_name', 'subject_name', 'teaching_loads.id as teaching_load_id')
+    ->get();
+
+    
+    // dd($loads_description);
+
+
+return view('academic-admin.marks-management.show', compact('greetings', 'teaching_loads', 'assessements', 'students', 'assessement_id', 'loads_description', 'assessement_description', 'mode_value'));      
+
+}
+}
+
+
+
+
+
 
     public function manage(Request $request){
         $greetings= $this->greetings();
