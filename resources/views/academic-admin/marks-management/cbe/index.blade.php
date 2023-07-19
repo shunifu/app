@@ -31,7 +31,7 @@
         <div class="card card-light   elevation-3">
            
             <div class="card-body">
-                <form action="#" method="post">
+                <form action="{{ route('marks.show_cbe') }}" method="post">
 
                             @csrf
                             <div class="form-row">

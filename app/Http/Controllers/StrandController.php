@@ -8,6 +8,7 @@ use App\Models\Subject;
 use App\Models\Term;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class StrandController extends Controller
 {
@@ -28,6 +29,27 @@ class StrandController extends Controller
      */
     public function create()
     {
+
+
+        if (!Schema::hasTable('strands')) {
+            Schema::create('cbe_marks', function($table){
+                  
+                   $table->id();
+                   $table->unsignedBigInteger('term_iu');
+                   $table->unsignedBigInteger('student_id');
+                   $table->unsignedBigInteger('teaching_load_id');
+                   $table->unsignedBigInteger('strand_id');
+                   $table->unsignedBigInteger('term_id');
+                   $table->string('grade')->nullable();
+           
+                   $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
+                   $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
+                   $table->foreign('teaching_load_id')->references('id')->on('teaching_loads')->onDelete('cascade');
+                   $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
+                   $table->foreign('strand_id')->references('id')->on('strands')->onDelete('cascade');
+                   $table->timestamps();
+           });
+       }
 
         $terms=DB::table('academic_sessions')
         ->join('terms','terms.academic_session','=','academic_sessions.id')

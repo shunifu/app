@@ -393,10 +393,10 @@ $array = implode("','",$string);
 
 
 
-public function show(Mark $mark, Request $request)
+public function show_cbe(Mark $mark, Request $request)
 {
 
-    //dd($request->all());
+    dd($request->all());
    
      // Validation
     $validator=$request->validate([
@@ -408,9 +408,8 @@ public function show(Mark $mark, Request $request)
 
     $greetings=$this->greetings();
     $teaching_loads=$this->teaching_loads();
-    $assessements=$this->assessements();
+    $terms=$this->terms();
 
-    // $teaching_load_description=Assessement::find($assessement_id);
 
   
     $string=$request->teaching_load;
@@ -431,32 +430,10 @@ public function show(Mark $mark, Request $request)
 
     //Deadline Checker
 
-    $deadline_data=Assessement::where('id', $assessement_id)->first();
-    $deadline=$deadline_data->marks_deadline;
+  //  $deadline_data=Assessement::where('id', $assessement_id)->first();
+ //   $deadline=$deadline_data->marks_deadline;
 
-    $current_date=(date("Y-m-d H:i:s"));
-   
-
-
- 
-
-
-      
-        
-        //check if current date is greater than deadline
-
-        if($current_date>$deadline){
-
-            //failed to meet the deadline
-
-            flash()->overlay('<i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i>'.' Sorry '.Auth::user()->name . ' You failed to meet the deadline for this assessement. To get an extension please  go to the school  administrator and politely request for a deadline extension.', 'Add Marks');
-            return redirect('/marks');
-
-        
-
-
-
-    }elseif(is_null($deadline) OR ($deadline>=$current_date)){
+  
 
   
 // $array=array_map('intval', explode(',', $string));
@@ -474,7 +451,7 @@ $array = implode("','",$string);
         subjects.subject_name,
         grades.grade_name,
         grades.id as grade_id,
-        (SELECT marks.mark from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1)  AS mark,
+        (SELECT cbemarks.mark from strands WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1)  AS mark,
         (SELECT marks.id from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1) AS mark_id
        FROM
            student_loads
@@ -500,7 +477,7 @@ $array = implode("','",$string);
 
 return view('academic-admin.marks-management.show', compact('greetings', 'teaching_loads', 'assessements', 'students', 'assessement_id', 'loads_description', 'assessement_description', 'mode_value'));      
 
-}
+
 }
 
 
