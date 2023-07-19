@@ -32,22 +32,14 @@ class StrandController extends Controller
 
 
         if (!Schema::hasTable('strands')) {
-            Schema::create('cbe_marks', function($table){
+            Schema::create('strands', function($table){
                   
-                   $table->id();
-                   $table->unsignedBigInteger('term_iu');
-                   $table->unsignedBigInteger('student_id');
-                   $table->unsignedBigInteger('teaching_load_id');
-                   $table->unsignedBigInteger('strand_id');
-                   $table->unsignedBigInteger('term_id');
-                   $table->string('grade')->nullable();
-           
-                   $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
-                   $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
-                   $table->foreign('teaching_load_id')->references('id')->on('teaching_loads')->onDelete('cascade');
-                   $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
-                   $table->foreign('strand_id')->references('id')->on('strands')->onDelete('cascade');
-                   $table->timestamps();
+                $table->id();
+                $table->longText('strand');
+                $table->integer('subject_id');
+                $table->integer('stream_id');
+                $table->integer('term_id');
+                $table->timestamps();
            });
        }
 

@@ -1258,13 +1258,13 @@
                   <p>Enter Marks</p>
                 </a>
               </li>
-
+{{-- 
               <li class="nav-item">
                 <a href="/marks/CBE"  class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>CBE Grades</p>
                 </a>
-              </li>
+              </li> --}}
 
 
               <li class="nav-item">
@@ -1336,7 +1336,7 @@
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
                   <p>
-                   Stands Management 
+                   Strands Management 
                     <i class="fas fa-angle-left right"></i>
                   </p>
                 </a>
