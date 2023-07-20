@@ -38,7 +38,7 @@
     
                                 <div class="col-md-6 form-group">
                                     <x-jet-label>Select Class</x-jet-label><br>
-                                    <select class="form-control" name="teaching_load[]" id="multiple_loads" multiple="multiple">
+                                    <select class="form-control" name="teaching_load[]" class="class_id" >
                                         <option value="">Select Class</option>
                                         @foreach($teaching_loads as $teaching_load_item)
                                             <option value="{{ $teaching_load_item->teaching_load_id }}">
@@ -65,6 +65,17 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                {{-- <div class="col-md-4 form-group">
+                                    <x-jet-label>Select Strand</x-jet-label>
+                                    <select class="form-control" name="term_id">
+                                        <option value="">Select Strand</option>
+                                        
+                                    </select>
+                                    @error('term_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div> --}}
     
                             </div>
 
@@ -93,6 +104,50 @@
         });
       
     </script>
+
+<script>
+    $(document).ready(function () {
+
+        $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+
+    $(".class_id").change(function (e) { 
+        e.preventDefault();
+        alert('s');
+
+        var data={
+                    'term_id':$('select[name="term_id"] :selected').val(),
+                    'class_id':$('select[name="class_id"] :selected').val(),
+                   
+                }
+
+             $.ajax({
+                type: "GET",
+                url: "{{route('strands.fetch')}}",
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                }
+             });
+        
+    });
+
+   
+
+
+});
+
+
+
+
+        
+    });
+</script>
+
+  
     
 
  

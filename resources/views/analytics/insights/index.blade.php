@@ -227,7 +227,7 @@
             } 
             
             if (baseline=="assessement") {
-                console.log(data)
+                console.log(data);
                 $(".baseline_group_label").append("Assessement");
              
                 $("#baseline_group_select").append('<option>Select Assessement</option>');

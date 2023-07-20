@@ -1351,7 +1351,7 @@
                 </ul>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="{{ route('teaching_loads.show')}}" class="nav-link">
+                    <a href="{{ route('strands.view')}}" class="nav-link">
                        <i class="nav-icon fas fa-chevron-circle-right"></i>
                       <p>Manage Strands</p>
                     </a>

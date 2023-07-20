@@ -118,7 +118,9 @@ class MarkController extends Controller
                    $table->unsignedBigInteger('teaching_load_id');
                    $table->unsignedBigInteger('strand_id');
                    $table->unsignedBigInteger('term_id');
+               
                    $table->string('grade')->nullable();
+                   $table->integer('active')->default('1');
            
                    $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
                    $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
@@ -396,7 +398,7 @@ $array = implode("','",$string);
 public function show_cbe(Mark $mark, Request $request)
 {
 
-    dd($request->all());
+  
    
      // Validation
     $validator=$request->validate([
@@ -439,29 +441,73 @@ public function show_cbe(Mark $mark, Request $request)
 // $array=array_map('intval', explode(',', $string));
 $array = implode("','",$string);
 
-    
-    $students=DB::select(DB::raw("SELECT
-        student_loads.student_id,
-        users.name,
-        users.id as student_id,
+$load_data=TeachingLoad::where('id', $string)->first();
+// $subject_id_is=$load_data->class_id;
 
-        users.middlename,
-        users.lastname,
-        student_loads.teaching_load_id,
-        subjects.subject_name,
-        grades.grade_name,
-        grades.id as grade_id,
-        (SELECT cbemarks.mark from strands WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1)  AS mark,
-        (SELECT marks.id from marks WHERE  teaching_load_id= student_loads.teaching_load_id AND marks.assessement_id=$assessement_id AND student_id=users.id AND marks.active=1) AS mark_id
-       FROM
-           student_loads
-           INNER JOIN users ON users.id=student_loads.student_id
-           INNER JOIN grades_students ON grades_students.student_id=student_loads.student_id
-           INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id
-           INNER JOIN grades ON grades.id=teaching_loads.class_id
-           INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  
-           WHERE student_loads.teaching_load_id IN ('".$array."') AND grades_students.active=1 AND teaching_loads.active=1 AND users.active=1
-       ORDER BY `users`.`lastname`, `users`.`name` ASC"));
+
+
+$students=DB::select(DB::raw("SELECT
+distinct student_loads.student_id,
+users.name,
+users.id as student_id,
+(strands.strand),
+
+users.middlename,
+users.lastname,
+student_loads.teaching_load_id,
+subjects.subject_name,
+grades.grade_name,
+grades.id as grade_id
+
+
+FROM
+   student_loads
+   INNER JOIN users ON users.id=student_loads.student_id
+   INNER JOIN grades_students ON grades_students.student_id=student_loads.student_id
+   INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id
+   INNER JOIN strands ON strands.subject_id=teaching_loads.subject_id
+ 
+   INNER JOIN grades ON grades.id=teaching_loads.class_id
+   INNER JOIN strands b ON b.stream_id=grades.stream_id
+   INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  
+  
+   
+   WHERE student_loads.teaching_load_id =".$load_data->id." AND grades_students.active=1 AND teaching_loads.active=1 AND users.active=1 AND grades_students.grade_id=".$load_data->class_id." AND strands.term_id=".$term_id." AND b.stream_id=grades.stream_id
+ORDER BY `users`.`lastname`, `users`.`name` ASC"));
+
+dd($students);
+
+    
+    // $students=DB::select(DB::raw("SELECT
+    //     student_loads.student_id,
+    //     users.name,
+    //     users.id as student_id,
+
+    //     users.middlename,
+    //     users.lastname,
+    //     student_loads.teaching_load_id,
+    //     subjects.subject_name,
+    //     grades.grade_name,
+    //     grades.id as grade_id,
+     
+    //     (SELECT cbe_marks.grade from cbe_marks WHERE  teaching_load_id= student_loads.teaching_load_id AND cbe_marks.term_id=$term_id AND student_id=users.id AND cbe_marks.active=1)  AS mark,
+
+    //     (SELECT cbe_marks.id from cbe_marks WHERE  teaching_load_id= student_loads.teaching_load_id AND cbe_marks.term_id=$term_id AND student_id=users.id AND cbe_marks.active=1) AS mark_id
+    //    FROM
+    //        student_loads
+    //        INNER JOIN users ON users.id=student_loads.student_id
+    //        INNER JOIN grades_students ON grades_students.student_id=student_loads.student_id
+    //        INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id
+         
+    //        INNER JOIN grades ON grades.id=teaching_loads.class_id
+    //        INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  
+          
+           
+    //        WHERE student_loads.teaching_load_id IN ('".$array."') AND grades_students.active=1 AND teaching_loads.active=1 AND users.active=1
+    //    ORDER BY `users`.`lastname`, `users`.`name` ASC"));
+
+
+       dd($students);
 
     $loads_description = DB::table('teaching_loads')
     ->join('grades', 'teaching_loads.class_id', '=', 'grades.id')
@@ -475,7 +521,7 @@ $array = implode("','",$string);
     // dd($loads_description);
 
 
-return view('academic-admin.marks-management.show', compact('greetings', 'teaching_loads', 'assessements', 'students', 'assessement_id', 'loads_description', 'assessement_description', 'mode_value'));      
+return view('academic-admin.marks-management.cbe.show', compact('greetings', 'teaching_loads',  'students', 'loads_description', 'mode_value'));      
 
 
 }

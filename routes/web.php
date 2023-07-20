@@ -205,10 +205,15 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
        //Strands Routes
        Route::get('/academic-admin/strands-bank', [StrandController::class,'create'])->name('strands.create');
        Route::post('/academic-admin/strands/add', [StrandController::class,'store'])->name('strands.store');
+
+      
+       Route::get('/academic-admin/strands-bank/view', [StrandController::class,'view'])->name('strands.view');
+       Route::post('/academic-admin/strands-bank/show', [StrandController::class,'show'])->name('strands.show');
+
+       Route::get(' /academic-admin/strands/edit/{id}', [StrandController::class,'edit'])->name('strands.edit');
+
        Route::post('/subject/modify', [StrandController::class,'modify'])->name('subject.modify');
-       Route::get('/academic-admin/subject/edit/{id}', [SubjectController::class,'edit'])->name('subject.edit');
-       Route::post('/academic-admin/subject/update', [SubjectController::class,'update'])->name('subject.update');
-       Route::get('/academic-admin/subject/delete/{id}', [SubjectController::class,'destroy'])->name('subject.destroy');
+       Route::get('/academic-admin/strands/fetch', [StrandController::class,'fetch'])->name('strands.fetch');
     
     //Department Routes
     Route::get('/academic-admin/department', [DepartmentController::class,'create'])->name('department.create');

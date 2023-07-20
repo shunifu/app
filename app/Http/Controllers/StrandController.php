@@ -91,16 +91,54 @@ class StrandController extends Controller
     return redirect()->back();
     }
 
+
+
+
+    public function view(){
+     
+        $terms=DB::table('academic_sessions')
+        ->join('terms','terms.academic_session','=','academic_sessions.id')
+        ->where('academic_sessions.active', 1 )//
+        ->select('terms.term_name','terms.id as term_id')
+        ->get();
+
+        $subjects=Subject::all();
+        $streams=Stream::all();
+
+        return view('academic-admin.strands-management.view', compact('terms', 'streams', 'subjects'));
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Strand  $strand
      * @return \Illuminate\Http\Response
      */
-    public function show(Strand $strand)
+    public function show(Strand $strand, Request $request)
     {
-        //
+     //   dd($request->all());
+        $subject_id=$request->subject_id;
+        $term_id=$request->term_id;
+        $stream_id=$request->stream_id;
+
+        $term_name=Term::find($term_id)->term_name;
+        $subject_name=Subject::find($subject_id)->subject_name;
+        $stream_name=Stream::find($stream_id)->stream_name;
+    
+
+        $strands=Strand::where('subject_id', $subject_id)->where('term_id',$term_id)->where('stream_id',$stream_id)->get();
+
+        return view('academic-admin.strands-management.show', compact('strands', 'term_name','subject_name', 'stream_name'));
     }
+
+
+
+
+    public function fetch(Request $request){
+        dd($request->all());
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
