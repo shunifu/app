@@ -111,12 +111,7 @@
 
 
 <td class="align-middle ">
-   @if (is_null($student->mark))
-   {{-- <div class="input-group">
-    <input type="text"  {{$mode_value}}   id="marks" class="form-control" placeholder="Mark" name="marks[]">  
-   <div class="input-group-append">
-    </div>  
-</div> --}}
+ 
 
 
 
@@ -163,19 +158,9 @@
   
  </div>
   
-   @else
-<div class="input-group">
-<input type="text" readonly  id="marks" class="form-control" placeholder="Grade" name="marks[]" value="{{$student->mark}}"> 
-<div class="input-group-append">
-<button class="btn btn-success edit_marks" id="{{$student->mark_id}}" type="button"> <i class="fas fa-edit"></i></button>
-</div>
-{{-- <div class="input-group-append">
-    <button class="btn btn-danger remove_student" id="{{$student->student_id}}" type="button"> <i class="fas fa-user-times"></i></button>
-    
-    </div>  --}}
-</div>
   
-   @endif
+  
+
 
 </td>
 

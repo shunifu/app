@@ -204,47 +204,46 @@ return redirect('/marks');
     public function cbe_store(Request $request)
     {
 
-        dd($request->all());
+   //     dd($request->all());
         //Insert or ignore
 
-        $activeSession=AcademicSession::where('active', 1)->first();
-        $session_id=$activeSession->id;
+        // $activeSession=AcademicSession::where('active', 1)->first();
+        // $session_id=$activeSession->id;
 
 //Check if same s
 
       
-for($i = 0; $i < count($request->grade); $i++) {
+for($i = 0; $i < count($request->student_id); $i++) {
     $students=$request->student_id[$i];
+  
     $grades=($request->grade[$i]);
+   
     $load_id=$request->teaching_load_id[$i];
     $teacher_id=$request->teacher_id[$i];
-    $term_id=$request->assessement_id[$i];
-    
+    $term_id=$request->term_id[$i];
+    $strand_id=$request->strand_id[$i];
 
     //Delete duplicates
 
     
-   if(is_null($request->marks[$i])){
-
-
-
-   } else{
+  
 
     CBEMark::updateOrCreate(
         ['student_id'=>$students,
         'teaching_load_id'=>$load_id,
-        'mark'=>$request->marks[$i],
+        'grade'=>$grades[$i],
         'teacher_id'=>$teacher_id,
-        'assessement_id'=>$assessement_id, 
-        'session_id'=>$session_id
-        
-         ], ['mark'=>$request->marks[$i]]);
+        'term_id'=>$term_id, 
+        'strand_id'=>$strand_id,
 
-   }
+        
+         ], ['grade'=>$request->grade[$i]]);
+
+   
 
 }
    
-flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Good Work '.Auth::user()->name . ' You have successfully added marks.', 'Add Marks');
+flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Good Work '.Auth::user()->name . ' You have successfully added CBE grades.', 'Add CBE Grades');
 return redirect('/marks');
     
     }
