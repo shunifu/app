@@ -85,19 +85,21 @@
                                         <tbody>
 
                                             @foreach ($students as $key=>$student)
+
+                                      
                                            
                                                 <tr>
 
-                                                    <input type="hidden" id="student_id"  name="student_id[]"
+                                                    <input type="hidden" id="student_id"  name="student_id[{{$key}}]"
                                                         value="{{ $student->student_id }} ">
-                                                    <input id="teaching_load_id" type="hidden" name="teaching_load_id[]"
+                                                    <input id="teaching_load_id" type="hidden" name="teaching_load_id"
                                                         value="{{ $student->teaching_load_id }}">
-                                                    <input type="hidden" name="teacher_id[]"
+                                                    <input type="hidden" name="teacher_id"
                                                         value="{{ Auth::user()->id }}">
 
-                                                    <input type="hidden" name="strand_id[]"
+                                                    <input type="hidden" name="strand_id"
                                                         value="{{ $strand_id }} ">
-                                                        <input type="hidden" name="term_id[]"
+                                                        <input type="hidden" name="term_id"
                                                         value="{{ $term_id }} ">
                                                      
 
@@ -116,16 +118,16 @@
 
 
 <div class="form-check ">
-    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$student->student_id}}"   value="Excellent">
-    <label class="form-check-label" for="{{$student->student_id}}">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$key}}"   value="Excellent">
+    <label class="form-check-label" for="{{$key}}">
     Excellent
     </label>
   
  </div>
 
  <div class="form-check ">
-    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$student->student_id}}"   value="Very Good">
-    <label class="form-check-label" for="{{$student->student_id}}">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$key}}"   value="Very Good">
+    <label class="form-check-label" for="{{$key}}">
     Very Good
     </label>
   
@@ -133,8 +135,8 @@
 
 
  <div class="form-check ">
-    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$student->student_id}}"   value="Good">
-    <label class="form-check-label" for="{{$student->student_id}}">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$key}}"   value="Good">
+    <label class="form-check-label" for="{{$key}}">
     Good
     </label>
   
@@ -142,8 +144,8 @@
    
 
  <div class="form-check ">
-    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$student->student_id}}"   value="Suffcient">
-    <label class="form-check-label" for="{{$student->student_id}}">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$key}}"   value="Suffcient">
+    <label class="form-check-label" for="{{$key}}">
     Sufficient
     </label>
   
@@ -151,8 +153,8 @@
 
 
  <div class="form-check ">
-    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$student->student_id}}"   value="Not Sufficient">
-    <label class="form-check-label" for="{{$student->student_id}}">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$key}}"   value="Not Sufficient">
+    <label class="form-check-label" for="{{$key}}">
     Not Sufficient
     </label>
   
@@ -197,7 +199,7 @@
 
 
                                     </table>
-                                    <x-jet-button class="float-right col-sm-2" id="add_mark_btn">Add Marks</x-jet-button>
+                                    <x-jet-button class="float-right col-sm-2" id="add_mark_btn">Add CBE Grades</x-jet-button>
                                 </form>
 
                             </div>

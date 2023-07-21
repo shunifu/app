@@ -204,7 +204,7 @@ return redirect('/marks');
     public function cbe_store(Request $request)
     {
 
-   //     dd($request->all());
+//    dd($request->all());
         //Insert or ignore
 
         // $activeSession=AcademicSession::where('active', 1)->first();
@@ -215,13 +215,11 @@ return redirect('/marks');
       
 for($i = 0; $i < count($request->student_id); $i++) {
     $students=$request->student_id[$i];
-  
     $grades=($request->grade[$i]);
-   
-    $load_id=$request->teaching_load_id[$i];
-    $teacher_id=$request->teacher_id[$i];
-    $term_id=$request->term_id[$i];
-    $strand_id=$request->strand_id[$i];
+    $load_id=$request->teaching_load_id;
+    $teacher_id=$request->teacher_id;
+    $term_id=$request->term_id;
+    $strand_id=$request->strand_id;
 
     //Delete duplicates
 
@@ -231,13 +229,13 @@ for($i = 0; $i < count($request->student_id); $i++) {
     CBEMark::updateOrCreate(
         ['student_id'=>$students,
         'teaching_load_id'=>$load_id,
-        'grade'=>$grades[$i],
+        'grade'=>$grades,
         'teacher_id'=>$teacher_id,
         'term_id'=>$term_id, 
         'strand_id'=>$strand_id,
 
         
-         ], ['grade'=>$request->grade[$i]]);
+         ], ['grade'=>$grades]);
 
    
 
