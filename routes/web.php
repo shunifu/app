@@ -213,7 +213,7 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
        Route::get(' /academic-admin/strands/edit/{id}', [StrandController::class,'edit'])->name('strands.edit');
 
        Route::post('/subject/modify', [StrandController::class,'modify'])->name('subject.modify');
-       Route::get('/academic-admin/strands/fetch', [StrandController::class,'fetch'])->name('strands.fetch');
+   
     
     //Department Routes
     Route::get('/academic-admin/department', [DepartmentController::class,'create'])->name('department.create');
@@ -472,6 +472,10 @@ Route::get('/users/teacher/loads/student/delete/{id}/{student}', [TeachingLoadCo
 Route::post('/teaching-loads/archive', [TeachingLoadController::class,'archive'])->name('teaching_loads.archive');
 Route::post('/teaching-loads/delete', [TeachingLoadController::class,'delete'])->name('teaching_loads.delete');
 
+
+
+Route::get('/academic-admin/strands/fetch', [StrandController::class,'fetch'])->name('strands.fetch');
+
 //Support Staff Data Route
 Route::get('/users/support', [AdminStaffController::class,'create'])->name('support.create');
 Route::post('/users/support/add', [AdminStaffController::class,'store'])->name('support.store');
@@ -717,7 +721,13 @@ Route::get('/marks',[MarkController::class,'create'])->name('marks.create');
 Route::get('/marks/cbe',[MarkController::class,'create_cbe'])->name('marks.create_cbe');
 Route::post('/marks/students/show',[MarkController::class,'show'])->name('marks.show');
 Route::post('/marks/students/show/cbe',[MarkController::class,'show_cbe'])->name('marks.show_cbe');
+
 Route::post('/marks/save',[MarkController::class,'store'])->name('marks.store');
+
+
+Route::post('/marks/save/cbe',[MarkController::class,'cbe_store'])->name('marks.cbe_store');
+
+
 Route::get('/marks/manage',[MarkController::class,'manage'])->name('marks.manage');
 Route::post('/marks/show',[MarkController::class,'show_marks'])->name('marks.show_marks');
 Route::get('/marks/transfer',[MarkController::class,'transfer_marks'])->name('marks.transfer');

@@ -89,7 +89,7 @@
                                     </div>
                                 </div>
 
-                                @error('lesson_objectives')
+                                @error('strand')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

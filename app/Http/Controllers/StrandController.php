@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grade;
 use App\Models\Strand;
 use App\Models\Stream;
 use App\Models\Subject;
+use App\Models\TeachingLoad;
 use App\Models\Term;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -135,7 +137,25 @@ class StrandController extends Controller
 
 
     public function fetch(Request $request){
-        dd($request->all());
+
+
+        $teaching_load=TeachingLoad::find($request->teaching_load);
+        $subject_id=$teaching_load->subject_id;
+        $class_id=$teaching_load->class_id;
+
+        $getStream=Grade::where('id',$class_id)->first();
+        $stream_id=$getStream->stream_id;
+
+      
+        $strands=Strand::where('stream_id', $stream_id)->where('subject_id', $subject_id)->where('term_id', $request->term_id)->get();
+
+        return response()->json([
+            'status'=>200,
+            'result'=>$strands,
+    
+          ]);
+
+
     }
 
 

@@ -43,22 +43,23 @@
                             @endforeach
                          
                             </ul>
+
+                            
                        {{-- //    .text-gray-700 mb-1 2h-base --}}
 
                             <hr>
 
                              <p class="text-gray-700 mb-1 2h-base">
-                                <strong>Important Note:</strong><br>
+                                <strong>Strand you adding grades for is</strong><br>
                                 <ul>
 
                      <li>         
-                    Please ensure that the data you are entering reflects the data in your official scheme book. 
-                    Siyabonga  {{\Spatie\Emoji\Emoji::hugging_face()}}
+                          {{$strand_description->strand}} {{\Spatie\Emoji\Emoji::hugging_face()}}
                 </li>  
 <p></p> 
-                <li>
+                {{-- <li>
                     If you want to <span class="text-bold">CHANGE or edit a mark </span> , click on the green button. After clicking on the green button a pop up will show where you will be able to change/edit the mark of the student.
-                </li>
+                </li> --}}
                 </ul>
              
                                     <hr>
@@ -67,7 +68,7 @@
                             
                             <div class="table-responsive">
 
-                                <form action="{{ route('marks.store') }}" method="post" id="marksform">
+                                <form action="{{ route('marks.cbe_store') }}" method="post" id="marksform">
                                     @csrf
                                     <table class="table table-sm table-hover mx-auto table-bordered col-sm " id="marks_table">
 
@@ -75,16 +76,16 @@
 
                                             {{-- <th width="3px">Remove</th> --}}
                                       
-                                            <th style="width: 10px;">Student</th>
-                                            <th style="width: 10px;" >Strand</th>
-                                            <th style="width: 10px;" >Grade</th>
+                                            <th >Student</th>
+                                            {{-- <th >Strand</th> --}}
+                                            <th  >Grade</th>
                                          
 
                                         </thead>
                                         <tbody>
 
-                                          
-                                            @forelse($students as $student)
+                                            @foreach ($students as $key=>$student)
+                                           
                                                 <tr>
 
                                                     <input type="hidden" id="student_id"  name="student_id[]"
@@ -100,25 +101,71 @@
                                                         value="{{ $term_id }} ">
                                                      
 
-                                                          <td class="align-middle" style="width: 10px;" >
+                                                          <td class="align-middle"  >
                                                             {{ $student->lastname }}  {{ $student->name }} 
                                                           </td>
-                                                            <td class="align-middle">
-                                                                <input type="text"    id="strand" class="form-control" value="{{$strand}}"  name="marks[]">  
+                                                            {{-- <td class="align-middle">
+                                                              {{$student->strand}}
                         
-                                                            </td>
+                                                            </td> --}}
 
 
 <td class="align-middle ">
    @if (is_null($student->mark))
-   <div class="input-group">
-    <input type="text" min="0" max="100" {{$mode_value}}   id="marks" class="form-control" placeholder="Mark" name="marks[]">  
+   {{-- <div class="input-group">
+    <input type="text"  {{$mode_value}}   id="marks" class="form-control" placeholder="Mark" name="marks[]">  
    <div class="input-group-append">
     </div>  
-</div>
+</div> --}}
+
+
+
+<div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$student->student_id}}"   value="Excellent">
+    <label class="form-check-label" for="{{$student->student_id}}">
+    Excellent
+    </label>
+  
+ </div>
+
+ <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$student->student_id}}"   value="Very Good">
+    <label class="form-check-label" for="{{$student->student_id}}">
+    Very Good
+    </label>
+  
+ </div>
+
+
+ <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$student->student_id}}"   value="Good">
+    <label class="form-check-label" for="{{$student->student_id}}">
+    Good
+    </label>
+  
+ </div>
+   
+
+ <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$student->student_id}}"   value="Suffcient">
+    <label class="form-check-label" for="{{$student->student_id}}">
+    Sufficient
+    </label>
+  
+ </div>
+
+
+ <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$student->student_id}}"   value="Not Sufficient">
+    <label class="form-check-label" for="{{$student->student_id}}">
+    Not Sufficient
+    </label>
+  
+ </div>
+  
    @else
 <div class="input-group">
-<input type="number" readonly  min="0" max="100"  id="marks" class="form-control" placeholder="Mark" name="marks[]" value="{{$student->mark}}"> 
+<input type="text" readonly  id="marks" class="form-control" placeholder="Grade" name="marks[]" value="{{$student->mark}}"> 
 <div class="input-group-append">
 <button class="btn btn-success edit_marks" id="{{$student->mark_id}}" type="button"> <i class="fas fa-edit"></i></button>
 </div>
@@ -158,9 +205,8 @@
 
 {{-- </td> --}}
 </tr>
-                                            @empty
-                                              No mark
-                                            @endforelse
+                                          
+                                            @endforeach
 
                                         </tbody>
 

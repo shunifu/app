@@ -18,7 +18,7 @@
   
     </x-slot>
 
-
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
  
 @include('partials.marks-header')
 
@@ -31,15 +31,15 @@
         <div class="card card-light   elevation-3">
            
             <div class="card-body">
-                <form action="{{ route('marks.show_cbe') }}" method="post">
+                <form action="{{ route('marks.show_cbe') }}" method="post" id="fr">
 
                             @csrf
                             <div class="form-row">
     
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-4 form-group">
                                     <x-jet-label>Select Class</x-jet-label><br>
-                                    <select class="form-control" name="teaching_load[]" class="class_id" >
-                                        <option value="">Select Class</option>
+                                    <select class="form-control" name="teaching_load" id="teaching_load" >
+                                        <option value="">Select Teaching Load</option>
                                         @foreach($teaching_loads as $teaching_load_item)
                                             <option value="{{ $teaching_load_item->teaching_load_id }}">
                                                 {{ $teaching_load_item->grade_name }} -
@@ -51,9 +51,9 @@
                                     @enderror
                                 </div>
     
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-4 form-group">
                                     <x-jet-label>Select Term</x-jet-label>
-                                    <select class="form-control" name="term_id">
+                                    <select class="form-control" name="term_id" id="term_id">
                                         <option value="">Select Term</option>
                                         @foreach($terms as $term)
                                             <option value="{{ $term->term_id }}">
@@ -66,16 +66,16 @@
                                     @enderror
                                 </div>
 
-                                {{-- <div class="col-md-4 form-group">
+                                <div class="col-md-4 form-group">
                                     <x-jet-label>Select Strand</x-jet-label>
-                                    <select class="form-control" name="term_id">
+                                    <select class="form-control" name="strand_id" id="strand_id">
                                         <option value="">Select Strand</option>
                                         
                                     </select>
-                                    @error('term_id')
+                                    @error('strand_id')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div> --}}
+                                </div>
     
                             </div>
 
@@ -95,33 +95,27 @@
     </div>
 
     
- 
-    <script type="text/javascript">
-        // $('#multiple_loads').multiselect();
-        
-        $('#multiple_loads').multiselect({
-            buttonWidth: '150px'
-        });
-      
-    </script>
+
 
 <script>
     $(document).ready(function () {
 
-        $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-
-    $(".class_id").change(function (e) { 
+    
+  
+    $("#teaching_load, #term_id").change(function (e) { 
         e.preventDefault();
-        alert('s');
 
+ 
         var data={
-                    'term_id':$('select[name="term_id"] :selected').val(),
-                    'class_id':$('select[name="class_id"] :selected').val(),
+                     'term_id':$('select[name="term_id"] :selected').val(),
+                    'teaching_load':$('select[name="teaching_load"] :selected').val(),
                    
                 }
+
+                $('#strand_id .strand_data').remove();
+
+
+                console.log(data);
 
              $.ajax({
                 type: "GET",
@@ -129,7 +123,14 @@
                 data: data,
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
+                   
+                    $.each(data.result, function (key, value) { 
+                    $("#strand_id").append('<option class="strand_data" value='+value.id+'>'+value.strand+'</option>');
+                
+                  
+});
+
+
                 }
              });
         
@@ -143,8 +144,7 @@
 
 
 
-        
-    });
+ 
 </script>
 
   
