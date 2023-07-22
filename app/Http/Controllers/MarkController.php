@@ -204,7 +204,7 @@ return redirect('/marks');
     public function cbe_store(Request $request)
     {
 
-//    dd($request->all());
+//   dd($request->all());
         //Insert or ignore
 
         // $activeSession=AcademicSession::where('active', 1)->first();
@@ -212,34 +212,63 @@ return redirect('/marks');
 
 //Check if same s
 
-      
-for($i = 0; $i < count($request->student_id); $i++) {
-    $students=$request->student_id[$i];
-    $grades=($request->grade[$i]);
+
+ foreach ($request->grade as $key => $value) {
+   
+    $string=explode("-",$key);
+
+    
+
+    $students=$string[1];
+    $student_grade=$value;
     $load_id=$request->teaching_load_id;
     $teacher_id=$request->teacher_id;
     $term_id=$request->term_id;
     $strand_id=$request->strand_id;
 
-    //Delete duplicates
-
-    
-  
 
     CBEMark::updateOrCreate(
         ['student_id'=>$students,
         'teaching_load_id'=>$load_id,
-        'grade'=>$grades,
+      //  'grade'=>$student_grade,
         'teacher_id'=>$teacher_id,
         'term_id'=>$term_id, 
         'strand_id'=>$strand_id,
 
         
-         ], ['grade'=>$grades]);
+         ], ['grade'=>$student_grade]);
+
+
+ }
+
+      
+// for($i = 0; $i < count($request->grade); $i++) {
+//     $students=$request->student_id[$i];
+//     $grades=($request->grade[$i]);
+//     $load_id=$request->teaching_load_id;
+//     $teacher_id=$request->teacher_id;
+//     $term_id=$request->term_id;
+//     $strand_id=$request->strand_id;
+
+//     //Delete duplicates
+
+    
+  
+
+//     CBEMark::updateOrCreate(
+//         ['student_id'=>$students,
+//         'teaching_load_id'=>$load_id,
+//         'grade'=>$grades,
+//         'teacher_id'=>$teacher_id,
+//         'term_id'=>$term_id, 
+//         'strand_id'=>$strand_id,
+
+        
+//          ], ['grade'=>$grades]);
 
    
 
-}
+// }
    
 flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Good Work '.Auth::user()->name . ' You have successfully added CBE grades.', 'Add CBE Grades');
 return redirect('/marks');
@@ -465,7 +494,7 @@ public function show_cbe(Mark $mark, Request $request)
 
 
   
-    $string=$request->teaching_load;
+    $teaching_load=$request->teaching_load;
     $strand_id=$request->strand_id;
    
 
@@ -493,7 +522,7 @@ public function show_cbe(Mark $mark, Request $request)
 // $array=array_map('intval', explode(',', $string));
 // $array = implode("','",$string);
 
-$load_data=TeachingLoad::where('id', $string)->first();
+$load_data=TeachingLoad::where('id', $teaching_load)->first();
 // $subject_id_is=$load_data->class_id;
 
 
@@ -529,38 +558,31 @@ $load_data=TeachingLoad::where('id', $string)->first();
 
 // dd($students);
 
-    
-    $students=DB::select(DB::raw("SELECT
-        student_loads.student_id,
-        users.name,
-        users.id as student_id,
+$students=DB::select(DB::raw("SELECT
+student_loads.student_id,
+users.name,
+users.id as student_id,
 
-        users.middlename,
-        users.lastname,
-        student_loads.teaching_load_id,
-        subjects.subject_name,
-        grades.grade_name,
-        grades.id as grade_id,
-       
-     
-        (SELECT cbe_marks.grade from cbe_marks WHERE  teaching_load_id= student_loads.teaching_load_id AND cbe_marks.term_id=$term_id AND student_id=users.id AND cbe_marks.active=1)  AS mark,
+users.middlename,
+users.lastname,
+student_loads.teaching_load_id,
 
-        (SELECT strands.strand from strands WHERE  id=".$strand_id.")  AS strand,
+grades.grade_name,
+grades.id as grade_id,
+(SELECT cbe_marks.grade from cbe_marks  WHERE cbe_marks.student_id=student_loads.student_id and strand_id=".$strand_id." AND term_id=".$term_id.") as grade_description
 
-        (SELECT cbe_marks.id from cbe_marks WHERE  teaching_load_id= student_loads.teaching_load_id AND cbe_marks.term_id=$term_id AND student_id=users.id AND cbe_marks.active=1) AS mark_id
-       FROM
-           student_loads
-           INNER JOIN users ON users.id=student_loads.student_id
-           INNER JOIN grades_students ON grades_students.student_id=student_loads.student_id
-           INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id
-         
-           INNER JOIN grades ON grades.id=teaching_loads.class_id
-           INNER JOIN subjects ON subjects.id=teaching_loads.subject_id  
-          
-          
-           
-           WHERE student_loads.teaching_load_id =".$string." AND grades_students.active=1 AND teaching_loads.active=1 AND users.active=1
-       ORDER BY `users`.`lastname`, `users`.`name` ASC"));
+
+FROM
+   student_loads
+   INNER JOIN users ON users.id=student_loads.student_id
+   INNER JOIN grades_students ON grades_students.student_id=student_loads.student_id
+   INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id
+
+   INNER JOIN grades ON grades.id=teaching_loads.class_id
+  
+   
+   WHERE student_loads.teaching_load_id =".$teaching_load." AND grades_students.active=1 AND teaching_loads.active=1   AND users.active=1
+ORDER BY `users`.`lastname`, `users`.`name` ASC"));
 
 
       // dd($students);
@@ -568,13 +590,21 @@ $load_data=TeachingLoad::where('id', $string)->first();
     $loads_description = DB::table('teaching_loads')
     ->join('grades', 'teaching_loads.class_id', '=', 'grades.id')
     ->join('subjects', 'teaching_loads.subject_id', '=', 'subjects.id')
-    ->where('teaching_loads.id', $string)
+    ->where('teaching_loads.id', $teaching_load)
     ->where('teaching_loads.active', 1)
     ->select('grade_name', 'subject_name', 'teaching_loads.id as teaching_load_id')
     ->get();
 
 
     $strand_description = Strand::find($strand_id);
+
+    // $summary = DB::table('strands')
+    // ->join('users', 'users.id', '=', 'grades.id')
+    // ->join('subjects', 'teaching_loads.subject_id', '=', 'subjects.id')
+    // ->where('teaching_loads.id', $teaching_load)
+    // ->where('teaching_loads.active', 1)
+    // ->select('grade_name', 'subject_name', 'teaching_loads.id as teaching_load_id')
+    // ->get();
 
     
     // dd($loads_description);

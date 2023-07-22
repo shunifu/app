@@ -74,10 +74,9 @@
 
                                         <thead class="thead-light hidden-md-up">
 
-                                            {{-- <th width="3px">Remove</th> --}}
                                       
                                             <th >Student</th>
-                                            {{-- <th >Strand</th> --}}
+                                          
                                             <th  >Grade</th>
                                          
 
@@ -90,8 +89,7 @@
                                            
                                                 <tr>
 
-                                                    <input type="hidden" id="student_id"  name="student_id[{{$key}}]"
-                                                        value="{{ $student->student_id }} ">
+                                                  
                                                     <input id="teaching_load_id" type="hidden" name="teaching_load_id"
                                                         value="{{ $student->teaching_load_id }}">
                                                     <input type="hidden" name="teacher_id"
@@ -106,91 +104,310 @@
                                                           <td class="align-middle"  >
                                                             {{ $student->lastname }}  {{ $student->name }} 
                                                           </td>
-                                                            {{-- <td class="align-middle">
-                                                              {{$student->strand}}
-                        
-                                                            </td> --}}
+                                                           
 
 
 <td class="align-middle ">
  
+    @if (is_null($student->grade_description))
+
+
+    <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"   value="Excellent">
+        <label class="form-check-label" for="{{$key}}">
+        Excellent
+        </label>
+      
+     </div>
+    
+     <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}"   value="Very Good">
+        <label class="form-check-label" for="{{$key}}">
+        Very Good
+        </label>
+      
+     </div>
+    
+    
+     <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"   value="Good">
+        <label class="form-check-label" for="{{$key}}">
+        Good
+        </label>
+      
+     </div>
+       
+    
+     <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"   value="Sufficient">
+        <label class="form-check-label" for="{{$key}}">
+        Sufficient
+        </label>
+      
+     </div>
+    
+    
+     <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}" id="{{$key}}"   value="Not Sufficient">
+        <label class="form-check-label" for="{{$key}}">
+        Not Sufficient
+        </label>
+      
+     </div>
+
+@else
+
+
+@if ($student->grade_description==="Excellent")
+
+<div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"  checked   value="Excellent">
+    <label class="form-check-label" for="{{$key}}">
+        Excellent
+        </label>
+    </div>
+
+<div class="form-check ">
+<input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Very Good">
+<label class="form-check-label" for="{{$key}}">
+    Very Good
+    </label>
+</div>
 
 
 
 <div class="form-check ">
-    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$key}}"   value="Excellent">
-    <label class="form-check-label" for="{{$key}}">
-    Excellent
-    </label>
-  
- </div>
-
- <div class="form-check ">
-    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$key}}"   value="Very Good">
-    <label class="form-check-label" for="{{$key}}">
-    Very Good
-    </label>
-  
- </div>
-
-
- <div class="form-check ">
-    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$key}}"   value="Good">
-    <label class="form-check-label" for="{{$key}}">
+<input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Good">
+<label class="form-check-label" for="{{$key}}">
     Good
     </label>
-  
- </div>
-   
+</div>
 
- <div class="form-check ">
-    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$key}}"   value="Suffcient">
+
+<div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Sufficient">
     <label class="form-check-label" for="{{$key}}">
-    Sufficient
-    </label>
-  
- </div>
+        Sufficient
+        </label>
+    </div>
 
 
- <div class="form-check ">
-    <input class="form-check-input" type="radio" name="grade[{{$key}}]" id="{{$key}}"   value="Not Sufficient">
+
+    <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Not Sufficient">
+        <label class="form-check-label" for="{{$key}}">
+            Not Sufficient
+            </label>
+        </div>
+
+
+
+
+
+@endif
+
+
+
+
+    @if ($student->grade_description==="Very Good")
+
+    <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Excellent">
+        <label class="form-check-label" for="{{$key}}">
+            Excellent
+            </label>
+        </div>
+
+    <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"  checked  value="Very Good">
     <label class="form-check-label" for="{{$key}}">
-    Not Sufficient
-    </label>
+        Very Good
+        </label>
+    </div>
+    
+
   
- </div>
+    <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Good">
+    <label class="form-check-label" for="{{$key}}">
+        Good
+        </label>
+    </div>
+
+
+    <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Sufficient">
+        <label class="form-check-label" for="{{$key}}">
+            Sufficient
+            </label>
+        </div>
+
+
+
+        <div class="form-check ">
+            <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Not Sufficient">
+            <label class="form-check-label" for="{{$key}}">
+                Not Sufficient
+                </label>
+            </div>
+
+
+    @endif
+
+
+
+    @if ($student->grade_description==="Good")
+
+    <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Excellent">
+        <label class="form-check-label" for="{{$key}}">
+            Excellent
+            </label>
+        </div>
+
+    <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Very Good">
+    <label class="form-check-label" for="{{$key}}">
+        Very Good
+        </label>
+    </div>
+    
+
+  
+    <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"  checked   value="Good">
+    <label class="form-check-label" for="{{$key}}">
+        Good
+        </label>
+    </div>
+
+
+    <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Sufficient">
+        <label class="form-check-label" for="{{$key}}">
+            Sufficient
+            </label>
+        </div>
+
+
+
+        <div class="form-check ">
+            <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Not Sufficient">
+            <label class="form-check-label" for="{{$key}}">
+                Not Sufficient
+                </label>
+            </div>
+
+
+    @endif
   
   
+    @if ($student->grade_description==="Sufficient")
+
+    <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Excellent">
+        <label class="form-check-label" for="{{$key}}">
+            Excellent
+            </label>
+        </div>
+
+    <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Very Good">
+    <label class="form-check-label" for="{{$key}}">
+        Very Good
+        </label>
+    </div>
+    
+
+  
+    <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"     value="Good">
+    <label class="form-check-label" for="{{$key}}">
+        Good
+        </label>
+    </div>
+
+
+    <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"  checked   value="Sufficient">
+        <label class="form-check-label" for="{{$key}}">
+            Sufficient
+            </label>
+        </div>
+
+
+
+        <div class="form-check ">
+            <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Not Sufficient">
+            <label class="form-check-label" for="{{$key}}">
+                Not Sufficient
+                </label>
+            </div>
+
+
+    @endif
+
+
+
+    @if ($student->grade_description==="Not Sufficient")
+
+    <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Excellent">
+        <label class="form-check-label" for="{{$key}}">
+            Excellent
+            </label>
+        </div>
+
+    <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"    value="Very Good">
+    <label class="form-check-label" for="{{$key}}">
+        Very Good
+        </label>
+    </div>
+    
+
+  
+    <div class="form-check ">
+    <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"     value="Good">
+    <label class="form-check-label" for="{{$key}}">
+        Good
+        </label>
+    </div>
+
+
+    <div class="form-check ">
+        <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}"     value="Sufficient">
+        <label class="form-check-label" for="{{$key}}">
+            Sufficient
+            </label>
+        </div>
+
+
+
+        <div class="form-check ">
+            <input class="form-check-input" type="radio" name="grade[{{$key}}-{{$student->student_id}}]" id="{{$key}}" id="{{$key}}" checked   value="Not Sufficient">
+            <label class="form-check-label" for="{{$key}}">
+                Not Sufficient
+                </label>
+            </div>
+
+
+    @endif
+
+
+
+
+
   
 
+
+
+@endif
 
 </td>
 
 
-{{-- <td class="align-middle">
-    @if (is_null($student->effort_grade))
-    <div class="input-group">
-     <input type="number" min="0" max="2"   id="effort_grade" class="form-control" placeholder="Effort Grade" name="effort_grade[]">  
-    <div class="input-group-append">
-     </div>  
- </div>
-    @else --}}
- {{-- <div class="input-group"> --}}
- {{-- <input type="number" readonly  min="0" max="2"  id="effort_grade" class="form-control" placeholder="Effort Grade" name="effort_grade[]" value="{{$student->effort_grade}}">  --}}
- {{-- <div class="input-group-append">
- <button class="btn btn-success edit_effort_grade" id="{{$student->mark_id}}" type="button"> <i class="fas fa-edit"></i></button>
- </div> --}}
- {{-- <div class="input-group-append">
-     <button class="btn btn-danger remove_student" id="{{$student->student_id}}" type="button"> <i class="fas fa-user-times"></i></button>
-     
-     </div>  --}}
- {{-- </div> --}}
-   
-    {{-- @endif --}}
- 
- {{-- </td> --}}
 
-{{-- </td> --}}
 </tr>
                                           
                                             @endforeach
