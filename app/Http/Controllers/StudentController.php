@@ -39,6 +39,7 @@ use App\Models\AssessementProgressReport;
 use App\Models\GradeTeacher;
 use App\Models\Intervention;
 use App\Models\School;
+use App\Models\CBEMark;
 use App\Models\StudentFees;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use FontLib\Table\Type\name;
@@ -1056,6 +1057,7 @@ public function parent_update(Request $request){
                 $mark=Mark::where('student_id', $student_list[$i]);
                 $grade=StudentClass::where('student_id', $student_list[$i]);
                 $parent=ParentStudent::where('student_id', $student_list[$i]);
+                $cbe_mark=CBEMark::where('student_id', $student_list[$i]);
 
                 if ($assessement_report->exists()) {
                     $assessement_report->delete();
@@ -1075,6 +1077,10 @@ public function parent_update(Request $request){
 
                 if ($mark->exists()) {
                     $mark->delete();
+                }
+
+                if ($cbe_mark->exists()) {
+                    $cbe_mark->delete();
                 }
         
 
@@ -1119,7 +1125,7 @@ public function parent_update(Request $request){
             $user=User::where('id', $student_list[$i]);
                 // $parent=ParentStudent::where('student_id', $student_list[$i]);
             $user=User::where('id', $student_list[$i]);
-            
+            $cbe_mark=CBEMark::where('student_id', $student_list[$i]);
 
              
           
@@ -1152,6 +1158,10 @@ public function parent_update(Request $request){
                     $mark->update(['active'=>'0']);
                 }
 
+                if ($cbe_mark->exists()) {
+                    $cbe_mark->update(['active'=>'0']);
+                }
+
                 if ($term_averages->exists()) {
                     $term_averages->delete();
                 }
@@ -1179,7 +1189,7 @@ public function parent_update(Request $request){
             $user=User::where('id', $student_list[$i]);
                 // $parent=ParentStudent::where('student_id', $student_list[$i]);
             $user=User::where('id', $student_list[$i]);
-            
+            $cbe_mark=CBEMark::where('student_id', $student_list[$i]);
 
              
           
@@ -1212,6 +1222,10 @@ public function parent_update(Request $request){
                     $mark->update(['active'=>'1']);
                 }
 
+                if ($cbe_mark->exists()) {
+                    $cbe_mark->update(['active'=>'1']);
+                }
+
             }
         }
 
@@ -1241,6 +1255,8 @@ public function parent_update(Request $request){
                 $grade=StudentClass::where('student_id', $student_list[$i])->where('academic_session', $session);
 
                 // dd($session);
+
+                $cbe_mark=CBEMark::where('student_id', $student_list[$i]);
            
 
                 if ($assessement_report->exists()) {
@@ -1262,6 +1278,10 @@ public function parent_update(Request $request){
 
                 if ($mark->exists()) {
                     $mark->delete();
+                }
+
+                if ($cbe_mark->exists()) {
+                    $cbe_mark->delete();
                 }
     
 

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\StudentSubjectAverage;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\Console\Input\Input;
+use App\Models\CBEMark;
 
 class TeachingLoadController extends Controller
 {
@@ -652,6 +653,7 @@ return redirect('users/teacher/loads/view/'.$teaching_load_id)->with('Teaching L
         DB::table('student_subject_averages')->where('teaching_load_id',$id)->delete();
         DB::table('student_loads')->where('teaching_load_id',$id)->delete();
         DB::table('marks')->where('teaching_load_id',$id)->delete(); 
+    //    DB::table('cbe_marks')->where('teaching_load_id',$id)->delete(); 
         DB::table('teaching_loads')->where('id',$id)->delete();
     
   
@@ -764,6 +766,8 @@ return redirect('users/teacher/loads/view/'.$teaching_load_id)->with('Teaching L
               $student_mark=Mark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
     
               $student_subject_average=StudentSubjectAverage::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+              $cbe_student_mark=CBEMark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
     
               //archive workflow
     
@@ -782,6 +786,11 @@ return redirect('users/teacher/loads/view/'.$teaching_load_id)->with('Teaching L
                   $student_mark->delete();
                  
               }
+
+              if ($cbe_student_mark->exists()) {
+                $cbe_student_mark->delete();
+               
+            }
     
     
           }
@@ -798,6 +807,8 @@ return redirect('users/teacher/loads/view/'.$teaching_load_id)->with('Teaching L
               $student_mark=Mark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
   
               $student_subject_average=StudentSubjectAverage::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
+              $cbe_student_mark=CBEMark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
 
               //archive workflow
 
@@ -816,6 +827,11 @@ return redirect('users/teacher/loads/view/'.$teaching_load_id)->with('Teaching L
                   $student_mark->update(['active'=>'1']);
                  
               }
+
+              if ($cbe_student_mark->exists()) {
+                $cbe_student_mark->update(['active'=>'1']);
+               
+            }
 
 
           }
@@ -857,6 +873,8 @@ if (Auth::user()->hasRole('admin_teacher') or Auth::user()->id==$teacher_id) {
 
             $student_subject_average=StudentSubjectAverage::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
 
+            $cbe_student_mark=CBEMark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
             //archive workflow
 
             //delete in teaching load
@@ -875,6 +893,11 @@ if (Auth::user()->hasRole('admin_teacher') or Auth::user()->id==$teacher_id) {
                
             }
 
+            if ($cbe_student_mark->exists()) {
+              $cbe_student_mark->update(['active'=>'0']);
+             
+          }
+
 
         }
        
@@ -889,7 +912,10 @@ if (Auth::user()->hasRole('admin_teacher') or Auth::user()->id==$teacher_id) {
 
           $student_mark=Mark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
 
+          $cbe_student_mark=CBEMark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
           $student_subject_average=StudentSubjectAverage::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
 
           //archive workflow
 
@@ -908,6 +934,11 @@ if (Auth::user()->hasRole('admin_teacher') or Auth::user()->id==$teacher_id) {
               $student_mark->delete();
              
           }
+
+          if ($cbe_student_mark->exists()) {
+            $cbe_student_mark->delete();
+           
+        }
 
 
       }
@@ -928,6 +959,8 @@ if (Auth::user()->hasRole('admin_teacher') or Auth::user()->id==$teacher_id) {
 
           $student_subject_average=StudentSubjectAverage::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
 
+          $cbe_student_mark=CBEMark::where('student_id', $request->students[$i])->where('teaching_load_id', $request->teaching_load_id[$i]);
+
           //archive workflow
 
           //delete in teaching load
@@ -945,6 +978,11 @@ if (Auth::user()->hasRole('admin_teacher') or Auth::user()->id==$teacher_id) {
               $student_mark->update(['active'=>'1']);
              
           }
+
+          if ($cbe_student_mark->exists()) {
+            $cbe_student_mark->update(['active'=>'1']);
+           
+        }
 
 
       }
