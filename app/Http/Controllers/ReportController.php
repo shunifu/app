@@ -79,9 +79,27 @@ class ReportController extends Controller
         //Section
         $sections=Section::all();
 
+       
+
         $templates=ReportTemplate::all();
 
         $variables=ReportVariable::all();
+
+        if (is_null($templates) ) {
+
+            flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Please add report templates. To do so, please go to settings , then Report Settings and click Report Templates');
+            return redirect('/report/templates');
+
+          
+        }
+
+        if (is_null($variables) ) {
+
+            flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. Please add report variables. To do so, please go to settings , then Report Settings and click Report Variables');
+            return redirect('/report/variables');
+
+          
+        }
         
         return view('academic-admin.reports-management.term.index', compact('terms','streams','classes','sections','templates','variables'));
 

@@ -818,7 +818,7 @@
                     <a href="#" class="nav-link">
                       <i class="nav-icon fas fa-chart-line"></i>
                       <p>
-                        Mid-term Reports
+                       CBE Report
                         <i class="fas fa-angle-left right"></i>
                       </p>
                     </a>
@@ -826,13 +826,13 @@
                     <ul class="nav nav-treeview">
                
                       <li class="nav-item">
-                        <a href="/report/term-based/" class="nav-link">
+                        <a href="/report/term-based/stream/cbe" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Stream Based</p>
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="/report/term-based/class" class="nav-link">
+                        <a href="/report/term-based/class/cbe" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Class Based</p>
                         </a>
@@ -843,33 +843,7 @@
 
 
 
-                  <li class="nav-item has-treeview">
                   
-                    <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-chart-line"></i>
-                      <p>
-                        Progress Reports
-                        <i class="fas fa-angle-left right"></i>
-                      </p>
-                    </a>
-
-                    <ul class="nav nav-treeview">
-               
-                      <li class="nav-item">
-                        <a href="/report/term-based/" class="nav-link">
-                          <i class="nav-icon fas fa-chevron-circle-right"></i>
-                          <p>Stream Based</p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="/report/term-based/class" class="nav-link">
-                          <i class="nav-icon fas fa-chevron-circle-right"></i>
-                          <p>Class Based</p>
-                        </a>
-                      </li>
-                    
-                    </ul>
-                  </li>
 
                 
 

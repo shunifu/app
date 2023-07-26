@@ -96,6 +96,7 @@ th span {
         <th><span>Class</span></th>
         <th><span>Average</span></th>
          <th><span>Ratio</span></th>
+         <th><span>Rate</span></th>
         <th><span>Comment</span></th>
         <th><span>English Language</span> </th>
         <th><span>Maths</span></th>
@@ -270,6 +271,10 @@ where student_id = ".$student->learner_id.""));
                             
                         <a href="/analytics/loads/check/{{$student->student_id}}/{{$assessement_id}}/"><span class="bg-danger"> {{$student->loads_count}}:{{$student->marks_count}}</span></a>
                        @endif
+                    </td>
+
+                    <td>
+                        rate
                     </td>
 
 

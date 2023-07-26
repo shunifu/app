@@ -159,6 +159,8 @@
     <div class="dropdown-menu">
       <button  id="btn_transfer"  value="transfer"   class="btn btn-warning dropdown-item" >Transfer</button>
       <div role="separator" class="dropdown-divider"></div>
+      <button  id="btn_merge"  value="merge"   class="btn btn-warning dropdown-item" >Merge</button>
+      <div role="separator" class="dropdown-divider"></div>
       <button type="submit" name="btn" id="btn"  value="archive" class="btn btn-warning dropdown-item" >Archive</button>
       <button type="submit" name="btn" id="btn"  value="unarchive" class="btn btn-warning dropdown-item" >Unarchive</button>
       <button type="submit" name="btn" id="btn"  value="partial_delete" class="btn btn-danger dropdown-item" >Partial Delete</button> 

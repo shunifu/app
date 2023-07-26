@@ -43,6 +43,7 @@ use App\Models\CBEMark;
 use App\Models\StudentFees;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use FontLib\Table\Type\name;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session as Fas;
 use Image;
 use ImageOptimizer;
@@ -122,7 +123,7 @@ class StudentController extends Controller
             $image = $request->file('student_image');
           //  Image::make($image->getRealPath())->resize(150, 150);
 
-$student_image = cloudinary()->upload($request->file('student_image')->getRealPath(), [ 'folder' => 'shunifu','name'=>$code.'-'.$student_id, 'transformation' => [ 'quality' => 85 ]
+$student_image = cloudinary()->upload($request->file('student_image')->getRealPath(), [ 'folder' => 'shunifu','name'=>$code.'-'.$student_id, 'transformation' => [ 'quality' => 75 ]
 ])->getSecurePath();
 
         //   $image_new=ImageOptimizer::optimize($image);
@@ -1045,6 +1046,28 @@ public function parent_update(Request $request){
         $session_=AcademicSession::where('active', 1)->first();
         $session=$session_->id;
         $current_class=$request->current_class;
+
+        if (!Schema::hasTable('cbe_marks')) {
+            Schema::create('cbe_marks', function($table){
+                  
+                   $table->id();
+                   $table->unsignedBigInteger('teacher_id');
+                   $table->unsignedBigInteger('student_id');
+                   $table->unsignedBigInteger('teaching_load_id');
+                   $table->unsignedBigInteger('strand_id');
+                   $table->unsignedBigInteger('term_id');
+               
+                   $table->string('grade')->nullable();
+                   $table->integer('active')->default('1');
+           
+                   $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
+                   $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
+                   $table->foreign('teaching_load_id')->references('id')->on('teaching_loads')->onDelete('cascade');
+                   $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
+                   $table->foreign('strand_id')->references('id')->on('strands')->onDelete('cascade');
+                   $table->timestamps();
+           });
+       }
 
         
       

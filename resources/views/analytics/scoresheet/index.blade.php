@@ -100,6 +100,7 @@ th span {
         <th><span>Class</span></th>
         <th><span>Average</span></th>
          <th><span>Ratio</span></th>
+         <th><span>Rate</span></th>
         <th><span>Comment</span></th>
        
         <th><span>English Lang</span> </th>

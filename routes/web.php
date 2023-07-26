@@ -89,6 +89,7 @@ use App\Http\Controllers\StudentAttendanceController;
 use App\Http\Controllers\AssessementSettingController;
 use App\Http\Controllers\CoronaSurvellianceController;
 use App\Http\Controllers\AssessementQuestionController;
+use App\Http\Controllers\CBEReportController;
 use App\Http\Controllers\DisciplinaryCasesController;
 use App\Http\Controllers\InsetServicesController;
 use App\Http\Controllers\InsetWorkshopController;
@@ -98,6 +99,7 @@ use App\Http\Controllers\PermissionsManagementController;
 use App\Http\Controllers\ShunifuServiceController;
 use App\Http\Controllers\StrandController;
 use App\Http\Controllers\TimetableController;
+use App\Models\CBEMark;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -885,10 +887,23 @@ Route::post('/report/term-based/stream', [ReportController::class,'stream'])->na
 //Route::post('/report/term-based/class/', [ReportController::class,'class'])->name('report.class');
 Route::post('/report/term-based/student', [ReportController::class,'student'])->name('report.student');
 
+
+
+//cbe report
+
+Route::get('/report/term-based/stream/cbe', [CBEReportController::class,'index'])->name('cbe_report.index');
+
+Route::get('/report/term-based/class/cbe', [CBEReportController::class,'index'])->name('cbe_report.index');
+
+Route::post('/report/term-based/cbe', [CBEReportController::class,'create'])->name('cbe_report.create');
+
 // Assessement Based Stream Report
 Route::get('/report/assessement-based/', [ReportController::class,'assessement_based_index'])->name('report.assessment_based');
 Route::post('/report/assessement-based/generate', [ReportController::class,'generate_assessement_report'])->name('report.stream-assessement-based');
 
+
+
+//
 
 //Open Day Report
 
