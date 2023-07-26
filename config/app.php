@@ -156,12 +156,12 @@ return [
  
  
 
-    // 'DB_CONNECTION' => 'mysql',
-    // 'DB_HOST' => "SG-grape-laugh-9477-7606-mysql-master.servers.mongodirector.com",
-    // 'DB_PORT' => '3306',
-    // 'DB_DATABASE' => env('DB_NAME'),
-    // 'DB_USERNAME' => 'sgroot',
-    // 'DB_PASSWORD'=>'Wo835nKf@TS4aE04',
+    'DB_CONNECTION' => 'mysql',
+    'DB_HOST' => "SG-grape-laugh-9477-7606-mysql-master.servers.mongodirector.com",
+    'DB_PORT' => '3306',
+    'DB_DATABASE' => env('DB_NAME'),
+    'DB_USERNAME' => 'sgroot',
+    'DB_PASSWORD'=>'Wo835nKf@TS4aE04',
 
     // 'APP_DEBUG' => 'false',
     // 'APP_ENV' => 'production',
@@ -172,12 +172,12 @@ return [
     //     // The environment is local
     // }
 
-    'DB_CONNECTION' => 'mysql',
-    'DB_HOST' => "127.0.0.1",
-    'DB_PORT' => '3306',
-    'DB_DATABASE' => env('DB_NAME'),
-    'DB_USERNAME' => 'root',
-    'DB_PASSWORD'=>'',
+    // 'DB_CONNECTION' => 'mysql',
+    // 'DB_HOST' => "127.0.0.1",
+    // 'DB_PORT' => '3306',
+    // 'DB_DATABASE' => env('DB_NAME'),
+    // 'DB_USERNAME' => 'root',
+    // 'DB_PASSWORD'=>'',
 
 
     // 'DB_CONNECTION' => 'shunifuservices',
@@ -203,7 +203,7 @@ return [
 'GOOGLE_CLIENT_SECRET'=>"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",
 'GOOGLE_REDIRECT_URL'=>"/redirect/google",
 
-'CLOUDINARY_URL'=>'cloudinary://434951831945849:NJZgQVie22hrsjoXbro416J9PVs@innovazaniacloud',
+'CLOUDINARY_URL'=>'cloudinary://884547925317869:B-IO0MYnPfVb1Lm9Lsx3KvjXUxM@doramr0cr',
 'CLOUDINARY_PRESET'=>'XXXXXXXXXXXXX',
 'CLOUDINARY_NOTIFICATION_URL'=>'',
 
