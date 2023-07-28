@@ -1060,15 +1060,75 @@ public function parent_update(Request $request){
                    $table->string('grade')->nullable();
                    $table->integer('active')->default('1');
            
-                   $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
-                   $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
-                   $table->foreign('teaching_load_id')->references('id')->on('teaching_loads')->onDelete('cascade');
-                   $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
-                   $table->foreign('strand_id')->references('id')->on('strands')->onDelete('cascade');
                    $table->timestamps();
            });
        }
 
+
+       if ($request->btn=="merge") {
+      
+   
+
+       $student_data=[];
+       for ($i = 0; $i <count($student_list); $i++) {
+
+
+        $student_data[]=DB::table('grades_students')
+        ->join('grades','grades_students.grade_id','=','grades.id')
+        ->join('users','grades_students.student_id','=','users.id')
+        ->join('academic_sessions','grades_students.academic_session','=','academic_sessions.id')
+        ->where('grades_students.grade_id', $current_class)
+        ->where('grades_students.academic_session', $session)
+        ->where('academic_sessions.id',$session )
+        ->where('users.id',$student_list[$i])
+     ->select('users.id as student_id', 'users.name', 'users.middlename','users.lastname','grades.grade_name', 'academic_sessions.id as session_id', 'grades.id as grade_id')
+       
+        ->first();
+        // $student_data[]=User::where('id', $student_list[$i])->first();
+
+
+    //    dd($student_data);
+
+
+//         $sub = StudentLoad::select('id')
+  
+//     ->where('student_id',$student_list)
+//     ->where('academic_session',$session )
+//     ->groupBy('subjects.id');
+
+// $kj=DB::table(DB::raw("($sub->toSq()) as loads"))
+//     ->mergeBindings($sub)
+  
+//     ->get();
+
+//     dd($kj);
+
+//       $student_data[]=  DB::select(DB::raw("SELECT users.name, users.middlename, users.lastname, grades.grade_name,
+// GROUP_CONCAT(subjects.subject_name) AS subject_name,
+// subjects.id as subject_id
+
+// FROM
+// grades_students
+// INNER JOIN student_loads ON student_loads.student_id = grades_students.student_id
+// INNER JOIN teaching_loads ON teaching_loads.id = student_loads.teaching_load_id
+// INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
+// INNER JOIN grades ON grades.id = teaching_loads.class_id
+// INNER JOIN users ON users.id=grades_students.student_id
+// WHERE grades_students.student_id = ".$student_list[$i]." AND `grades_students`.`academic_session` =".$session." AND  users.active=1 AND teaching_loads.active=1
+// GROUP BY
+// users.id,
+// subjects.id"));
+
+
+      
+       }
+
+   //    dd($student_data);
+
+     return view('users.students.merge-management.index', compact('student_data', 'session'));
+
+
+       }
         
       
         if ($request->btn=="delete") {
@@ -1381,6 +1441,12 @@ public function parent_update(Request $request){
     }
 
 
+    public function student_merge(Request $request){
+
+        dd($request->all());
+
+    }
+
 public function  parent_link(Request $request){
 $streams=Grade::all();
 return view('users.students.parent-link.index',compact('streams'));      
@@ -1654,7 +1720,51 @@ public function store_parent_cell(Request $request){
 
 
 
+public function parent_cell_show($id, $student_id){
+ //   
 
+        // 1. check if number exists
+    $parent_cell_exists=User::where('cell_number', $id)->exists();
+
+
+
+    if($parent_cell_exists){
+        // 2. if exists
+  
+    $parent_cell=User::where('cell_number', $id)->first();
+    $parent_id=$parent_cell->id;
+
+  //     1. Change the parent_id in parent_students and put in the parent id of new parent (owner of new number)
+
+
+    $updateParent=ParentStudent::where('student_id', $student_id)->where('parent_id', $parent_id)->update([
+        "parent_id"=>$parent_id,
+    ]);
+    
+  
+
+    }else{
+          //     if it does not exist
+    //      1. Add new number as user 
+
+    // $new_parent=User::create([
+    //     'cell_number'=>$id
+    // ])
+    //      2. Assign new user to student in parent_students
+
+    }
+
+
+
+    
+    
+    $parent_cell=User::where('cell_number', $id)->first();
+    $parent_id=$parent_cell->id;
+
+    return response()->json($mark[0]);
+
+
+}
 
 
 

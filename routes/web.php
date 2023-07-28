@@ -143,7 +143,7 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
     Route::get('/class/student-management/link-parents',  [StudentController::class,'parent_link_class_teacher'])->name('parent_link.index_class_teacher');
     Route::post('/class/student-management/show-parents',  [StudentController::class,'classteacher_parent_link_show'])->name('classteacher_parent_link_show');
   Route::post('/class/student-management/add-parents',  [StudentController::class,'store_parent_cell'])->name('classteacher_parent_link.store');
-    
+  Route::get('/parents-student/link/edit/{id}',  [StudentController::class,'parent_cell_show'])->name('parent_link.show_cell');
 
 // Route::post('/link/students-parents/list',  [StudentController::class,'classteacher_parent_link_show'])->name('classteacher_parent_link.show');
 
@@ -327,6 +327,9 @@ Route::post('/send/single/parent',[StudentController::class,'send_msg']);
 
 Route::post('/users/student/manage/removal/process',[StudentController::class,'removal_loadstudents'])->name('student.removal');
 Route::post('/users/student/manage/removal/process/selection',[StudentController::class,'removal'])->name('student.removal_selection');
+
+
+Route::post('/users/student/merge',[StudentController::class,'student_merge'])->name('student.merge');
 
 Route::post('/student/image/upload',[StudentController::class,'student_image'])->name('student.image');
 

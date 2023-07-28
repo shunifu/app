@@ -47,7 +47,7 @@
                                     <th class="col-3">Student</th>
                                 
                                     <th style="5px">Parent Cell</th>
-                                    <th style="5px">Parent Email Address</th>
+                                    {{-- <th style="5px">Parent Email Address</th> --}}
 
                                 </thead>
                                 <tbody>
@@ -87,7 +87,7 @@
                                             </td>
 
 
-                                            <td class="align-middle">
+                                            {{-- <td class="align-middle">
                                                 @if($student->cell_number==NULL)
                                                     <input type="email" id="parent_email" class="form-control"
                                                         placeholder="Parent Email" name="parent_cell[]">
@@ -105,7 +105,7 @@
 
                                                 @endif
 
-                                            </td>
+                                            </td> --}}
 
                                             </td>
                                         </tr>
@@ -154,7 +154,7 @@
                         <p></p>
 
 
-                        <label class="label-control">New Mark</label>
+                        <label class="label-control">New Cell Number</label>
                         <input type="text" class="form-control" name="new_cell_number" required
                             placeholder="Enter New Cell Number">
 
@@ -206,7 +206,7 @@
             event.preventDefault();
             var edit_id = $(this).attr('id');
 
-            // alert(edit_id);
+        // alert(edit_id);
             $("#editData").modal('show');
             $.ajax({
                     url: '/parents-student/link/edit/' + edit_id,
