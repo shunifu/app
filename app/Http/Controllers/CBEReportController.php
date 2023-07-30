@@ -72,17 +72,22 @@ class CBEReportController extends Controller
     public function create(Request $request)
     {
 
-        dd($request->all());
+   //   dd($request->all());
+
+     $stream_id=$request->stream;
 
 
-        $students=DB::table('grades')
-        ->join('grades_students', 'grades_students.grade_id', '=', 'grades.id')
-        ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
-        ->select('terms.id as term_id','terms.term_name', 'academic_sessions.academic_session')
+        $students=DB::table('grades_students')
+        ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
+        ->join('users', 'users.id', '=', 'grades_students.student_id')
+        ->select('users.id as student_id', 'users.name', 'users.middlename', 'users.lastname' ,'grades.id as grade_id')
         ->where('academic_sessions.active',1)
+        ->where('grades.stream_id',$stream_id)
         ->where('grades_students.active',1)
-        ->where('grades')
         ->get();
+
+        
 
 
          

@@ -70,6 +70,7 @@
                                                 foreach ($student_loads as $student_load) {
 
                                                     echo '<li>'.$student_load->subject_name.'</li>';
+                                                   // echo 
                                                     // echo '<input type=""'
 
                                                 }
@@ -82,7 +83,7 @@
                                     </div>
                         
                                 </label>
-                                  <input type="hidden" name="block{{$student->student_id}}" id="{{$student->student_id}}" value="{{$student->student_id}}">
+                                  <input type="hidden" name="students[]" id="{{$student->student_id}}" value="{{$student->student_id}}">
                          
                               </div>
                             

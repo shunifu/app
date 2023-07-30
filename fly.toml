@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for summer-silence-8276 on 2023-06-10T10:14:48+02:00
+# fly.toml app configuration file generated for hj on 2023-07-30T14:14:54+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "summer-silence-8276"
+app = "hj"
 primary_region = "jnb"
 console_command = "php /var/www/html/artisan tinker"
 
@@ -19,6 +19,7 @@ console_command = "php /var/www/html/artisan tinker"
   LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
   SESSION_DRIVER = "cookie"
   SESSION_SECURE_COOKIE = "true"
+  DB_PASSWORD="sisekelohigh"
 
 [http_service]
   internal_port = 8080

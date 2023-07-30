@@ -47,7 +47,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session as Fas;
 use Image;
 use ImageOptimizer;
-
+use Sabberworm\CSS\Property\Import;
 
 // use Validator;
 
@@ -1443,7 +1443,84 @@ public function parent_update(Request $request){
 
     public function student_merge(Request $request){
 
-        dd($request->all());
+      // dd($request->all());
+        $students=$request->students;
+        $chosen=$request->chosen;
+
+       $rejected=array_diff($students, array($chosen));
+    
+
+   
+       
+
+//       dd($rejected);
+
+
+$chosen_student=DB::table('student_loads')
+->join('teaching_loads','teaching_loads.id','=','student_loads.teaching_load_id')
+->join('subjects','subjects.id','=','teaching_loads.subject_id')
+->where('teaching_loads.active', 1)
+->where('student_loads.student_id',$chosen)
+->select('student_loads.student_id as student_id', 'subjects.id as subject_id', 'teaching_loads.class_id', 'student_loads.id as student_load_id')
+->get();
+
+        foreach ($rejected as $key => $student) {
+
+
+            //1. Get subjects leaners are doing
+
+
+
+          
+
+         //   dd($chosen);
+
+            $rejected_students_subjects=DB::table('student_loads')
+            ->join('teaching_loads','teaching_loads.id','=','student_loads.teaching_load_id')
+            ->join('subjects','subjects.id','=','teaching_loads.subject_id')
+            ->where('teaching_loads.active', 1)
+            ->whereIn('student_loads.student_id',(array($student)) )
+            ->select('student_loads.student_id as student_id', 'subjects.id as subject_id', 'teaching_loads.class_id', 'student_loads.id as student_load_id')
+            ->get()->pluck('subject_id')->toArray();
+
+
+            $chosen_student_subjects=DB::table('student_loads')
+            ->join('teaching_loads','teaching_loads.id','=','student_loads.teaching_load_id')
+            ->join('subjects','subjects.id','=','teaching_loads.subject_id')
+            ->where('teaching_loads.active', 1)
+            ->where('student_loads.student_id',$chosen)
+            ->select('student_loads.student_id as student_id', 'subjects.id as subject_id', 'teaching_loads.class_id', 'student_loads.id as student_load_id')
+            ->get()->pluck('subject_id')->toArray();
+
+
+          //  dd($rejected_students_loads);
+
+
+            //2. Transfer subjects to chosen
+                 //compare the subject list of chosen with rejected
+
+                 $chosen_subjectlist=implode(",",$chosen_student_subjects);
+                 $rejected_subjectlist=implode(",",$rejected_students_subjects);
+               
+               
+                 $comparison=array_diff(($rejected_students_subjects), ($chosen_student_subjects));
+
+           
+                 
+                 foreach ($comparison as $key => $value) {
+                 
+                    //transfer student
+
+
+                 }
+
+                 
+
+
+
+           
+
+        }
 
     }
 
