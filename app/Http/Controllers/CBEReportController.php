@@ -87,8 +87,9 @@ class CBEReportController extends Controller
         ->where('grades_students.active',1)
         ->get();
 
-        
 
+        
+     return view('academic-admin.reports-management.cbe-report.list', compact('students'));
 
          
 
