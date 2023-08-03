@@ -425,10 +425,10 @@ WHERE sub.student_id=".$student.""));
 
                         Term Opening Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->start_date)->format('d F Y')}}</span> 
                         
-                        <br>
+                     <br>
                         Term Closing Date <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->end_date)->format('d F Y')}}</span>
                         <br>
-                        Next Term Date: <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->next_term_date)->format('d F Y')}}</span> 
+                        Next Term Date: <span class="text-bold">{{ \Carbon\Carbon::parse($student_term_data->next_term_date)->format('d F Y')}}</span>
                         
                         <br>
                         Student Class: <span class="text-bold">{{$student_term_data->grade_name}}</span>
@@ -438,12 +438,12 @@ WHERE sub.student_id=".$student.""));
 
                         <?php
  
-                        $attendance=\DB::select(\DB::raw("SELECT number_of_absent_days FROM cummulative_attendances WHERE student_id=".$student." AND term_id=".$term.""));
+                        $attendance=\DB::select(\DB::raw("SELECT number_of_absent_days FROM cummulative_attendances WHERE student_id=".$student." AND term_id=".$term." LIMIT 1"));
                     
                         
                   
                         foreach ($attendance as $attendance_key) {
-                       echo 'Days Absent: '.$attendance_key->number_of_absent_days.' '.'out of 58 Days';
+                       echo 'Days Absent in Term: '.$attendance_key->number_of_absent_days.' '.'Days';
                      
                          }
                   
@@ -1362,17 +1362,13 @@ foreach ($term_average as $student_term_data) {
     <thead >
         <tr class="hope">
             <th class="background">Class Teacher's Comment</th>
-            <th class="background">Class Coordinator's Comment</th>
-          
+            <th class="background">Head Teacher's Comment</th>    
            
         </tr>
     </thead>
 
     <tbody>
         <tr>
-
-
-
             <td>
                 @foreach ($class_teacher_comments as $teacher_comment)
                    
@@ -1383,25 +1379,14 @@ foreach ($term_average as $student_term_data) {
                 @endforeach
             </td>
 
-
             <td>
-                @foreach ($class_teacher_comments as $teacher_comment)
-                   
-                @if (in_array(number_format($student_term_data->student_average), range($teacher_comment->from,$teacher_comment->to,  0.01)) )
-               {{$teacher_comment->comment}}
-                    
-                @endif
-                @endforeach
-            </td>
-
-            {{-- <td>
                 @foreach ($headteacher_comments  as $headteacher_comment)
                 @if (in_array(number_format($student_term_data->student_average), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
                 {{$headteacher_comment->comment}}
                     
                 @endif
                 @endforeach   
-            </td> --}}
+            </td>
         </tr>
     </tbody>
 
@@ -1428,31 +1413,7 @@ foreach ($term_average as $student_term_data) {
                             <?php
                         
 
-$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 AND class_manager_status=1 OR class_manager_status IS NULL "));
-foreach ($class_t as $key_t) {
-
-echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
-
-
-}
-
-                            ?>
-                          </div>
-
-                       </div>
-
-
-                       <div class="col">
-                        <div id="signaturetitle">
-                          Class Coordinator Signature
-                          </div>
-                          <div class="text-center">
-
-                         
-                            <?php
-                        
-
-$class_c=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 AND class_manager_status=2"));
+$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 "));
 foreach ($class_t as $key_t) {
 
 echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
@@ -1476,7 +1437,7 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                           <div class="text-center">
                           @if ($variable->principal_signature==1)
                          
-                            <img class="img-fluid " width="90" height="90" src="{{$school_is->base64}} " alt="">
+                            <img class="img-fluid " width="80" height="80" src="{{$school_is->base64}} " alt="">
                                @else       
                                <img class="img-fluid " width="120" height="120" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">            
                           @endif
