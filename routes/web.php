@@ -900,6 +900,10 @@ Route::get('/report/term-based/class/cbe', [CBEReportController::class,'index'])
 
 Route::post('/report/term-based/cbe', [CBEReportController::class,'create'])->name('cbe_report.create');
 
+Route::get('/cbe/report/generate/{id}', [CBEReportController::class,'generate'])->name('cbe_report.index');
+
+
+
 // Assessement Based Stream Report
 Route::get('/report/assessement-based/', [ReportController::class,'assessement_based_index'])->name('report.assessment_based');
 Route::post('/report/assessement-based/generate', [ReportController::class,'generate_assessement_report'])->name('report.stream-assessement-based');
