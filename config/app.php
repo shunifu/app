@@ -247,6 +247,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         \Yajra\Datatables\DataTablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
         
      
 
@@ -333,6 +334,8 @@ return [
         'aliases' => Facade::defaultAliases()->merge([
             'Image' => \Intervention\Image\Facades\Image::class,
         ])->toArray(),
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+	'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class
 
     ],
 

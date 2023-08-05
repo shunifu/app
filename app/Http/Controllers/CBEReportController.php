@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AcademicSession;
 use App\Models\Grade;
 use App\Models\ReportTemplate;
 use App\Models\ReportVariable;
+use App\Models\School;
 use App\Models\Section;
 use App\Models\Stream;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -123,19 +125,46 @@ class CBEReportController extends Controller
 
          $student_data=DB::table('student_loads')
         ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
-    
-        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'users.name', 'users.middlename', 'users.lastname' ,'grades.id as grade_id', 'grades.grade_name as grade_name', 'subjects.id as subject_id','subjects.subject_name', 'cbe_marks.grade as assessement_grade')
+        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         // ->where('academic_sessions.active',1)
-        ->where('cbe_marks.student_id',$id)
-        ->where('cbe_marks.term_id',3)
+      //  ->where('cbe_marks.student_id',$id)
+        ->where('student_loads.student_id',$id)
+        ->where('student_loads.active',1)
         ->groupBy('subjects.id')
         ->get();
 
 
-        $pdf = Pdf::loadView('academic-admin.reports-management.cbe-report.view',compact('student_data'))->setPaper('a4', 'landscape');
-        return $pdf->stream('invoice.pdf');
+        $student_details=DB::table('users')
+        ->join('grades_students', 'grades_students.student_id', '=', 'users.id')
+        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        ->join('streams', 'streams.id', '=', 'grades.stream_id')
+        ->select('users.id as student_id','users.name','users.lastname','users.middlename','grades.id as grade_id','grades.grade_name', 'streams.stream_name as stream_name', 'users.profile_photo_path as student_image', 'users.national_id as pin')
+        ->where('users.id',$id)
+        ->get();
 
-      //  return view('academic-admin.reports-management.cbe-report.view', compact('student_data'));
+        $academic_sessions=DB::table('terms')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
+        ->select('terms.id as term_id','academic_sessions.academic_session as academic_year')
+        ->where('academic_sessions.active',1)
+        ->get();
+
+
+        $school=School::all();
+
+
+     //  dd($student_data);
+
+     
+
+        // $pdf = PDF::loadView('pdf.invoice', $data);
+        // return $pdf->download('invoice.pdf');
+
+        // $pdf = PDF::loadView('academic-admin.reports-management.cbe-report.view',compact('student_data'))->setPaper('a4', 'landscape')->setOptions(['isHtml5ParserEnabled' => true]);
+        // return $pdf->download('invoice.pdf');
+
+      return view('academic-admin.reports-management.cbe-report.view', compact('student_data', 'student_details','school','academic_sessions'));
 
 
     
