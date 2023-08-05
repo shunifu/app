@@ -1457,7 +1457,7 @@ School Stamp
                         </div>
                         <div class="text-center">
                             @if ($variable->school_stamp==1)
-                            <img class="img-fluid " width="100" height="100" src="{{$school_is->school_stamp}} " alt="">  
+                            <img class="img-fluid " width="85" height="85" src="{{$school_is->school_stamp}} " alt="">  
                             @else
                             <img class="img-fluid " width="140" height="140" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">
                             @endif
