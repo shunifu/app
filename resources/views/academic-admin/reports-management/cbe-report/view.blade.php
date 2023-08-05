@@ -171,7 +171,13 @@ echo '</tr>';
 }
 echo '<tr> <thead>';
 echo '<th>'."Comment".'</th>';
-echo '<td>'.'kjhhjk'.'</td>';
+echo '<td>'.'Comments is asd '.'</td>';
+echo '</thead></tr>';  
+
+
+echo '<tr> <thead>';
+echo '<th>'."Comment".'</th>';
+echo '<td>'.'Comments is asd '.'</td>';
 echo '</thead></tr>';  
 
         @endphp

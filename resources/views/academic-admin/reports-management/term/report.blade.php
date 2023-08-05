@@ -1437,9 +1437,9 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                           <div class="text-center">
                           @if ($variable->principal_signature==1)
                          
-                            <img class="img-fluid " width="80" height="80" src="{{$school_is->base64}} " alt="">
+                            <img class="img-fluid " width="180" height="180" src="{{$school_is->base64}} " alt="">
                                @else       
-                               <img class="img-fluid " width="240" height="240" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">            
+                               <img class="img-fluid " width="120" height="120" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">            
                           @endif
                          
                         </div>
