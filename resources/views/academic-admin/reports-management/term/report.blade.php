@@ -410,7 +410,7 @@ WHERE sub.student_id=".$student.""));
                                 @if (is_null($student_term_data->profile_photo_path))
                                 <img class="user-image img-fluid elevation-1 mx-auto d-block" width="200" height="200" src="https://ui-avatars.com/api/?name={{$student_term_data->name}}+&amp;color=7F9CF5&amp;background=EBF4FF" alt={{$student_term_data->name}} />
                                 @else
-                                <img class="user-image img-circle elevation-1 " width="220" height="220"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
+                                <img class="user-image  elevation-1 " width="220" height="220"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
                                 @endif
                                
                                 
@@ -438,12 +438,12 @@ WHERE sub.student_id=".$student.""));
 
                         <?php
  
-                        $attendance=\DB::select(\DB::raw("SELECT number_of_absent_days FROM cummulative_attendances WHERE student_id=".$student." AND term_id=".$term." LIMIT 1"));
+                        $attendance=\DB::select(\DB::raw("SELECT number_of_absent_days FROM cummulative_attendances WHERE student_id=".$student." AND term_id=".$term." order by id desc LIMIT 1"));
                     
                         
                   
                         foreach ($attendance as $attendance_key) {
-                       echo 'Days Absent in Term: '.$attendance_key->number_of_absent_days.' '.'Days';
+                       echo 'Days Absent in Term: '.$attendance_key->number_of_absent_days.' '.'Days out of 72 Days';
                      
                          }
                   
