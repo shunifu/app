@@ -169,16 +169,77 @@ echo '</tr>';
 
 
 }
-echo '<tr> <thead>';
-echo '<th>'."Comment".'</th>';
-echo '<td>'.'Comments is asd '.'</td>';
-echo '</thead></tr>';  
 
 
+
+
+if($item->stream_id==1 OR $item->stream_id==2){
+
+}else{
+
+
+
+$marks=DB::table('student_subject_averages')
+        
+        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_subject_averages.teaching_load_id')
+        ->join('users', 'users.id', '=', 'student_subject_averages.student_id')
+        ->where('student_subject_averages.student_id',$item->student_id)
+        ->where('teaching_loads.subject_id',$item->subject_id)
+        ->where('student_subject_averages.term_id',3)
+        ->get();
+
+foreach ($marks as $mark) {
+    echo '<tr>';
+echo '<th rowspan="3">Achievement</th>'; 
+if(round($mark->ca_average)<"50"){
+
+echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
+}else{
+echo '<td>Tests: '.'<strong><span class="text-primary">'.round($mark->ca_average).'%'.'</span></strong></td>';
+}
+echo '</tr>';
+echo '<tr>';
+    if(round($mark->exam_mark)<"50"){
+
+echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
+}else{
+echo '<td>Exam: '.'<strong><span class="text-primary">'.round($mark->exam_mark).'%'.'</span></strong></td>';
+}
+
+echo '</tr>';
+echo '<tr>';
+    if(round($mark->student_average)<"50"){
+
+        echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
+    }else{
+        echo '<td>Total: '.'<strong><span class="text-primary">'.round($mark->student_average).'%'.'</span></strong></td>';
+    }
+   
+
+echo '</tr>';
+
+
+
 echo '<tr> <thead>';
 echo '<th>'."Comment".'</th>';
-echo '<td>'.'Comments is asd '.'</td>';
-echo '</thead></tr>';  
+
+foreach ($comments  as $comment) {
+    if( in_array(round($mark->student_average), range($comment->from,$comment->to)) ) 
+               
+
+                echo '<td>'.$comment->comment.'</td>';
+            
+}
+
+echo '</thead></tr>'; 
+}
+ 
+
+
+
+}
+
+
 
         @endphp
 

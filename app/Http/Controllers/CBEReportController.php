@@ -156,7 +156,7 @@ class CBEReportController extends Controller
 
      //  dd($student_data);
 
-     
+     $comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 1)->get();
 
         // $pdf = PDF::loadView('pdf.invoice', $data);
         // return $pdf->download('invoice.pdf');
@@ -164,7 +164,7 @@ class CBEReportController extends Controller
         // $pdf = PDF::loadView('academic-admin.reports-management.cbe-report.view',compact('student_data'))->setPaper('a4', 'landscape')->setOptions(['isHtml5ParserEnabled' => true]);
         // return $pdf->download('invoice.pdf');
 
-      return view('academic-admin.reports-management.cbe-report.view', compact('student_data', 'student_details','school','academic_sessions'));
+      return view('academic-admin.reports-management.cbe-report.view', compact('student_data', 'student_details','school','academic_sessions', 'comments'));
 
 
     
