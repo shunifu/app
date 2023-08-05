@@ -504,7 +504,7 @@ grades.stream_id,
     WHERE student_subject_averages.student_id = ".$student." AND `student_subject_averages`.`term_id` = ".$term." 
     GROUP BY
     student_subject_averages.student_id,
-    subjects.id ORDER BY subjects.order DESC"));
+    subjects.id ORDER BY subjects.order ASC"));
 
 ?>
 
