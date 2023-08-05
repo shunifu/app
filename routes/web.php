@@ -214,7 +214,7 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
 
        Route::get(' /academic-admin/strands/edit/{id}', [StrandController::class,'edit'])->name('strands.edit');
 
-       Route::post('/subject/modify', [StrandController::class,'modify'])->name('subject.modify');
+       Route::post('/subject/modify', [SubjectController::class,'modify'])->name('subject.modify');
    
     
     //Department Routes
