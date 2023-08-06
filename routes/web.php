@@ -900,7 +900,7 @@ Route::get('/report/term-based/class/cbe', [CBEReportController::class,'index'])
 
 Route::post('/report/term-based/cbe', [CBEReportController::class,'create'])->name('cbe_report.create');
 
-Route::get('/cbe/report/generate/{id}', [CBEReportController::class,'generate'])->name('cbe_report.index');
+Route::get('/cbe/report/generate/{term_id}/{student_id}', [CBEReportController::class,'generate'])->name('cbe_report.index');
 
 
 

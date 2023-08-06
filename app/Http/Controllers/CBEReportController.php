@@ -78,11 +78,14 @@ class CBEReportController extends Controller
     public function create(Request $request)
     {
 
-   //   dd($request->all());
+     // dd($request->all());
 
      $stream_id=$request->stream;
+     $term_id=$request->term;
+     $scope=$request->p_class;
 
 
+     if($scope=="stream_based"){
         $students=DB::table('grades_students')
         ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
         ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
@@ -92,10 +95,28 @@ class CBEReportController extends Controller
         ->where('grades.stream_id',$stream_id)
         ->where('grades_students.active',1)
         ->get();
+     }
+
+
+     if($scope=="class_based"){
+        $students=DB::table('grades_students')
+        ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'grades_students.academic_session')
+        ->join('users', 'users.id', '=', 'grades_students.student_id')
+        ->select('users.id as student_id', 'users.name', 'users.middlename', 'users.lastname' ,'grades.id as grade_id')
+        ->where('academic_sessions.active',1)
+        ->where('grades.stream_id',$stream_id)
+        ->where('grades_students.active',1)
+        ->get();
+     }
+
 
 
         
-     return view('academic-admin.reports-management.cbe-report.list', compact('students'));
+
+
+        
+     return view('academic-admin.reports-management.cbe-report.list', compact('students', 'term_id'));
 
          
 
@@ -103,7 +124,7 @@ class CBEReportController extends Controller
     }
 
 
-    public function generate($id){
+    public function generate($term_id, $student_id){
 
         $pdf = App::make('dompdf.wrapper');
 
@@ -130,9 +151,9 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         // ->where('academic_sessions.active',1)
       //  ->where('cbe_marks.student_id',$id)
-        ->where('student_loads.student_id',$id)
+        ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->orderBy('subjects.order', 'ASC')
+        ->orderBy('subjects.subject_name', 'ASC')
         ->groupBy('subjects.id')
 
         ->get();
@@ -143,13 +164,13 @@ class CBEReportController extends Controller
         ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
         ->join('streams', 'streams.id', '=', 'grades.stream_id')
         ->select('users.id as student_id','users.name','users.lastname','users.middlename','grades.id as grade_id','grades.grade_name', 'streams.stream_name as stream_name', 'users.profile_photo_path as student_image', 'users.national_id as pin')
-        ->where('users.id',$id)
+        ->where('users.id',$student_id)
         ->get();
 
         $academic_sessions=DB::table('terms')
         ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
-        ->select('terms.id as term_id','academic_sessions.academic_session as academic_year')
-        ->where('academic_sessions.active',1)
+        ->select('terms.id as term_id','academic_sessions.academic_session as academic_year', 'terms.term_name')
+        ->where('terms.id',$term_id)
         ->get();
 
 
