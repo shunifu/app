@@ -2,37 +2,62 @@
 
    <style>
 
-    body{
-        overflow: hidden;
-  position: relative;
-    }
-    .row.no-gutter {
+  
+        /* overflow: hidden;
+  position: relative; */
+/* 
+  @media print {
+        font-size: 14px;
+
+        @page {size: A4 landscape; }
+
+    /* .row.no-gutter {
   margin-left: 0;
   margin-right: 0;
-}
-.row.no-gutter [class*='col-']:not(:first-child),
+} */
+/* .row.no-gutter [class*='col-']:not(:first-child),
 .row.no-gutter [class*='col-']:not(:last-child) {
   padding-right: 0;
   padding-left: 0;
-}
-.row > div {
+} */
+/* .row > div {
   background: rgb(250, 250, 250);
   border: 0.5px solid;
+} */
+
+      /* } */ 
+
+      @media print {
+
+@page {
+    size: landscape letter;
+   
+ }
+ body{
+    font-size: 13px;
+
+ }
+
+ .row > div {
+    width: fit-content;
 }
+
+
+
+
+
+/* use width if in portrait (use the smaller size to try 
+   and prevent image from overflowing page... */
+
+}
+
    </style>
 
-{{-- <style type="text/css" media="print">
-    @page { 
-        size: landscape;
-    }
-    body { 
-        writing-mode: tb-rl;
-    }
-</style> --}}
+
 
     <div class="container-fluid bg-white">
         <div class="row "style="display: flex; flex-wrap: wrap">
-            <div class="col-12" id="front_page">
+            <div class="col-auto" id="front_page">
 
                 @foreach ($school as $school_item)
     
@@ -68,14 +93,14 @@
         
   
      
-       <hr style="page-break-before: always">
-            <div class="row  gutters-2">
+       <p style="page-break-before: always">
+            <div class="row d-flex " >
 
 @foreach ($student_data as $item)
     
 
 
-        <div class="col-6  padding-0">
+        <div class="col-sm-12 col-md-6 col-lg-6" style="border: 1px solid black;min-height: 100px;  display: inline;" >
 
     
 <div class="table-responsive">
@@ -189,34 +214,62 @@ $marks=DB::table('student_subject_averages')
         ->get();
 
 foreach ($marks as $mark) {
-    echo '<tr>';
-echo '<th rowspan="3">Achievement</th>'; 
-if(round($mark->ca_average)<"50"){
 
-echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
+  
+  echo '<tr rowspan=2>
+    <th colspan="2">Achievement</th>
+  </tr>
+</thead>
+<tbody>
+  <tr >
+    <td>Test</td>
+    <td>';
+         if(round($mark->ca_average)<"50"){
+
+ echo '<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong>';
 }else{
-echo '<td>Tests: '.'<strong><span class="text-primary">'.round($mark->ca_average).'%'.'</span></strong></td>';
+echo '<strong><span class="text-primary">'.round($mark->ca_average).'%'.'</span></strong>';
 }
-echo '</tr>';
-echo '<tr>';
-    if(round($mark->exam_mark)<"50"){
+echo '</td>
+  </tr>
+  <tr>
+    <td>Exam</td>
+    <td>34</td>
+  </tr>
+  <tr>
+    <td>Final Mark</td>
+    <td>34</td>
+  </tr>
+  </tr>';
 
-echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
-}else{
-echo '<td>Exam: '.'<strong><span class="text-primary">'.round($mark->exam_mark).'%'.'</span></strong></td>';
-}
+//     echo '<tr>';
+// echo '<th rowspan="3">Achievement</th>'; 
+// if(round($mark->ca_average)<"50"){
 
-echo '</tr>';
-echo '<tr>';
-    if(round($mark->student_average)<"50"){
+// echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
+// }else{
+// echo '<td>Tests: '.'<strong><span class="text-primary">'.round($mark->ca_average).'%'.'</span></strong></td>';
+// }
+// echo '</tr>';
+// echo '<tr>';
+//     if(round($mark->exam_mark)<"50"){
 
-        echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
-    }else{
-        echo '<td>Total: '.'<strong><span class="text-primary">'.round($mark->student_average).'%'.'</span></strong></td>';
-    }
+// echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
+// }else{
+// echo '<td>Exam: '.'<strong><span class="text-primary">'.round($mark->exam_mark).'%'.'</span></strong></td>';
+// }
+
+// echo '</tr>';
+// echo '<tr>';
+//     if(round($mark->student_average)<"50"){
+
+//         echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
+//     }else{
+//         echo '<td>Total: '.'<strong><span class="text-primary">'.round($mark->student_average).'%'.'</span></strong></td>';
+//     }
    
 
-echo '</tr>';
+// echo '</tr>';
 
 
 

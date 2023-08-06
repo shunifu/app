@@ -132,7 +132,9 @@ class CBEReportController extends Controller
       //  ->where('cbe_marks.student_id',$id)
         ->where('student_loads.student_id',$id)
         ->where('student_loads.active',1)
+        ->orderBy('subjects.order', 'ASC')
         ->groupBy('subjects.id')
+
         ->get();
 
 
@@ -163,10 +165,9 @@ class CBEReportController extends Controller
 
         // $pdf = PDF::loadView('academic-admin.reports-management.cbe-report.view',compact('student_data'))->setPaper('a4', 'landscape')->setOptions(['isHtml5ParserEnabled' => true]);
         // return $pdf->download('invoice.pdf');
-        flash()->overlay('<i class="fas fa-exclamation-circle text-warning"></i> Notice. CBE Report is undergoing a minor update. It will be up  at 4:30pm');
-        return redirect('/report/term-based/class/cbe');
+    
 
-  //    return view('academic-admin.reports-management.cbe-report.view', compact('student_data', 'student_details','school','academic_sessions', 'comments'));
+     return view('academic-admin.reports-management.cbe-report.view', compact('student_data', 'student_details','school','academic_sessions', 'comments'));
 
 
     
