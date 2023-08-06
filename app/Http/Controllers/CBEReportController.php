@@ -163,7 +163,7 @@ class CBEReportController extends Controller
 
         // $pdf = PDF::loadView('academic-admin.reports-management.cbe-report.view',compact('student_data'))->setPaper('a4', 'landscape')->setOptions(['isHtml5ParserEnabled' => true]);
         // return $pdf->download('invoice.pdf');
-        flash()->overlay('<i class="fas fa-exclamation-circle text-warning"></i> Notice. CBE Report is undergoing an minor update. It will be up  at 3:30pm');
+        flash()->overlay('<i class="fas fa-exclamation-circle text-warning"></i> Notice. CBE Report is undergoing an minor update. It will be up  at 4:30pm');
         return redirect('/report/templates');
 
   //    return view('academic-admin.reports-management.cbe-report.view', compact('student_data', 'student_details','school','academic_sessions', 'comments'));
