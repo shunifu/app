@@ -696,12 +696,6 @@ echo $key_position->student_position.' / '.$subtotal->total;
         </td> 
         
 
-
- 
-    
-       
-  
-
              <td>
 
             <?php
