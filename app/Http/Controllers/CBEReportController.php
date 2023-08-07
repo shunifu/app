@@ -230,7 +230,9 @@ class CBEReportController extends Controller
 
     $school=School::all();
     $comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 1)->get();
-    return view('academic-admin.reports-management.cbe-report.view', compact('back_subjects','student_details','school','academic_sessions', 'comments', 'ict_maths_subjects', 'hpe', 'english','siswati', 'ict_maths_subjects'));
+    $class_teacher_comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 2)->get();   
+    $headteacher_comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 3)->get();   
+    return view('academic-admin.reports-management.cbe-report.view', compact('back_subjects','student_details','school','academic_sessions', 'comments', 'ict_maths_subjects', 'hpe', 'english','siswati', 'ict_maths_subjects', 'headteacher_comments', 'class_teacher_comments'));
 
     }
 

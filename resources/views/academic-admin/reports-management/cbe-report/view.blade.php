@@ -421,8 +421,17 @@ echo '</thead></tr>';
               </thead>
               <tbody>
                 <tr>
-                  <td></td>
+               
+
                   <td colspan="5" height="70px">
+
+                    @foreach ($class_teacher_comments as $teacher_comment)
+                   
+                    @if (in_array(number_format($mark->student_average), range($teacher_comment->from,$teacher_comment->to,  0.01)) )
+                   {{$teacher_comment->comment}}
+                        
+                    @endif
+                    @endforeach
                   </td>
                 </tr>
 
@@ -438,9 +447,16 @@ echo '</thead></tr>';
                 </thead>
                 <tbody>
                   <tr>
-                    <td></td>
-                    <td colspan="4" height="70px">
-                    </td>
+        
+                  
+                    <td colspan="4" height="70px">  
+                       @foreach ($headteacher_comments  as $headteacher_comment)
+                      @if (in_array(number_format($mark->student_average), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
+                      {{$headteacher_comment->comment}}
+                          
+                      @endif
+                      @endforeach  
+                       </td>
                   </tr>
   
                 </tbody>
