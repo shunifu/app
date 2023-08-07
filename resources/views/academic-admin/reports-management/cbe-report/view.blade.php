@@ -547,12 +547,7 @@ echo '</thead></tr>';
 
        
 
-         @if ($item->subject_name=="English Language")
-             <div class="col-8">
-             
-         @else
-         <div class="col"> 
-         @endif
+         <div class="col-auto">
 
 
          <div class="table-responsive">
@@ -707,7 +702,7 @@ echo '</thead></tr>';
        
 
  
-          <div class="col-8">
+          <div class="col">
           
       
 
