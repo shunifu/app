@@ -490,7 +490,26 @@ echo '</thead></tr>';
                      
                       <tr>
                        <td >Days Absent In Term</td>
-                       <td class="text-bold" colspan="1"> 8</td>
+                       <td class="text-bold" colspan="1"> 
+
+
+                        <?php
+ 
+                        $attendance=\DB::select(\DB::raw("SELECT number_of_absent_days FROM cummulative_attendances WHERE student_id=".$item->$student." AND term_id='3' order by id desc LIMIT 1"));
+                    
+                        
+                  
+                        foreach ($attendance as $attendance_key) {
+                       echo 'Days Absent in Term: '.$attendance_key->number_of_absent_days.' '.'Days out of 72 Days';
+                     
+                         }
+                  
+                                   
+                    
+                    
+                     ?>
+
+                       </td>
                       </tr>
                     </tbody>
                     </table>
