@@ -463,7 +463,7 @@ echo '</thead></tr>';
                     @foreach ($headteacher_comments as $headteacher_comment)
                    
                     @if (in_array(number_format($mark_item->student_average), range($headteacher_comment->from,$headteacher_comment->to,  0.01)) )
-                   {{$headteacher_comment->comment}}  <img src="https://res.cloudinary.com/doramr0cr/image/upload/v1691236032/shunifu/school_stamp0331.png" height="60px"/>
+                   {{$headteacher_comment->comment}}  <img src="https://res.cloudinary.com/doramr0cr/image/upload/v1691236032/shunifu/school_stamp0331.png" height="40px"/>
                         
                     @endif
                     @endforeach
