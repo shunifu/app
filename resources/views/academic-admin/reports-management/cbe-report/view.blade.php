@@ -21,7 +21,7 @@ table{
 }
 
 #contain{
- style="font-size: 9.5px;
+ style="font-size: 11px;
 }
 
 }
