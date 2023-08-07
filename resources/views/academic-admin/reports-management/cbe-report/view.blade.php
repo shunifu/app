@@ -381,7 +381,7 @@ echo '</thead></tr>';
 </div>
 
 
-         <div class="col-8">
+         <div class="col">
           <table class="table table-compact  table-bordered table-sm" id="contain">
             <thead>
               <tr>
@@ -390,23 +390,23 @@ echo '</thead></tr>';
             </thead>
             <tbody>
               <tr>
-                <td style=" white-space: nowrap;"><strong>Excellent [E]</strong></td>
+                <td style=" white-space: nowrap;">Excellent [E]</td>
                 <td colspan="2" style=" white-space: nowrap;">Learner is outstanding in all<br>areas of competency or<br>strand</td>
               </tr>
               <tr>
-                <td style=" white-space: nowrap;"><strong>Very Good [VG]</strong></td>
+                <td style=" white-space: nowrap;">Very Good [VG]</td>
                 <td colspan="2" style=" white-space: nowrap;">Learner is highly proficient<br>in most areas of competency<br>or strand</td>
               </tr>
               <tr>
-                <td style=" white-space: nowrap;"><strong>Good [G]</strong></td>
+                <td style=" white-space: nowrap;">Good [G]</td>
                 <td colspan="2" style=" white-space: nowrap;">Learner has mastered the<br>competencies satisfactorily<br>or strand</td>
               </tr>
               <tr>
-                <td style=" white-space: nowrap;"><strong>Sufficient [S]</strong></td>
+                <td style=" white-space: nowrap;">Sufficient [S]</td>
                 <td colspan="2" style=" white-space: nowrap;">Learner may have not<br>achieved all the<br>competencies or strand</td>
               </tr>
               <tr>
-                <td style=" white-space: nowrap;"><strong>Not Sufficient</strong></td>
+                <td style=" white-space: nowrap;">Not Sufficient</td>
                 <td colspan="2"style=" white-space: nowrap;" >Learner has not been able to<br>reach a minimum level of<br>competency or strand</td>
               </tr>
             </tbody>
@@ -421,17 +421,8 @@ echo '</thead></tr>';
               </thead>
               <tbody>
                 <tr>
-               
-
-                  <td colspan="5">
-
-                    @foreach ($class_teacher_comments as $teacher_comment)
-                   
-                    @if (in_array(number_format($mark->student_average), range($teacher_comment->from,$teacher_comment->to,  0.01)) )
-                   {{$teacher_comment->comment}}
-                        
-                    @endif
-                    @endforeach
+                  <td></td>
+                  <td colspan="5" height="70px">
                   </td>
                 </tr>
 
@@ -447,16 +438,9 @@ echo '</thead></tr>';
                 </thead>
                 <tbody>
                   <tr>
-        
-                  
-                    <td colspan="4" > 
-                       @foreach ($headteacher_comments  as $headteacher_comment)
-                      @if (in_array(number_format($mark->student_average), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
-                      {{$headteacher_comment->comment}}   <img src="https://res.cloudinary.com/doramr0cr/image/upload/v1691236032/shunifu/school_stamp0331.png" />
-                          
-                      @endif
-                      @endforeach  
-                       </td>
+                    <td></td>
+                    <td colspan="4" height="70px">
+                    </td>
                   </tr>
   
                 </tbody>
@@ -490,26 +474,7 @@ echo '</thead></tr>';
                      
                       <tr>
                        <td >Days Absent In Term</td>
-                       <td class="text-bold" colspan="1"> 
-
-
-                        <?php
- 
-                        $attendance=\DB::select(\DB::raw("SELECT number_of_absent_days FROM cummulative_attendances WHERE student_id=".$item->$student." AND term_id='3' order by id desc LIMIT 1"));
-                    
-                        
-                  
-                        foreach ($attendance as $attendance_key) {
-                       echo 'Days Absent in Term: '.$attendance_key->number_of_absent_days.' '.'Days out of 72 Days';
-                     
-                         }
-                  
-                                   
-                    
-                    
-                     ?>
-
-                       </td>
+                       <td class="text-bold" colspan="1"> 8</td>
                       </tr>
                     </tbody>
                     </table>
@@ -578,11 +543,11 @@ echo '</thead></tr>';
          <div style="break-after:page"><p></div>
 <p id="contain">
 
-         @foreach ($english as $item) 
+         @foreach ($languages as $item) 
 
        
 
-         <div class="col-6">
+         <div class="col-8">
 
 
          <div class="table-responsive">
@@ -732,12 +697,12 @@ echo '</thead></tr>';
         @endforeach 
 
       </div>
-      @foreach ($siswati as $item) 
+      @foreach ($ict_maths_subjects as $item) 
 
        
 
  
-          <div class="col-6">
+          <div class="col">
           
       
 
