@@ -144,19 +144,44 @@ class CBEReportController extends Controller
         // ->groupBy('subjects.id')
         // ->get();
 
-         $student_data=DB::table('student_loads')
+         $social_studies=DB::table('student_loads')
         ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
         ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
         ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
-        // ->where('academic_sessions.active',1)
-      //  ->where('cbe_marks.student_id',$id)
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->orderBy('subjects.subject_name', 'ASC')
-        ->groupBy('subjects.id')
-
+        ->where('subjects.id','36')
         ->get();
+
+       
+
+
+        $back_subjects=DB::table('student_loads')
+        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
+        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
+        ->where('student_loads.student_id',$student_id)
+        ->where('student_loads.active',1)
+        ->whereIn('subjects.id',[26, 36])
+        ->get();
+
+        
+
+      
+
+        
+
+
+
+
+
+      
+
+        $student_data="0";
+
+       
 
 
         $student_details=DB::table('users')
@@ -188,7 +213,7 @@ class CBEReportController extends Controller
         // return $pdf->download('invoice.pdf');
     
 
-     return view('academic-admin.reports-management.cbe-report.view', compact('student_data', 'student_details','school','academic_sessions', 'comments'));
+     return view('academic-admin.reports-management.cbe-report.view', compact('back_subjects','student_details','school','academic_sessions', 'comments'));
 
 
     

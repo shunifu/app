@@ -3,31 +3,7 @@
    <style>
 
   
-        /* overflow: hidden;
-  position: relative; */
-/* 
   @media print {
-        font-size: 14px;
-
-        @page {size: A4 landscape; }
-
-    /* .row.no-gutter {
-  margin-left: 0;
-  margin-right: 0;
-} */
-/* .row.no-gutter [class*='col-']:not(:first-child),
-.row.no-gutter [class*='col-']:not(:last-child) {
-  padding-right: 0;
-  padding-left: 0;
-} */
-/* .row > div {
-  background: rgb(250, 250, 250);
-  border: 0.5px solid;
-} */
-
-      /* } */ 
-
-      @media print {
 
 @page {
     size: landscape letter;
@@ -35,18 +11,15 @@
    
  }
  body{
-    font-size: 13px;
+    font-size: 12px;
     -webkit-print-color-adjust: exact !important;
-
-   
+    
  }
 
+ table{
+  font-size:10px !important;
+ }
 
-}
-.row  {
-   
-   /* outline:1px solid #ccc; */
- 
 }
 
 
@@ -56,16 +29,19 @@
     
 
 
-    <div class="container-fluid d-flex flex-column bg-white">
-        <div class="row">
+  <div class="container-fluid d-flex flex-column bg-white">
+      <div class="row">
 
          <div class="col">
 
             <div class="row">
-                <div class="col">
-                   
-                       
-                       <div class="table-responsive">
+             
+              <div class="col-4">
+   {{-- Subjects --}}
+
+   @foreach ($back_subjects as $item) 
+
+   <div class="table-responsive">
     <table class="table  table-bordered table-sm" id="performance_table">
      <thead>
        <tr>
@@ -105,6 +81,8 @@ $strands=DB::table('strands')
         ->get();
 }else{
 
+
+
 $strands=DB::table('strands')
         ->join('cbe_marks', 'cbe_marks.strand_id', '=', 'strands.id')
         ->join('teaching_loads', 'teaching_loads.id', '=', 'cbe_marks.teaching_load_id')
@@ -119,24 +97,7 @@ $strands=DB::table('strands')
         ->where('cbe_marks.term_id',3)
         ->get();
 
-    // $strands=DB::table('student_subject_averages')
-    //     ->join('cbe_marks', 'cbe_marks.strand_id', '=', 'strands.id')
-    //     ->join('teaching_loads', 'teaching_loads.id', '=', 'cbe_marks.teaching_load_id')
-      
-    //     ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
-    //     ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
-    //     ->join('users', 'users.id', '=', 'cbe_marks.student_id')
-    //     ->join('student_subject_averages','student_subject_averages.student_id',  '=', 'users.id')
-    //     ->join('grades_students', 'grades_students.student_id', '=', 'cbe_marks.student_id')
-    //     ->select('strands.id as strand_id','strands.strand','users.id as student_id', 'users.name', 'users.middlename', 'users.lastname' ,'grades.id as grade_id', 'grades.grade_name as grade_name', 'subjects.id as subject_id','subjects.subject_name', 'cbe_marks.grade as assessement_grade', 'student_subject_averages.ca_average as ca', 'student_subject_averages.exam_mark as exam', 'student_subject_averages.student_average as final_mark')
-    //     // ->where('academic_sessions.active',1)
-    //     ->where('cbe_marks.student_id',$item->student_id)
-    //     ->where('teaching_loads.subject_id',$item->subject_id)
-    //     ->where('student_subject_averages.term_id',3)
-    //     // ->where('student_subject_averages.student_id','=','cbe_marks.student_id')
-    //     ->where('student_subject_averages.student_id',$item->student_id)
-    //     ->where('cbe_marks.term_id',3)
-    //     ->get();
+    
 }
 
 
@@ -233,17 +194,120 @@ echo '</thead></tr>';
          
          
       </tbody>
-   </table>
-   </div>
+   </table> 
 
 
 
 
-                   @endphp 
-                </div>
-            </div>
+  </div>
+
+ @endforeach 
+
+
+</div>
+
+
+         <div class="col">
+          <table class="table  table-bordered table-sm">
+            <thead>
+              <tr>
+                <th colspan="3">Assessement Grade Descriptor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Excellent [E]</td>
+                <td colspan="2">Learner is outstanding in all<br>areas of competency or<br>strand</td>
+              </tr>
+              <tr>
+                <td>Very Good [VG]</td>
+                <td colspan="2">Learner is highly proficient<br>in most areas of competency<br>or strand</td>
+              </tr>
+              <tr>
+                <td>Good [G]</td>
+                <td colspan="2">Learner has mastered the<br>competencies satisfactorily<br>or strand</td>
+              </tr>
+              <tr>
+                <td>Sufficient [S]</td>
+                <td colspan="2">Learner may have not<br>achieved all the<br>competencies or strand</td>
+              </tr>
+              <tr>
+                <td>Not Sufficient</td>
+                <td colspan="2">Learner has not been able to<br>reach a minimum level of<br>competency or strand</td>
+              </tr>
+            </tbody>
+            </table>
+
+           
+            <table class="table  table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th colspan="4" >Class Teacher's General Comments</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td colspan="5" height="100px">
+                  </td>
+                </tr>
+
+              </tbody>
+              </table>
+
+
+              <table class="table  table-bordered table-sm">
+                <thead>
+                  <tr>
+                    <th colspan="4">Head Teacher's  Comments</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td colspan="4" height="100px">
+                    </td>
+                  </tr>
+  
+                </tbody>
+                </table>
+
+                <table class="table  table-bordered table-sm">
+                  <thead>
+                    <tr>
+                     <center> <th colspan="4">School Calendar</th></center>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Term Close&nbsp;&nbsp;Date</td>
+                      <td colspan="3">Next Open Date</td>
+                    </tr>
+                    <tr>
+                     <td class="text-bold">11 August 2023</td>
+                     <td class="text-bold" colspan="3">12 September 2023</td>
+                    </tr>
+                  </tbody>
+                  </table>
+
+                  <table class="table  table-bordered table-sm">
+                    <thead>
+                      <tr>
+                       <center> <th colspan="4">Days Absent</th></center>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     
+                      <tr>
+                       <td >Days Absent In Term</td>
+                       <td class="text-bold" colspan="1"> </td>
+                      </tr>
+                    </tbody>
+                    </table>
 
          </div>
+
+         
 
             <div class="col text-center">
 
@@ -292,7 +356,7 @@ echo '</thead></tr>';
 
 
 
-        </div>
+      
         
   
     
