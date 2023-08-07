@@ -167,6 +167,30 @@ class CBEReportController extends Controller
         ->whereIn('subjects.id',[26, 36])
         ->get();
 
+
+        $ict_maths_subjects=DB::table('student_loads')
+        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
+        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
+        ->where('student_loads.student_id',$student_id)
+        ->where('student_loads.active',1)
+        ->whereIn('subjects.id',[6, 39])
+        ->get();
+
+
+        $hpe=DB::table('student_loads')
+        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
+        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
+        ->where('student_loads.student_id',$student_id)
+        ->where('student_loads.active',1)
+        ->whereIn('subjects.id',[38])
+        ->get();
+
+
+
         
 
       
@@ -198,33 +222,9 @@ class CBEReportController extends Controller
         ->where('terms.id',$term_id)
         ->get();
 
-
-        $school=School::all();
-
-
-     //  dd($student_data);
-
-     $comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 1)->get();
-
-        // $pdf = PDF::loadView('pdf.invoice', $data);
-        // return $pdf->download('invoice.pdf');
-
-        // $pdf = PDF::loadView('academic-admin.reports-management.cbe-report.view',compact('student_data'))->setPaper('a4', 'landscape')->setOptions(['isHtml5ParserEnabled' => true]);
-        // return $pdf->download('invoice.pdf');
-    
-
-     return view('academic-admin.reports-management.cbe-report.view', compact('back_subjects','student_details','school','academic_sessions', 'comments'));
-
-
-    
-    // $pdf->loadHTML('Shunifu');
-    // return $pdf->stream('d');
-
-
-
-        //get marks
-        //calculate
-        //
+    $school=School::all();
+    $comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 1)->get();
+    return view('academic-admin.reports-management.cbe-report.view', compact('back_subjects','student_details','school','academic_sessions', 'comments', 'ict_maths_subjects', 'hpe'));
 
     }
 
