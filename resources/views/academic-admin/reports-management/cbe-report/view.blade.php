@@ -381,7 +381,7 @@ echo '</thead></tr>';
 </div>
 
 
-         <div class="col">
+         <div class="col-8">
           <table class="table table-compact  table-bordered table-sm" id="contain">
             <thead>
               <tr>
@@ -390,23 +390,23 @@ echo '</thead></tr>';
             </thead>
             <tbody>
               <tr>
-                <td style=" white-space: nowrap;">Excellent [E]</td>
+                <td style=" white-space: nowrap;"><strong>Excellent [E]</strong></td>
                 <td colspan="2" style=" white-space: nowrap;">Learner is outstanding in all<br>areas of competency or<br>strand</td>
               </tr>
               <tr>
-                <td style=" white-space: nowrap;">Very Good [VG]</td>
+                <td style=" white-space: nowrap;"><strong>Very Good [VG]</strong></td>
                 <td colspan="2" style=" white-space: nowrap;">Learner is highly proficient<br>in most areas of competency<br>or strand</td>
               </tr>
               <tr>
-                <td style=" white-space: nowrap;">Good [G]</td>
+                <td style=" white-space: nowrap;"><strong>Good [G]</strong></td>
                 <td colspan="2" style=" white-space: nowrap;">Learner has mastered the<br>competencies satisfactorily<br>or strand</td>
               </tr>
               <tr>
-                <td style=" white-space: nowrap;">Sufficient [S]</td>
+                <td style=" white-space: nowrap;"><strong>Sufficient [S]</strong></td>
                 <td colspan="2" style=" white-space: nowrap;">Learner may have not<br>achieved all the<br>competencies or strand</td>
               </tr>
               <tr>
-                <td style=" white-space: nowrap;">Not Sufficient</td>
+                <td style=" white-space: nowrap;"><strong>Not Sufficient</strong></td>
                 <td colspan="2"style=" white-space: nowrap;" >Learner has not been able to<br>reach a minimum level of<br>competency or strand</td>
               </tr>
             </tbody>
@@ -423,7 +423,7 @@ echo '</thead></tr>';
                 <tr>
                
 
-                  <td colspan="5" height="70px">
+                  <td colspan="5">
 
                     @foreach ($class_teacher_comments as $teacher_comment)
                    
