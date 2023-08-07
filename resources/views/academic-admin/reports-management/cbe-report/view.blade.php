@@ -11,17 +11,17 @@
   
 }
 body{
-   font-size: 10px;
+   font-size: 12px;
    -webkit-print-color-adjust: exact !important;
    
 }
 
 table{
- font-size:10px !important;
+ font-size:12px !important;
 }
 
 #contain{
- style="font-size: 11px;
+ font-size: 12px;
 }
 
 }
@@ -463,7 +463,7 @@ echo '</thead></tr>';
                     @foreach ($headteacher_comments as $headteacher_comment)
                    
                     @if (in_array(number_format($mark_item->student_average), range($headteacher_comment->from,$headteacher_comment->to,  0.01)) )
-                   {{$headteacher_comment->comment}}  <img src="https://res.cloudinary.com/doramr0cr/image/upload/v1691236032/shunifu/school_stamp0331.png" height="20px"/>
+                   {{$headteacher_comment->comment}}  <img src="https://res.cloudinary.com/doramr0cr/image/upload/v1691236032/shunifu/school_stamp0331.png" height="60px"/>
                         
                     @endif
                     @endforeach
