@@ -750,7 +750,7 @@ echo '</thead></tr>';
        @endforeach 
      </div>
 
- </div>
+
 
 
  <div class="col-6">
@@ -900,10 +900,12 @@ echo '</thead></tr>';
 
      </tbody>
   </table> 
-
+</div>
   @endforeach 
 
  </div>
+</div>
+ 
 
 <div class="row">
   <div class="col-6">
@@ -1059,14 +1061,12 @@ echo '</thead></tr>';
 
 
 
-
-
   <div class="col-6">
 
     @foreach ($ict as $item) 
-
-<div class="table-responsive">
- <table class="table  table-bordered table-sm" id="performance_table">
+  
+  <div class="table-responsive">
+  <table class="table  table-bordered table-sm" id="performance_table">
   <thead>
     <tr>
       
@@ -1076,19 +1076,19 @@ echo '</thead></tr>';
          <td>Strand</td>
          <td>Grade</td>
        </tr>
-
+  
       
    </thead>
-
+  
    <tbody>
-
+  
      @php
-
-
-if($item->stream_id==1 OR $item->stream_id==2 ){
-//foundation
-
-$strands=DB::table('strands')
+  
+  
+  if($item->stream_id==1 OR $item->stream_id==2 ){
+  //foundation
+  
+  $strands=DB::table('strands')
      ->join('cbe_marks', 'cbe_marks.strand_id', '=', 'strands.id')
      ->join('teaching_loads', 'teaching_loads.id', '=', 'cbe_marks.teaching_load_id')
      ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
@@ -1101,11 +1101,11 @@ $strands=DB::table('strands')
      ->whereIn('teaching_loads.subject_id',[$item->subject_id])
      ->where('cbe_marks.term_id',3)
      ->get();
-}else{
-
-
-
-$strands=DB::table('strands')
+  }else{
+  
+  
+  
+  $strands=DB::table('strands')
      ->join('cbe_marks', 'cbe_marks.strand_id', '=', 'strands.id')
      ->join('teaching_loads', 'teaching_loads.id', '=', 'cbe_marks.teaching_load_id')
      ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
@@ -1118,36 +1118,36 @@ $strands=DB::table('strands')
      ->where('teaching_loads.subject_id',$item->subject_id)
      ->where('cbe_marks.term_id',3)
      ->get();
-
- 
-}
-
-
-
-
-
-
-foreach ($strands as $strand) {
-echo '<tr>';
-
-echo '<td>'.$strand->strand.'</td>';
-echo '<td>'.$strand->assessement_grade.'</td>';
-
-echo '</tr>';
-
-
-}
-
-
-
-
-if($item->stream_id==1 OR $item->stream_id==2){
-
-}else{
-
-
-
-$marks=DB::table('student_subject_averages')
+  
+  
+  }
+  
+  
+  
+  
+  
+  
+  foreach ($strands as $strand) {
+  echo '<tr>';
+  
+  echo '<td>'.$strand->strand.'</td>';
+  echo '<td>'.$strand->assessement_grade.'</td>';
+  
+  echo '</tr>';
+  
+  
+  }
+  
+  
+  
+  
+  if($item->stream_id==1 OR $item->stream_id==2){
+  
+  }else{
+  
+  
+  
+  $marks=DB::table('student_subject_averages')
      
      ->join('teaching_loads', 'teaching_loads.id', '=', 'student_subject_averages.teaching_load_id')
      ->join('users', 'users.id', '=', 'student_subject_averages.student_id')
@@ -1155,64 +1155,66 @@ $marks=DB::table('student_subject_averages')
      ->where('teaching_loads.subject_id',$item->subject_id)
      ->where('student_subject_averages.term_id',3)
      ->get();
-
-foreach ($marks as $mark) {
- echo '<tr>';
-echo '<th rowspan="3">Achievement</th>'; 
-if(round($mark->ca_average)<"50"){
-
-echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
-}else{
-echo '<td>Tests: '.'<strong><span class="text-primary">'.round($mark->ca_average).'%'.'</span></strong></td>';
-}
-echo '</tr>';
-echo '<tr>';
- if(round($mark->exam_mark)<"50"){
-
-echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
-}else{
-echo '<td>Exam: '.'<strong><span class="text-primary">'.round($mark->exam_mark).'%'.'</span></strong></td>';
-}
-
-echo '</tr>';
-echo '<tr>';
- if(round($mark->student_average)<"50"){
-
+  
+  foreach ($marks as $mark) {
+  echo '<tr>';
+  echo '<th rowspan="3">Achievement</th>'; 
+  if(round($mark->ca_average)<"50"){
+  
+  echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
+  }else{
+  echo '<td>Tests: '.'<strong><span class="text-primary">'.round($mark->ca_average).'%'.'</span></strong></td>';
+  }
+  echo '</tr>';
+  echo '<tr>';
+  if(round($mark->exam_mark)<"50"){
+  
+  echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
+  }else{
+  echo '<td>Exam: '.'<strong><span class="text-primary">'.round($mark->exam_mark).'%'.'</span></strong></td>';
+  }
+  
+  echo '</tr>';
+  echo '<tr>';
+  if(round($mark->student_average)<"50"){
+  
      echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
- }else{
+  }else{
      echo '<td>Total: '.'<strong><span class="text-primary">'.round($mark->student_average).'%'.'</span></strong></td>';
- }
+  }
    
-echo '</tr>';
-
-echo '<tr> <thead>';
-echo '<th>'."Comment".'</th>';
-
-foreach ($comments  as $comment) {
- if( in_array(round($mark->student_average), range($comment->from,$comment->to)) ) 
+  echo '</tr>';
+  
+  echo '<tr> <thead>';
+  echo '<th>'."Comment".'</th>';
+  
+  foreach ($comments  as $comment) {
+  if( in_array(round($mark->student_average), range($comment->from,$comment->to)) ) 
             
-
+  
              echo '<td>'.$comment->comment.'</td>';
          
-}
-
-echo '</thead></tr>'; 
-}
-
-
-}
- 
+  }
+  
+  echo '</thead></tr>'; 
+  }
+  
+  
+  }
+  
      @endphp
-
+  
    </tbody>
-</table> 
-
-</div>
-
-@endforeach 
+  </table> 
+  
+  </div>
+  
+  @endforeach 
     </div>
+
+  
 </div>
-</div>
+{{-- </div> --}}
 
 
 {{-- <div> end of row --}}
