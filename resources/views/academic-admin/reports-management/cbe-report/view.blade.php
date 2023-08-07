@@ -543,7 +543,7 @@ echo '</thead></tr>';
          <div style="break-after:page"><p></div>
 <p id="contain">
 
-         @foreach ($languages as $item) 
+         @foreach ($english as $item) 
 
        
 
@@ -697,7 +697,7 @@ echo '</thead></tr>';
         @endforeach 
 
       </div>
-      @foreach ($ict_maths_subjects as $item) 
+      @foreach ($siswati as $item) 
 
        
 
