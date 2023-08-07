@@ -20,6 +20,10 @@
   font-size:10px !important;
  }
 
+ #contain{
+  style="font-size: 9.5px;
+ }
+
 }
 
 
@@ -29,7 +33,7 @@
     
 
 
-  <div class="container-fluid d-flex flex-column bg-white">
+  <div class="container-fluid d-flex flex-column bg-white" id="contain">
       <div class="row">
 
          <div class="col">
@@ -418,7 +422,7 @@ echo '</thead></tr>';
               <tbody>
                 <tr>
                   <td></td>
-                  <td colspan="5" height="100px">
+                  <td colspan="5" height="70px">
                   </td>
                 </tr>
 
@@ -435,7 +439,7 @@ echo '</thead></tr>';
                 <tbody>
                   <tr>
                     <td></td>
-                    <td colspan="4" height="100px">
+                    <td colspan="4" height="70px">
                     </td>
                   </tr>
   
