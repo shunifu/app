@@ -547,7 +547,7 @@ echo '</thead></tr>';
 
        
 
-         <div class="col-auto">
+         <div class="col-6">
 
 
          <div class="table-responsive">
@@ -702,7 +702,7 @@ echo '</thead></tr>';
        
 
  
-          <div class="col">
+          <div class="col-6">
           
       
 
