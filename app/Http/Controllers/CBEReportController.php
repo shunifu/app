@@ -241,6 +241,28 @@ class CBEReportController extends Controller
         ->get();
 
 
+        $expressive_art=DB::table('student_loads')
+        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
+        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
+        ->where('student_loads.student_id',$student_id)
+        ->where('student_loads.active',1)
+        ->whereIn('subjects.id',[37])
+        ->get();
+
+        $practical_arts=DB::table('student_loads')
+        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
+        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
+        ->where('student_loads.student_id',$student_id)
+        ->where('student_loads.active',1)
+        ->whereIn('subjects.id',[42])
+        ->get();
+
+
+
 
 
 
