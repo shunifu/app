@@ -273,9 +273,11 @@ class CBEReportController extends Controller
         ->join('grades_students', 'grades_students.student_id', '=', 'users.id')
         ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
         ->join('streams', 'streams.id', '=', 'grades.stream_id')
-        ->select('users.id as student_id','users.name','users.lastname','users.middlename','grades.id as grade_id','grades.grade_name', 'streams.stream_name as stream_name', 'users.profile_photo_path as student_image', 'users.national_id as pin')
+        ->select('users.id as student_id','users.name','users.lastname','users.middlename','grades.id as grade_id','grades.grade_name', 'streams.stream_name as stream_name', 'users.profile_photo_path as student_image', 'users.national_id as pin', 'streams.id as stream_id')
         ->where('users.id',$student_id)
         ->get();
+
+        $stream=$student_details['0']->stream_id;
 
         $academic_sessions=DB::table('terms')
         ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
@@ -287,7 +289,14 @@ class CBEReportController extends Controller
     $comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 1)->get();
     $class_teacher_comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 2)->get();   
     $headteacher_comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 3)->get();   
-    return view('academic-admin.reports-management.cbe-report.view', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments'));
+
+    if($stream==2){
+        return view('academic-admin.reports-management.cbe-report.grade2', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments'));
+    }elseif($stream==3){
+        return view('academic-admin.reports-management.cbe-report.view', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments'));
+    }
+
+  
 
     }
 
