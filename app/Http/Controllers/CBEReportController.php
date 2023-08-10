@@ -290,11 +290,14 @@ class CBEReportController extends Controller
     $class_teacher_comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 2)->get();   
     $headteacher_comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 3)->get();   
 
-    if($stream==2){
-        return view('academic-admin.reports-management.cbe-report.grade2', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments'));
-    }elseif($stream==3){
-        return view('academic-admin.reports-management.cbe-report.view', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments'));
-    }
+    // if($stream==2){
+    //     return view('academic-admin.reports-management.cbe-report.grade2', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments'));
+    // }elseif($stream==3){
+    //     return view('academic-admin.reports-management.cbe-report.view', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments'));
+    // }
+
+
+    return view('academic-admin.reports-management.cbe-report.view', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id'));
 
   
 

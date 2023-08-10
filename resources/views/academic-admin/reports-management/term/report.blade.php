@@ -1423,7 +1423,6 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
 
                        </div>
 
-                    
                        <div class="col">
                         <div id="signaturetitle">
                            Headteacher's Signature:

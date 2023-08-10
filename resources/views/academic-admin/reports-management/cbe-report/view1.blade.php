@@ -8,6 +8,7 @@
 @page {
    size: landscape A4;
    border: red;
+   font-size: 12px;
   
 }
 body{
@@ -81,7 +82,7 @@ $strands=DB::table('strands')
        // ->where('academic_sessions.active',1)
        ->where('cbe_marks.student_id',$item->student_id)
        ->where('teaching_loads.subject_id',$item->subject_id)
-       ->where('cbe_marks.term_id',$term_id)
+       ->where('cbe_marks.term_id',3)
        ->get();
 }else{
 
@@ -98,7 +99,7 @@ $strands=DB::table('strands')
        // ->where('academic_sessions.active',1)
        ->where('cbe_marks.student_id',$item->student_id)
        ->where('teaching_loads.subject_id',$item->subject_id)
-       ->where('cbe_marks.term_id',$term_id)
+       ->where('cbe_marks.term_id',3)
        ->get();
 
    
@@ -245,7 +246,7 @@ $strands=DB::table('strands')
      // ->where('academic_sessions.active',1)
      ->where('cbe_marks.student_id',$item->student_id)
      ->where('teaching_loads.subject_id',$item->subject_id)
-     ->where('cbe_marks.term_id',$term_id)
+     ->where('cbe_marks.term_id',3)
      ->get();
 }else{
 
@@ -262,7 +263,7 @@ $strands=DB::table('strands')
      // ->where('academic_sessions.active',1)
      ->where('cbe_marks.student_id',$item->student_id)
      ->where('teaching_loads.subject_id',$item->subject_id)
-     ->where('cbe_marks.term_id',$term_id)
+     ->where('cbe_marks.term_id',3)
      ->get();
 
  
@@ -636,7 +637,7 @@ echo '</thead></tr>';
              // ->where('academic_sessions.active',1)
              ->where('cbe_marks.student_id',$item->student_id)
              ->whereIn('teaching_loads.subject_id',[$item->subject_id])
-             ->where('cbe_marks.term_id',$term_id)
+             ->where('cbe_marks.term_id',3)
              ->get();
        }else{
        
@@ -653,7 +654,7 @@ echo '</thead></tr>';
              // ->where('academic_sessions.active',1)
              ->where('cbe_marks.student_id',$item->student_id)
              ->where('teaching_loads.subject_id',$item->subject_id)
-             ->where('cbe_marks.term_id',$term_id)
+             ->where('cbe_marks.term_id',3)
              ->get();
        
          
@@ -793,7 +794,7 @@ echo '</thead></tr>';
        // ->where('academic_sessions.active',1)
        ->where('cbe_marks.student_id',$item->student_id)
        ->whereIn('teaching_loads.subject_id',[$item->subject_id])
-       ->where('cbe_marks.term_id',$term_id)
+       ->where('cbe_marks.term_id',3)
        ->get();
  }else{
  
@@ -810,7 +811,7 @@ echo '</thead></tr>';
        // ->where('academic_sessions.active',1)
        ->where('cbe_marks.student_id',$item->student_id)
        ->where('teaching_loads.subject_id',$item->subject_id)
-       ->where('cbe_marks.term_id',$term_id)
+       ->where('cbe_marks.term_id',3)
        ->get();
  
    
@@ -946,7 +947,7 @@ $strands=DB::table('strands')
    // ->where('academic_sessions.active',1)
    ->where('cbe_marks.student_id',$item->student_id)
    ->whereIn('teaching_loads.subject_id',[$item->subject_id])
-   ->where('cbe_marks.term_id',$term_id)
+   ->where('cbe_marks.term_id',3)
    ->get();
 }else{
 
@@ -963,7 +964,7 @@ $strands=DB::table('strands')
    // ->where('academic_sessions.active',1)
    ->where('cbe_marks.student_id',$item->student_id)
    ->where('teaching_loads.subject_id',$item->subject_id)
-   ->where('cbe_marks.term_id',$term_id)
+   ->where('cbe_marks.term_id',3)
    ->get();
 
 
@@ -1098,7 +1099,7 @@ echo '</thead></tr>';
      // ->where('academic_sessions.active',1)
      ->where('cbe_marks.student_id',$item->student_id)
      ->whereIn('teaching_loads.subject_id',[$item->subject_id])
-     ->where('cbe_marks.term_id',$term_id)
+     ->where('cbe_marks.term_id',3)
      ->get();
   }else{
   
@@ -1115,7 +1116,7 @@ echo '</thead></tr>';
      // ->where('academic_sessions.active',1)
      ->where('cbe_marks.student_id',$item->student_id)
      ->where('teaching_loads.subject_id',$item->subject_id)
-     ->where('cbe_marks.term_id',$term_id)
+     ->where('cbe_marks.term_id',3)
      ->get();
   
   
@@ -1249,7 +1250,7 @@ echo '</thead></tr>';
      // ->where('academic_sessions.active',1)
      ->where('cbe_marks.student_id',$item->student_id)
      ->whereIn('teaching_loads.subject_id',[$item->subject_id])
-     ->where('cbe_marks.term_id',$term_id)
+     ->where('cbe_marks.term_id',3)
      ->get();
   }else{
   
@@ -1266,7 +1267,7 @@ echo '</thead></tr>';
      // ->where('academic_sessions.active',1)
      ->where('cbe_marks.student_id',$item->student_id)
      ->where('teaching_loads.subject_id',$item->subject_id)
-     ->where('cbe_marks.term_id',$term_id)
+     ->where('cbe_marks.term_id',3)
      ->get();
   
   
