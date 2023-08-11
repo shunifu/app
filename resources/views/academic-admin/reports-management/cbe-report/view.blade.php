@@ -15,6 +15,22 @@ body{
    -webkit-print-color-adjust: exact !important;
    
 }
+
+div.col-4{
+ 
+    width: 50%;
+    border: 1px solid black;
+  
+    font-size: 9px;
+    /* 100 = viewport width, as 1vw = 1/100th of that
+       So if the container is 50% of viewport (as here)
+       then factor that into how you want it to size.
+       Let's say you like 5vw if it were the whole width,
+       then for this container, size it at 2.5vw (5 * .5 [i.e. 50%])
+    */
+    /* font-size: 2.5vw; */
+
+}
 /* 
 table{
  font-size:11px !important;
@@ -25,7 +41,21 @@ table{
 } */
 
 }
+/* .container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
 
+.row {
+  height: 8.5in;
+  display: inline-flex;
+  padding: 0;
+  margin: 0;
+
+  max-height: 100;
+  width: 100%;
+} */
 
   </style>
 
@@ -33,7 +63,7 @@ table{
    
 
 
- <div class="container-fluid d-flex flex-column bg-white" id="contain">
+<div class="container-fluid d-flex flex-column bg-white" id="contain">
      <div class="row">
 
         <div class="col">
@@ -67,7 +97,7 @@ table{
        @php
 
 
-if($item->stream_id==1 OR $item->stream_id==2 ){
+if($item->stream_id==13 OR $item->stream_id==12 ){
 //foundation
 
 $strands=DB::table('strands')
@@ -123,7 +153,7 @@ echo '</tr>';
 
 
 
-if($item->stream_id==1 OR $item->stream_id==2){
+if($item->stream_id==13 OR $item->stream_id==12){
 
 }else{
 
@@ -135,7 +165,7 @@ $marks=DB::table('student_subject_averages')
        ->join('users', 'users.id', '=', 'student_subject_averages.student_id')
        ->where('student_subject_averages.student_id',$item->student_id)
        ->where('teaching_loads.subject_id',$item->subject_id)
-       ->where('student_subject_averages.term_id',3)
+       ->where('student_subject_averages.term_id',$term_id)
        ->get();
 
 foreach ($marks as $mark) {
@@ -226,12 +256,11 @@ echo '</thead></tr>';
 
    <tbody>
 
-       
      
      @php
 
 
-if($item->stream_id==1 OR $item->stream_id==2 ){
+if($item->stream_id==13 OR $item->stream_id==12 ){
 //foundation
 
 $strands=DB::table('strands')
@@ -287,7 +316,7 @@ echo '</tr>';
 
 
 
-if($item->stream_id==1 OR $item->stream_id==2){
+if($item->stream_id==13 OR $item->stream_id==12){
 
 }else{
 
@@ -299,7 +328,7 @@ $marks=DB::table('student_subject_averages')
      ->join('users', 'users.id', '=', 'student_subject_averages.student_id')
      ->where('student_subject_averages.student_id',$item->student_id)
      ->where('teaching_loads.subject_id',$item->subject_id)
-     ->where('student_subject_averages.term_id',3)
+     ->where('student_subject_averages.term_id',$term_id)
      ->get();
 
 foreach ($marks as $mark) {
@@ -415,7 +444,7 @@ echo '</thead></tr>';
 
       $marks=DB::table('term_averages') 
      ->where('term_averages.student_id',$item->student_id)
-     ->where('term_averages.term_id',3)
+     ->where('term_averages.term_id',$term_id)
      ->get();
           
 @endphp
@@ -622,7 +651,7 @@ echo '</thead></tr>';
              @php
        
        
-       if($item->stream_id==1 OR $item->stream_id==2 ){
+       if($item->stream_id==13 OR $item->stream_id==12 ){
        //foundation
        
        $strands=DB::table('strands')
@@ -678,7 +707,7 @@ echo '</thead></tr>';
        
        
        
-       if($item->stream_id==1 OR $item->stream_id==2){
+       if($item->stream_id==13 OR $item->stream_id==12){
        
        }else{
        
@@ -690,7 +719,7 @@ echo '</thead></tr>';
              ->join('users', 'users.id', '=', 'student_subject_averages.student_id')
              ->where('student_subject_averages.student_id',$item->student_id)
              ->where('teaching_loads.subject_id',$item->subject_id)
-             ->where('student_subject_averages.term_id',3)
+             ->where('student_subject_averages.term_id',$term_id)
              ->get();
        
        foreach ($marks as $mark) {
@@ -779,7 +808,7 @@ echo '</thead></tr>';
        @php
  
  
- if($item->stream_id==1 OR $item->stream_id==2 ){
+ if($item->stream_id==13 OR $item->stream_id==12 ){
  //foundation
  
  $strands=DB::table('strands')
@@ -835,7 +864,7 @@ echo '</thead></tr>';
  
  
  
- if($item->stream_id==1 OR $item->stream_id==2){
+ if($item->stream_id==13 OR $item->stream_id==12){
  
  }else{
  
@@ -847,7 +876,7 @@ echo '</thead></tr>';
        ->join('users', 'users.id', '=', 'student_subject_averages.student_id')
        ->where('student_subject_averages.student_id',$item->student_id)
        ->where('teaching_loads.subject_id',$item->subject_id)
-       ->where('student_subject_averages.term_id',3)
+       ->where('student_subject_averages.term_id',$term_id)
        ->get();
  
  foreach ($marks as $mark) {
@@ -932,7 +961,7 @@ echo '</thead></tr>';
    @php
 
 
-if($item->stream_id==1 OR $item->stream_id==2 ){
+if($item->stream_id==13 OR $item->stream_id==12 ){
 //foundation
 
 $strands=DB::table('strands')
@@ -988,7 +1017,7 @@ echo '</tr>';
 
 
 
-if($item->stream_id==1 OR $item->stream_id==2){
+if($item->stream_id==13 OR $item->stream_id==12){
 
 }else{
 
@@ -1000,7 +1029,7 @@ $marks=DB::table('student_subject_averages')
    ->join('users', 'users.id', '=', 'student_subject_averages.student_id')
    ->where('student_subject_averages.student_id',$item->student_id)
    ->where('teaching_loads.subject_id',$item->subject_id)
-   ->where('student_subject_averages.term_id',3)
+   ->where('student_subject_averages.term_id',$term_id)
    ->get();
 
 foreach ($marks as $mark) {
@@ -1060,9 +1089,15 @@ echo '</thead></tr>';
   </div>
 
 
+
+
+
+
+
+
   <div class="col-4">
 
-    @foreach ($science as $item) 
+    @foreach ($ict as $item) 
   
   <div class="table-responsive">
   <table class="table  table-bordered table-sm" id="performance_table">
@@ -1084,7 +1119,7 @@ echo '</thead></tr>';
      @php
   
   
-  if($item->stream_id==1 OR $item->stream_id==2 ){
+  if($item->stream_id==13 OR $item->stream_id==12 ){
   //foundation
   
   $strands=DB::table('strands')
@@ -1140,7 +1175,7 @@ echo '</thead></tr>';
   
   
   
-  if($item->stream_id==1 OR $item->stream_id==2){
+  if($item->stream_id==13 OR $item->stream_id==12){
   
   }else{
   
@@ -1152,7 +1187,162 @@ echo '</thead></tr>';
      ->join('users', 'users.id', '=', 'student_subject_averages.student_id')
      ->where('student_subject_averages.student_id',$item->student_id)
      ->where('teaching_loads.subject_id',$item->subject_id)
-     ->where('student_subject_averages.term_id',3)
+     ->where('student_subject_averages.term_id',$term_id)
+     ->get();
+  
+  foreach ($marks as $mark) {
+  echo '<tr>';
+  echo '<th rowspan="3">Achievement</th>'; 
+  if(round($mark->ca_average)<"50"){
+  
+  echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
+  }else{
+  echo '<td>Tests: '.'<strong><span class="text-primary">'.round($mark->ca_average).'%'.'</span></strong></td>';
+  }
+  echo '</tr>';
+  echo '<tr>';
+  if(round($mark->exam_mark)<"50"){
+  
+  echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
+  }else{
+  echo '<td>Exam: '.'<strong><span class="text-primary">'.round($mark->exam_mark).'%'.'</span></strong></td>';
+  }
+  
+  echo '</tr>';
+  echo '<tr>';
+  if(round($mark->student_average)<"50"){
+  
+     echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
+  }else{
+     echo '<td>Total: '.'<strong><span class="text-primary">'.round($mark->student_average).'%'.'</span></strong></td>';
+  }
+   
+  echo '</tr>';
+  
+  echo '<tr> <thead>';
+  echo '<th>'."Comment".'</th>';
+  
+  foreach ($comments  as $comment) {
+  if( in_array(round($mark->student_average), range($comment->from,$comment->to)) ) 
+            
+  
+             echo '<td>'.$comment->comment.'</td>';
+         
+  }
+  
+  echo '</thead></tr>'; 
+  }
+  
+  
+  }
+  
+     @endphp
+  
+   </tbody>
+  </table> 
+  
+  </div>
+  
+  @endforeach 
+    </div>
+
+
+
+
+
+  <div class="col-4">
+
+    @foreach ($science as $item) 
+  
+  <div class="table-responsive">
+  <table class="table  table-bordered table-sm" id="performance_table">
+  <thead>
+    <tr>
+      
+       <th colspan="2"><strong>{{$item->subject_name}} </strong></th>
+     </tr>
+     <tr>
+         <td>Strand</td>
+         <td>Grade</td>
+       </tr>
+  
+      
+   </thead>
+  
+   <tbody>
+  
+     @php
+  
+  
+  if($item->stream_id==13 OR $item->stream_id==12 ){
+  //foundation
+  
+  $strands=DB::table('strands')
+     ->join('cbe_marks', 'cbe_marks.strand_id', '=', 'strands.id')
+     ->join('teaching_loads', 'teaching_loads.id', '=', 'cbe_marks.teaching_load_id')
+     ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+     ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+     ->join('users', 'users.id', '=', 'cbe_marks.student_id')
+     ->join('grades_students', 'grades_students.student_id', '=', 'cbe_marks.student_id')
+     ->select('strands.id as strand_id','strands.strand','users.id as student_id', 'users.name', 'users.middlename', 'users.lastname' ,'grades.id as grade_id', 'grades.grade_name as grade_name', 'subjects.id as subject_id','subjects.subject_name', 'cbe_marks.grade as assessement_grade')
+     // ->where('academic_sessions.active',1)
+     ->where('cbe_marks.student_id',$item->student_id)
+     ->whereIn('teaching_loads.subject_id',[$item->subject_id])
+     ->where('cbe_marks.term_id',$term_id)
+     ->get();
+  }else{
+  
+  
+  
+  $strands=DB::table('strands')
+     ->join('cbe_marks', 'cbe_marks.strand_id', '=', 'strands.id')
+     ->join('teaching_loads', 'teaching_loads.id', '=', 'cbe_marks.teaching_load_id')
+     ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+     ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+     ->join('users', 'users.id', '=', 'cbe_marks.student_id')
+     ->join('grades_students', 'grades_students.student_id', '=', 'cbe_marks.student_id')
+     ->select('strands.id as strand_id','strands.strand','users.id as student_id', 'users.name', 'users.middlename', 'users.lastname' ,'grades.id as grade_id', 'grades.grade_name as grade_name', 'subjects.id as subject_id','subjects.subject_name', 'cbe_marks.grade as assessement_grade')
+     // ->where('academic_sessions.active',1)
+     ->where('cbe_marks.student_id',$item->student_id)
+     ->where('teaching_loads.subject_id',$item->subject_id)
+     ->where('cbe_marks.term_id',$term_id)
+     ->get();
+  
+  
+  }
+  
+  
+  
+  
+  
+  
+  foreach ($strands as $strand) {
+  echo '<tr>';
+  
+  echo '<td>'.$strand->strand.'</td>';
+  echo '<td>'.$strand->assessement_grade.'</td>';
+  
+  echo '</tr>';
+  
+  
+  }
+  
+  
+  
+  
+  if($item->stream_id==13 OR $item->stream_id==12){
+  
+  }else{
+  
+  
+  
+  $marks=DB::table('student_subject_averages')
+     
+     ->join('teaching_loads', 'teaching_loads.id', '=', 'student_subject_averages.teaching_load_id')
+     ->join('users', 'users.id', '=', 'student_subject_averages.student_id')
+     ->where('student_subject_averages.student_id',$item->student_id)
+     ->where('teaching_loads.subject_id',$item->subject_id)
+     ->where('student_subject_averages.term_id',$term_id)
      ->get();
   
   foreach ($marks as $mark) {
@@ -1213,7 +1403,7 @@ echo '</thead></tr>';
 
   <div class="col-4">
 
-    @foreach ($ict as $item) 
+    @foreach ($consumer_science as $item) 
   
   <div class="table-responsive">
   <table class="table  table-bordered table-sm" id="performance_table">
@@ -1235,7 +1425,7 @@ echo '</thead></tr>';
      @php
   
   
-  if($item->stream_id==1 OR $item->stream_id==2 ){
+  if($item->stream_id==13 OR $item->stream_id==12 ){
   //foundation
   
   $strands=DB::table('strands')
@@ -1291,7 +1481,7 @@ echo '</thead></tr>';
   
   
   
-  if($item->stream_id==1 OR $item->stream_id==2){
+  if($item->stream_id==13 OR $item->stream_id==12){
   
   }else{
   
@@ -1303,7 +1493,7 @@ echo '</thead></tr>';
      ->join('users', 'users.id', '=', 'student_subject_averages.student_id')
      ->where('student_subject_averages.student_id',$item->student_id)
      ->where('teaching_loads.subject_id',$item->subject_id)
-     ->where('student_subject_averages.term_id',3)
+     ->where('student_subject_averages.term_id',$term_id)
      ->get();
   
   foreach ($marks as $mark) {

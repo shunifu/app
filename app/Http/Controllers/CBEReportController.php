@@ -144,16 +144,7 @@ class CBEReportController extends Controller
         // ->groupBy('subjects.id')
         // ->get();
 
-         $social_studies=DB::table('student_loads')
-        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
-        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
-        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
-        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
-        ->where('student_loads.student_id',$student_id)
-        ->where('student_loads.active',1)
-        ->where('subjects.id','36')
-        ->get();
-
+        
        
 
 
@@ -164,7 +155,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[26, 36])
+        ->whereIn('subjects.id',[28, 26,41])
         ->get();
 
 
@@ -186,7 +177,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[38])
+        ->whereIn('subjects.id',[34])
         ->get();
 
 
@@ -227,7 +218,17 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[39])
+        ->whereIn('subjects.id',[33])
+        ->get();
+
+        $agric=DB::table('student_loads')
+        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
+        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
+        ->where('student_loads.student_id',$student_id)
+        ->where('student_loads.active',1)
+        ->whereIn('subjects.id',[31])
         ->get();
 
         $science=DB::table('student_loads')
@@ -237,7 +238,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[14])
+        ->whereIn('subjects.id',[31])
         ->get();
 
 
@@ -248,7 +249,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[37])
+        ->whereIn('subjects.id',[32])
         ->get();
 
         $practical_arts=DB::table('student_loads')
@@ -258,8 +259,31 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[42])
+        ->whereIn('subjects.id',[29])
         ->get();
+
+        $personal_skills=DB::table('student_loads')
+        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
+        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
+        ->where('student_loads.student_id',$student_id)
+        ->where('student_loads.active',1)
+        ->whereIn('subjects.id',[41])
+        ->get();
+
+        $consumer_science=DB::table('student_loads')
+        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
+        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
+        ->where('student_loads.student_id',$student_id)
+        ->where('student_loads.active',1)
+        ->whereIn('subjects.id',[40])
+        ->get();
+
+
+
 
 
 
@@ -297,7 +321,7 @@ class CBEReportController extends Controller
     // }
 
 
-    return view('academic-admin.reports-management.cbe-report.view', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id'));
+    return view('academic-admin.reports-management.cbe-report.view', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts'));
 
   
 
