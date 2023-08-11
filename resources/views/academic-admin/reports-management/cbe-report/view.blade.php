@@ -18,10 +18,10 @@ body{
 
 div.col-4{
  
-    width: 50%;
+    width: 40%;
     border: 1px solid black;
   
-    font-size: 9px;
+    font-size: 9.5px;
     /* 100 = viewport width, as 1vw = 1/100th of that
        So if the container is 50% of viewport (as here)
        then factor that into how you want it to size.
@@ -30,6 +30,14 @@ div.col-4{
     */
     /* font-size: 2.5vw; */
 
+}
+
+
+div.assessement{
+  width: 40%;
+    border: 1px solid black;
+  
+    font-size: 9.5px;
 }
 /* 
 table{
@@ -410,7 +418,7 @@ echo '</thead></tr>';
 </div>
 
 
-        <div class="col">
+        <div class="col ">
          <table class="table table-compact  table-bordered table-sm" id="contain">
            <thead>
              <tr>
@@ -561,7 +569,7 @@ echo '</thead></tr>';
 
         
 
-           <div class="col text-center" id="contain">
+           <div class="col text-center" id="contain"  style="   width: 40%;border: 1px solid black;font-size: 9.5px;">
 
                @foreach ($school as $school_item)
    
