@@ -112,7 +112,7 @@ table{
        @php
 
 
-if($item->stream_id==13 OR $item->stream_id==12 ){
+if($item->stream_id==1 OR $item->stream_id==2 ){
 //foundation
 
 $strands=DB::table('strands')
@@ -168,7 +168,7 @@ echo '</tr>';
 
 
 
-if($item->stream_id==13 OR $item->stream_id==12){
+if($item->stream_id==1 OR $item->stream_id==2){
 
 }else{
 
@@ -275,7 +275,7 @@ echo '</thead></tr>';
      @php
 
 
-if($item->stream_id==13 OR $item->stream_id==12 ){
+if($item->stream_id==1 OR $item->stream_id==2 ){
 //foundation
 
 $strands=DB::table('strands')
@@ -331,7 +331,7 @@ echo '</tr>';
 
 
 
-if($item->stream_id==13 OR $item->stream_id==12){
+if($item->stream_id==1 OR $item->stream_id==2){
 
 }else{
 
@@ -666,7 +666,7 @@ echo '</thead></tr>';
              @php
        
        
-       if($item->stream_id==13 OR $item->stream_id==12 ){
+       if($item->stream_id==1 OR $item->stream_id==2 ){
        //foundation
        
        $strands=DB::table('strands')
@@ -722,7 +722,7 @@ echo '</thead></tr>';
        
        
        
-       if($item->stream_id==13 OR $item->stream_id==12){
+       if($item->stream_id==1 OR $item->stream_id==2){
        
        }else{
        
@@ -823,7 +823,7 @@ echo '</thead></tr>';
        @php
  
  
- if($item->stream_id==13 OR $item->stream_id==12 ){
+ if($item->stream_id==1 OR $item->stream_id==2 ){
  //foundation
  
  $strands=DB::table('strands')
@@ -879,7 +879,7 @@ echo '</thead></tr>';
  
  
  
- if($item->stream_id==13 OR $item->stream_id==12){
+ if($item->stream_id==1 OR $item->stream_id==2){
  
  }else{
  
@@ -976,7 +976,7 @@ echo '</thead></tr>';
    @php
 
 
-if($item->stream_id==13 OR $item->stream_id==12 ){
+if($item->stream_id==1 OR $item->stream_id==2 ){
 //foundation
 
 $strands=DB::table('strands')
@@ -1032,7 +1032,7 @@ echo '</tr>';
 
 
 
-if($item->stream_id==13 OR $item->stream_id==12){
+if($item->stream_id==1 OR $item->stream_id==2){
 
 }else{
 
@@ -1134,7 +1134,7 @@ echo '</thead></tr>';
      @php
   
   
-  if($item->stream_id==13 OR $item->stream_id==12 ){
+  if($item->stream_id==1 OR $item->stream_id==2 ){
   //foundation
   
   $strands=DB::table('strands')
@@ -1190,7 +1190,7 @@ echo '</thead></tr>';
   
   
   
-  if($item->stream_id==13 OR $item->stream_id==12){
+  if($item->stream_id==1 OR $item->stream_id==2){
   
   }else{
   
@@ -1289,7 +1289,7 @@ echo '</thead></tr>';
      @php
   
   
-  if($item->stream_id==13 OR $item->stream_id==12 ){
+  if($item->stream_id==1 OR $item->stream_id==2 ){
   //foundation
   
   $strands=DB::table('strands')
@@ -1345,7 +1345,7 @@ echo '</thead></tr>';
   
   
   
-  if($item->stream_id==13 OR $item->stream_id==12){
+  if($item->stream_id==1 OR $item->stream_id==2){
   
   }else{
   
@@ -1446,7 +1446,7 @@ echo '</thead></tr>';
      @php
   
   
-  if($item->stream_id==13 OR $item->stream_id==12 ){
+  if($item->stream_id==1 OR $item->stream_id==2 ){
   //foundation
   
   $strands=DB::table('strands')
@@ -1502,7 +1502,7 @@ echo '</thead></tr>';
   
   
   
-  if($item->stream_id==13 OR $item->stream_id==12){
+  if($item->stream_id==1 OR $item->stream_id==2){
   
   }else{
   
@@ -1604,7 +1604,7 @@ echo '</thead></tr>';
        @php
     
     
-    if($item->stream_id==13 OR $item->stream_id==12 ){
+    if($item->stream_id==1 OR $item->stream_id==2 ){
     //foundation
     
     $strands=DB::table('strands')
@@ -1660,7 +1660,7 @@ echo '</thead></tr>';
     
     
     
-    if($item->stream_id==13 OR $item->stream_id==12){
+    if($item->stream_id==1 OR $item->stream_id==2){
     
     }else{
     
@@ -1759,7 +1759,7 @@ echo '</thead></tr>';
          @php
       
       
-      if($item->stream_id==13 OR $item->stream_id==12 ){
+      if($item->stream_id==1 OR $item->stream_id==2 ){
       //foundation
       
       $strands=DB::table('strands')
@@ -1815,7 +1815,7 @@ echo '</thead></tr>';
       
       
       
-      if($item->stream_id==13 OR $item->stream_id==12){
+      if($item->stream_id==1 OR $item->stream_id==2){
       
       }else{
       

@@ -147,7 +147,7 @@ class CBEReportController extends Controller
         
        
 
-
+//religious, social, personal skills
         $back_subjects=DB::table('student_loads')
         ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
         ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
@@ -155,19 +155,11 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[28, 26,41])
+        ->whereIn('subjects.id',[36, 26,44])
         ->get();
 
 
-        // $ict_maths_subjects=DB::table('student_loads')
-        // ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
-        // ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
-        // ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
-        // ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
-        // ->where('student_loads.student_id',$student_id)
-        // ->where('student_loads.active',1)
-        // ->whereIn('subjects.id',[6, 39])
-        // ->get();
+      
 
 
         $hpe=DB::table('student_loads')
@@ -177,18 +169,10 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[34])
+        ->whereIn('subjects.id',[38])
         ->get();
 
-        // $social_studies=DB::table('student_loads')
-        // ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
-        // ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
-        // ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
-        // ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
-        // ->where('student_loads.student_id',$student_id)
-        // ->where('student_loads.active',1)
-        // ->whereIn('subjects.id',[28])
-        // ->get();
+     
 
 
         $siswati=DB::table('student_loads')
@@ -228,7 +212,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[33])
+        ->whereIn('subjects.id',[39])
         ->get();
 
         $agric=DB::table('student_loads')
@@ -238,7 +222,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[31])
+        ->whereIn('subjects.id',[23])
         ->get();
 
         $science=DB::table('student_loads')
@@ -259,7 +243,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[32])
+        ->whereIn('subjects.id',[37])
         ->get();
 
         $practical_arts=DB::table('student_loads')
@@ -269,7 +253,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[29])
+        ->whereIn('subjects.id',[42])
         ->get();
 
         $personal_skills=DB::table('student_loads')
@@ -279,7 +263,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[41])
+        ->whereIn('subjects.id',[44])
         ->get();
 
         $consumer_science=DB::table('student_loads')
@@ -289,7 +273,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[40])
+        ->whereIn('subjects.id',[16])
         ->get();
 
         $general_studies=DB::table('student_loads')
@@ -299,7 +283,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[30])
+        ->whereIn('subjects.id',[43])
         ->get();
 
 
