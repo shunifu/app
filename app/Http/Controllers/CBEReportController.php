@@ -324,7 +324,21 @@ class CBEReportController extends Controller
     // }
 
 
-    return view('academic-admin.reports-management.cbe-report.view', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream'));
+    if ($stream==1 OR $stream==2) {
+        $size="size:  JIS-B4;";
+      
+        $gutter="no-gutters";
+      
+        $row='<div class="row" style="flex-direction: row-reverse;" >';
+       
+    }else{
+        $size="size:  landscape A4;";
+        $gutter=" ";
+        $row='<div class="row">';
+    }
+
+
+    return view('academic-admin.reports-management.cbe-report.view', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row'));
 
   
 
