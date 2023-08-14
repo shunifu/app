@@ -948,7 +948,7 @@ if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
 if ($result) {
   do {
   if ($res = $db->store_result()) {
-      echo "<table  table-bordered table-sm width=100><tr>";
+    echo "<table class='table table-sm table-bordered' width=100% border=0><tr>";
 
         
       // printing table headers
