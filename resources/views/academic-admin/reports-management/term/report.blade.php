@@ -912,7 +912,7 @@ SET SESSION group_concat_max_len = 1000000;
         )ORDER BY assessement_name ASC
       ) INTO @sql
 from c_a__exams  INNER JOIN assessements ON assessements.id=c_a__exams.assessement_id 
- INNER JOIN marks ON marks.assessement_id=c_a__exams.assessement_id WHERE c_a__exams.term_id=".$term." ;
+ INNER JOIN marks ON marks.assessement_id=c_a__exams.assessement_id WHERE c_a__exams.term_id=".$term."  ;
 SET @sql = CONCAT('SELECT 
     subjects.subject_name as Subject, 
     ', @sql, ',
@@ -932,7 +932,7 @@ SET @sql = CONCAT('SELECT
     INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
     INNER JOIN report_comments 
     WHERE marks.student_id = ".$student." 
-    AND `c_a__exams`.`term_id` = ".$term." 
+    AND `c_a__exams`.`term_id` = ".$term." AND student_subject_averages.term_id=".$term."
     AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id
     AND report_comments.user_type=1 and report_comments.section_id=".$section_id."
     AND student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to
@@ -948,7 +948,7 @@ if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
 if ($result) {
   do {
   if ($res = $db->store_result()) {
-      echo "<table  table-bordered table-sm><tr>";
+      echo "<table  table-bordered table-sm width=100><tr>";
 
         
       // printing table headers
