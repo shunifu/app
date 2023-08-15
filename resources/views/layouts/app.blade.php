@@ -1657,9 +1657,9 @@
 
             
              
-                <li class="nav-header">Teacher Services</li>
+                {{-- <li class="nav-header">Teacher Services</li> --}}
 
-
+{{-- 
                 <li class="nav-item has-treeview">
                   <a href="#" class="nav-link">
                     <i class="fas fa-stethoscope nav-icon"></i>
@@ -1701,27 +1701,27 @@
                   
       
                    </ul>
-                </li>  
+                </li>   --}}
       
       
-                <li class="nav-item has-treeview">
+                {{-- <li class="nav-item has-treeview">
                   <a href="#" class="nav-link">
                     <i class="fas fa-stethoscope nav-icon"></i>
                     <p>
                      TSC Services
                       <i class="fas fa-angle-left right"></i>
                     </p>
-                  </a>
-                  <ul class="nav nav-treeview">
+                  </a> --}}
+                  {{-- <ul class="nav nav-treeview"> --}}
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                       <a href="{{ route('index.teachers') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Vacancies</p>
                       </a>
-                    </li> 
+                    </li>  --}}
 
-
+{{-- 
                     <li class="nav-item">
                       <a href="{{ route('index.students') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
@@ -1729,85 +1729,85 @@
                       </a>
                     </li>
        
-                    
-      
+                     --}}
+{{--       
                      <li class="nav-item">
                       <a href="{{ route('index.support-staff') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Queries</p>
                       </a>
-                    </li>
-      
+                    </li> --}}
+{{--       
                     <li class="nav-item">
                       <a href="{{ route('index.visitors') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>My Files</p>
                       </a>
-                    </li> 
+                    </li>  --}}
       
                   
       
-                   </ul>
-                </li> 
+                   {{-- </ul> --}}
+                {{-- </li>  --}}
       
-                <li class="nav-item has-treeview">
-                  <a href="#" class="nav-link">
+                {{-- <li class="nav-item has-treeview"> --}}
+                  {{-- <a href="#" class="nav-link">
                     <i class="fas fa-stethoscope nav-icon"></i>
                     <p>
                      ECESWA Corner
                       <i class="fas fa-angle-left right"></i>
                     </p>
-                  </a>
-                  <ul class="nav nav-treeview">
-                    <li class="nav-item">
+                  </a> --}}
+                  {{-- <ul class="nav nav-treeview"> --}}
+                    {{-- <li class="nav-item">
                       <a href="{{ route('index.students') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Apply for Marking </p>
                       </a>
-                    </li>
+                    </li> --}}
        
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                       <a href="{{ route('index.teachers') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Candidate Registration</p>
                       </a>
-                    </li> 
+                    </li>  --}}
       
-                     <li class="nav-item">
+                     {{-- <li class="nav-item">
                       <a href="{{ route('index.support-staff') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Exam Reports</p>
                       </a>
-                    </li>
+                    </li> --}}
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                       <a href="{{ route('index.support-staff') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Exam Timetables</p>
                       </a>
-                    </li>
+                    </li> --}}
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                       <a href="{{ route('index.support-staff') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p> Syllabus</p>
                       </a>
-                    </li>
+                    </li> --}}
       
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                       <a href="{{ route('index.visitors') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Past Papers</p>
                       </a>
-                    </li> 
+                    </li>  --}}
       
                   
       
-                   </ul>
+                   {{-- </ul>
                 </li> 
+       --}}
       
-      
-                <li class="nav-item has-treeview">
+                {{-- <li class="nav-item has-treeview">
                   <a href="#" class="nav-link">
                     <i class="fas fa-stethoscope nav-icon"></i>
                     <p>
@@ -1854,7 +1854,7 @@
                   
       
                    </ul>
-                </li> 
+                </li>  --}}
 
 
 
