@@ -344,7 +344,7 @@ a[target='_blank']{
                     
                         <button class="btn btn-primary btn-block mt-1 px-3 submit">Login to Shunifu</button>
                      
-                        <div class="text-center pt-4 text-muted"> <a href="/reset">Forgot Password?</a>
+                        {{-- <div class="text-center pt-4 text-muted"> <a href="/reset">Forgot Password?</a> --}}
                         </div>
                     </form>
                 </div>
