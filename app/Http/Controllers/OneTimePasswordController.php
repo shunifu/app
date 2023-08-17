@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Hash;
 use AfricasTalking\SDK\AfricasTalking;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OneTimePasswordController extends Controller
 {
@@ -72,4 +74,45 @@ $cellIs=$userExists->cell_number;
   public function resendOTP(){
 
   }
+
+
+  public function parent_reset_pin_method(){
+
+    $parentExists=User::where('role_id', 10)->where('active', 1)->get();
+
+    foreach ($parentExists as $parent) {
+
+      $parent_id=$parent->id;
+      $parent_cell=$parent->cell_number;
+
+  $children = DB::table('parents_students')
+  ->join('users', 'users.id', '=', 'parents_students.student_id')
+  ->where('parents_students.parent_id',$parent_id)
+  ->where('users.active', 1)
+  ->whereNotNull('users.national_id')
+  ->select('users.id as student_id', 'users.national_id as pin' )
+  ->first();
+
+
+  if(!empty($children)){
+  
+    $otp = $children->pin;
+  }else{
+  $otp="asdasdajsdklasdasdasf43";
+  }
+  
+
+//$otp =  Otp::generate($user);
+
+
+
+// $url=substr( URL::to('/'),7);
+
+
+User::where('id', $parent_id)->update(['password' => Hash::make($otp), 'status'=>0]);
+
+
+    }
+
+}
 }

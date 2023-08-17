@@ -345,6 +345,12 @@
          @endrole
 
 @role('parent')
+<li class="nav-item">
+  <a href="/users/parent/kids" class="nav-link">
+    <i class="fas fa-user nav-icon"></i>
+    <p>My Kids </p>
+  </a>
+</li>
 <li class="nav-item has-treeview">
   <a href="#" class="nav-link">
     <i class="fas fa-user-friends nav-icon"></i>
@@ -548,12 +554,7 @@
         @role('parent')
                    
 
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="fas fa-coins nav-icon"></i>
-            <p>School Fees</p>
-          </a>
-        </li>
+     
 
         @endrole
 

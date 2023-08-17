@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\Term;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -259,6 +260,31 @@ class ParentController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+
+
+    public function report_card(){
+
+
+        // $children = DB::table('parents_students')
+        // ->join('users', 'users.id', '=', 'parents_students.student_id')
+        // ->where('parents_students.parent_id', Auth::user()->id)
+        // ->get()->count();
+ 
+    $children = DB::table('parents_students')
+    ->join('users', 'users.id', '=', 'parents_students.student_id')
+    ->join('grades_students', 'grades_students.student_id', '=', 'users.id')
+    ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+    ->where('parents_students.parent_id', Auth::user()->id)
+    ->where('users.active', 1)
+    ->get();
+
+        $terms=Term::all();
+
+
+        return view('users.parents.performance.index',compact('children', 'terms'));
+
     }
 
 

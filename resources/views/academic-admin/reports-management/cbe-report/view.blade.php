@@ -104,13 +104,13 @@ table{
   </style>
 
 
-   
-
-
-<div class="container-fluid d-flex flex-column bg-white"  id="contain">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+<a href="#" class="btn btn-col-4 btn-primary" id="print">Generate PDF of Report</a>
+<div class="container-fluid d-flex flex-column bg-white" id="print_area"  >
 
   {{-- Front Page --}}
-     <div class="row"  >
+     <div class="row" id="makepdf"  >
 
 
       @if ($stream=="1" or $stream==2)
@@ -511,6 +511,7 @@ echo '</thead></tr>';
 
 
         <div class="col-3">
+      <div class="table-responsive">
          <table class="table table-compact  table-bordered table-sm">
            <thead>
              <tr>
@@ -668,7 +669,7 @@ echo '</thead></tr>';
 
 
      </div>
-
+      </div>
 
 
 {{-- End of Front page --}}
@@ -2139,19 +2140,22 @@ echo '</thead></tr>';
 
 </p>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    let printLink = document.getElementById("print");
+    let container = document.getElementById("print_area");
 
+    printLink.addEventListener("click", event => {
+        event.preventDefault();
+        printLink.style.display = "none";
+        window.print();
+    }, false);
 
-  <script>
-  window.onload = function() {
-    var d = document.getElementsByTagName("div")[0]
-    if (d.offsetHeight < d.scrollHeight ||
-        d.offsetWidth < d.scrollWidth) {
-      console.log("overflow");
-    } else {
-      console.log("no overflow");
-    }
-  }
- 
+    container.addEventListener("click", event => {
+        printLink.style.display = "flex";
+    }, false);
+
+}, false);
 </script>
 
 

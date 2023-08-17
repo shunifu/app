@@ -113,15 +113,15 @@ font-size:15px;
 
 
       <div class="container">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+     <div class="row row-cols-1 row-cols-md-4 row-cols-xl-4">
                <div class="col">
              <div class="card radius-10 border-start border-0 border-3 border-info">
               <div class="card-body">
                 <div class="d-flex align-items-center">
                   <div>
                     
-                    <p class="mb-0 text-secondary">Total Kids</p>
-                    <h4 class="my-1 text-info">1</h4>
+                    <p class="mb-0 text-secondary">My Kids</p>
+                    <h4 class="my-1 text-info">{{$totalkids}}</h4>
                     <a href="/users/parent/kids"><p class="mb-0 font-13 text-info " >View My Kids </p></a>
                   </div>
                   <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa-solid fa-users-between-lines"></i>
@@ -136,8 +136,8 @@ font-size:15px;
                  <div class="d-flex align-items-center">
                    <div>
                      <p class="mb-0 text-secondary"> School Events</p>
-                     <h4 class="my-1 text-danger"></h4>
-                     <a href="/users/teacher/loads/manage"><p class="mb-0 font-13 text-danger">View Teaching Loads </p></a> 
+                     <h4 class="my-1 text-danger">0</h4>
+                     <a href="#"><p class="mb-0 font-13 text-danger">View School Events </p></a> 
                    </div>
             
                    <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i class="fas fa-user-graduate    "></i>
@@ -146,14 +146,14 @@ font-size:15px;
                </div>
             </div>
             </div>
-            <div class="col">
+            {{-- <div class="col">
             <div class="card radius-10 border-start border-0 border-3 border-success">
                <div class="card-body">
                  <div class="d-flex align-items-center">
                    <div>
                      <p class="mb-0 text-secondary">Fees</p>
-                     <h4 class="my-1 text-success"></h4>
-                     <a href="/marks/"><p class="mb-0 font-13 text-success">View Fees</p></a> 
+                     <h4 class="my-1 text-success">Fees</h4>
+                     <a href="#"><p class="mb-0 font-13 text-success">View Fees</p></a> 
                   
                    </div>
                    <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class="fas fa-user-friends    "></i>
@@ -161,7 +161,7 @@ font-size:15px;
                  </div>
                </div>
             </div>
-            </div>
+            </div> --}}
         
             <div class="col">
             <div class="card radius-10 border-start border-0 border-3 border-warning">

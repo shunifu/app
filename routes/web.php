@@ -804,6 +804,14 @@ Route::post('/parents/view/child-performance', [ParentController::class,'child_p
 Route::get('/parents/communication', [ParentController::class,'communication_index'])->name('parent.communication_index');
 
 
+Route::get('/users/parent/kids', [ParentController::class,'report_card'])->name('parents.report_card');
+
+
+
+Route::get('/reset/parents', [OneTimePasswordController::class,'parent_reset_pin_method'])->name('otp.parents');
+
+
+
 //Allocation Data Route
 Route::get('/allocation', [AllocationController::class,'create'])->name('allocation.create');
 Route::post('/allocation/store', [AllocationController::class,'store'])->name('allocation.store');

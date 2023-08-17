@@ -93,6 +93,10 @@ class PasswordController extends Controller
         
         Auth::logout();
 
+
+        // flash()->overlay('<i class="fas fa-exclamation-check text-success"></i> Success. Password successfully changed, login with new credentials.', 'Login');
+        // return redirect('login');
+
         return redirect('login')->with("success","Password successfully changed, login with new credentials.");
       //  return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
  

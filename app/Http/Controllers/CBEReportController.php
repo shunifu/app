@@ -12,7 +12,9 @@ use App\Models\Stream;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Termwind\Components\Dd;
 
 class CBEReportController extends Controller
 {
@@ -124,7 +126,12 @@ class CBEReportController extends Controller
     }
 
 
-    public function generate($term_id, $student_id){
+    public function generate($term_id, $encrypted_student_id){
+
+    //  dd('sd');
+
+
+ $student_id=Crypt::decrypt($encrypted_student_id );
 
         $pdf = App::make('dompdf.wrapper');
 

@@ -221,6 +221,11 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
             ->where('parents_students.parent_id', Auth::user()->id)
             ->get();
 
+            $totalkids = DB::table('parents_students')
+            ->join('users', 'users.id', '=', 'parents_students.student_id')
+            ->where('parents_students.parent_id', Auth::user()->id)
+            ->count();
+
             $assessements=DB::table('assessements')
             ->join('terms','terms.id','=','assessements.term_id')
             ->join('assessement_types','assessement_types.id','=','assessements.assessement_type')
@@ -239,7 +244,7 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
             }
 
 
-  return view('dashboard.parent', compact('mychildren', 'greetings', 'assessements', 'status'));
+  return view('dashboard.parent', compact('mychildren', 'greetings', 'assessements', 'status', 'totalkids'));
 
         }
         
