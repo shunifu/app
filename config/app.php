@@ -174,8 +174,8 @@ return [
 'DB_USERNAME' => 'sgroot',
 'DB_PASSWORD'=>'eXk7@XmEYb9r9KZ9',
 
-'APP_DEBUG' => 'false',
-'APP_ENV' => 'production',
+// 'APP_DEBUG' => 'false',
+// 'APP_ENV' => 'production',
 
 
 

@@ -55,8 +55,85 @@
         
                            <div class="button mt-2 d-flex flex-row align-items-center">
         
-                           <a href="/cbe/report/generate/3/{{\Crypt::encrypt($child->student_id)}}"><button class="btn btn-sm btn-primary w-100">{{$child->name}}'s  Report Card</button></a> 
-                           <a href=""> <button class="btn btn-sm btn-outline-primary w-100 ml-2">{{$child->name}}'s Profile</button></a>
+                     
+
+                           @foreach (\App\Models\School::all() as $item)
+                         @if ($item->school_type=="primary-school")
+                         <a href="/cbe/report/generate/3/{{\Crypt::encrypt($child->student_id)}}"><button class="btn btn-sm btn-primary w-100">{{$child->name}}'s  Report Card</button></a> 
+                         <a href=""> <button class="btn btn-sm btn-outline-primary w-100 ml-2">{{$child->name}}'s Profile</button></a>  
+                         @else
+
+                         
+                         <form action="{{route('report.stream')}}" method="post">
+                            @csrf
+                   
+                          <div class="card-body">
+                          
+                           <input type="hidden" name="p_class" value="class_based">
+                   
+                            <div class="form-row">
+                   
+                              
+                   
+                               <div class="col-md-4 form-group">
+                                   <x-jet-label>Select Term</x-jet-label>
+                                   <select class="form-control" name="term">
+                                       <option value="">Term</option>
+                                       @foreach($terms as $term)
+                                           <option value="{{ $term->term_id }}">
+                                               {{ $term->term_name }}-{{ $term->academic_session }}
+                                            
+                                       @endforeach
+                                   </select>
+                                   @error('term')
+                                       <span class="text-danger">{{ $message }}</span>
+                                   @enderror
+                               </div>
+                   
+                   
+                   
+                               <div class="col-md-4 form-group">
+                            <x-jet-label>Choose Class</x-jet-label>
+                            <select class="form-control" name="grade">
+                               <option value="">Select Class</option>
+                               @foreach($classes as $class)
+                                   <option value="{{ $class->id }}">
+                                       {{ $class->grade_name }}
+                                   </option> 
+                               @endforeach
+                           </select>
+                           @error('grade')
+                               <span class="text-danger">{{ $message }}</span>
+                           @enderror
+                        </div>
+                      
+                       
+                        <div class="col-md-4 form-group">
+                           <x-jet-label>Choose Report Template</x-jet-label>
+                          
+                           <select name="report_template" id="report_template" class="form-control">
+                               <option value="">Select Template</option>
+                             @foreach ($templates as $item)
+                            
+                             <option value="{{$item->id}}">{{$item->template_name}}</option>
+                             @endforeach
+                           </select>
+                   
+                       </div>
+                          </div>
+                   
+                          <div class="card-footer text-muted">
+                            <x-jet-button id="btnSelector" onclick="callAjax();">Generate Class Report</x-jet-button>
+                          </div>
+                          </form>
+
+
+
+
+                         <a href="/report/generate/3/{{\Crypt::encrypt($child->student_id)}}"><button class="btn btn-sm btn-primary w-100">{{$child->name}}'s  Report Card</button></a> 
+                         <a href=""> <button class="btn btn-sm btn-outline-primary w-100 ml-2">{{$child->name}}'s Profile</button></a>   
+                         @endif
+                           @endforeach
         
                                
                            </div>

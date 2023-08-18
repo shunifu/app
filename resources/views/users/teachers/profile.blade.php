@@ -120,7 +120,7 @@
         @else
             <div class="col-md-12 mx-auto">  
         @endif
-
+<small>Please use this section after you have updated your password. </small>
       
             <div class="card card-light  ">
                 <div class="card-body">
@@ -240,7 +240,7 @@
                         <hr>
            
                         </div> 
-                    <x-jet-button>Update Teacher</x-jet-button>
+                    <x-jet-button>Update My Profile</x-jet-button>
               
  
                        

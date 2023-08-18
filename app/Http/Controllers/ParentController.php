@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grade;
+use App\Models\ReportTemplate;
+use App\Models\ReportVariable;
 use App\Models\Role;
+use App\Models\Section;
+use App\Models\Stream;
 use App\Models\Term;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -283,7 +288,38 @@ class ParentController extends Controller
         $terms=Term::all();
 
 
-        return view('users.parents.performance.index',compact('children', 'terms'));
+
+        $terms=DB::table('terms')
+        ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
+      
+        ->select('terms.id as term_id','terms.term_name', 'academic_sessions.academic_session')
+        ->get();
+
+        //Scope to current session ....think about it.
+
+        //Streams
+        $streams=Stream::all();
+
+        //Classes
+        $classes=Grade::all();
+
+        //Section
+        $sections=Section::all();
+
+        $assessements=DB::table('assessements')
+        ->join('terms','terms.id','=','assessements.term_id')
+        ->join('assessement_types','assessement_types.id','=','assessements.assessement_type')
+        ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
+        ->where('academic_sessions.active', 1 )//
+        ->select('assessements.id as assessement_id','terms.term_name', 'assessement_name', 'assessement_type_name')
+        ->get();
+        
+        $templates=ReportTemplate::all();
+
+        $variables=ReportVariable::all();
+
+
+        return view('users.parents.performance.index',compact('children', 'terms', 'templates', 'variables'));
 
     }
 
