@@ -45,7 +45,7 @@
 
                 <tr>
                     <td scope="row">{{$student->name}}  {{$student->middlename}} {{$student->lastname}}</td>
-                    <td> <a href="/cbe/report/generate/{{$term_id}}/{{$student->student_id}}">Generate</a></td>
+                    <td> <a href="/cbe/report/generate/{{$term_id}}/{{\Crypt::encrypt($student->student_id)}} ">Generate</a></td>
                    
                 </tr>  
                 @endforeach
