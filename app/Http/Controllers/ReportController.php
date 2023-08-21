@@ -294,6 +294,7 @@ class ReportController extends Controller
         //Check if final term status set
         //Check if promotions have been made 
 
+   //    dd($request->all());
 
         if($request->exists('grade')){
 
@@ -312,9 +313,11 @@ class ReportController extends Controller
             ]);
             
         
-        }else{
+        }elseif($request->exists('stream')){
             $stream=$request->stream;
             $p_key="stream_based";
+
+        
 
             $validation=$request->validate([
                 'stream'=>'required',
@@ -323,6 +326,22 @@ class ReportController extends Controller
              
     
             ]);
+        }elseif($request->exists('stream_of_kid')){
+
+
+       //     dd("sfd");
+    
+            $stream=$request->stream_of_kid;
+            $p_key="parent";
+
+            $validation=$request->validate([
+              
+                'term'=>'required',
+                'report_template'=>'required',
+             
+    
+            ]);
+
         }
        
 
@@ -360,6 +379,14 @@ class ReportController extends Controller
      }
 
     // Getting the section of the selected stream (high school or secondary)
+
+
+    
+
+
+  
+
+
               $section=Grade::where('stream_id', $stream)->first();
               $section_id=$section->section_id;
       
@@ -434,6 +461,7 @@ class ReportController extends Controller
         $term_average_type=$criteria->term_average_type;//average type
         $number_of_decimal_places=$criteria->number_of_decimal_places;// number of decimal places
         $tie_type=$criteria->tie_type;// number of decimal places
+        $position_type=$criteria->position_type;
 
         $school_is=School::first();
       
@@ -444,14 +472,9 @@ class ReportController extends Controller
                 }
             }
 
-        
-       
-
-
+    
         $subject=Subject::where('subject_type','passing_subject')->first();
         $passing_subject=$subject->id;
-
-
         $non_value_exists=Subject::where('subject_type','non-value')->exists();
 
         if($non_value_exists){
@@ -480,6 +503,23 @@ class ReportController extends Controller
         //End of Weight for the term
 
 
+
+        $ca_assessements = DB::table('c_a__exams')
+        ->join('assessements', 'assessements.id', '=', 'c_a__exams.assessement_id')
+        ->where('assign_as', 'CA')
+        ->where('c_a__exams.term_id',$term )//scope this to specified academic year
+        ->get()->pluck('assessement_name')->toArray();
+
+
+        $exam_assessements = DB::table('c_a__exams')
+        ->join('assessements', 'assessements.id', '=', 'c_a__exams.assessement_id')
+        ->where('assign_as', 'Examination')
+        ->where('c_a__exams.term_id',$term )//scope this to specified academic year
+        ->get()->pluck('assessement_name')->toArray();
+
+        // dd($exam_assessements);
+
+       
 
         // //Getting the tests assigned to the term
         // $assigned_assessements=Assessement::where('term_id', $term)->get()->toArray();
@@ -517,7 +557,7 @@ class ReportController extends Controller
             ->where('academic_sessions.active',1)
             ->get()->pluck('student_id');
 
-
+            dd($students);
         }
         if($p_key=="class_based"){
             $students = DB::table('grades_students')
@@ -529,6 +569,23 @@ class ReportController extends Controller
             ->where('academic_sessions.active',1)
             ->get()->pluck('student_id');
         }
+
+
+        if($p_key=="parent"){
+
+            $child=$request->child_id;
+            $students = DB::table('grades_students')
+            ->join('users', 'grades_students.student_id', '=', 'users.id')
+            ->join('academic_sessions', 'grades_students.academic_session', '=', 'academic_sessions.id')
+            ->where('grades_students.student_id', $child)
+            ->where('grades_students.active', 1)
+            ->where('users.active', 1)
+            ->where('academic_sessions.active',1)
+            ->get()->pluck('student_id');
+
+         //   dd($students);
+        }
+
 
      //   dd($students);
 
@@ -564,6 +621,29 @@ class ReportController extends Controller
         ->where('grades_students.active', 1)
         ->where('users.active', 1)
         ->get()->count();
+       }elseif($p_key=="class_based"){
+        $total_students = DB::table('grades_students')
+        ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
+        ->join('users', 'grades_students.student_id', '=', 'users.id')
+        ->join('streams', 'streams.id', '=', 'grades.stream_id')
+        ->where('grades.id', $classofstudent)
+        ->where('grades_students.active', 1)
+        ->where('users.active', 1)
+        ->get()->count('grades_students.student_id');
+       }elseif($p_key=="parent"){
+
+        //get what was set in critea
+        if($position_type=="stream_based"){
+           
+            $total_students = DB::table('grades_students')
+            ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
+            ->join('users', 'grades_students.student_id', '=', 'users.id')
+            ->join('streams', 'streams.id', '=', 'grades.stream_id')
+            ->where('grades.stream_id', $stream)
+            ->where('grades_students.active', 1)
+            ->where('users.active', 1)
+            ->get()->count();
+
        }else{
         $total_students = DB::table('grades_students')
         ->join('grades', 'grades_students.grade_id', '=', 'grades.id')
@@ -575,6 +655,8 @@ class ReportController extends Controller
         ->get()->count('grades_students.student_id');
        }
 
+
+    }
   
       
         foreach ($students as $student ) {
@@ -886,7 +968,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
 
 
     
-return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight', 'calculation_type', 'non_value_subject_name', 'report_template', 'section_id','variables','get_academic_session'));   
+return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight', 'calculation_type', 'non_value_subject_name', 'report_template', 'section_id','variables','get_academic_session', 'ca_assessements','exam_assessements'));   
  }
 
 

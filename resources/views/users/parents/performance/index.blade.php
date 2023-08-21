@@ -34,29 +34,29 @@
                       </div>
                     </div>
                 
-                </div>
-                     --}}
+                </div> --}}
+                    
 
-                     <div class="card p-3">
-
-                        <div class="d-flex align-items-center">
-        
-                            <div class="image">
-                        <img src="{{$child->profile_photo_path}}"  class="rounded" width="155" >
-                        </div>
-        
-                        <div class="ml-3 w-100">
+                     <div class="card p-3 ">
+                      <div class="text-center">
+               
+                      <div class="image p-2">
+                        @if (is_null($child->profile_photo_path))
+                        <img  src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1613141854/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300_urpxk5.jpg"  class="rounded" width="155" >   
+                        @else
+                        <img src="{{$child->profile_photo_path}}"  class=" img-fluid " width="155" height="155" >    
+                        @endif
+               
+                  </div>
+                    
+                        <div class="mr-3">
                             
                            <h4 class="mb-0 mt-0">{{$child->lastname}} {{$child->name}} {{$child->middlename}}</h4>
                            <span>{{$child->grade_name}}</span>
+ 
         
-                        
+                           <div class="text-center">
         
-        
-                           <div class="button mt-2 d-flex flex-row align-items-center">
-        
-                     
-
                            @foreach (\App\Models\School::all() as $item)
                          @if ($item->school_type=="primary-school")
                          <a href="/cbe/report/generate/3/{{\Crypt::encrypt($child->student_id)}}"><button class="btn btn-sm btn-primary w-100">{{$child->name}}'s  Report Card</button></a> 
@@ -65,15 +65,13 @@
 
                          
                          <form action="{{route('report.stream')}}" method="post">
-                            @csrf
-                   
-                          <div class="card-body">
-                          
-                           <input type="hidden" name="p_class" value="class_based">
-                   
+                         @csrf
+                    
+                           <input type="hidden" name="p_class" value="parent">
+                           <input type="hidden" name="child_id" value="{{$child->student_id}}"/>
+                           <input type="hidden" name="stream_of_kid" value="{{$child->stream_id}}"/>
                             <div class="form-row">
                    
-                              
                    
                                <div class="col-md-4 form-group">
                                    <x-jet-label>Select Term</x-jet-label>
@@ -91,28 +89,13 @@
                                </div>
                    
                    
-                   
-                               <div class="col-md-4 form-group">
-                            <x-jet-label>Choose Class</x-jet-label>
-                            <select class="form-control" name="grade">
-                               <option value="">Select Class</option>
-                               @foreach($classes as $class)
-                                   <option value="{{ $class->id }}">
-                                       {{ $class->grade_name }}
-                                   </option> 
-                               @endforeach
-                           </select>
-                           @error('grade')
-                               <span class="text-danger">{{ $message }}</span>
-                           @enderror
-                        </div>
-                      
+                  
                        
                         <div class="col-md-4 form-group">
-                           <x-jet-label>Choose Report Template</x-jet-label>
+                           <x-jet-label>  Template</x-jet-label>
                           
                            <select name="report_template" id="report_template" class="form-control">
-                               <option value="">Select Template</option>
+                               <option value="">Select Report Template</option>
                              @foreach ($templates as $item)
                             
                              <option value="{{$item->id}}">{{$item->template_name}}</option>
@@ -120,18 +103,16 @@
                            </select>
                    
                        </div>
+                       <div class="col-md-4 form-group">
+                       <div class="mt-4 mb-3"></div>
+                       <input type="submit" class="btn btn-success" value="{{$child->name}}'s  Report">
+                      
+                      </div>
                           </div>
                    
-                          <div class="card-footer text-muted">
-                            <x-jet-button id="btnSelector" onclick="callAjax();">Generate Class Report</x-jet-button>
-                          </div>
+                        
                           </form>
 
-
-
-
-                         <a href="/report/generate/3/{{\Crypt::encrypt($child->student_id)}}"><button class="btn btn-sm btn-primary w-100">{{$child->name}}'s  Report Card</button></a> 
-                         <a href=""> <button class="btn btn-sm btn-outline-primary w-100 ml-2">{{$child->name}}'s Profile</button></a>   
                          @endif
                            @endforeach
         
@@ -142,9 +123,10 @@
                         </div>
         
                             
-                        </div>
+                      </div>
+                     </div>
                         
-                    </div>
+                    
                 @endforeach
 
 

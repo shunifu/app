@@ -46,7 +46,7 @@ body { margin: 0px; }
 
             @media print {
             th.background {
-                font-size: {{$variable->font_size}};
+            font-size: {{$variable->font_size}}px;
             background-color: {{$variable->column_color}} !important;
             -webkit-print-color-adjust: exact; 
             color: #FFFFFF !important;
@@ -87,7 +87,7 @@ body { margin: 0px; }
 }
 
 @media print {
-.page-break { display: block; page-break-before: always; }
+.page-break { display: block; page-break-after: always; }
 }
 #signaturetitle {
   font-weight: bold;
@@ -104,7 +104,7 @@ body { margin: 0px; }
 
 table tbody tr td {
 
-    font-size:{{$variable->font_size}};
+    font-size:{{$variable->font_size.'px'}};
 }
 
 
@@ -129,16 +129,21 @@ table tbody tr td {
         <div class="lead small"><h4 class="lead"></h4> </div>  
         <div class="text-body text-muted">
 
-        This is where you will view student  reports. Please note that, it it take a few minutes for the report to show.<p>
-            {{-- <select class="selectpicker my-select">
-                <option>Mustard</option>
-                <option>Ketchup</option>
-                <option>Barbecue</option>
-              </select> --}}
+            <ul>
+
+           
+       <li>If you are using a phone it is advisable that you download the report as a PDF. To do so, click on Download as PDF button and then save the document on your device. </li> 
+
+       <li>Please note that when you download the report as PDF, the first page will appear blank and the second page is where there report will appear. The report card appears in the second page of the PDF.</li> 
+
+       <li>Please note that report cards for learners in Form 3 and Form 5 are not available on this platform for now..</li> 
+
+    </ul>
+        
        
-        You can Print them out, by clicking the click button. 
-        <button class="btn btn-primary" onclick="window.print()" id="print_report">Print</button>
-        <button class="btn btn-primary" onclick="goBack();">Go Back</button>
+       
+        <button class="btn btn-primary" onclick="window.print()" id="print_report">Download Report  as PDF</button>
+        <a href="/dashboard"> <button class="btn btn-primary">Go Back</button></a>
         </div>
     </p>
   </div>
@@ -231,7 +236,7 @@ if ($variable->term_position==0) {
 }else{
     
     ?> <br>Student Position: <span class="text-bold"> <?php       
-if ($tie_type=="share_n_+_1") {
+
 
     if ($p_key=="stream_based") {
        $sql_piece="where term_averages.term_id=".$term." AND term_averages.student_stream=".$stream."";
@@ -239,7 +244,6 @@ if ($tie_type=="share_n_+_1") {
      $sql_piece="where term_averages.term_id=".$term." AND term_averages.student_class=".$classofstudent."";
  }
  
- //    if tie type is share, i.e ties share the same position run the query below
 
 $student_position=\DB::select(\DB::raw("select t.*
 from (select term_averages.student_id,term_averages.student_average, rank() over (order by term_averages.student_average desc) as student_position
@@ -252,33 +256,6 @@ echo $key->student_position.' out of '.$total_students.' ' ;
 echo $key->student_position.' out of '.$total_students.' ';
 }
 
-}
-
-
-}else if ($tie_type=="share") {
-
-if ($p_key=="stream_based") {
-       $sql_piece="where sc.term_id=".$term." AND sc.student_stream=".$stream."";
- } else {
-     $sql_piece="where sc.term_id=".$term." AND sc.student_class=".$classofstudent."";
- }
- 
-
-$student_position=\DB::select(\DB::raw("SELECT * FROM (SELECT st.id as student_id,
-          sc.student_average,
-          CASE 
-            WHEN @grade = COALESCE(sc.student_average, 0) THEN @rownum 
-            ELSE @rownum := @rownum + 1 
-          END AS student_position,
-          @grade := COALESCE(sc.student_average, 0) as avg
-         
-     FROM users st
-LEFT JOIN term_averages sc ON sc.student_id = st.id
-     JOIN (SELECT @rownum := 0, @grade := NULL) r  
-     ".$sql_piece."
- ORDER BY sc.student_average DESC ) as sub
-WHERE sub.student_id=".$student.""));
-    
 }
 
 }
@@ -321,9 +298,9 @@ WHERE sub.student_id=".$student.""));
                                  <li>
                                    Passed only <span class="text-danger">{{$student_term_data->number_of_passed_subjects}}</span>
                                    @if ($student_term_data->number_of_passed_subjects==1)
-                                   subject
+                                   subject instead of {{$number_of_subjects}} or more
                                        @else
-                                       subjects
+                                       subjects instead of {{$number_of_subjects}} or more
                                    @endif
                                   
                                 </li>
@@ -408,12 +385,10 @@ WHERE sub.student_id=".$student.""));
                             <center>
 
                                 @if (is_null($student_term_data->profile_photo_path))
-                                <img class="user-image img-fluid elevation-1 mx-auto d-block" width="200" height="200" src="https://ui-avatars.com/api/?name={{$student_term_data->name}}+&amp;color=7F9CF5&amp;background=EBF4FF" alt={{$student_term_data->name}} />
+                                <img class="user-image img-fluid elevation-1 mx-auto d-block" width="180" height="180" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1613141854/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300_urpxk5.jpg" alt={{$student_term_data->name}} />
                                 @else
-                                <img class="user-image  elevation-1 " width="220" height="220"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
+                                <img class="user-image  elevation-1  img-fluid  mx-auto d-block" width="220" height="220"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
                                 @endif
-                               
-                                
                                
                             </center>
 
@@ -443,31 +418,21 @@ WHERE sub.student_id=".$student.""));
                         
                   
                         foreach ($attendance as $attendance_key) {
-                       echo 'Days Absent in Term: '.$attendance_key->number_of_absent_days.' '.'Days out of 72 Days';
+                       echo 'Days Absent in Term: '.$attendance_key->number_of_absent_days.' '.'Days';
                      
                          }
-                  
-                                   
-                    
-                    
+              
                      ?>
-
-                
-                             
-                       
-      <br>
-                        Report regenerated: <span class="text-bold text-italic">{{date('d F Y H:i')}}</span>
+            
+                         <br>
+                        Report generated on: <span class="text-bold text-italic">{{date('d F Y H:i')}}</span>
                         <br>
-
 
                         </td>
 
 
                     </tr>
-                        
-                 
- 
-                       
+ ]
                     </tbody>
                 </table>
        <br>
@@ -508,7 +473,7 @@ grades.stream_id,
 
 ?>
 
-{{-- if template is shunifu x --}}
+{{-- if template is shunifu ca_exam --}}
 
 @if ($report_template->report_colums=="ca_exam")
     
@@ -962,22 +927,6 @@ if ($result) {
       echo "</tr>\n";
 
 
-//       foreach ($data as $row) {
-//     // Check the value of the mark and determine the CSS class
-//     if ($row['mark'] < 50) {
-//       $class = 'mark-red';
-//     } else {
-//       $class = 'mark-green';
-//     }
-
-//     // Generate the HTML for the table row
-//     echo '<tr>';
-//     echo '<td>' . htmlspecialchars($row['student_name']) . '</td>';
-//     echo '<td class="mark ' . $class . '">' . $row['mark'] . '%</td>';
-//     echo '...';
-//     echo '</tr>';
-//   }
-
 
       // printing table rows
       while($row = $res->fetch_assoc())
@@ -1022,342 +971,20 @@ $db->close();
     
 @endif
 
-@if ($report_template->report_colums=="year_assessements")
-@php
-$db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
-$result = $db->multi_query("SET @sql = NULL;
-    SELECT
-      GROUP_CONCAT(DISTINCT
-        CONCAT(
-          'MAX(IF(assessements.id = ''',
-      assessements.id,
-      ''', marks.mark, NULL)) AS ',
-      replace(assessement_name, ' ', '')
-        )
-      ) INTO @sql
-from assessements  
- INNER JOIN marks ON marks.assessement_id=assessements.id 
- INNER JOIN terms ON terms.id=assessements.term_id
- INNER JOIN academic_sessions ON academic_sessions.id = terms.academic_session
- WHERE  academic_sessions.active=1;
-SET @sql = CONCAT('SELECT 
-    subjects.subject_name as Subject, 
-    ', @sql, ',
-   
-    ROUND(student_subject_averages.ca_average) as CA,
-    ROUND(student_subject_averages.student_average) as Average,
-    
-    (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
-     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
-     
-     CONCAT(lastname,' ',name) AS Teacher
-    
-   
-     from marks 
-    INNER JOIN assessements ON assessements.id = marks.assessement_id
-    INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
-    INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
-    INNER JOIN users ON users.id = marks.teacher_id
-     INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
-                  INNER JOIN report_comments 
-                   WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id AND report_comments.user_type=1 and report_comments.section_id=".$section_id." AND student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to
-    GROUP BY
-    marks.student_id,student_subject_averages.student_id,
-    subjects.id');
 
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;");
-
-if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
-
-if ($result) {
-  do {
-  if ($res = $db->store_result()) {
-      echo "<table class='table table-sm table-bordered' width=100% border=0><tr>";
-
-      // printing table headers
-      for($i=0; $i<mysqli_num_fields($res); $i++)
-      {
-          $field = mysqli_fetch_field($res);
-          echo "<th class='background'>{$field->name}</th>";
-      }
-      echo "</tr>\n";
-
-      // printing table rows
-      while($row = $res->fetch_row())
-      {
-     //   dd($row[5]);
-        if ($row['5'] <= 40) {
-        $class = 'class=text-danger';
-     
-    } else {
-        $class = 'class=text-info';
-    }
-    echo "<tr>";
-          foreach($row as $cell) {
-        //   foreach ($scell as $key => $value) {
-        //     # code...
-        //   }
-            if ($cell === NULL) { $cell = '-'; }
-         
-            echo "<td $class>$cell</td>";
-          }
-          echo "</tr>\n";
-      }
-      $res->free();
-      echo "</table>";
-
-    }
-  } while ($db->more_results() && $db->next_result());
-}
-$db->close();
-
-@endphp
-    
-@endif
-
-
-
-{{-- Begining of Vulamasango template --}}
-
-@if ($report_template->report_colums=="vulamasango_template")
-@php
-
-$db=mysqli_connect(config("app.DB_HOST"),config("app.DB_USERNAME"),config("app.DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
-$result = $db->multi_query("SET @sql = NULL;
-SET SESSION group_concat_max_len = 1000000;
-    SELECT
-      GROUP_CONCAT(DISTINCT
-        CONCAT(
-          'MAX(IF(assessements.id = ''',
-      assessements.id,
-      ''', marks.mark, NULL)) AS ',
-      replace(assessement_name, ' ', '')
-        )
-      ) INTO @sql
-from c_a__exams  INNER JOIN assessements ON assessements.id=c_a__exams.assessement_id 
- INNER JOIN marks ON marks.assessement_id=c_a__exams.assessement_id WHERE c_a__exams.term_id=".$term.";
-SET @sql = CONCAT('SELECT 
-    subjects.subject_name as Subject, 
-    ', @sql, ',
-    
-    ROUND(student_subject_averages.ca_average) as CA,
-   
-
-    
-    (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
-     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
-  
-     concat(salutation,lastname) Teacher
-     from marks 
-    INNER JOIN assessements ON assessements.id = marks.assessement_id
-    INNER JOIN c_a__exams ON c_a__exams.assessement_id=assessements.id
-    INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
-    INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
-    INNER JOIN users ON users.id = marks.teacher_id
-     INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
-                  INNER JOIN report_comments 
-                   WHERE marks.student_id = ".$student." AND `c_a__exams`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id AND report_comments.user_type=1 and report_comments.section_id=".$section_id." AND student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to
-    GROUP BY
-    marks.student_id,student_subject_averages.student_id,
-    subjects.id');
-
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;");
-
-if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
-if ($result) {
-  do {
-  if ($res = $db->store_result()) {
-      echo "<table class='table table-sm table-bordered' width=100% border=0><tr>";
-
-        
-      // printing table headers
-      for($i=0; $i<mysqli_num_fields($res); $i++)
-      {
-          $field = mysqli_fetch_field($res);
-
-        
-          echo "<th class='background' id='assessement'>{$field->name}</th>";
-      }
-      echo "</tr>\n";
-
-
-//       foreach ($data as $row) {
-//     // Check the value of the mark and determine the CSS class
-//     if ($row['mark'] < 50) {
-//       $class = 'mark-red';
-//     } else {
-//       $class = 'mark-green';
-//     }
-
-//     // Generate the HTML for the table row
-//     echo '<tr>';
-//     echo '<td>' . htmlspecialchars($row['student_name']) . '</td>';
-//     echo '<td class="mark ' . $class . '">' . $row['mark'] . '%</td>';
-//     echo '...';
-//     echo '</tr>';
-//   }
-
-
-      // printing table rows
-      while($row = $res->fetch_assoc())
-      {
-
-       
-     
-   
-    echo "<tr>";
-          foreach($row as $cell=>$value) {
-        //   foreach ($cell as $key => $value) {
-        
-        //   }
-
-     
-  
-        if (htmlspecialchars($value) < $pass_rate) {
-        $class = 'class=text-danger';
-     
-    } else {
-        $class = 'class=text-black';
-    }
-        
-            if ($value === NULL) { $value = '-'; }
-
-            if(is_numeric($value)){$percentage="%";}else{$percentage=" ";}
-            
-         
-            echo "<td $class>$value"."$percentage</td>";
-          }
-          echo "</tr>\n";
-      }
-      $res->free();
-      echo "</table>";
-
-    }
-  } while ($db->more_results() && $db->next_result());
-}
-$db->close();
-
-@endphp
-    
-@endif
-
-@if ($report_template->report_colums=="year_assessements")
-@php
-$db=mysqli_connect(env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE")) or die ("Connection failed!");
-$result = $db->multi_query("SET @sql = NULL;
-    SELECT
-      GROUP_CONCAT(DISTINCT
-        CONCAT(
-          'MAX(IF(assessements.id = ''',
-      assessements.id,
-      ''', marks.mark, NULL)) AS ',
-      replace(assessement_name, ' ', '')
-        )
-      ) INTO @sql
-from assessements  
- INNER JOIN marks ON marks.assessement_id=assessements.id 
- INNER JOIN terms ON terms.id=assessements.term_id
- INNER JOIN academic_sessions ON academic_sessions.id = terms.academic_session
- WHERE  academic_sessions.active=1;
-SET @sql = CONCAT('SELECT 
-    subjects.subject_name as Subject, 
-    ', @sql, ',
-   
-    ROUND(student_subject_averages.ca_average) as CA,
-    ROUND(student_subject_averages.student_average) as Average,
-    
-    (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.comment END) AS Comment,
-     (CASE WHEN student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to THEN report_comments.symbol END) AS Symbol,
-     
-     CONCAT(lastname,' ',name) AS Teacher
-    
-   
-     from marks 
-    INNER JOIN assessements ON assessements.id = marks.assessement_id
-    INNER JOIN teaching_loads ON teaching_loads.id = marks.teaching_load_id
-    INNER JOIN subjects ON subjects.id = teaching_loads.subject_id
-    INNER JOIN users ON users.id = marks.teacher_id
-     INNER JOIN student_subject_averages ON student_subject_averages.student_id = marks.student_id
-                  INNER JOIN report_comments 
-                   WHERE marks.student_id = ".$student." AND `assessements`.`term_id` = ".$term." AND marks.active=1 AND student_subject_averages.teaching_load_id=marks.teaching_load_id AND report_comments.user_type=1 and report_comments.section_id=".$section_id." AND student_subject_averages.student_average BETWEEN report_comments.from AND report_comments.to
-    GROUP BY
-    marks.student_id,student_subject_averages.student_id,
-    subjects.id');
-
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;");
-
-if ($err=mysqli_error($db)) { echo $err."<br><hr>"; }
-
-if ($result) {
-  do {
-  if ($res = $db->store_result()) {
-      echo "<table class='table table-sm table-bordered' width=100% border=0><tr>";
-
-      // printing table headers
-      for($i=0; $i<mysqli_num_fields($res); $i++)
-      {
-          $field = mysqli_fetch_field($res);
-          echo "<th class='background'>{$field->name}</th>";
-      }
-      echo "</tr>\n";
-
-      // printing table rows
-      while($row = $res->fetch_row())
-      {
-     //   dd($row[5]);
-        if ($row['5'] <= 40) {
-        $class = 'class=text-danger';
-     
-    } else {
-        $class = 'class=text-info';
-    }
-    echo "<tr>";
-          foreach($row as $cell) {
-        //   foreach ($scell as $key => $value) {
-        //     # code...
-        //   }
-            if ($cell === NULL) { $cell = '-'; }
-         
-            echo "<td $class>$cell</td>";
-          }
-          echo "</tr>\n";
-      }
-      $res->free();
-      echo "</table>";
-
-    }
-  } while ($db->more_results() && $db->next_result());
-}
-$db->close();
-
-@endphp
-    
-@endif
-{{-- endofif --}}
-
+{{-- end of templates --}}
 
         <hr>          
 
                  <?php
 
 foreach ($term_average as $student_term_data) {
-
-    ?>
-
-
-       
+    ?> 
 <table class="table table-sm table-bordered">
     <thead >
         <tr class="hope">
             <th class="background">Class Teacher's Comment</th>
-            <th class="background">Head Teacher's Comment</th>    
-           
+            <th class="background">Head Teacher's Comment</th>          
         </tr>
     </thead>
 
@@ -1365,10 +992,8 @@ foreach ($term_average as $student_term_data) {
         <tr>
             <td>
                 @foreach ($class_teacher_comments as $teacher_comment)
-                   
                 @if (in_array(number_format($student_term_data->student_average), range($teacher_comment->from,$teacher_comment->to,  0.01)) )
                {{$teacher_comment->comment}}
-                    
                 @endif
                 @endforeach
             </td>
@@ -1377,10 +1002,10 @@ foreach ($term_average as $student_term_data) {
                 @foreach ($headteacher_comments  as $headteacher_comment)
                 @if (in_array(number_format($student_term_data->student_average), range($headteacher_comment->from,$headteacher_comment->to, 0.01) ))
                 {{$headteacher_comment->comment}}
-                    
                 @endif
                 @endforeach   
             </td>
+            
         </tr>
     </tbody>
 
@@ -1423,41 +1048,32 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
 
                        </div>
 
-                       <div class="col">
-                        <div id="signaturetitle">
-                           Headteacher's Signature:
-                          </div>
-                          <div class="text-center">
-                          @if ($variable->principal_signature==1)
-                         
-                            <img class="img-fluid " width="100" height="100" src="{{$school_is->base64}} " alt="">
-                               @else       
-                               <img class="img-fluid " width="240" height="240" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">            
-                          @endif
-                         
-                        </div>
-
-                       
+                    <div class="col">
+                    <div id="signaturetitle">
+                    Headteacher's Signature:
+                    </div>
+                    <div class="text-center">
+                    @if ($variable->principal_signature==1)
+                    <img class="img-fluid " width="100" height="100" src="{{$school_is->base64}} " alt="">
+                    @else       
+                    <img class="img-fluid " width="240" height="240" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">            
+                    @endif
+                    </div>               
                     </div>
 
-                  
-
-                       
-
-                       <div class="col">
-                        <div id="signaturetitle">
-School Stamp
-                        </div>
-                        <div class="text-center">
-                            @if ($variable->school_stamp==1)
-                            <img class="img-fluid " width="140" height="140" src="{{$school_is->school_stamp}} " alt="">  
-                            @else
-                            <img class="img-fluid " width="140" height="140" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">
-                            @endif
-                           
-                          </div>
-
-                       </div>
+ 
+                    <div class="col">
+                    <div id="signaturetitle">
+                    School Stamp
+                    </div>
+                    <div class="text-center">
+                    @if ($variable->school_stamp==1)
+                    <img class="img-fluid " width="140" height="140" src="{{$school_is->school_stamp}} " alt="">  
+                    @else
+                    <img class="img-fluid " width="140" height="140" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1667299468/image_sig_kmjh1n.jpg" alt="">
+                    @endif
+                    </div>
+                    </div>
 
                      
                    </div>
@@ -1466,7 +1082,8 @@ School Stamp
                     <thead>
                         <tr class="hope">
                             <th class="background">Passing Criteria</th>
-                            <th class="background">Subject Average Calculation</th>    
+                            <th class="background">Subject Average Calculation</th>  
+                            <th class="background">Assessement Categorization</th>     
                             <th class="background">Term Average Calculation</th>   
                         
                 
@@ -1476,10 +1093,10 @@ School Stamp
                       <tr>
  
                         <td>
-                             In order for a student to pass, she/he must at least get.
+                            For a student to pass, she/he must at least get.
                             <ul>
                               
-                              <li>A minimum average of at least <span class="text-bold">{{$pass_rate}}%</span></li> 
+                              <li>A minimum average of <span class="text-bold">{{$pass_rate}}% or more</span></li> 
                               {{-- 2. language and number of subjects --}}
                               <li>An average of <span class="text-bold">{{$pass_rate}}% or more </span> in at least {{$number_of_subjects}} subjects 
                                   
@@ -1495,6 +1112,14 @@ School Stamp
                                 <li>Continuous Assessement: <strong>{{$ca_weight*100}}%</strong> </li>
                                 <li>Examination: <strong>{{$exam_weight*100}}%</strong></li>
                             </ul>
+                        
+                        </td>
+
+                        <td>  Assessement Categorization is ;
+                            <br>
+                               CA Assessements: <span class="text-bold"> <small> {{implode(',',$ca_assessements)}}</small></span><br>
+                               Exam Assessements: <span class="text-bold"><small>{{implode(',',$exam_assessements)}}</small></span> 
+                           
                         
                         </td>
                 
@@ -1526,38 +1151,9 @@ School Stamp
                 </table> 
                     
 
-                   <center><small>&copy; Report generated by the <strong>Shunifu Platform</strong>-Developed by <strong>Innovazania</strong> based at the <strong>Royal Science & Technology Park</strong>  7689 0726 | 2517 9400</small></center>
+                   <center><small>&copy; Report generated by the <strong>Shunifu Education Management Platform</strong>-Developed through the incubatory support of the <strong>Royal Science & Technology Park (RSTP)</strong>  7689 0726 | 2517 9400</small></center>
                   
-                   {{-- <center><span class="text-center text-bold">SHUNIFU is supported by:</span> 
-                    <div class="row align-items-center" style="padding: 10px 0px 0px 40px;">
-
-                        <div class="col">
-                           
-                                <img width="70" height="50" src="https://i0.wp.com/swaziaidsprogram.org/wp-content/uploads/2016/03/COAT-OF-ARMS-lite.jpg" alt="">  
-                            
-                        </div>
-                        <div class="col">
-                           
-                                <img class="img-fluid " width="30" height="30" src="https://rstp.org.sz/wp-content/uploads/2021/05/logo.png" alt="">  
-                            
-                        </div>
-
-                        <div class="col">
-                           
-                                <img class="img-fluid " width="50" height="50" src="https://scontent.fmts2-2.fna.fbcdn.net/v/t39.30808-6/271723633_230907602550991_1404130140181354290_n.jpg?_nc_cat=102&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=cnm8aDqhXu4AX9raYhM&_nc_ht=scontent.fmts2-2.fna&oh=00_AfCysYK7VbWwo8Nd0na6Hi9oVQ4XR5X7LQ47__TdVeErJQ&oe=647439B3" alt="">  
-                           
-                        </div>
-
-                        <div class="col">
-                         
-                                <img class="img-fluid " width="60" height="60" src="https://scontent.fmts2-1.fna.fbcdn.net/v/t39.30808-6/326057008_893819222037625_8604329256953122806_n.jpg?_nc_cat=111&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=MMtAmtKF_ZAAX_dgjsx&_nc_ht=scontent.fmts2-1.fna&oh=00_AfB70tQ2_fpgKd426OwnqpeDHcyWySgJ0pBl4Xqf7xvGJg&oe=64748EAE" alt="">  
-                            
-                        </div>
-
-                    </div>
-                    
-                </center> --}}
-               
+                
     
 
             </div>

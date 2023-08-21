@@ -285,6 +285,9 @@ class ParentController extends Controller
     ->where('users.active', 1)
     ->get();
 
+
+   // dd($children);
+
         $terms=Term::all();
 
 
@@ -319,7 +322,7 @@ class ParentController extends Controller
         $variables=ReportVariable::all();
 
 
-        return view('users.parents.performance.index',compact('children', 'terms', 'templates', 'variables'));
+        return view('users.parents.performance.index',compact('children', 'terms', 'templates', 'variables', 'classes'));
 
     }
 
