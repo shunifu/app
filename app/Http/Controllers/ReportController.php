@@ -557,7 +557,7 @@ class ReportController extends Controller
             ->where('academic_sessions.active',1)
             ->get()->pluck('student_id');
 
-            dd($students);
+         //   dd($students);
         }
         if($p_key=="class_based"){
             $students = DB::table('grades_students')

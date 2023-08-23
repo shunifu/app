@@ -156,26 +156,26 @@ return [
 
 
 
-'DB_CONNECTION' => 'mysql',
-'DB_HOST' => "SG-grape-laugh-9477-7606-mysql-master.servers.mongodirector.com",
-'DB_PORT' => '3306',
-'DB_DATABASE' => env('DB_NAME'),
-'DB_USERNAME' => 'sgroot',
-'DB_PASSWORD'=>'Wo835nKf@TS4aE04',
-
-'APP_DEBUG' => 'false',
-'APP_ENV' => 'production',
-
-
 // 'DB_CONNECTION' => 'mysql',
-// 'DB_HOST' => "SG-mud-sleep-7178-7754-mysql-master.servers.mongodirector.com",
+// 'DB_HOST' => "SG-grape-laugh-9477-7606-mysql-master.servers.mongodirector.com",
 // 'DB_PORT' => '3306',
 // 'DB_DATABASE' => env('DB_NAME'),
 // 'DB_USERNAME' => 'sgroot',
-// 'DB_PASSWORD'=>'eXk7@XmEYb9r9KZ9',
+// 'DB_PASSWORD'=>'Wo835nKf@TS4aE04',
 
 // 'APP_DEBUG' => 'false',
 // 'APP_ENV' => 'production',
+
+
+'DB_CONNECTION' => 'mysql',
+'DB_HOST' => "SG-mud-sleep-7178-7754-mysql-master.servers.mongodirector.com",
+'DB_PORT' => '3306',
+'DB_DATABASE' => env('DB_NAME'),
+'DB_USERNAME' => 'sgroot',
+'DB_PASSWORD'=>'eXk7@XmEYb9r9KZ9',
+
+'APP_DEBUG' => 'false',
+'APP_ENV' => 'production',
 
 
 
