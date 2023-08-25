@@ -78,7 +78,7 @@
                 </small>
                 </p>
 
-                <form action="{{route('password.change')}}" method="POST">
+                {{-- <form action="{{route('password.change')}}" method="POST">
                     @csrf
                 <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
@@ -107,9 +107,9 @@
                   <li class="list-group-item">
                     <button type="submit" class="btn btn-primary btn-block">Update Password</button>
                     {{-- <a href="#" class="btn btn-primary btn-block"><b>Update Password</b></a> --}}
-                  </li>
+                  {{-- </li>
                 </ul>
-                </form>
+                </form>  --}}
         </div>
     </div>
         </div>
