@@ -222,7 +222,7 @@ if (empty(\App\Models\TeachingLoad::where('teacher_id', Auth::user()->id))){
 ?>
 <script>
   $(document).ready(function () {
-    $('#notice').modal('show');
+ //   $('#notice').modal('show');
   });
   
 
@@ -233,7 +233,7 @@ if (empty(\App\Models\TeachingLoad::where('teacher_id', Auth::user()->id))){
 ?>
 <script>
   $(document).ready(function () {
-    $('#notice').modal('show');
+ //   $('#notice').modal('show');
   });
   
 
