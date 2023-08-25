@@ -64,7 +64,7 @@
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
          
-          <h3 class="profile-username text-center">Password Center</h3>
+          {{-- <h3 class="profile-username text-center">Password Center</h3>
 
                 <p class="text-muted text-center">Manage Password<br>
                 <small>Your new password must have;
@@ -76,7 +76,7 @@
                         <li>Must include special characters</li>
                     </ul>
                 </small>
-                </p>
+                </p> --}}
 
                 {{-- <form action="{{route('password.change')}}" method="POST">
                     @csrf
