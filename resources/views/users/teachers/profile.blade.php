@@ -64,7 +64,7 @@
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
          
-          {{-- <h3 class="profile-username text-center">Password Center</h3>
+          <h3 class="profile-username text-center">Password Center</h3>
 
                 <p class="text-muted text-center">Manage Password<br>
                 <small>Your new password must have;
@@ -76,9 +76,9 @@
                         <li>Must include special characters</li>
                     </ul>
                 </small>
-                </p> --}}
+                </p> 
 
-                {{-- <form action="{{route('password.change')}}" method="POST">
+            <form action="{{route('password.change')}}" method="POST">
                     @csrf
                 <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
@@ -106,10 +106,10 @@
                 
                   <li class="list-group-item">
                     <button type="submit" class="btn btn-primary btn-block">Update Password</button>
-                    {{-- <a href="#" class="btn btn-primary btn-block"><b>Update Password</b></a> --}}
-                  {{-- </li>
+                 
+                 </li>
                 </ul>
-                </form>  --}}
+                </form> 
         </div>
     </div>
         </div>
