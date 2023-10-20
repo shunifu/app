@@ -180,7 +180,7 @@ return [
 'DB_PORT' => '3306',
 'DB_DATABASE' => env('DB_NAME'),
 'DB_USERNAME' => 'sgroot',
-'DB_PASSWORD'=>'P2@2t7tCMPYuRcDf',
+'DB_PASSWORD'=>'VcqNno+iRTeqLc8c',
 
 // 'APP_DEBUG' => 'false',
 // 'APP_ENV' => 'production',
