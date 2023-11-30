@@ -462,6 +462,7 @@ class ReportController extends Controller
         $number_of_decimal_places=$criteria->number_of_decimal_places;// number of decimal places
         $tie_type=$criteria->tie_type;// number of decimal places
         $position_type=$criteria->position_type;
+        $subject_position_type=$criteria->subject_position_type;
 
         $school_is=School::first();
       
@@ -968,7 +969,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
 
 
     
-return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight', 'calculation_type', 'non_value_subject_name', 'report_template', 'section_id','variables','get_academic_session', 'ca_assessements','exam_assessements'));   
+return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight', 'calculation_type', 'non_value_subject_name', 'report_template', 'section_id','variables','get_academic_session', 'ca_assessements','exam_assessements', 'subject_position_type'));   
  }
 
 

@@ -30,7 +30,23 @@ class AssessementSettingController extends Controller
         Schema::table('assessement_weights', function (Blueprint $table)
         {
            
-            $table->string('stream_id');
+            $table->integer('stream_id');
+        });
+    }
+
+    if (!Schema::hasColumn('assessement_weights', 'mock_percentage')) //check the column
+    {
+        Schema::table('assessement_weights', function (Blueprint $table)
+        {
+            $table->integer('mock_percentage');
+        });
+    }
+
+    if (!Schema::hasColumn('pass_rates', 'subject_position_type')) //check the column
+    {
+        Schema::table('pass_rates', function (Blueprint $table)
+        {
+            $table->string('subject_position_type');
         });
     }
 
@@ -103,6 +119,7 @@ class AssessementSettingController extends Controller
        $assessement_terms=DB::table('terms')
        ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
        ->select('terms.id as term_id','terms.term_name', 'academic_sessions.academic_session')
+       ->where('academic_sessions.active', 1)
        ->get();
 
     return view('academic-admin.settings-management.assessements.index', compact('streams','assessements_','assessement_types', 'assessement_terms', 'assessements', 'ca_exam_assignments',  'sections', 'pass_rates', 'ca_exam_assignments_', 'assessement_weight_'));

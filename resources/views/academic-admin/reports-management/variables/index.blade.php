@@ -119,6 +119,71 @@
                 @enderror
             </div>
 
+            <div class="form-group">
+              <x-jet-label>Subject Comment Type</x-jet-label>
+             <select class="form-control" name="subject_comment_type">
+              <option value="">Select Option</option>
+              <option value="1">Automated</option>
+              <option value="0">Custom</option>
+          
+             </select>
+              @error('subject_comment_type')
+              <span class="text-danger">{{$message}}</span>  
+              @enderror
+          </div>
+
+          <div class="form-group">
+            <x-jet-label>Class Teacher Comment Type</x-jet-label>
+           <select class="form-control" name="class_teacher_comment_type">
+            <option value="">Select Option</option>
+            <option value="1">Automated</option>
+            <option value="0">Custom</option>
+        
+           </select>
+            @error('class_teacher_comment_type')
+            <span class="text-danger">{{$message}}</span>  
+            @enderror
+        </div>
+
+        <div class="form-group">
+          <x-jet-label>Home Room Teacher Comment Type</x-jet-label>
+         <select class="form-control" name="homeroom_teacher_comment_type">
+          <option value="">Select Option</option>
+          <option value="1">Automated</option>
+          <option value="0">Custom</option>
+      
+         </select>
+          @error('homeroom_teacher_comment_type')
+          <span class="text-danger">{{$message}}</span>  
+          @enderror
+      </div>
+
+      <div class="form-group">
+        <x-jet-label>Class Co-ordinator Teacher Comment Type</x-jet-label>
+       <select class="form-control" name="coordinator_teacher_comment_type">
+        <option value="">Select Option</option>
+        <option value="1">Automated</option>
+        <option value="0">Custom</option>
+    
+       </select>
+        @error('coordinator_teacher_comment_type')
+        <span class="text-danger">{{$message}}</span>  
+        @enderror
+    </div>
+
+    <div class="form-group">
+      <x-jet-label>Head Teacher Comment Type</x-jet-label>
+     <select class="form-control" name="headteacher_teacher_comment_type">
+      <option value="">Select Option</option>
+      <option value="1">Automated</option>
+      <option value="0">Custom</option>
+  
+     </select>
+      @error('headteacher_teacher_comment_type')
+      <span class="text-danger">{{$message}}</span>  
+      @enderror
+  </div>
+
               <div class="form-group">
                   <x-jet-label>Data Visualization</x-jet-label>
                   <select name="data_visualization" id="data_visualization" class="form-control">

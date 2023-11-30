@@ -44,7 +44,8 @@ class AssessementWeightController extends Controller
                 'stream'=>'required',
                 'assessement_term'=>'required',
                 'ca_percentage'=>'required|numeric|max:100', 
-                'exam_percentage'=>'required|numeric|max:100'
+                'exam_percentage'=>'required|numeric|max:100',
+                'mock_percentage'=>'required|numeric|max:100'
             ]);
 
             $termExists=AssessementWeight::where('term_id',$request->assessement_term)->where('stream_id', $request->stream)->exists();
@@ -54,7 +55,7 @@ class AssessementWeightController extends Controller
                 return redirect()->back();
             }
 
-            if((($request->ca_percentage)+($request->exam_percentage))==100){
+            if((($request->ca_percentage)+($request->exam_percentage)+($request->mock_percentage))==100){
 
                
 
@@ -62,7 +63,8 @@ class AssessementWeightController extends Controller
                 'stream_id'=>$request->stream,
                 'term_id'=>$request->assessement_term,
                 'ca_percentage'=>$request->ca_percentage,
-                'exam_percentage'=>$request->exam_percentage
+                'exam_percentage'=>$request->exam_percentage,
+                'mock_percentage'=>$request->mock_percentage
             ]);
     
             flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have assigned assessements', 'Assign Assessements');
@@ -129,6 +131,7 @@ return view('academic-admin.settings-management.assessements.assessement-weight.
             AssessementWeight::where('id',$request->id)->update([
                 'ca_percentage'=>$request->ca_weight,
                 'exam_percentage'=>$request->exam_weight,
+                'mock_percentage'=>$request->mock_weight,
             ]);
             flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have updated Assessement Weight', 'Update Assessement Weight');
             return redirect('settings/assessement#pills-weight');

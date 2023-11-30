@@ -1366,7 +1366,7 @@ $admin=Auth::user()->hasRole('admin_teacher');
             return view('analytics.term-analytics.index-class', compact('grades', 'sections', 'streams','subjects', 'terms'));
             }else if($teacher){
                 return view('analytics.class_index', compact('grades', 'sections', 'streams','subjects'));
-            }
+            
         }
 
 

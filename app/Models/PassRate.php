@@ -20,6 +20,7 @@ class PassRate extends Model
         'tie_type',
         'term_average_type',
         'number_of_decimal_places',
+        'subject_position_type',
 
 
     ];

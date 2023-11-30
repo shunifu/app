@@ -49,13 +49,11 @@
         <select class="form-control" name="report_columns" id="report_columns">
           <option value="{{$template->report_colums}}">{{$template->report_colums}}</option>
           <option value="">---------------------------------------------</option>
-          <option value="ca_only">CA Only</option>
-          <option value="exam_only">Exam Only</option>
-          <option value="ca_exam"> CA & Exam</option>
-          <option value="ieb">IEB Template</option>
-          <option value="term_assessements">Term Assessements</option>
-          <option value="vulamasango_template">Vulamasango Template</option>
-          <option value="year_assessements">Year Assessements</option>
+          <option value="ca_only">Show CA Column Only</option>
+          <option value="exam_only">Show Examination Column Only</option>
+          <option value="ca_exam"> Show Exam & Assessement Columns</option>
+          <option value="term_assessement_categorization">Show Term Assessment Categorization</option>
+          <option value="custom">Custom Template</option>
         </select>
       
           @error('report_columns')

@@ -36,48 +36,81 @@
             
             @csrf
           <div class="form-group">
-              <x-jet-label>Select Template</x-jet-label>
+              <x-jet-label>Enter Template Name</x-jet-label>
               <input type="text" class="form-control" name="template_name" placeholder="Enter Template Name"/>
               @error('template_name')
               <span class="text-danger">{{$message}}</span>  
               @enderror
           </div>
 
-          {{-- <div class="form-group">
-            <x-jet-label>Select Section</x-jet-label>
-     
-          <select class="form-control" name="class_type" id="class_type">
-            <option value="">Select Class Type</option>
-            <option value="internal_classes">Internal Classes</option>
-            <option value="external_classes">External Classes</option>
-          </select>
-        
-            @error('class_type')
-            <span class="text-danger">{{$message}}</span>  
-            @enderror
-        </div> --}}
+          
         <div class="form-group">
-          <x-jet-label>Report Columns</x-jet-label>
+          <x-jet-label>Choose Report Table Columns</x-jet-label>
         <select class="form-control" name="report_columns" id="report_columns">
-          <option value="">Columns To Show</option>
-          <option value="ca_only">CA Only</option>
-          <option value="exam_only">Exam Only</option>
-          <option value="ca_exam"> CA & Exam</option>
-          <option value="term_assessements">Term Assessements</option>
-          <option value="vulamasango_template">Term /w Weights Template</option>
-          <option value="scoresheet">Symbol Based Scoresheet</option>
+          <option value="">Choose Columns to Show</option>
+          <option value="ca_only">Show CA Column Only</option>
+          <option value="exam_only">Show Examination Column Only</option>
+          <option value="ca_exam"> Show Exam & CA Columns</option>
+          <option value="ca_exam_p"> Show Exam with Position & CA with Position </option>
+          <option value="term_assessement_categorization">Show Term Assessment Categorization</option>
+          <option value="custom">Custom Template</option>
         </select>
-      
           @error('report_columns')
           <span class="text-danger">{{$message}}</span>  
           @enderror
       </div>
+
+      <div class="form-group">
+        <x-jet-label>Subject Positioning</x-jet-label>
+        <select class="form-control" name="subject_positioning" id="subject_positioning">
+            <option value="">Select Subject Positioning</option>
+            <option value="class_based">Class Based</option>
+            <option value="stream_based">Stream Based</option>
+            <option value="teacher_load_based">Teaching Load Based</option>
+        </select>
+        @error('report_branding')
+        <span class="text-danger">{{$message}}</span>  
+        @enderror
+        </div>
+
+ <div class="form-group">
+  <x-jet-label>Comments To Show</x-jet-label>
+  <select class="form-control" name="comment_category" id="comment_category">
+      <option value="">Select Comment Category</option>
+      <option value="1">Subject Comments</option>
+      <option value="2">Class Teacher Comment</option>
+      <option value="5">Home Room Teacher Comment</option>
+      <option value="6">Class Coodinator Comment</option>
+      <option value="3">Head Teacher Comment</option>
+      <option value="4">Effort Grade</option>
+  </select>
+  @error('comment_category')
+  <span class="text-danger">{{$message}}</span>  
+  @enderror
+  </div>
+
+
+  <div class="form-group">
+    <x-jet-label>School Branding</x-jet-label>
+    <select class="form-control" name="school_branding" id="school_branding">
+        <option value="">Select School Brand Option</option>
+        <option value="1">Enable</option>
+        <option value="0">Disable</option>
+    </select>
+    @error('report_branding')
+    <span class="text-danger">{{$message}}</span>  
+    @enderror
+    </div>
+
+  
+
+
          
           </div>
           <!-- /.card-body -->
   
           <div class="card-footer">
-            <x-jet-button>Add Template </x-jet-button>
+            <x-jet-button>Add Report Template </x-jet-button>
           </div>
        
       </div>

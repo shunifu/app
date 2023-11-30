@@ -210,25 +210,36 @@ class SchoolController extends Controller
 		if($request->hasFile('school_stamp')){
 				
 			$school_stamp_result = $request->file('school_stamp')->storeOnCloudinaryAs('shunifu', 'school_stamp'.$school_code);
-			$school_stamp=$school_stamp_result->getSecurePath();
+			$school_stamp_file=$school_stamp_result->getSecurePath();
 		}else{
 			$school_stamp_file=$school->school_stamp;
 		}
 		
-			// "_token" => "PNWVIGP8P4tncnCqK5VrT6sDxme9uGR4CEm876me"
-		// "school_name" => "Demo School"
-		// "school_slogan" => "Innovative School"
-		// "school_code" => "555"
-		// "school_type" => "high-school"
-		// "school_number" => "23441012"
-		// "school_email" => "info@shunifu.app"
-		// "school_logo" => null
-		// "school_letter_head" => null
-		// "background_image" => null
-		// "id" => "1"
+
+		if($request->hasFile('principal_signature')){
+				
+			$principal_signature_result = $request->file('principal_signature')->storeOnCloudinaryAs('shunifu', 'principal_signature'.$school_code);
+			$principal_signature_file=$principal_signature_result->getSecurePath();
+		}else{
+			$principal_signature_file=$school->base64;
+		}
+	
 
 
-	$update=School::where('id',$id)->update(['school_code'=>$request->school_code, 'school_name'=>$request->school_name,'school_slogan'=>$request->school_slogan, 'school_type'=>$request->school_type,'school_email'=>$request->school_email,'school_telephone'=>$request->school_number,'school_telephone'=>$request->school_number,	'school_logo'=>$school_logo_file,'school_letter_head'=>$letterhead_file,'school_background_image'=>$background_file]);
+		$update=School::where('id',$id)->update([
+		'school_code'=>$request->school_code, 
+		'school_name'=>$request->school_name,
+		'school_slogan'=>$request->school_slogan,
+		'school_type'=>$request->school_type,
+		'school_email'=>$request->school_email,
+		'school_telephone'=>$request->school_number,
+		'school_logo'=>$school_logo_file,
+		'school_letter_head'=>$letterhead_file,
+		'school_background_image'=>$background_file,
+		'base64'=>$principal_signature_file,
+		'school_stamp'=>$school_stamp_file,
+	
+	]);
 
 	
 

@@ -189,9 +189,7 @@
   <div class="py-1">
     <h4 class="text-bold text-muted">Guidelines for Assessement Categorization Section</h4> 
     This section is where you categorize or group assessments into either Continuous Assessement (CA) or Examination <span class="text-bold">for a specific term.</span> <br>
-    To group an assessement into a category, You select a term and after selecting the term,  you then select the assessement, after selecting the assessement you then select the category you want to place that  assessement under, then click on Assign Categorization. <br>
-    
-    The categorization will help Shunifu know which assessements are to be considered CA and which ones are to be considered Exam. 
+    In order to categorize an assessment, you must first choose a term. Once you have selected the term, you can then choose the assessment and the category in which you want to place it. Finally, click on "Assign Categorization" to complete the process. This categorization will assist Shunifu in distinguishing between assessments that are considered CA and those that are considered Exam.
    
   </div>
   <hr>
@@ -256,7 +254,7 @@
                           <option value="">Select Assignment</option>
                           <option value="CA">Continuous Assessement</option>
                           <option value="Examination">Examination</option>
-                          <option value="Informal">Informal Assessement</option>
+                          <option value="Mock">Mock Examination</option>
                           </select>
                           @error('assign_as')
                           <span class="text-danger">{{$message}}</span>  
@@ -974,8 +972,7 @@
 <div class="tab-pane fade" id="pills-weight" role="tabpanel" aria-labelledby="pills-weight-tab">
   <div class="py-1">
     <h4 class="text-bold text-muted">Guidelines for the Assessement Weight Section</h4> 
-    This section is where you add CA or Exam weights. This is where you tell Shunifu how much the Continuous Assessement or Examination will weight. For an example you can tell Shunifu that in Term 2 , Form 1 the  Continuous Assesement will weight 40% and Examination will weight 60%. <br>
-    Please make sure that the both weights when added together equal <span class="text-bold">100%</span>
+    In this section, you have the option to specify the weights for CA or Exam. Here, you can inform Shunifu about the percentage of weightage assigned to Continuous Assessment and Examination. For instance, you can indicate that in Term 2, Form 1, the Continuous Assessment will carry a weight of 40% and the Examination will carry a weight of 60%. It is important to ensure that the total weightage of both components adds up to 100%.
 <p><br>
   <span class="text-bold text-muted">Steps to adding weights.</span>
     <ol>
@@ -1041,6 +1038,21 @@
                           <span class="text-danger">{{$message}}</span>  
                           @enderror
                           </div>
+
+
+                          <div class="form-group">
+                   <x-jet-label> Mock Examination Percentage</x-jet-label><small class="text-bold">optional</small>
+                            <div class="input-group mb-2">
+                                <input type="text" name="mock_percentage" class="form-control" aria-label="">
+                                <div class="input-group-append">
+                                  <span class="input-group-text">%</span>
+                                </div>
+                              </div>
+                            @error('mock_percentage')
+                            <span class="text-danger">{{$message}}</span>  
+                            @enderror
+                            </div>
+                  
 
                           <div class="form-group">
                               <x-jet-label> Examination Percentage</x-jet-label>

@@ -1187,19 +1187,77 @@
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
+
+            
+            
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ route('check.loads') }}" class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
-                  <p>Loads Checker</p>
+            
+
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-chevron-circle-right"></i>
+                  <p>
+                    Marks Checker
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
                 </a>
+                <ul class="nav nav-treeview">
+               
+                  <li class="nav-item">
+                    <a href="/report/term-based/" class="nav-link">
+                      <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Stream Based</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/report/term-based/class" class="nav-link">
+                      <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Class Based</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="/report/term-based/class" class="nav-link">
+                      <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Teacher Based</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="/report/term-based/class" class="nav-link">
+                      <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Subject Based</p>
+                    </a>
+                  </li>
+                
+                </ul>
               </li>
 
-              <li class="nav-item">
-              <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
-                  <p>Ratio Checker</p>
+
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-chevron-circle-right"></i>
+                  <p>
+                    Ratio Checker
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
                 </a>
+                <ul class="nav nav-treeview">
+               
+                  <li class="nav-item">
+                    <a href="/report/term-based/" class="nav-link">
+                      <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Stream Based</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/report/term-based/class" class="nav-link">
+                      <i class="nav-icon fas fa-chevron-circle-right"></i>
+                      <p>Class Based</p>
+                    </a>
+                  </li>
+                
+                </ul>
               </li>
 
               <li class="nav-item">

@@ -53,9 +53,10 @@
                   <select class="form-control" name="comment_category" id="comment_category">
                       <option value="">Select Comment Category</option>
                       <option value="1">Subject Comments</option>
-                      <option value="2">Class-Teacher Comment</option>
+                      <option value="2">Class Teacher Comment</option>
                       <option value="5">Home Room Teacher Comment</option>
-                      <option value="3">Head-Teacher Comment</option>
+                      <option value="6">Class Coodinator Comment</option>
+                      <option value="3">Head Teacher Comment</option>
                       <option value="4">Effort Grade</option>
                   </select>
                   @error('comment_category')

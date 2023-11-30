@@ -51,6 +51,7 @@ class PassRateController extends Controller
                 'average_calculation'=>'required',
                 'position_type'=>'required',
                 'subject_average_calculation'=>'required',
+                'subject_position_type'=>'required',
             ]);
 
             $sectionExists=PassRate::where('section_id',$request->section)->exists();
@@ -73,6 +74,7 @@ class PassRateController extends Controller
                 'term_average_type'=>$request->term_average_type,
                 'tie_type'=>$request->tie_type,
                 'number_of_decimal_places'=>$request->number_of_decimal_places,
+                'subject_position_type'=>$request->subject_position_type,
             ]);
     
             flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have added pass rates', 'Add Pass Rates');
@@ -158,6 +160,7 @@ class PassRateController extends Controller
                 'tie_type'=>$request->tie_type,
                 'term_average_type'=>$request->term_average_type,
                 'number_of_decimal_places'=>$number_of_decimal_places,
+                'subject_position_type'=>$request->subject_position_type,
             ]);
 
         flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have changed pass rates', 'Edit Pass Rate');
