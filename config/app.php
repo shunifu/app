@@ -175,12 +175,12 @@ return [
 // 'DB_PASSWORD'=>'eXk7@XmEYb9r9KZ9',
 
 
-// 'DB_CONNECTION' => 'mysql',
-// 'DB_HOST' => "SG-last-scalegrid-7885-mysql-master.servers.mongodirector.com",
-// 'DB_PORT' => '3306',
-// 'DB_DATABASE' => env('DB_NAME'),
-// 'DB_USERNAME' => 'sgroot',
-// 'DB_PASSWORD'=>'VcqNno+iRTeqLc8c',
+'DB_CONNECTION' => 'mysql',
+'DB_HOST' => "SG-last-scalegrid-7885-mysql-master.servers.mongodirector.com",
+'DB_PORT' => '3306',
+'DB_DATABASE' => env('DB_NAME'),
+'DB_USERNAME' => 'sgroot',
+'DB_PASSWORD'=>'VcqNno+iRTeqLc8c',
 
 // 'APP_DEBUG' => 'false',
 // 'APP_ENV' => 'production',
@@ -191,12 +191,12 @@ return [
 //     // The environment is local
 // }
 
-'DB_CONNECTION' => 'mysql',
-'DB_HOST' => "127.0.0.1",
-'DB_PORT' => '3306',
-'DB_DATABASE' => env('DB_NAME'),
-'DB_USERNAME' => 'root',
-'DB_PASSWORD'=>'',
+// 'DB_CONNECTION' => 'mysql',
+// 'DB_HOST' => "127.0.0.1",
+// 'DB_PORT' => '3306',
+// 'DB_DATABASE' => env('DB_NAME'),
+// 'DB_USERNAME' => 'root',
+// 'DB_PASSWORD'=>'',
 
 
 // 'DB_CONNECTION' => 'shunifuservices',
