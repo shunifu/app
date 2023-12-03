@@ -48,19 +48,21 @@
           <x-jet-label>Choose Report Table Columns</x-jet-label>
         <select class="form-control" name="report_columns" id="report_columns">
           <option value="">Choose Columns to Show</option>
+         
+          <option value="ca_exam"> Show Exam & CA Columns</option>
+          <option value="term_assessements">Show Term Assessment Categorization</option>
           <option value="ca_only">Show CA Column Only</option>
           <option value="exam_only">Show Examination Column Only</option>
-          <option value="ca_exam"> Show Exam & CA Columns</option>
-          <option value="ca_exam_p"> Show Exam with Position & CA with Position </option>
-          <option value="term_assessement_categorization">Show Term Assessment Categorization</option>
-          <option value="custom">Custom Template</option>
+          {{-- <option value="ca_exam_p"> Show Exam with Position & CA with Position </option> --}}
+       
+          {{-- <option value="custom">Custom Template</option> --}}
         </select>
           @error('report_columns')
           <span class="text-danger">{{$message}}</span>  
           @enderror
       </div>
 
-      <div class="form-group">
+      {{-- <div class="form-group">
         <x-jet-label>Subject Positioning</x-jet-label>
         <select class="form-control" name="subject_positioning" id="subject_positioning">
             <option value="">Select Subject Positioning</option>
@@ -71,9 +73,9 @@
         @error('report_branding')
         <span class="text-danger">{{$message}}</span>  
         @enderror
-        </div>
+        </div> --}}
 
- <div class="form-group">
+ {{-- <div class="form-group">
   <x-jet-label>Comments To Show</x-jet-label>
   <select class="form-control" name="comment_category" id="comment_category">
       <option value="">Select Comment Category</option>
@@ -87,10 +89,10 @@
   @error('comment_category')
   <span class="text-danger">{{$message}}</span>  
   @enderror
-  </div>
+  </div> --}}
 
 
-  <div class="form-group">
+  {{-- <div class="form-group">
     <x-jet-label>School Branding</x-jet-label>
     <select class="form-control" name="school_branding" id="school_branding">
         <option value="">Select School Brand Option</option>
@@ -100,7 +102,7 @@
     @error('report_branding')
     <span class="text-danger">{{$message}}</span>  
     @enderror
-    </div>
+    </div> --}}
 
   
 

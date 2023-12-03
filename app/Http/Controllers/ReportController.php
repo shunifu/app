@@ -212,7 +212,26 @@ class ReportController extends Controller
 
     public function stream(Request $request){
 
-      
+        if (!Schema::hasColumn('student_subject_averages', 'mock_piece')) //check the column
+		{
+			Schema::table('student_subject_averages', function (Blueprint $table)
+			{
+			   
+				$table->double('mock_piece')->nullable();
+              
+			});
+		}
+
+        if (!Schema::hasColumn('student_subject_averages', 'mock_mark')) //check the column
+		{
+			Schema::table('student_subject_averages', function (Blueprint $table)
+			{
+			   
+				$table->double('mock_mark')->nullable();
+              
+			});
+		}
+
 
 
       Schema::table('student_subject_averages', function ($table) {
@@ -220,6 +239,7 @@ class ReportController extends Controller
         $table->float('ca_average')->change();
         $table->float('exam_mark')->change();
         $table->float('student_average')->change();
+        $table->float('mock_mark')->change();
     });
 
 
@@ -243,6 +263,16 @@ class ReportController extends Controller
 			   
 				$table->double('ca_piece')->nullable();
                 $table->double('exam_piece')->nullable();
+			});
+		}
+
+        if (!Schema::hasColumn('student_subject_averages', 'mock_piece')) //check the column
+		{
+			Schema::table('student_subject_averages', function (Blueprint $table)
+			{
+			   
+				$table->double('mock_piece')->nullable();
+              
 			});
 		}
 
@@ -407,7 +437,7 @@ class ReportController extends Controller
 
         if (!($ca_exam_assignment_exists)) {
              //if it does not exist
-            flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. It looks like in this term, there is no assessement that has been assigned as CA or Exam.');
+            flash()->overlay('<i class="fas fa-exclamation-circle text-danger"></i> Error. It appears that for this term, there are no assessments assigned as CA or Exam.'.'<br>'.'To assign assessments please go to Settings and Click Assessement Settings and then go to Assessement Categorization');
             return redirect()->back();
         }
 
@@ -462,16 +492,15 @@ class ReportController extends Controller
         $number_of_decimal_places=$criteria->number_of_decimal_places;// number of decimal places
         $tie_type=$criteria->tie_type;// number of decimal places
         $position_type=$criteria->position_type;
-        $subject_position_type=$criteria->subject_position_type;
 
         $school_is=School::first();
       
 
-            if($school_is->school_code=='0387'){
-                if($stream==1){
-                    $number_of_subjects==6;
-                }
-            }
+            // if($school_is->school_code=='0387'){
+            //     if($stream==1){
+            //         $number_of_subjects==6;
+            //     }
+            // }
 
     
         $subject=Subject::where('subject_type','passing_subject')->first();
@@ -501,6 +530,7 @@ class ReportController extends Controller
         $weight=AssessementWeight::where('term_id',$term)->where('stream_id', $stream)->first(); 
         $ca_weight=$weight->ca_percentage*(0.01);
         $exam_weight=$weight->exam_percentage*(0.01);
+        $mock_weight=$weight->mock_percentage*(0.01);
         //End of Weight for the term
 
 
@@ -515,6 +545,13 @@ class ReportController extends Controller
         $exam_assessements = DB::table('c_a__exams')
         ->join('assessements', 'assessements.id', '=', 'c_a__exams.assessement_id')
         ->where('assign_as', 'Examination')
+        ->where('c_a__exams.term_id',$term )//scope this to specified academic year
+        ->get()->pluck('assessement_name')->toArray();
+
+
+        $mock_assessements = DB::table('c_a__exams')
+        ->join('assessements', 'assessements.id', '=', 'c_a__exams.assessement_id')
+        ->where('assign_as', 'Mock')
         ->where('c_a__exams.term_id',$term )//scope this to specified academic year
         ->get()->pluck('assessement_name')->toArray();
 
@@ -677,10 +714,6 @@ class ReportController extends Controller
 
         //if the subject average rule is custom, it means that the subject average is calculated  based on the selection of assessements
 
-       
-      
-    
-
 $subject_average[]=DB::select(DB::raw("SELECT marks.student_id,
 GROUP_CONCAT(subjects.subject_name) AS subject_name,
 subjects.id as subject_id,
@@ -689,8 +722,10 @@ teaching_loads.class_id as student_class,
 teaching_loads.id as teaching_load_id,
 (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN marks.mark END))AS ca,
 (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN marks.mark END))AS exam,
+(AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Mock' THEN marks.mark END))AS mock,
 (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN (marks.mark)*".$ca_weight." END))AS ca_weight,
-(AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN (marks.mark)*".$exam_weight." END)) as exam_weight
+(AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN (marks.mark)*".$exam_weight." END)) as exam_weight,
+(AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Mock' THEN (marks.mark)*".$mock_weight." END)) as mock_weight
 FROM
 marks
 INNER JOIN c_a__exams ON c_a__exams.assessement_id = marks.assessement_id
@@ -701,9 +736,6 @@ WHERE marks.student_id = ".$student." AND `c_a__exams`.`term_id` = ".$term." AND
 GROUP BY
 marks.student_id,
 subjects.id"));
-
-
-
 }
 
 
@@ -721,13 +753,15 @@ subjects.id"));
             'teaching_load_id' =>$item->teaching_load_id,
             'ca_average' =>$item->ca,
             'exam_mark' =>$item->exam,
+            'mock_mark' =>$item->mock,
             'ca_piece' =>$item->ca_weight,
             'exam_piece' =>$item->exam_weight,
-            'student_average' =>(round(($item->ca_weight)+($item->exam_weight))),
+            'mock_piece' =>$item->mock_weight,
+            'student_average' =>(round(($item->ca_weight)+($item->exam_weight)+($item->mock_weight))),
             'student_class'  =>$item->student_class,
             'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
                 ];
-            })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average', 'position','student_class']);
+            })->toArray(), ['student_key'], ['ca_average','exam_mark','mock_mark', 'student_average', 'position','student_class']);
         }
     
     }
@@ -969,7 +1003,7 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
 
 
     
-return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight', 'calculation_type', 'non_value_subject_name', 'report_template', 'section_id','variables','get_academic_session', 'ca_assessements','exam_assessements', 'subject_position_type'));   
+return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight','mock_weight','calculation_type', 'non_value_subject_name', 'report_template', 'section_id','variables','get_academic_session', 'ca_assessements','exam_assessements', 'mock_assessements'));   
  }
 
 

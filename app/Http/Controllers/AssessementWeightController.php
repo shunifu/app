@@ -55,6 +55,7 @@ class AssessementWeightController extends Controller
                 return redirect()->back();
             }
 
+
             if((($request->ca_percentage)+($request->exam_percentage)+($request->mock_percentage))==100){
 
                
@@ -127,7 +128,7 @@ return view('academic-admin.settings-management.assessements.assessement-weight.
 
  //       dd($request->all());
        
-        if(($request->ca_weight)+($request->exam_weight)==100){
+        if(($request->ca_weight)+($request->exam_weight)+($request->mock_weight)==100){
             AssessementWeight::where('id',$request->id)->update([
                 'ca_percentage'=>$request->ca_weight,
                 'exam_percentage'=>$request->exam_weight,

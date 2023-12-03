@@ -98,7 +98,7 @@ class AssessementSettingController extends Controller
        ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
        ->join('streams','streams.id','=','assessement_weights.stream_id')
        ->where('academic_sessions.active', 1)
-       ->select('terms.id as term_id','streams.stream_name','streams.id as stream_id','assessement_weights.id as assessement_weight_id','ca_percentage','exam_percentage','terms.term_name')
+       ->select('terms.id as term_id','streams.stream_name','streams.id as stream_id','assessement_weights.id as assessement_weight_id','ca_percentage','exam_percentage','mock_percentage','terms.term_name')
        ->get();
 
        //Section

@@ -12,6 +12,7 @@ class AssessementWeight extends Model
     protected $fillable=[
         'term_id',
         'ca_percentage',
+        'mock_percentage',
         'exam_percentage',
         'stream_id',
     ];

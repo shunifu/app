@@ -1272,13 +1272,69 @@ if($request->analysis_indicator=='subject_analysis'){
 
 public function term_based(Request $request){
 
-    Schema::table('student_subject_averages', function ($table) {
-       
-        $table->float('ca_average')->change();
-        $table->float('student_average')->change();
-        $table->float('exam_mark')->change();
-    });
+    if (!Schema::hasColumn('student_subject_averages', 'mock_piece')) //check the column
+    {
+        Schema::table('student_subject_averages', function (Blueprint $table)
+        {
+           
+            $table->double('mock_piece')->nullable();
+          
+        });
+    }
 
+    if (!Schema::hasColumn('student_subject_averages', 'mock_mark')) //check the column
+    {
+        Schema::table('student_subject_averages', function (Blueprint $table)
+        {
+           
+            $table->double('mock_mark')->nullable();
+          
+        });
+    }
+
+
+
+  Schema::table('student_subject_averages', function ($table) {
+       
+    $table->float('ca_average')->change();
+    $table->float('exam_mark')->change();
+    $table->float('student_average')->change();
+    $table->float('mock_mark')->change();
+});
+
+
+
+if (!Schema::hasTable('cummulative_attendances')) {
+    Schema::create('cummulative_attendances', function($table){
+          
+           $table->id();
+           $table->integer('student_id');
+           $table->integer('term_id');
+           $table->integer('class');
+           $table->integer('number_of_absent_days')->default(0);
+           $table->timestamps();
+   });
+}
+
+if (!Schema::hasColumn('student_subject_averages', 'ca_piece')) //check the column
+    {
+        Schema::table('student_subject_averages', function (Blueprint $table)
+        {
+           
+            $table->double('ca_piece')->nullable();
+            $table->double('exam_piece')->nullable();
+        });
+    }
+
+    if (!Schema::hasColumn('student_subject_averages', 'mock_piece')) //check the column
+    {
+        Schema::table('student_subject_averages', function (Blueprint $table)
+        {
+           
+            $table->double('mock_piece')->nullable();
+          
+        });
+    }
  
  
 $admin=Auth::user()->hasRole('admin_teacher');
@@ -1318,21 +1374,67 @@ $admin=Auth::user()->hasRole('admin_teacher');
 
     public function term_based_class(Request $request){
 
-        Schema::table('student_subject_averages', function ($table) {
-       
-            $table->float('ca_average')->change();
-            $table->float('student_average')->change();
-            $table->float('exam_mark')->change();
-        });
+        if (!Schema::hasColumn('student_subject_averages', 'mock_piece')) //check the column
+		{
+			Schema::table('student_subject_averages', function (Blueprint $table)
+			{
+			   
+				$table->double('mock_piece')->nullable();
+              
+			});
+		}
+
+        if (!Schema::hasColumn('student_subject_averages', 'mock_mark')) //check the column
+		{
+			Schema::table('student_subject_averages', function (Blueprint $table)
+			{
+			   
+				$table->double('mock_mark')->nullable();
+              
+			});
+		}
 
 
-        if (!Schema::hasColumn('student_subject_averages', 'ca_piece')) //check the column
+
+      Schema::table('student_subject_averages', function ($table) {
+           
+        $table->float('ca_average')->change();
+        $table->float('exam_mark')->change();
+        $table->float('student_average')->change();
+        $table->float('mock_mark')->change();
+    });
+
+
+
+    if (!Schema::hasTable('cummulative_attendances')) {
+        Schema::create('cummulative_attendances', function($table){
+              
+               $table->id();
+               $table->integer('student_id');
+               $table->integer('term_id');
+               $table->integer('class');
+               $table->integer('number_of_absent_days')->default(0);
+               $table->timestamps();
+       });
+   }
+
+   if (!Schema::hasColumn('student_subject_averages', 'ca_piece')) //check the column
 		{
 			Schema::table('student_subject_averages', function (Blueprint $table)
 			{
 			   
 				$table->double('ca_piece')->nullable();
                 $table->double('exam_piece')->nullable();
+			});
+		}
+
+        if (!Schema::hasColumn('student_subject_averages', 'mock_piece')) //check the column
+		{
+			Schema::table('student_subject_averages', function (Blueprint $table)
+			{
+			   
+				$table->double('mock_piece')->nullable();
+              
 			});
 		}
 
@@ -1368,12 +1470,22 @@ $admin=Auth::user()->hasRole('admin_teacher');
                 return view('analytics.class_index', compact('grades', 'sections', 'streams','subjects'));
             
         }
-
+    }
 
     public function term_based_show(Request $request){
 
         // DB::table('student_subject_averages')->delete();
         // DB::table('term_averages')->delete();
+
+        $non_value_exists=Subject::where('subject_type','non-value')->exists();
+
+if($non_value_exists){
+    $subject_non_value=Subject::where('subject_type','non-value')->get()->pluck('id')->toArray();         
+    $nonvalue_subjects_id = implode(',',$subject_non_value);
+   
+}else{
+    $non_value_subject=0;
+}
 
         $type_key=$request->key;
 
@@ -1499,20 +1611,21 @@ if (!($term_checker)) {
 
 
 
-//end of check for completion of marks for students
-
-//1. Getting the pass rates & criteria & number of subjects for the stream
-$criteria=PassRate::where('section_id', $section_id)->first();
-$pass_rate=$criteria->passing_rate;// pass rate
-$number_of_subjects=$criteria->number_of_subjects; //number of subject
-$passing_subject_rule=$criteria->passing_subject_rule; // passin subject rule
-$term_average_rule=$criteria->average_calculation; //average calculation
-$subject_average_rule=$criteria->subject_average_calculation; //subject average calculation
-$term_average_type=$criteria->term_average_type;//average type
-$number_of_decimal_places=$criteria->number_of_decimal_places;// number of decimal places
-$tie_type=$criteria->tie_type;// number of decimal places
-
-$school_is=School::first();
+ //end of check for completion of marks for students
+  
+         //1. Getting the pass rates & criteria & number of subjects for the stream
+         $criteria=PassRate::where('section_id', $section_id)->first();
+         $pass_rate=$criteria->passing_rate;// pass rate
+         $number_of_subjects=$criteria->number_of_subjects; //number of subject
+         $passing_subject_rule=$criteria->passing_subject_rule; // passin subject rule
+         $term_average_rule=$criteria->average_calculation; //average calculation
+         $subject_average_rule=$criteria->subject_average_calculation; //subject average calculation
+         $term_average_type=$criteria->term_average_type;//average type
+         $number_of_decimal_places=$criteria->number_of_decimal_places;// number of decimal places
+         $tie_type=$criteria->tie_type;// number of decimal places
+         $position_type=$criteria->position_type;
+ 
+         $school_is=School::first();
 
 
  if($school_is->school_code=='0387'){
@@ -1525,58 +1638,85 @@ $school_is=School::first();
 
 
 
-$subject=Subject::where('subject_type','passing_subject')->first();
-$passing_subject=$subject->id;
+ $subject=Subject::where('subject_type','passing_subject')->first();
+        $passing_subject=$subject->id;
+        $non_value_exists=Subject::where('subject_type','non-value')->exists();
 
+        if($non_value_exists){
+            $subject_non_value=Subject::where('subject_type','non-value')->first();
+            $non_value_subject=$subject_non_value->id;
+            $non_value_subject_name=$subject_non_value->subject_name;
 
-$non_value_exists=Subject::where('subject_type','non-value')->exists();
+        }else{
+            $non_value_subject=0;
+        }
+    
+        //Getting Academic Year
+        $get_academic_session = DB::table('terms')
+        ->join('academic_sessions', 'terms.academic_session', '=', 'academic_sessions.id')
+        ->where('terms.id',$term )//scope this to specified academic year
+        ->first();
 
-if($non_value_exists){
-    $subject_non_value=Subject::where('subject_type','non-value')->get()->pluck('id')->toArray();         
-    $nonvalue_subjects_id = implode(',',$subject_non_value);
-   
-}else{
-    $non_value_subject=0;
-}
-
-//Getting Academic Year
-$get_academic_session = DB::table('terms')
-->join('academic_sessions', 'terms.academic_session', '=', 'academic_sessions.id')
-->where('terms.id',$term )//scope this to specified academic year
-->first();
-
-
-
-
-
-//Weight for the term
-$weight=AssessementWeight::where('term_id',$term)->where('stream_id', $stream)->first(); 
-$ca_weight=$weight->ca_percentage*(0.01);
-$exam_weight=$weight->exam_percentage*(0.01);
-//End of Weight for the term
+        
 
 
 
-// //Getting the tests assigned to the term
-// $assigned_assessements=Assessement::where('term_id', $term)->get()->toArray();
-
-
-// //dd($assigned_assessements);
-// $number_of_tests_in_term=Assessement::where('term_id',$term)->count();
-
-
-// $ca_assessements=Assessement::where('term_id', $term)->where('assessement_type', 1)->get();
-// $exam_assessements=Assessement::where('term_id', $term)->where('assessement_type', 2)->get();
-//filter to stream
-
-//calculate subject average based on criteria
-
-//end of subject average calculation
-
-//if stream based
+        //Weight for the term
+        $weight=AssessementWeight::where('term_id',$term)->where('stream_id', $stream)->first(); 
+        $ca_weight=$weight->ca_percentage*(0.01);
+        $exam_weight=$weight->exam_percentage*(0.01);
+        $mock_weight=$weight->mock_percentage*(0.01);
+        //End of Weight for the term
 
 
 
+        $ca_assessements = DB::table('c_a__exams')
+        ->join('assessements', 'assessements.id', '=', 'c_a__exams.assessement_id')
+        ->where('assign_as', 'CA')
+        ->where('c_a__exams.term_id',$term )//scope this to specified academic year
+        ->get()->pluck('assessement_name')->toArray();
+
+
+        $exam_assessements = DB::table('c_a__exams')
+        ->join('assessements', 'assessements.id', '=', 'c_a__exams.assessement_id')
+        ->where('assign_as', 'Examination')
+        ->where('c_a__exams.term_id',$term )//scope this to specified academic year
+        ->get()->pluck('assessement_name')->toArray();
+
+
+        $mock_assessements = DB::table('c_a__exams')
+        ->join('assessements', 'assessements.id', '=', 'c_a__exams.assessement_id')
+        ->where('assign_as', 'Mock')
+        ->where('c_a__exams.term_id',$term )//scope this to specified academic year
+        ->get()->pluck('assessement_name')->toArray();
+
+        // dd($exam_assessements);
+
+       
+
+        // //Getting the tests assigned to the term
+        // $assigned_assessements=Assessement::where('term_id', $term)->get()->toArray();
+
+       
+        // //dd($assigned_assessements);
+        // $number_of_tests_in_term=Assessement::where('term_id',$term)->count();
+      
+    
+        // $ca_assessements=Assessement::where('term_id', $term)->where('assessement_type', 1)->get();
+        // $exam_assessements=Assessement::where('term_id', $term)->where('assessement_type', 2)->get();
+        //filter to stream
+
+        //calculate subject average based on criteria
+
+        //end of subject average calculation
+
+
+        $activeYear=AcademicSession::where('active',1)->first();
+        $activeYearIs=$activeYear->id;
+
+        $Remove = StudentClass::where('active', 1)->where('academic_session','!=',$activeYearIs)->update([
+            "active"=>'0',
+        ]);
 
 if ($type_key=="stream_based") {
     $students = DB::table('grades_students')
@@ -1642,9 +1782,7 @@ foreach ($students as $student ) {
 
 if($subject_average_rule=="custom"){
 
-//if the subject average rule is custom, it means that the subject average is calculated  based on the selection of assessements
-
-
+    //if the subject average rule is custom, it means that the subject average is calculated  based on the selection of assessements
 
 $subject_average[]=DB::select(DB::raw("SELECT marks.student_id,
 GROUP_CONCAT(subjects.subject_name) AS subject_name,
@@ -1654,8 +1792,10 @@ teaching_loads.class_id as student_class,
 teaching_loads.id as teaching_load_id,
 (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN marks.mark END))AS ca,
 (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN marks.mark END))AS exam,
+(AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Mock' THEN marks.mark END))AS mock,
 (AVG(CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'CA' THEN (marks.mark)*".$ca_weight." END))AS ca_weight,
-(AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN (marks.mark)*".$exam_weight." END)) as exam_weight
+(AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Examination' THEN (marks.mark)*".$exam_weight." END)) as exam_weight,
+(AVG( CASE WHEN  c_a__exams.term_id=".$term." AND c_a__exams.assign_as = 'Mock' THEN (marks.mark)*".$mock_weight." END)) as mock_weight
 FROM
 marks
 INNER JOIN c_a__exams ON c_a__exams.assessement_id = marks.assessement_id
@@ -1666,37 +1806,31 @@ WHERE marks.student_id = ".$student." AND `c_a__exams`.`term_id` = ".$term." AND
 GROUP BY
 marks.student_id,
 subjects.id"));
-
-
-
-
 }
-
-//  dd($subject_average);
  
 }
 
 if($subject_average_rule=="custom"){
-
-
-foreach ($subject_average as $key) {
-
+    foreach ($subject_average as $key) {
+     
 $insert=StudentSubjectAverage::upsert(collect($key)->map(function($item) use($student) {
- return [
- 'student_id' => $item->student_id,
- 'term_id'  =>$item->term_id,
- 'subject_id' => $item->subject_id,
- 'teaching_load_id' =>$item->teaching_load_id,
- 'ca_average' =>$item->ca,
- 'exam_mark' =>$item->exam,
- 'ca_piece' =>$item->ca_weight,
- 'exam_piece' =>$item->exam_weight,
- 'student_average' =>(round(($item->ca_weight)+($item->exam_weight))),
- 'student_class'  =>$item->student_class,
- 'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
-     ];
- })->toArray(), ['student_key'], ['ca_average','exam_mark', 'student_average']);
-}
+        return [
+        'student_id' => $item->student_id,
+        'term_id'  =>$item->term_id,
+        'subject_id' => $item->subject_id,
+        'teaching_load_id' =>$item->teaching_load_id,
+        'ca_average' =>$item->ca,
+        'exam_mark' =>$item->exam,
+        'mock_mark' =>$item->mock,
+        'ca_piece' =>$item->ca_weight,
+        'exam_piece' =>$item->exam_weight,
+        'mock_piece' =>$item->mock_weight,
+        'student_average' =>(round(($item->ca_weight)+($item->exam_weight)+($item->mock_weight))),
+        'student_class'  =>$item->student_class,
+        'student_key' =>$item->student_id.'-'.$item->term_id.'-'.$item->subject_id,
+            ];
+        })->toArray(), ['student_key'], ['ca_average','exam_mark','mock_mark', 'student_average', 'position','student_class']);
+    }
 
 }
 

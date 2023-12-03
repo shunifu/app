@@ -1041,7 +1041,7 @@
 
 
                           <div class="form-group">
-                   <x-jet-label> Mock Examination Percentage</x-jet-label><small class="text-bold">optional</small>
+                   <x-jet-label> Mock Examination Percentage</x-jet-label><small class="text-muted">Please use this ONLY is you want the mock examination to have a stand alone weight</small>
                             <div class="input-group mb-2">
                                 <input type="text" name="mock_percentage" class="form-control" aria-label="">
                                 <div class="input-group-append">
@@ -1131,6 +1131,7 @@
     
                             <th>Stream</th>
                             <th>Continuous Assessement</th>
+                            <th>Mock </th>
                             <th>Examination</th>
                             <th>Manage</th>
                         </tr>
@@ -1140,6 +1141,7 @@
                         <tr>
                           <td>{{$assessements_weight->stream_name}}</td>
                           <td>{{$assessements_weight->ca_percentage}}%</td>
+                          <td>{{$assessements_weight->mock_percentage}}%</td>
                           <td>{{$assessements_weight->exam_percentage}}%</td>
                         
                         <td class="py-0 align-middle">

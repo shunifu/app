@@ -136,7 +136,6 @@ table tbody tr td {
 
        <li>Please note that when you download the report as PDF, the first page will appear blank and the second page is where there report will appear. The report card appears in the second page of the PDF.</li> 
 
-       <li>Please note that report cards for learners in Form 3 and Form 5 are not available on this platform for now..</li> 
 
     </ul>
         
@@ -432,7 +431,7 @@ echo $key->student_position.' out of '.$total_students.' ';
 
 
                     </tr>
- ]
+
                     </tbody>
                 </table>
        <br>
@@ -453,6 +452,7 @@ grades.stream_id,
     student_subject_averages.student_average,
     student_subject_averages.ca_average,
     student_subject_averages.exam_mark,
+    student_subject_averages.mock_mark,
     subjects.subject_name, 
     subjects.subject_type, 
     subjects.id as subject_id,
@@ -484,6 +484,7 @@ grades.stream_id,
         <tr class="hope">
             <th class="background">Subject Name</th>
             <th class="background" >CA</th>     
+            <th class="background" >Mock</th>     
             <th class="background">Examination</th>   
             <?php if ($variable->subject_average==0) {   }else{  ?> <th class="background" >Subject Average</th> <?php  }?>
             <?php if ($variable->subject_position==0) {   }else{  ?> <th class="background" >Subject Postion</th> <?php  }?>
@@ -512,7 +513,20 @@ grades.stream_id,
             @endif
         </td>   
       
+        <td  @if(!isset($item2->mock_mark)) class="bg-danger" @endif> 
+            @if ($item2->mock_mark<$pass_rate)
+            @isset($item2->mock_mark)
+            <span class="text-danger">{{($item2->mock_mark)}}%</span>
+            @endisset
 
+            @if(!isset($item2->mock_mark))
+           <span class="small text-black">mark not entered</span> 
+            @endif
+            
+            @else
+            {{round($item2->mock_mark)}}%
+            @endif
+        </td> 
 
         
         <td  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
@@ -562,6 +576,18 @@ grades.stream_id,
 // where student_id =".$student.""));
 
 // $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads INNER JOIN users ON users.id=student_loads.student_id WHERE users.active=1 AND student_loads.active=1 AND student_loads.teaching_load_id  IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id." AND student_loads.active=1 AND teaching_loads.active=1)"));
+
+
+//stream based positioning 
+
+
+
+
+//Class Based Positioning
+
+
+
+//teacher load based positioning
 
 $sub_position=\DB::select(\DB::raw("select t.*
 from (select student_subject_averages.student_id,student_subject_averages.student_average, rank() over (order by student_subject_averages.student_average  desc) as student_position
@@ -1117,12 +1143,12 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                       <tr>
  
                         <td>
-                            For a student to pass, she/he must at least get.
+                            A student must fulfil the following requirements in order to get a clean pass.
                             <ul>
                               
-                              <li>A minimum average of <span class="text-bold">{{$pass_rate}}% or more</span></li> 
+                              <li>Get a  minimum overal average of <span class="text-bold">{{$pass_rate}}% or more</span></li> 
                               {{-- 2. language and number of subjects --}}
-                              <li>An average of <span class="text-bold">{{$pass_rate}}% or more </span> in at least {{$number_of_subjects}} subjects 
+                              <li>Get an average of <span class="text-bold">{{$pass_rate}}% or more </span> in at least {{$number_of_subjects}} subjects 
                                   
                                   @if ($passing_subject_rule==1)
                                   inclusive of  <span class="text-bold">English Language</span></li>   
@@ -1130,10 +1156,12 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                           
                             </ul>
                         </td> 
+                    
              
                         <td> {{$student_term_data->name}}'s subject average was calculated based on the following assessement weight's;
                             <ul>
                                 <li>Continuous Assessement: <strong>{{$ca_weight*100}}%</strong> </li>
+                                <li>Mock: <strong>{{$mock_weight*100}}%</strong></li>
                                 <li>Examination: <strong>{{$exam_weight*100}}%</strong></li>
                             </ul>
                         
@@ -1142,12 +1170,13 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                         <td>  Assessement Categorization is ;
                             <br>
                                CA Assessements: <span class="text-bold"> <small> {{implode(',',$ca_assessements)}}</small></span><br>
+                               Mock Assessements: <span class="text-bold"> <small> {{implode(',',$mock_assessements)}}</small></span><br>
                                Exam Assessements: <span class="text-bold"><small>{{implode(',',$exam_assessements)}}</small></span> 
                            
                         
                         </td>
                 
-                        <td> {{$student_term_data->name}}'s term average was calculated based on the following criterion;
+                        <td> {{$student_term_data->name}}'s  term average  was calculated using the following criteria:
                             <ul>
                             
                                 @if ($calculation_type=="default")
@@ -1175,7 +1204,7 @@ echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'
                 </table> 
                     
 
-                   <center><small>&copy; Report generated by the <strong>Shunifu Education Management Platform</strong>-Developed through the incubatory support of the <strong>Royal Science & Technology Park (RSTP)</strong>  7689 0726 | 2517 9400</small></center>
+                   <center><small>&copy;This report was generated using the <span class="text-bold">Shunifu School Management Platform</span> which is <span class="text-bold">Eswatini's number one school management system, trusted, loved & used  by schools all over Eswatini</span>. Shunifu is developed under the incubatory support of the <span class="text-bold">Royal Science & Technology Park (RSTP)</span> 2517 9400 | 7689 0726 | 7989 0726</small></center>
                   
                 
     

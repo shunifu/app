@@ -139,23 +139,30 @@ $final_term=1;
 
     public function destroy(Request $request){
         $term=$request->id;
+
+        $term_id=decrypt($term);
+
+     
        
         //Checks
 
         //1. Check if the terms has been assigned assessments
-        $existsInAssessements=Assessement::where('term_id', $term)->exists();
+        $existsInAssessements=Assessement::where('term_id', $term_id)->exists();
 
         //2. Check if the terms has been assigned in ca_exams 
-        $existsInCa_Exams=CA_Exam::where('term_id', $term)->exists();
+        $existsInCa_Exams=CA_Exam::where('term_id', $term_id)->exists();
 
         //3. Check if the terms has been assigned in assessement_progress_reports
-        $existsInAssessementsProgressReport=AssessementProgressReport::where('term_id', $term)->exists();
+        $existsInAssessementsProgressReport=AssessementProgressReport::where('term_id', $term_id)->exists();
 
         //4. Check if the terms has been assigned in assessement_weights
-        $existsInAssessementsWeights=AssessementWeight::where('term_id', $term)->exists();
+        $existsInAssessementsWeights=AssessementWeight::where('term_id', $term_id)->exists();
 
         //5. Check if the terms has been assigned in term_averages
-        $existsInTermAverages=TermAverage::where('term_id', $term)->exists();
+        $existsInTermAverages=TermAverage::where('term_id', $term_id)->exists();
+
+
+       // dd($existsInTermAverages);
 
         //6. Check if the terms has been assigned in stream_subject_averages
     //    $existsInStreamSubjectAverages=DB::('stream_subject_averages')::where('term_id', $term)->exists();
@@ -163,7 +170,7 @@ $final_term=1;
 
         //7. Check if the terms has been assigned in student_subject_averages
 
-$existsInStudentSubjectAverages=StudentSubjectAverage::where('term_id', $term)->exists();
+$existsInStudentSubjectAverages=StudentSubjectAverage::where('term_id', $term_id)->exists();
 
 if ($existsInAssessements || $existsInCa_Exams || $existsInAssessementsProgressReport || $existsInAssessementsWeights || $existsInTermAverages ) {
 
@@ -175,12 +182,19 @@ if ($existsInAssessements || $existsInCa_Exams || $existsInAssessementsProgressR
     
 }else{
 
+  
+    $TermExists=Term::where('id', $term_id)->exists();
+
+    if($TermExists){
+        Term::where('id', $term_id)->delete();
+        flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Success . Term has been successfully deleted', 'Delete Term ');
+        return Redirect::back();
+    }
+
+
+
+
    
-    $delete=Term::find($term)->delete();
-
-
-    flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Success . Term has been successfully deleted', 'Delete Term ');
-    return Redirect::back();
     
 }
 

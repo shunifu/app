@@ -153,7 +153,7 @@ class AssessementController extends Controller
                 Assessement::find($request->assessement_id)->update([
                 'assessement_name'=>$request->edit_assessement_name, 
                 'assessement_month'=>$request->edit_assessement_month,
-                 'assessement_type'=>$request->edit_assessement_type,
+                'assessement_type'=>$request->edit_assessement_type,
                 'term_id'=>$request->term_id,
                 'marks_deadline'=>$request->edit_marks_deadline,
                 ]);
