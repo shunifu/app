@@ -29,6 +29,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\AssessementProgressReport;
 use App\Models\ReportTemplate;
+use App\Models\StudentClass;
 
 use function GuzzleHttp\Psr7\build_query;
 use Illuminate\Support\Facades\Validator;

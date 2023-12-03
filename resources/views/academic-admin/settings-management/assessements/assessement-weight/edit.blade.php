@@ -60,6 +60,14 @@
                 </div>
 
                 <div class="form-group">
+                  <x-jet-label> Mock  Weight</x-jet-label>
+                  <x-jet-input name="mock_weight" value="{{$item->mock_percentage}}" ></x-jet-input>
+                  @error('mock_weight')
+                  <span class="text-danger">{{$message}}</span>  
+                  @enderror
+              </div>
+
+                <div class="form-group">
                     <x-jet-label> Examination Assessement Weight</x-jet-label>
                     <x-jet-input name="exam_weight" value="{{$item->exam_percentage}}" ></x-jet-input>
                     @error('exam_weight')
