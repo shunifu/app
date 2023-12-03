@@ -486,7 +486,7 @@ grades.stream_id,
             <th class="background" >CA</th>     
             <th class="background" >Mock</th>     
             <th class="background">Examination</th>   
-            <?php if ($variable->subject_average==0) {   }else{  ?> <th class="background" >Subject Average</th> <?php  }?>
+<?php if ($variable->subject_average==0) {   }else{  ?> <th class="background" >Subject Average</th> <?php  }?>
             <?php if ($variable->subject_position==0) {   }else{  ?> <th class="background" >Subject Postion</th> <?php  }?>
             <th class="background">Symbol</th>
             <th class="background">Comment</th>
