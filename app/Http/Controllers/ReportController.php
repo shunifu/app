@@ -995,15 +995,21 @@ student_subject_averages.student_id = ".$student."  AND student_subject_averages
     $examExists=AssessementWeight::where('term_id', $term)->where('exam_percentage', '<>', '0')->where('stream_id',$stream )->exists();
     $caExists=AssessementWeight::where('term_id', $term)->where('ca_percentage', '<>', '0')->where('stream_id',$stream )->exists();
 
+    $MockExists=AssessementWeight::where('term_id', $term)->where('mock_percentage', '<>', '0')->where('stream_id',$stream )->exists();
+
     $noExam=AssessementWeight::where('term_id', $term)->where('exam_percentage', '0')->where('stream_id',$stream )->exists();
     $noCA=AssessementWeight::where('term_id', $term)->where('ca_percentage', '0')->where('stream_id',$stream )->exists();
+
+    $noMock=AssessementWeight::where('term_id', $term)->where('mock_percentage', '0')->where('stream_id',$stream )->exists();
     
 
     $calculation_type=$criteria->average_calculation;
 
+  //  dd($position_type);
+
 
     
-return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight','mock_weight','calculation_type', 'non_value_subject_name', 'report_template', 'section_id','variables','get_academic_session', 'ca_assessements','exam_assessements', 'mock_assessements'));   
+return view('academic-admin.reports-management.term.report', compact('report', 'students', 'school_info', 'comments', 'pass_rate', 'stream','number_of_subjects', 'class_teacher_comments', 'total_students', 'total_subjects','headteacher_comments','term','term_average_type', 'number_of_decimal_places','tie_type','passing_subject_rule','examExists', "p_key", 'school_is', 'ca_weight', 'exam_weight','mock_weight','calculation_type', 'non_value_subject_name', 'report_template', 'section_id','variables','get_academic_session', 'ca_assessements','exam_assessements', 'mock_assessements', 'MockExists', 'noMock', 'position_type'));   
  }
 
 

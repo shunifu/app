@@ -484,9 +484,9 @@ grades.stream_id,
         <tr class="hope">
             <th class="background">Subject Name</th>
             <th class="background" >CA</th>     
-            <th class="background" >Mock</th>     
+<?php if ($noMock) {   }else{  ?> <th class="background" >Mock</th> <?php  }?>
             <th class="background">Examination</th>   
-<?php if ($variable->subject_average==0) {   }else{  ?> <th class="background" >Subject Average</th> <?php  }?>
+            <?php if ($variable->subject_average==0) {   }else{  ?> <th class="background" >Subject Average</th> <?php  }?>
             <?php if ($variable->subject_position==0) {   }else{  ?> <th class="background" >Subject Postion</th> <?php  }?>
             <th class="background">Symbol</th>
             <th class="background">Comment</th>
@@ -512,21 +512,27 @@ grades.stream_id,
             {{round(($item2->ca_average),2)}}%
             @endif
         </td>   
-      
-        <td  @if(!isset($item2->mock_mark)) class="bg-danger" @endif> 
-            @if ($item2->mock_mark<$pass_rate)
-            @isset($item2->mock_mark)
-            <span class="text-danger">{{($item2->mock_mark)}}%</span>
-            @endisset
 
-            @if(!isset($item2->mock_mark))
-           <span class="small text-black">mark not entered</span> 
-            @endif
-            
-            @else
-            {{round($item2->mock_mark)}}%
-            @endif
-        </td> 
+      @if ($noMock)
+          
+      @else
+      <td  @if(!isset($item2->mock_mark)) class="bg-danger" @endif> 
+        @if ($item2->mock_mark<$pass_rate)
+        @isset($item2->mock_mark)
+        <span class="text-danger">{{($item2->mock_mark)}}%</span>
+        @endisset
+
+        @if(!isset($item2->mock_mark))
+       <span class="small text-black">mark not entered</span> 
+        @endif
+        
+        @else
+        {{round($item2->mock_mark)}}%
+        @endif
+    </td> 
+      @endif
+      
+       
 
         
         <td  @if(!isset($item2->exam_mark)) class="bg-danger" @endif> 
@@ -570,12 +576,6 @@ grades.stream_id,
 
           ?><td><?php
 
-// $sub_position=\DB::select(\DB::raw("select t.*
-// from (select student_subject_averages.student_id,student_subject_averages.student_average, rank() over (order by student_subject_averages.student_average  desc) as student_position
-// from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." AND  student_subject_averages.student_class IN(SELECT teaching_loads.class_id  FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id  where teaching_loads.teacher_id=".$item2->teacher_id."  and grades.stream_id=".$item2->stream_id.") ) t
-// where student_id =".$student.""));
-
-// $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads INNER JOIN users ON users.id=student_loads.student_id WHERE users.active=1 AND student_loads.active=1 AND student_loads.teaching_load_id  IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id." AND student_loads.active=1 AND teaching_loads.active=1)"));
 
 
 //stream based positioning 
@@ -587,25 +587,44 @@ grades.stream_id,
 
 
 
-//teacher load based positioning
+//teacher load based positiong 
 
-$sub_position=\DB::select(\DB::raw("select t.*
+// if($position_type="stream_based"){
+
+//     $sub_position=\DB::select(\DB::raw("select t.*
+// from (select student_subject_averages.student_id,student_subject_averages.student_average, rank() over (order by student_subject_averages.student_average  desc) as student_position
+// from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id." AND  student_subject_averages.student_class IN(SELECT teaching_loads.class_id  FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id  where  and grades.stream_id=".$item2->stream_id.") ) t
+// where student_id =".$student.""));
+
+// $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads INNER JOIN users ON users.id=student_loads.student_id WHERE users.active=1 AND student_loads.active=1 AND student_loads.teaching_load_id  IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND grades.stream_id=".$item2->stream_id." AND student_loads.active=1 AND teaching_loads.active=1)"));
+
+// }
+
+
+// if($position_type="class_based"){
+//     $sub_position=\DB::select(\DB::raw("select t.*
+// from (select student_subject_averages.student_id,student_subject_averages.student_average, rank() over (order by student_subject_averages.student_average  desc) as student_position
+// from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id." AND  student_subject_averages.student_class = ".$item2->class_id." ) t
+// where student_id =".$student.""));
+
+// $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads INNER JOIN users ON users.id=student_loads.student_id WHERE users.active=1 AND student_loads.active=1 AND student_loads.teaching_load_id  IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND grades.class_id=".$item2->class_id." AND student_loads.active=1 AND teaching_loads.active=1)"));
+// }
+
+// if($position_type="teacher_based"){
+    $sub_position=\DB::select(\DB::raw("select t.*
 from (select student_subject_averages.student_id,student_subject_averages.student_average, rank() over (order by student_subject_averages.student_average  desc) as student_position
-from student_subject_averages INNER JOIN grades ON grades.id=student_subject_averages.student_class WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id."  AND  grades.stream_id=".$item2->stream_id.") t
+from student_subject_averages INNER JOIN teaching_loads ON teaching_loads.id=student_subject_averages.teaching_load_id WHERE student_subject_averages.term_id=".$term." AND student_subject_averages.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." AND  student_subject_averages.student_class IN(SELECT teaching_loads.class_id  FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id  where teaching_loads.teacher_id=".$item2->teacher_id."  and grades.stream_id=".$item2->stream_id.") ) t
 where student_id =".$student.""));
 
-
-$total=\DB::select(\DB::raw("SELECT COUNT(grades_students.student_id) as total
-FROM grades_students 
-INNER JOIN grades ON grades.id=grades_students.grade_id
-LEFT JOIN student_loads ON student_loads.student_id=grades_students.student_id
-INNER JOIN teaching_loads ON teaching_loads.id=student_loads.teaching_load_id
-where 
-teaching_loads.subject_id=".$item2->subject_id." AND
-grades_students.grade_id IN (SELECT id from grades where grades.stream_id=".$item2->stream_id.")"));
+$total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads INNER JOIN users ON users.id=student_loads.student_id WHERE users.active=1 AND student_loads.active=1 AND student_loads.teaching_load_id  IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND teaching_loads.teacher_id=".$item2->teacher_id." and grades.stream_id=".$item2->stream_id." AND student_loads.active=1 AND teaching_loads.active=1)"));
+// }
 
 
-// $total=\DB::select(\DB::raw("SELECT COUNT(student_loads.student_id) AS total from student_loads WHERE student_loads.teaching_load_id IN (SELECT teaching_loads.id FROM teaching_loads INNER JOIN grades ON grades.id=teaching_loads.class_id where  teaching_loads.subject_id=".$item2->subject_id." AND grades.stream_id=".$item2->stream_id." AND student_loads.active=1 AND teaching_loads.active=1)"));
+
+
+//
+
+
 
 
 foreach ($sub_position as $key_position) {
