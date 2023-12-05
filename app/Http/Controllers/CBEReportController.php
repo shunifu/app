@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\AcademicSession;
 use App\Models\Grade;
+use App\Models\PassRate;
 use App\Models\ReportTemplate;
 use App\Models\ReportVariable;
 use App\Models\School;
 use App\Models\Section;
 use App\Models\Stream;
+use App\Models\Term;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -162,7 +164,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[36, 26,44])
+        ->whereIn('subjects.id',[36, 26])
         ->get();
 
 
@@ -295,6 +297,17 @@ class CBEReportController extends Controller
 
 
 
+        $french=DB::table('student_loads')
+        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
+        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
+        ->where('student_loads.student_id',$student_id)
+        ->where('student_loads.active',1)
+        ->whereIn('subjects.id',[46])
+        ->get();
+
+
 
 
 
@@ -312,6 +325,10 @@ class CBEReportController extends Controller
         ->get();
 
         $stream=$student_details['0']->stream_id;
+        $grade_id=$student_details['0']->grade_id;
+
+        $student_grade=Grade::where('id',$grade_id )->first();
+        $student_section=$student_grade->section_id;
 
         $academic_sessions=DB::table('terms')
         ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
@@ -320,9 +337,21 @@ class CBEReportController extends Controller
         ->get();
 
     $school=School::all();
-    $comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 1)->get();
-    $class_teacher_comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 2)->get();   
-    $headteacher_comments = DB::table('report_comments')->where('section_id',2)->where('user_type', 3)->get();   
+    $comments = DB::table('report_comments')->where('section_id',$student_section)->where('user_type', 1)->get();
+    $class_teacher_comments = DB::table('report_comments')->where('section_id',$student_section)->where('user_type', 2)->get();   
+    $headteacher_comments = DB::table('report_comments')->where('section_id',$student_section)->where('user_type', 3)->get();   
+
+    $terms=Term::where('id',$term_id)->first();
+    $term_opening_date=$terms->start_date;
+    $term_closing_date=$terms->end_date;
+    $next_term_date=$terms->next_term_date;
+    $final_term_status=$terms->final_term_status;
+
+    $pass_rates=PassRate::where('section_id', $student_section)->first();
+    $pass_mark=$pass_rates->passing_rate;
+
+
+
 
     // if($stream==2){
     //     return view('academic-admin.reports-management.cbe-report.grade2', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments'));
@@ -345,7 +374,7 @@ class CBEReportController extends Controller
     }
 
 
-    return view('academic-admin.reports-management.cbe-report.view', compact('science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row'));
+    return view('academic-admin.reports-management.cbe-report.view', compact('next_term_date','final_term_status','term_opening_date','term_closing_date','science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row', 'pass_mark', 'french'));
 
   
 

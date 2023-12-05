@@ -16,6 +16,7 @@ padding: 0px;
 body{
    /* font-size: 10px; */
    -webkit-print-color-adjust: exact !important;
+  
    
 }
 
@@ -41,8 +42,8 @@ font-style: normal;
 vertical-align: baseline; 
 text-align: left; 
 text-indent: 0px;
-font-size: 9pt; 
-line-height: 11px;
+font-size: 7.5pt; 
+line-height: 10.5px;
 
 }
 
@@ -123,7 +124,7 @@ table{
 
         @foreach ($school as $school_item)
 
-        <img src="{{$school_item->school_logo}}" height="200px" width="200px" class="img-fluid img-rounded  rounded mx-auto d-block" alt="">
+        <img src="{{$school_item->school_letterhead}}" height="200px" width="200px" class="img-fluid img-rounded  rounded mx-auto d-block" alt="">
     
 
        <h4 class="text-center font-weight-bold ">{{$school_item->school_name}}</h4>
@@ -271,7 +272,7 @@ $marks=DB::table('student_subject_averages')
 foreach ($marks as $mark) {
    echo '<tr>';
 echo '<th rowspan="3">Achievement</th>'; 
-if(round($mark->ca_average)<"50"){
+if(round($mark->ca_average)<$pass_mark){
 
 echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
 }else{
@@ -279,7 +280,7 @@ echo '<td>Tests: '.'<strong><span class="text-primary">'.round($mark->ca_average
 }
 echo '</tr>';
 echo '<tr>';
-   if(round($mark->exam_mark)<"50"){
+   if(round($mark->exam_mark)<$pass_mark){
 
 echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
 }else{
@@ -288,7 +289,7 @@ echo '<td>Exam: '.'<strong><span class="text-primary">'.round($mark->exam_mark).
 
 echo '</tr>';
 echo '<tr>';
-   if(round($mark->student_average)<"50"){
+   if(round($mark->student_average)<$pass_mark){
 
        echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
    }else{
@@ -434,7 +435,7 @@ $marks=DB::table('student_subject_averages')
 foreach ($marks as $mark) {
  echo '<tr>';
 echo '<th rowspan="3">Achievement</th>'; 
-if(round($mark->ca_average)<"50"){
+if(round($mark->ca_average)<$pass_mark){
 
 echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
 }else{
@@ -442,7 +443,7 @@ echo '<td>Tests: '.'<strong><span class="text-primary">'.round($mark->ca_average
 }
 echo '</tr>';
 echo '<tr>';
- if(round($mark->exam_mark)<"50"){
+ if(round($mark->exam_mark)<$pass_mark){
 
 echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
 }else{
@@ -451,7 +452,7 @@ echo '<td>Exam: '.'<strong><span class="text-primary">'.round($mark->exam_mark).
 
 echo '</tr>';
 echo '<tr>';
- if(round($mark->student_average)<"50"){
+ if(round($mark->student_average)<$pass_mark){
 
      echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
  }else{
@@ -620,8 +621,16 @@ echo '</thead></tr>';
                      <td colspan="3">Next Open Date</td>
                    </tr>
                    <tr>
-                    <td class="text-bold">11 August 2023</td>
-                    <td class="text-bold" colspan="3">12 September 2023</td>
+                    <td class="text-bold">{{ \Carbon\Carbon::parse($term_closing_date)->format('d F Y')}}</td>
+                    <td class="text-bold" colspan="3">
+                      @if ($next_term_date=="0000-00-00")
+                          Not Entered
+                      @else
+                      {{ \Carbon\Carbon::parse($next_term_date)->format('d F Y')}}  
+                      @endif
+                     
+                    
+                    </td>
                    </tr>
                  </tbody>
                  </table>
@@ -779,7 +788,7 @@ echo '</thead></tr>';
        foreach ($marks as $mark) {
          echo '<tr>';
        echo '<th rowspan="3">Achievement</th>'; 
-       if(round($mark->ca_average)<"50"){
+       if(round($mark->ca_average)<$pass_mark){
        
        echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
        }else{
@@ -787,7 +796,7 @@ echo '</thead></tr>';
        }
        echo '</tr>';
        echo '<tr>';
-         if(round($mark->exam_mark)<"50"){
+         if(round($mark->exam_mark)<$pass_mark){
        
        echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
        }else{
@@ -796,7 +805,7 @@ echo '</thead></tr>';
        
        echo '</tr>';
        echo '<tr>';
-         if(round($mark->student_average)<"50"){
+         if(round($mark->student_average)<$pass_mark){
        
              echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
          }else{
@@ -835,13 +844,165 @@ echo '</thead></tr>';
 
      {{-- end of english --}}
 
+     <div class="col col-sm-4 d-none d-sm-flex flex-column" >
+      @foreach ($french as $item) 
 
+
+    <div class="table-responsive">
+     <table class="table  table-bordered table-sm" id="performance_table">
+      <thead>
+        <tr>
+          
+           <th colspan="2"><strong>{{$item->subject_name}} </strong></th>
+         </tr>
+         <tr>
+             <td>Strand</td>
+             <td>Grade</td>
+           </tr>
+   
+          
+       </thead>
+   
+       <tbody>
+
+         @php
+   
+   
+   if($item->stream_id==1 OR $item->stream_id==2 ){
+   //foundation
+   
+   $strands=DB::table('strands')
+         ->join('cbe_marks', 'cbe_marks.strand_id', '=', 'strands.id')
+         ->join('teaching_loads', 'teaching_loads.id', '=', 'cbe_marks.teaching_load_id')
+         ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+         ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+         ->join('users', 'users.id', '=', 'cbe_marks.student_id')
+         ->join('grades_students', 'grades_students.student_id', '=', 'cbe_marks.student_id')
+         ->select('strands.id as strand_id','strands.strand','users.id as student_id', 'users.name', 'users.middlename', 'users.lastname' ,'grades.id as grade_id', 'grades.grade_name as grade_name', 'subjects.id as subject_id','subjects.subject_name', 'cbe_marks.grade as assessement_grade')
+         // ->where('academic_sessions.active',1)
+         ->where('cbe_marks.student_id',$item->student_id)
+         ->whereIn('teaching_loads.subject_id',[$item->subject_id])
+         ->where('cbe_marks.term_id',$term_id)
+         ->get();
+   }else{
+   
+   
+   
+   $strands=DB::table('strands')
+         ->join('cbe_marks', 'cbe_marks.strand_id', '=', 'strands.id')
+         ->join('teaching_loads', 'teaching_loads.id', '=', 'cbe_marks.teaching_load_id')
+         ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+         ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+         ->join('users', 'users.id', '=', 'cbe_marks.student_id')
+         ->join('grades_students', 'grades_students.student_id', '=', 'cbe_marks.student_id')
+         ->select('strands.id as strand_id','strands.strand','users.id as student_id', 'users.name', 'users.middlename', 'users.lastname' ,'grades.id as grade_id', 'grades.grade_name as grade_name', 'subjects.id as subject_id','subjects.subject_name', 'cbe_marks.grade as assessement_grade')
+         // ->where('academic_sessions.active',1)
+         ->where('cbe_marks.student_id',$item->student_id)
+         ->where('teaching_loads.subject_id',$item->subject_id)
+         ->where('cbe_marks.term_id',$term_id)
+         ->get();
+   
+     
+   }
+   
+   
+   
+   
+   
+   
+   foreach ($strands as $strand) {
+    echo '<tr>';
+   
+   echo '<td>'.$strand->strand.'</td>';
+   echo '<td>'.$strand->assessement_grade.'</td>';
+   
+   echo '</tr>';
+   
+   
+   }
+   
+   
+   
+   
+   if($item->stream_id==1 OR $item->stream_id==2){
+   
+   }else{
+   
+   
+   
+   $marks=DB::table('student_subject_averages')
+         
+         ->join('teaching_loads', 'teaching_loads.id', '=', 'student_subject_averages.teaching_load_id')
+         ->join('users', 'users.id', '=', 'student_subject_averages.student_id')
+         ->where('student_subject_averages.student_id',$item->student_id)
+         ->where('teaching_loads.subject_id',$item->subject_id)
+         ->where('student_subject_averages.term_id',$term_id)
+         ->get();
+   
+   foreach ($marks as $mark) {
+     echo '<tr>';
+   echo '<th rowspan="3">Achievement</th>'; 
+   if(round($mark->ca_average)<$pass_mark){
+   
+   echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
+   }else{
+   echo '<td>Tests: '.'<strong><span class="text-primary">'.round($mark->ca_average).'%'.'</span></strong></td>';
+   }
+   echo '</tr>';
+   echo '<tr>';
+     if(round($mark->exam_mark)<$pass_mark){
+   
+   echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
+   }else{
+   echo '<td>Exam: '.'<strong><span class="text-primary">'.round($mark->exam_mark).'%'.'</span></strong></td>';
+   }
+   
+   echo '</tr>';
+   echo '<tr>';
+     if(round($mark->student_average)<$pass_mark){
+   
+         echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
+     }else{
+         echo '<td>Total: '.'<strong><span class="text-primary">'.round($mark->student_average).'%'.'</span></strong></td>';
+     }
+       
+   echo '</tr>';
+
+   echo '<tr> <thead>';
+   echo '<th>'."Comment".'</th>';
+   
+   foreach ($comments  as $comment) {
+     if( in_array(round($mark->student_average), range($comment->from,$comment->to)) ) 
+                
+   
+                 echo '<td>'.$comment->comment.'</td>';
+             
+   }
+   
+   echo '</thead></tr>'; 
+   }
+   
+
+   }
+     
+         @endphp
+
+       </tbody>
+    </table> 
+
+   </div>
+
+ 
+   @endforeach 
+ </div>
+
+ {{-- end of french --}}
 
 
 {{-- siswati column --}}
 
 
- <div class="col-8" >
+ <div class="col col-sm-4 d-none d-sm-flex flex-column" >
 
   @foreach ($siswati as $item) 
 
@@ -939,7 +1100,7 @@ echo '</thead></tr>';
  foreach ($marks as $mark) {
    echo '<tr>';
  echo '<th rowspan="3">Achievement</th>'; 
- if(round($mark->ca_average)<"50"){
+ if(round($mark->ca_average)<$pass_mark){
  
  echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
  }else{
@@ -947,7 +1108,7 @@ echo '</thead></tr>';
  }
  echo '</tr>';
  echo '<tr>';
-   if(round($mark->exam_mark)<"50"){
+   if(round($mark->exam_mark)<$pass_mark){
  
  echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
  }else{
@@ -956,7 +1117,7 @@ echo '</thead></tr>';
  
  echo '</tr>';
  echo '<tr>';
-   if(round($mark->student_average)<"50"){
+   if(round($mark->student_average)<$pass_mark){
  
        echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
    }else{
@@ -1095,7 +1256,7 @@ $marks=DB::table('student_subject_averages')
 foreach ($marks as $mark) {
 echo '<tr>';
 echo '<th rowspan="3">Achievement</th>'; 
-if(round($mark->ca_average)<"50"){
+if(round($mark->ca_average)<$pass_mark){
 
 echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
 }else{
@@ -1103,7 +1264,7 @@ echo '<td>Tests: '.'<strong><span class="text-primary">'.round($mark->ca_average
 }
 echo '</tr>';
 echo '<tr>';
-if(round($mark->exam_mark)<"50"){
+if(round($mark->exam_mark)<$pass_mark){
 
 echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
 }else{
@@ -1112,7 +1273,7 @@ echo '<td>Exam: '.'<strong><span class="text-primary">'.round($mark->exam_mark).
 
 echo '</tr>';
 echo '<tr>';
-if(round($mark->student_average)<"50"){
+if(round($mark->student_average)<$pass_mark){
 
    echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
 }else{
@@ -1256,7 +1417,7 @@ echo '</thead></tr>';
   foreach ($marks as $mark) {
   echo '<tr>';
   echo '<th rowspan="3">Achievement</th>'; 
-  if(round($mark->ca_average)<"50"){
+  if(round($mark->ca_average)<$pass_mark){
   
   echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
   }else{
@@ -1264,7 +1425,7 @@ echo '</thead></tr>';
   }
   echo '</tr>';
   echo '<tr>';
-  if(round($mark->exam_mark)<"50"){
+  if(round($mark->exam_mark)<$pass_mark){
   
   echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
   }else{
@@ -1273,7 +1434,7 @@ echo '</thead></tr>';
   
   echo '</tr>';
   echo '<tr>';
-  if(round($mark->student_average)<"50"){
+  if(round($mark->student_average)<$pass_mark){
   
      echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
   }else{
@@ -1415,7 +1576,7 @@ echo '</thead></tr>';
   foreach ($marks as $mark) {
   echo '<tr>';
   echo '<th rowspan="3">Achievement</th>'; 
-  if(round($mark->ca_average)<"50"){
+  if(round($mark->ca_average)<$pass_mark){
   
   echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
   }else{
@@ -1423,7 +1584,7 @@ echo '</thead></tr>';
   }
   echo '</tr>';
   echo '<tr>';
-  if(round($mark->exam_mark)<"50"){
+  if(round($mark->exam_mark)<$pass_mark){
   
   echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
   }else{
@@ -1432,7 +1593,7 @@ echo '</thead></tr>';
   
   echo '</tr>';
   echo '<tr>';
-  if(round($mark->student_average)<"50"){
+  if(round($mark->student_average)<$pass_mark){
   
      echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
   }else{
@@ -1573,7 +1734,7 @@ echo '</thead></tr>';
     foreach ($marks as $mark) {
     echo '<tr>';
     echo '<th rowspan="3">Achievement</th>'; 
-    if(round($mark->ca_average)<"50"){
+    if(round($mark->ca_average)<$pass_mark){
     
     echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
     }else{
@@ -1581,7 +1742,7 @@ echo '</thead></tr>';
     }
     echo '</tr>';
     echo '<tr>';
-    if(round($mark->exam_mark)<"50"){
+    if(round($mark->exam_mark)<$pass_mark){
     
     echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
     }else{
@@ -1590,7 +1751,7 @@ echo '</thead></tr>';
     
     echo '</tr>';
     echo '<tr>';
-    if(round($mark->student_average)<"50"){
+    if(round($mark->student_average)<$pass_mark){
     
        echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
     }else{
@@ -1737,7 +1898,7 @@ echo '</thead></tr>';
       foreach ($marks as $mark) {
       echo '<tr>';
       echo '<th rowspan="3">Achievement</th>'; 
-      if(round($mark->ca_average)<"50"){
+      if(round($mark->ca_average)<$pass_mark){
       
       echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
       }else{
@@ -1745,7 +1906,7 @@ echo '</thead></tr>';
       }
       echo '</tr>';
       echo '<tr>';
-      if(round($mark->exam_mark)<"50"){
+      if(round($mark->exam_mark)<$pass_mark){
       
       echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
       }else{
@@ -1754,7 +1915,7 @@ echo '</thead></tr>';
       
       echo '</tr>';
       echo '<tr>';
-      if(round($mark->student_average)<"50"){
+      if(round($mark->student_average)<$pass_mark){
       
          echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
       }else{
@@ -1893,7 +2054,7 @@ echo '</thead></tr>';
         foreach ($marks as $mark) {
         echo '<tr>';
         echo '<th rowspan="3">Achievement</th>'; 
-        if(round($mark->ca_average)<"50"){
+        if(round($mark->ca_average)<$pass_mark){
         
         echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
         }else{
@@ -1901,7 +2062,7 @@ echo '</thead></tr>';
         }
         echo '</tr>';
         echo '<tr>';
-        if(round($mark->exam_mark)<"50"){
+        if(round($mark->exam_mark)<$pass_mark){
         
         echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
         }else{
@@ -1910,7 +2071,7 @@ echo '</thead></tr>';
         
         echo '</tr>';
         echo '<tr>';
-        if(round($mark->student_average)<"50"){
+        if(round($mark->student_average)<$pass_mark){
         
            echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
         }else{
@@ -2065,7 +2226,7 @@ echo '</thead></tr>';
           foreach ($marks as $mark) {
           echo '<tr>';
           echo '<th rowspan="3">Achievement</th>'; 
-          if(round($mark->ca_average)<"50"){
+          if(round($mark->ca_average)<$pass_mark){
           
           echo '<td>Tests: '.'<strong><span class="text-danger">'.round($mark->ca_average).'%'.'</span></strong></td>';
           }else{
@@ -2073,7 +2234,7 @@ echo '</thead></tr>';
           }
           echo '</tr>';
           echo '<tr>';
-          if(round($mark->exam_mark)<"50"){
+          if(round($mark->exam_mark)<$pass_mark){
           
           echo '<td>Exam: '.'<strong><span class="text-danger">'.round($mark->exam_mark).'%'.'</span></strong></td>';
           }else{
@@ -2082,7 +2243,7 @@ echo '</thead></tr>';
           
           echo '</tr>';
           echo '<tr>';
-          if(round($mark->student_average)<"50"){
+          if(round($mark->student_average)<$pass_mark){
           
              echo '<td>Total: '.'<strong><span class="text-danger">'.round($mark->student_average).'%'.'</span></strong></td>';
           }else{
