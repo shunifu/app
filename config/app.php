@@ -198,12 +198,12 @@ return [
 //     // The environment is local
 // }
 
-'DB_CONNECTION' => 'mysql',
-'DB_HOST' => "127.0.0.1",
-'DB_PORT' => '3306',
-'DB_DATABASE' => env('DB_NAME'),
-'DB_USERNAME' => 'root',
-'DB_PASSWORD'=>'',
+// 'DB_CONNECTION' => 'mysql',
+// 'DB_HOST' => "127.0.0.1",
+// 'DB_PORT' => '3306',
+// 'DB_DATABASE' => env('DB_NAME'),
+// 'DB_USERNAME' => 'root',
+// 'DB_PASSWORD'=>'',
 
 
 // 'DB_CONNECTION' => 'shunifuservices',
