@@ -124,7 +124,7 @@ table{
 
         @foreach ($school as $school_item)
 
-        <img src="{{$school_item->school_letterhead}}" height="200px" width="200px" class="img-fluid img-rounded  rounded mx-auto d-block" alt="">
+        <img src="{{$school_item->school_letter_head}}" height="200px" width="200px" class="img-fluid img-rounded  rounded mx-auto d-block" alt="">
     
 
        <h4 class="text-center font-weight-bold ">{{$school_item->school_name}}</h4>
