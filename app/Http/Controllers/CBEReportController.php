@@ -10,6 +10,7 @@ use App\Models\ReportVariable;
 use App\Models\School;
 use App\Models\Section;
 use App\Models\Stream;
+use App\Models\StudentClass;
 use App\Models\Term;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -320,20 +321,41 @@ class CBEReportController extends Controller
 
 
 
+$getStream=StudentClass::where('student_id',$student_id )->first();
+$stream=Grade::where('id', $getStream->grade_id)->first();
+$stream_is=$stream->stream_id;
+
+if($stream_is==1 OR $stream_is==2){
+    $student_data="0";
 
 
-        $student_data="0";
+    $student_details=DB::table('users')
+    ->join('grades_students', 'grades_students.student_id', '=', 'users.id')
+    ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+    ->join('streams', 'streams.id', '=', 'grades.stream_id')
+    ->select('users.id as student_id','users.name','users.lastname','users.middlename','grades.id as grade_id','grades.grade_name', 'streams.stream_name as stream_name', 'users.profile_photo_path as student_image', 'users.national_id as pin', 'streams.id as stream_id'  )
+    ->where('users.id',$student_id)
+    
+    ->get();
+}else{
+    $student_data="0";
 
 
-        $student_details=DB::table('users')
-        ->join('grades_students', 'grades_students.student_id', '=', 'users.id')
-        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-        ->join('streams', 'streams.id', '=', 'grades.stream_id')
-        ->join('term_averages', 'term_averages.student_id', '=', 'users.id')
-        ->select('users.id as student_id','users.name','users.lastname','users.middlename','grades.id as grade_id','grades.grade_name', 'streams.stream_name as stream_name', 'users.profile_photo_path as student_image', 'users.national_id as pin', 'streams.id as stream_id', 'term_averages.final_term_status', )
-        ->where('users.id',$student_id)
-        ->where('term_id',$term_id)
-        ->get();
+    $student_details=DB::table('users')
+    ->join('grades_students', 'grades_students.student_id', '=', 'users.id')
+    ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+    ->join('streams', 'streams.id', '=', 'grades.stream_id')
+    ->join('term_averages', 'term_averages.student_id', '=', 'users.id')
+    ->select('users.id as student_id','users.name','users.lastname','users.middlename','grades.id as grade_id','grades.grade_name', 'streams.stream_name as stream_name', 'users.profile_photo_path as student_image', 'users.national_id as pin', 'streams.id as stream_id', 'term_averages.final_term_status' )
+    ->where('users.id',$student_id)
+    ->where('term_id',$term_id)
+    ->get();
+}
+
+
+     
+
+        
 
 
         $stream=$student_details['0']->stream_id;
