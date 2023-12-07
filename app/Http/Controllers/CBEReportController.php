@@ -157,18 +157,26 @@ class CBEReportController extends Controller
        
 
 //religious, social, personal skills
-        $back_subjects=DB::table('student_loads')
+        $religious_education=DB::table('student_loads')
         ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
         ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
         ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[36, 26])
+        ->whereIn('subjects.id',[26])
         ->get();
 
 
-      
+        $social_studies=DB::table('student_loads')
+        ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
+        ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
+        ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
+        ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
+        ->where('student_loads.student_id',$student_id)
+        ->where('student_loads.active',1)
+        ->whereIn('subjects.id',[36])
+        ->get();
 
 
         $hpe=DB::table('student_loads')
@@ -320,9 +328,12 @@ class CBEReportController extends Controller
         ->join('grades_students', 'grades_students.student_id', '=', 'users.id')
         ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
         ->join('streams', 'streams.id', '=', 'grades.stream_id')
-        ->select('users.id as student_id','users.name','users.lastname','users.middlename','grades.id as grade_id','grades.grade_name', 'streams.stream_name as stream_name', 'users.profile_photo_path as student_image', 'users.national_id as pin', 'streams.id as stream_id')
+        ->join('term_averages', 'term_averages.student_id', '=', 'users.id')
+        ->select('users.id as student_id','users.name','users.lastname','users.middlename','grades.id as grade_id','grades.grade_name', 'streams.stream_name as stream_name', 'users.profile_photo_path as student_image', 'users.national_id as pin', 'streams.id as stream_id', 'term_averages.final_term_status', )
         ->where('users.id',$student_id)
+        ->where('term_id',$term_id)
         ->get();
+
 
         $stream=$student_details['0']->stream_id;
         $grade_id=$student_details['0']->grade_id;
@@ -361,7 +372,7 @@ class CBEReportController extends Controller
 
 
     if ($stream==1 OR $stream==2) {
-        $size="size:  JIS-B4;";
+        $size="size:  landscape A4;";
       
         $gutter="no-gutters";
       
@@ -373,8 +384,27 @@ class CBEReportController extends Controller
         $row='<div class="row">';
     }
 
+    
 
-    return view('academic-admin.reports-management.cbe-report.view', compact('next_term_date','final_term_status','term_opening_date','term_closing_date','science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row', 'pass_mark', 'french'));
+    if($stream==1 or $stream==2){
+        return view('academic-admin.reports-management.cbe-report.view_foundation_phase', compact('next_term_date','final_term_status','term_opening_date','term_closing_date','science','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row', 'pass_mark', 'french','religious_education'));
+    }
+
+    if($stream==3){
+        return view('academic-admin.reports-management.cbe-report.view_grade3', compact('next_term_date','final_term_status','term_opening_date','term_closing_date','science','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row', 'pass_mark', 'french','religious_education'));
+    }
+
+    if($stream==4){
+        return view('academic-admin.reports-management.cbe-report.view_grade_4', compact('next_term_date','final_term_status','term_opening_date','term_closing_date','science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row', 'pass_mark', 'french'));
+    }
+
+    if($stream==5){
+        return view('academic-admin.reports-management.cbe-report.view_grade_5', compact('next_term_date','final_term_status','term_opening_date','term_closing_date','science','back_subjects','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row', 'pass_mark', 'french'));
+    }
+
+
+
+   
 
   
 
