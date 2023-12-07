@@ -292,7 +292,9 @@
   
           <div class="col pt-1">
               @include('academic-admin.reports-management.cbe-report.general_studies')
-  
+              <div class="col">
+                @include('academic-admin.reports-management.cbe-report.expressive_art')
+            </div>
             
           </div>
       </div>
