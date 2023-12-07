@@ -272,6 +272,7 @@ class CBEReportController extends Controller
         ->where('student_loads.active',1)
         ->whereIn('subjects.id',[42])
         ->get();
+        
 
         $personal_skills=DB::table('student_loads')
         ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
@@ -398,7 +399,7 @@ class CBEReportController extends Controller
         return view('academic-admin.reports-management.cbe-report.view_grade4', compact('next_term_date','final_term_status','term_opening_date','term_closing_date','science','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row', 'pass_mark', 'french','religious_education'));
     }
     if($stream==5){
-        return view('academic-admin.reports-management.cbe-report.view_grade5', compact('next_term_date','final_term_status','term_opening_date','term_closing_date','science','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row', 'pass_mark', 'french','religious_education'));
+        return view('academic-admin.reports-management.cbe-report.view_grade5', compact('next_term_date','final_term_status','term_opening_date','term_closing_date','science','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row', 'pass_mark', 'french','religious_education', 'agric', 'social_studies'));
     }
 
 

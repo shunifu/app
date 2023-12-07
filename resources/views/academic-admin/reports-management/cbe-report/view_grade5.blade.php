@@ -115,7 +115,7 @@
   } */
 
   .table-bordered>tbody>tr>td,  .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
-  padding:2px;
+  padding:1px;
 }
   
   
@@ -189,7 +189,7 @@
   
          <p></p>
   
-         <h6 class=" display-4 text-center font-weight-bold ">Middle Phase</h6>
+         <h6 class=" display-4 text-center font-weight-bold ">Upper Phase</h6>
        
          <p></p>
   
@@ -288,14 +288,30 @@
       </div>
   
       <div class="col-3 pt-2 ">
-          @include('academic-admin.reports-management.cbe-report.maths')
-  
-          <div class="col pt-1">
-              @include('academic-admin.reports-management.cbe-report.general_studies')
-  
-            
+        @include('academic-admin.reports-management.cbe-report.maths')
+
+        <div class="col pt-1">
+            @include('academic-admin.reports-management.cbe-report.general_studies')
+            <div class="col">
+              @include('academic-admin.reports-management.cbe-report.expressive_art')
           </div>
-      </div>
+          
+        </div>
+    </div>
+
+    <div class="col-3 pt-2 ">
+        @include('academic-admin.reports-management.cbe-report.science')
+
+        <div class="col pt-1">
+            @include('academic-admin.reports-management.cbe-report.agriculture')
+            <div class="col">
+              @include('academic-admin.reports-management.cbe-report.social_studies')
+          </div>
+          
+        </div>
+    </div>
+
+      
   
       <div class="col pt-2">
           @include('academic-admin.reports-management.cbe-report.siswati')
