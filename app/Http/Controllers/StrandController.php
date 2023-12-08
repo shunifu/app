@@ -166,9 +166,9 @@ class StrandController extends Controller
      * @param  \App\Models\Strand  $strand
      * @return \Illuminate\Http\Response
      */
-    public function edit(Strand $strand)
+    public function edit(Strand $strand, Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

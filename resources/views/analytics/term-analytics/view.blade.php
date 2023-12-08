@@ -137,7 +137,7 @@ th span {
         <th><span>ECON</span></th>
         <th><span>Phy-Science</span></th>
         <th><span>Bio</span></th>
-     
+        <th><span>BioCore</span></th>
         @endif
 
         @foreach (\App\Models\School::all() as $item)
@@ -483,6 +483,16 @@ th span {
                         
                         @elseif($student->Biology<$pass_rate )
                         <span class="text-danger">{{ round($student->Biology)}} </span>
+                        @endif
+                    </td>
+
+                    <td class="align-middle p-2">
+                        @if ($student->BioCore>=$pass_rate)
+                        <span class="text-secondary">{{round($student->BioCore)}} </span>
+                        @elseif(is_null($student->BioCore))
+                        
+                        @elseif($student->BioCore<$pass_rate )
+                        <span class="text-danger">{{ round($student->BioCore)}} </span>
                         @endif
                     </td>
 
