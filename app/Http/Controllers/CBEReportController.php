@@ -264,6 +264,7 @@ class CBEReportController extends Controller
         ->whereIn('subjects.id',[37])
         ->get();
 
+
         $practical_arts=DB::table('student_loads')
         ->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
         ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')

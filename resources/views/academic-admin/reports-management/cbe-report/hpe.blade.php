@@ -29,33 +29,88 @@ $strands=DB::table('strands')
      ->where('cbe_marks.student_id',$item->student_id)
      ->where('teaching_loads.subject_id',$item->subject_id)
      ->where('cbe_marks.term_id',$term_id)
-     ->get();
+     ->get()->toArray();
+
+
+
+    // dd($strands);
+     
+     $total_strands = count(collect($strands));
 
 
 
 
 
 
-
-foreach ($strands as $strand) {
-echo '<tr>';
-
-echo '<td>'.$strand->strand.'</td>';
-echo '<td>'.$strand->assessement_grade.'</td>';
-
-echo '</tr>';
-
-
-}
 
 
 
 
 if($item->stream_id==1 OR $item->stream_id==2){
 
+    $strands_array = array();
+foreach ($strands as $h) {
+  $strands_array[] = $h->assessement_grade;
+}
+$uique_arrays = array_count_values($strands_array);
+// dd(array_sum($uique_arrays));
+
+$total_strands=array_sum($uique_arrays);
+$descriptor_keys = collect($uique_arrays);
+
+$keys = $descriptor_keys->keys();
+
+
+$weight=[];
+foreach ($keys as $key => $value) {
+
+ if($value=="Excellent"){
+  $weight[]=5;
+ }
+
+ if($value=="Very Good"){
+  $weight[]=4;
+ }
+
+ if($value=="Good"){
+  $weight[]=3;
+ }
+  
+ if($value=="Sufficient"){
+  $weight[]=2;
+ }
+
+ if($value=="Not Sufficient"){
+  $weight[]=1;
+ }
+
+
+}
+$weight_sum=array_sum($weight);
+$score=($weight_sum/$total_strands)*100;
+
+if($score>100){
+   $cal_1=($weight_sum/$total_strands);
+
+   $cal_2=$cal_1*$total_strands;
+   
+  $score=($weight_sum/$cal_2)*100;
+}
+
+echo '<tr> <thead>';
+echo '<th>'."Comment".'</th>';
+
+foreach ($comments  as $comment) {
+ if( in_array(round($score), range($comment->from,$comment->to)) ) 
+   echo '<td>'.$comment->comment.'</td>';
+         
+}
+
+echo '</thead></tr>'; 
+
+  
+
 }else{
-
-
 
 $marks=DB::table('student_subject_averages')
      
