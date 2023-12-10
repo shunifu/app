@@ -1235,27 +1235,27 @@
 
 
               <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
+                {{-- <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
                   <p>
                     Ratio Checker
                     <i class="fas fa-angle-left right"></i>
                   </p>
-                </a>
+                </a> --}}
                 <ul class="nav nav-treeview">
                
-                  <li class="nav-item">
+                  {{-- <li class="nav-item">
                     <a href="/report/term-based/" class="nav-link">
                       <i class="nav-icon fas fa-chevron-circle-right"></i>
                       <p>Stream Based</p>
                     </a>
-                  </li>
-                  <li class="nav-item">
+                  </li> --}}
+                  {{-- <li class="nav-item">
                     <a href="/report/term-based/class" class="nav-link">
                       <i class="nav-icon fas fa-chevron-circle-right"></i>
                       <p>Class Based</p>
                     </a>
-                  </li>
+                  </li> --}}
                 
                 </ul>
               </li>
@@ -1393,24 +1393,6 @@
     
     
            
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="{{ route('admin_check.loads') }}" class="nav-link">
-                       <i class="nav-icon fas fa-chevron-circle-right"></i>
-                      <p>Strands Management</p>
-                    </a>
-                  </li>
-                </ul>
-            
-    
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="/teaching-loads/transfer/" class="nav-link">
-                       <i class="nav-icon fas fa-chevron-circle-right"></i>
-                      <p>Transfer Loads</p>
-                    </a>
-                  </li>
-                </ul>
      
      
               </li>

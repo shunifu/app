@@ -213,6 +213,7 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
        Route::post('/academic-admin/strands-bank/show', [StrandController::class,'show'])->name('strands.show');
 
        Route::get(' /academic-admin/strands/edit/{id}', [StrandController::class,'edit'])->name('strands.edit');
+       Route::post('/academic-admin/strands/update', [StrandController::class,'update'])->name('strands.update');
 
        Route::post('/subject/modify', [SubjectController::class,'modify'])->name('subject.modify');
    

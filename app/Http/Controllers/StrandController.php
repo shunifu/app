@@ -166,9 +166,16 @@ class StrandController extends Controller
      * @param  \App\Models\Strand  $strand
      * @return \Illuminate\Http\Response
      */
-    public function edit(Strand $strand, Request $request)
+    public function edit(Strand $strand, $id)
     {
-        dd($request->all());
+
+        $strand_id=$id;
+
+        $strand=Strand::where('id', $strand_id)->first();
+       
+
+        return view('academic-admin.strands-management.edit', compact('strand_id', 'strand'));
+
     }
 
     /**
@@ -180,8 +187,30 @@ class StrandController extends Controller
      */
     public function update(Request $request, Strand $strand)
     {
-        //
-    }
+    
+
+
+        $id=$request->strand_id;
+        $strand=$request->strand;
+    
+      //  dd($request->all());
+        try {
+            // Get the updated rows count here. Keep in mind that zero is a
+            // valid value (not failure) if there were no updates needed
+             Strand::where('id',$id)->update(['strand'=>$strand]);
+    
+            flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have successfully updated strand', 'Update Strand');
+            return redirect()->back();
+            
+        } catch (\Illuminate\Database\QueryException $e) {
+            flash()->overlay('<i class="fas fa-check-circle text-danger"></i> Error. Strand not updated', 'Update Strand');
+            return redirect()->back();
+        }
+
+        
+       
+        }    
+
 
     /**
      * Remove the specified resource from storage.

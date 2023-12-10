@@ -101,9 +101,9 @@
                     </div>
                     <!-- /.card-body -->
 
-                    <div class="card-footer">
-                        <x-jet-button>Add Strands</x-jet-button>
-                    </div>
+                <div class="card-footer">
+                    <x-jet-button>Add Strands</x-jet-button>
+                </div>
                 </form>
             </div>
 

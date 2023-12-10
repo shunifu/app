@@ -487,12 +487,12 @@ th span {
                     </td>
 
                     <td class="align-middle p-2">
-                        @if ($student->BioCore>=$pass_rate)
-                        <span class="text-secondary">{{round($student->BioCore)}} </span>
-                        @elseif(is_null($student->BioCore))
+                        @if ($student->Biocore>=$pass_rate)
+                        <span class="text-secondary">{{round($student->Biocore)}} </span>
+                        @elseif(is_null($student->Biocore))
                         
-                        @elseif($student->BioCore<$pass_rate )
-                        <span class="text-danger">{{ round($student->BioCore)}} </span>
+                        @elseif($student->Biocore<$pass_rate )
+                        <span class="text-danger">{{ round($student->Biocore)}} </span>
                         @endif
                     </td>
 

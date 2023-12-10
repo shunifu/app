@@ -60,7 +60,7 @@
                       </button>
                       <div class="dropdown-menu">
                         <a class="dropdown-item" href="/academic-admin/strands/edit/{{$item->id}}">Edit Strand</a>
-                      
+                        <a class="dropdown-item" href="/academic-admin/strands/delete/{{$item->id}}">Delete Strand</a>
                       </div>
                     </div>
                    
