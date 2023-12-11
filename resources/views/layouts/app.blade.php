@@ -791,18 +791,18 @@
 
                     <ul class="nav nav-treeview">
                
-                      <li class="nav-item">
+                      {{-- <li class="nav-item">
                         <a href="/report/term-based/" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Stream Report</p>
                         </a>
-                      </li>
-                      <li class="nav-item">
+                      </li> --}}
+                      {{-- <li class="nav-item">
                         <a href="/report/term-based/class" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Class Report</p>
                         </a>
-                      </li>
+                      </li> --}}
                       <li class="nav-item">
                         <a href="/report/term-based/individual" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>

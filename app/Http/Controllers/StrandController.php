@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CBEMark;
 use App\Models\Grade;
 use App\Models\Strand;
 use App\Models\Stream;
@@ -218,8 +219,16 @@ class StrandController extends Controller
      * @param  \App\Models\Strand  $strand
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Strand $strand)
+    public function destroy(Strand $strand, $id)
     {
-        //
+        $find=CBEMark::where('strand_id', $id)->exists();
+
+        if($find){
+            flash()->overlay('<i class="fas fa-check-circle text-danger"></i> Error. Strand not updated', 'Update Strand');
+            return redirect()->back();
+        }else{
+            $strand=Strand::where('id', $id)->delete();
+        }
+
     }
 }
