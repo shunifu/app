@@ -47,7 +47,7 @@ line-height: 10.5px;
 
 }
 .table-bordered>tbody>tr>td,  .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
-  padding:4px;
+  padding:5px;
 }
   
 div.col-4{
@@ -177,7 +177,7 @@ table{
 
        <p></p>
 
-       <h6 class=" display-4 text-center font-weight-bold ">Lower Phase</h6>
+       <h6 class=" display-4 text-center font-weight-bold ">Foundation Phase</h6>
      
        <p></p>
 

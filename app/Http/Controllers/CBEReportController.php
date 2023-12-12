@@ -261,7 +261,7 @@ class CBEReportController extends Controller
         ->select('teaching_loads.id as teaching_load_id','subjects.subject_name','subjects.id as subject_id', 'subjects.id as subject_id','subjects.subject_name', 'student_loads.student_id','grades.stream_id as stream_id')
         ->where('student_loads.student_id',$student_id)
         ->where('student_loads.active',1)
-        ->whereIn('subjects.id',[37])
+        ->where('subjects.id',[37])
         ->get();
 
 

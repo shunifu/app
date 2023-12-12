@@ -189,7 +189,7 @@
   
          <p></p>
   
-         <h6 class=" display-4 text-center font-weight-bold ">Lower Phase</h6>
+         <h6 class=" display-4 text-center font-weight-bold ">Middle Phase</h6>
        
          <p></p>
   

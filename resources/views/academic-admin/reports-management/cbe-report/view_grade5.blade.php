@@ -143,6 +143,10 @@
   
           <div class="col">
             @include('academic-admin.reports-management.cbe-report.descriptors')
+
+            <div class="col">
+              @include('academic-admin.reports-management.cbe-report.consumer')
+                  </div>
                 </div>
       </div>
     

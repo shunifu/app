@@ -1,4 +1,4 @@
-@foreach ($expressive_art as $item) 
+@foreach ($consumer_science as $item) 
 
 <div class="table-responsive">
  <table class="table  table-bordered table-sm" id="performance_table">
