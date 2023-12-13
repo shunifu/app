@@ -63,4 +63,8 @@ class RestrictionController extends Controller
     
 
     }
+
+    public function payment_based_restriction_index(){
+
+    }
 }
