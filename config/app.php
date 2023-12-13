@@ -186,24 +186,24 @@ return [
 // 'APP_ENV' => 'production',
 
 
-'DB_CONNECTION' => 'mysql',
-'DB_HOST' => "SG-gcina-8009-mysql-master.servers.mongodirector.com",
-'DB_PORT' => '3306',
-'DB_DATABASE' => env('DB_NAME'),
-'DB_USERNAME' => 'sgroot',
-'DB_PASSWORD'=>'orIaQ46rsN+y14oQ',
+// 'DB_CONNECTION' => 'mysql',
+// 'DB_HOST' => "SG-gcina-8009-mysql-master.servers.mongodirector.com",
+// 'DB_PORT' => '3306',
+// 'DB_DATABASE' => env('DB_NAME'),
+// 'DB_USERNAME' => 'sgroot',
+// 'DB_PASSWORD'=>'orIaQ46rsN+y14oQ',
 
 
 // if (App::environment('local')) {
 //     // The environment is local
 // }
 
-// 'DB_CONNECTION' => 'mysql',
-// 'DB_HOST' => "127.0.0.1",
-// 'DB_PORT' => '3306',
-// 'DB_DATABASE' => env('DB_NAME'),
-// 'DB_USERNAME' => 'root',
-// 'DB_PASSWORD'=>'',
+'DB_CONNECTION' => 'mysql',
+'DB_HOST' => "127.0.0.1",
+'DB_PORT' => '3306',
+'DB_DATABASE' => env('DB_NAME'),
+'DB_USERNAME' => 'root',
+'DB_PASSWORD'=>'',
 
 
 // 'DB_CONNECTION' => 'shunifuservices',

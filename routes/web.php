@@ -96,6 +96,7 @@ use App\Http\Controllers\InsetWorkshopController;
 use App\Http\Controllers\MarkSettingController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\PermissionsManagementController;
+use App\Http\Controllers\RestrictionController;
 use App\Http\Controllers\ShunifuServiceController;
 use App\Http\Controllers\StrandController;
 use App\Http\Controllers\TimetableController;
@@ -322,8 +323,8 @@ Route::get('/users/student/manage/password/reset/{id}',[StudentController::class
 Route::get('/users/student/manage/removal',[StudentController::class,'student_removal'])->name('student.removal_index');
 
 Route::post('/send/single/parent',[StudentController::class,'send_msg']);
-
-
+Route::get('/parent/restriction/time-based',[RestrictionController::class,'time_based_index']);
+Route::post('/parent/restriction/time-based/store',[RestrictionController::class,'time_based_store']);
 
 
 Route::post('/users/student/manage/removal/process',[StudentController::class,'removal_loadstudents'])->name('student.removal');
