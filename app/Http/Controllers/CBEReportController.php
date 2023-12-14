@@ -777,52 +777,7 @@ return redirect()->back();
       }
   
     }else{
-        $children = DB::table('parents_students')
-        ->join('users', 'users.id', '=', 'parents_students.student_id')
-        ->join('grades_students', 'grades_students.student_id', '=', 'users.id')
-        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
-        ->where('parents_students.parent_id', Auth::user()->id)
-        ->where('users.active', 1)
-        ->get();
-    
-    
-       // dd($children);
-    
-            $terms=Term::all();
-    
-    
-    
-            $terms=DB::table('terms')
-            ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
-          
-            ->select('terms.id as term_id','terms.term_name', 'academic_sessions.academic_session')
-            ->get();
-    
-            //Scope to current session ....think about it.
-    
-            //Streams
-            $streams=Stream::all();
-    
-            //Classes
-            $classes=Grade::all();
-    
-            //Section
-            $sections=Section::all();
-    
-            $assessements=DB::table('assessements')
-            ->join('terms','terms.id','=','assessements.term_id')
-            ->join('assessement_types','assessement_types.id','=','assessements.assessement_type')
-            ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
-            ->where('academic_sessions.active', 1 )//
-            ->select('assessements.id as assessement_id','terms.term_name', 'assessement_name', 'assessement_type_name')
-            ->get();
-            
-            $templates=ReportTemplate::all();
-    
-            $variables=ReportVariable::all();
-    
-    
-            return view('users.parents.performance.index',compact('children', 'terms', 'templates', 'variables', 'classes'));
+        
     }
   
      
