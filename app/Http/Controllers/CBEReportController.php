@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AcademicSession;
 use App\Models\Grade;
 use App\Models\PassRate;
+use App\Models\PaymentRestriction;
 use App\Models\ReportTemplate;
 use App\Models\ReportVariable;
 use App\Models\School;
@@ -465,7 +466,17 @@ $dateToCheck =Carbon::now();
 if ($dateToCheck->between($startDate, $endDate)) {
    
 
-     //Chek Payment Restriction
+  $payments=PaymentRestriction::where('student_id', $student_id)->exists();
+
+  if($payments){
+
+ echo "Cannot view report due to outstanding fees";
+
+ 
+
+ exit();
+
+  }
       
   
   
