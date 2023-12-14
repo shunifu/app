@@ -490,21 +490,11 @@ return redirect()->back();
   
           $pdf = App::make('dompdf.wrapper');
   
-          //Get the strands
-  
-          // $student_data=DB::table('strands')
-          // ->join('cbe_marks', 'cbe_marks.strand_id', '=', 'strands.id')
-          // ->join('teaching_loads', 'teaching_loads.id', '=', 'cbe_marks.teaching_load_id')
-          // ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
-          // ->join('grades', 'grades.id', '=', 'teaching_loads.class_id')
-          // ->join('users', 'users.id', '=', 'cbe_marks.student_id')
-          // ->join('grades_students', 'grades_students.student_id', '=', 'cbe_marks.student_id')
-          // ->select('strands.id as strand_id','strands.strand','users.id as student_id', 'users.name', 'users.middlename', 'users.lastname' ,'grades.id as grade_id', 'grades.grade_name as grade_name', 'subjects.id as subject_id','subjects.subject_name', 'cbe_marks.grade as assessement_grade')
-          // // ->where('academic_sessions.active',1)
-          // ->where('cbe_marks.student_id',$id)
-          // ->where('cbe_marks.term_id',3)
-          // ->groupBy('subjects.id')
-          // ->get();
+        // if($report_type=="OBE"){
+
+
+
+        // }
   
           
          
