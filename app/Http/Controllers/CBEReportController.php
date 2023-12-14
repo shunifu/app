@@ -439,7 +439,7 @@ if($stream_is==1 OR $stream_is==2){
 
     public function generate_parent(Request $request){
 
-        dd($request->all());
+       // dd($request->all());
   
       //   "student_id" => "4632"
       //   "term" => "3"
