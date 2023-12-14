@@ -2012,13 +2012,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="parent/restriction/time-based" class="nav-link">
+                    <a href="/parent/restriction/time-based" class="nav-link">
                       <i class="nav-icon fas fa-check-circle"></i>
                       <p>Time Based </p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="parent/restriction/payment-based" class="nav-link">
+                    <a href="/parent/restriction/payment-based" class="nav-link">
                       <i class="nav-icon fas fa-check-circle"></i>
                       <p>Payment Based </p>
                     </a>

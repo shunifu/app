@@ -326,6 +326,10 @@ Route::post('/send/single/parent',[StudentController::class,'send_msg']);
 Route::get('/parent/restriction/time-based',[RestrictionController::class,'time_based_index']);
 Route::post('/parent/restriction/time-based/store',[RestrictionController::class,'time_based_store']);
 
+Route::get('/parent/restriction/payment-based',[RestrictionController::class,'payment_based_restriction_index']);
+Route::post('/parent/restriction/payment-based/store',[RestrictionController::class,'payment_based_restriction_store'])->name('payment_restriction.store');;
+
+Route::post('/parent/restriction/payment-based/load',[RestrictionController::class,'payment_based_restriction_load'])->name('restriction.loadstudents');
 
 Route::post('/users/student/manage/removal/process',[StudentController::class,'removal_loadstudents'])->name('student.removal');
 Route::post('/users/student/manage/removal/process/selection',[StudentController::class,'removal'])->name('student.removal_selection');
@@ -808,7 +812,7 @@ Route::get('/parents/communication', [ParentController::class,'communication_ind
 
 Route::get('/users/parent/kids', [ParentController::class,'report_card'])->name('parents.report_card');
 
-
+Route::post('/view/report/parent', [ParentController::class,'report_card_view'])->name('parents.report_card_view');
 
 Route::get('/reset/parents', [OneTimePasswordController::class,'parent_reset_pin_method'])->name('otp.parents');
 
@@ -912,6 +916,7 @@ Route::post('/report/term-based/cbe', [CBEReportController::class,'create'])->na
 
 Route::get('/cbe/report/generate/{term_id}/{student_id}', [CBEReportController::class,'generate'])->name('cbe_report.index');
 
+Route::post('/cbe/report/generate/parent', [CBEReportController::class,'generate_parent'])->name('cbe_report.index_parent');
 
 
 // Assessement Based Stream Report

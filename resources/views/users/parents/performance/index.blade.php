@@ -49,18 +49,51 @@
                
                   </div>
                     
-                        <div class="mr-3">
+                        
                             
                            <h4 class="mb-0 mt-0">{{$child->lastname}} {{$child->name}} {{$child->middlename}}</h4>
                            <span>{{$child->grade_name}}</span>
  
         
-                           <div class="text-center">
-        
+                         
                            @foreach (\App\Models\School::all() as $item)
                          @if ($item->school_type=="primary-school")
-                         <a href="/cbe/report/generate/3/{{\Crypt::encrypt($child->student_id)}}"><button class="btn btn-sm btn-primary w-100">{{$child->name}}'s  Report Card</button></a> 
-                         <a href=""> <button class="btn btn-sm btn-outline-primary w-100 ml-2">{{$child->name}}'s Profile</button></a>  
+                         <div class="row">
+                          <form action="/cbe/report/generate/parent" method="post">
+                            @csrf
+                            <input type="hidden" name="student_id" value="{{$child->student_id}}">
+                        <div class="col">
+                         <div class="form-group">
+                           <label for="">Term</label>
+                           <select class="form-control" name="term" id="term">
+                             <option>Select Term</option>
+                             @foreach ($terms as $term)
+                             <option value="{{$term->term_id}}">{{$term->term_name}}</option>  
+                             @endforeach
+                            
+                           </select>
+                         </div>
+                        </div>
+
+                        <div class="col">
+                          <div class="form-group">
+                            <label for=""> Type</label>
+                            <select class="form-control" name="report_type" id="report_type">
+                              <option>Select Report Type</option>
+                              <option value="obe">OBE</option>  
+                              <option value="cbe">CBE</option>  
+                            </select>
+                          </div>
+                         </div>
+
+                         <div class="col">
+                          <div class="form-group">
+                            <label for="">Action</label>
+                       <button type="submit" class="btn btn-primary">Load</button>
+                          </div>
+                         </div>
+                        </form>
+                         </div>
                          @else
 
                          
@@ -117,10 +150,10 @@
                            @endforeach
         
                                
-                           </div>
+                        
         
         
-                        </div>
+                       
         
                             
                       </div>

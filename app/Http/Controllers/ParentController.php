@@ -267,7 +267,10 @@ class ParentController extends Controller
         //
     }
 
+    public function report_card_view(Request $request){
 
+        dd($request->all());
+    }
 
     public function report_card(){
 

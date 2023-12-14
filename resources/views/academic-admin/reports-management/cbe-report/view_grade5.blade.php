@@ -192,19 +192,20 @@
   
   
          <p></p>
-  
-         <h6 class=" display-4 text-center font-weight-bold ">Upper Phase</h6>
        
-         <p></p>
+
+         <h3 class=" text-center font-weight-bold ">Upper Phase</h3>
+       
+         
   
           @endforeach
   
           @foreach ($student_details as $student_details_item)
            
-       
+          <div class="pic mx-auto" style=" width:120px; height:120px; border-radius:50%; background-image: url({{$student_details_item->student_image}}); background-position: center; background-size:100% auto; background-repeat: no-repeat;"></div>
    
     <p class="text-center mx-auto">
-      <h3 class=" text-center">Student Name: <strong>{{$student_details_item->lastname}} {{$student_details_item->name}} {{$student_details_item->middlename}}</strong></h3>
+      <h6 class=" text-center">Student Name: <strong>{{$student_details_item->lastname}} {{$student_details_item->name}} {{$student_details_item->middlename}}</strong></h6>
       <h6 class=" text-center ">Personal Identification Number: <strong>{{$student_details_item->pin}} </strong></h6>
       <h6 class="text-center ">Class: <strong>{{$student_details_item->grade_name}} Report </strong></h6>
   
@@ -248,7 +249,7 @@
             </div>
             <div class="text-center">
         
-            <img class="img-fluid " width="120" height="120" src="{{$school_item->base64}} " alt="">
+            <img class="img-fluid " width="80" height="80" src="{{$school_item->base64}} " alt="">
            
             </div>               
             </div>
@@ -260,7 +261,7 @@
             </div>
             <div class="text-center">
             
-            <img class="img-fluid " width="140" height="140" src="{{$school_item->school_stamp}} " alt="">  
+          
            
          
             </div>
