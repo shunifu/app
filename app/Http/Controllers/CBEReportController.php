@@ -475,15 +475,16 @@ if ($dateToCheck->between($startDate, $endDate)) {
 
   if($payments){
 
-flash()->overlay('<i class="fa-solid fa-exclamation text-error"></i> Error. Cannot view report due to outstanding fees.', 'Outstanding Fees');
+
+
+ 
+
+flash()->overlay('<i class="fas fa-check-circle text-error"></i> Error. Cannot view report.', 'Outstanding Fees');
      
 return redirect()->back();
   }
       
   
-  if($report_type=="CBE"){
-
- 
   
   //  $student_id=Crypt::decrypt($encrypted_student_id );
   
@@ -776,16 +777,14 @@ return redirect()->back();
           return view('academic-admin.reports-management.cbe-report.view_grade5', compact('next_term_date','final_term_status','term_opening_date','term_closing_date','science','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row', 'pass_mark', 'french','religious_education', 'agric', 'social_studies'));
       }
   
-    }else{
-        
-    }
+  
   
      
     } else {
         echo "The date is not between the start and end dates.";
     }
     
-
+    
   
       }
 
