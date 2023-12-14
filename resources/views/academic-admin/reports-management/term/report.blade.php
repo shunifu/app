@@ -386,7 +386,7 @@ echo $key->student_position.' out of '.$total_students.' ';
                                 @if (is_null($student_term_data->profile_photo_path))
                                 <img class="user-image img-fluid elevation-1 mx-auto d-block" width="180" height="180" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1613141854/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300_urpxk5.jpg" alt={{$student_term_data->name}} />
                                 @else
-                                <img class="user-image  elevation-1  img-fluid  mx-auto d-block" width="220" height="220"  src="{{$student_term_data->profile_photo_path}}" alt={{$student_term_data->name}} />
+                                 <div class="pic mx-auto" style=" width:120px; height:120px; border-radius:50%; background-image: url({{$student_term_data->profile_photo_path}}); background-position: center; background-size:100% auto; background-repeat: no-repeat;"></div>
                                 @endif
                                
                             </center>
