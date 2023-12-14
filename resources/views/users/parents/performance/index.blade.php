@@ -57,7 +57,7 @@
         
                          
                            @foreach (\App\Models\School::all() as $item)
-                         @if ($item->school_type=="primary-school" AND (!$child->stream_id==6))
+                         @if ($item->school_type=="primary-school" AND ($child->stream_id<6))
                          <div class="row">
                           <form action="/cbe/report/generate/parent" method="post">
                             @csrf
