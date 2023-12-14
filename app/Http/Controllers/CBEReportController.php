@@ -467,7 +467,7 @@ $startDate = Carbon::parse($from_date);
 $endDate = Carbon::parse($to_date);
 $dateToCheck =Carbon::now();
 
-if ($dateToCheck->between($startDate, $endDate)) {
+
    
 
   $payments=PaymentRestriction::where('parent_id', Auth::user()->id)->exists();
@@ -780,9 +780,7 @@ return redirect()->back();
   
   
      
-    } else {
-        echo "The date is not between the start and end dates.";
-    }
+   
     
     
   
