@@ -197,7 +197,7 @@
   
           @foreach ($student_details as $student_details_item)
            
-       
+          <div class="pic mx-auto" style=" width:120px; height:120px; border-radius:50%; background-image: url({{$student_details_item->student_image}}); background-position: center; background-size:100% auto; background-repeat: no-repeat;"></div>
    
     <p class="text-center mx-auto">
       <h3 class=" text-center">Student Name: <strong>{{$student_details_item->lastname}} {{$student_details_item->name}} {{$student_details_item->middlename}}</strong></h3>
