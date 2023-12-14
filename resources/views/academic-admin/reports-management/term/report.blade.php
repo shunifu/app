@@ -41,7 +41,7 @@
 
             @media print{
                 @page { margin: 0px; }
-body { margin: 0px; }
+body { margin: 0px;   -webkit-print-color-adjust: exact !important; }
             }
 
             @media print {
@@ -54,6 +54,8 @@ body { margin: 0px; }
             
             
             }
+
+            
 
             .table th#assessement {
   width: 5%;

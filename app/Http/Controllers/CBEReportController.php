@@ -18,6 +18,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Termwind\Components\Dd;
@@ -448,14 +449,17 @@ if($stream_is==1 OR $stream_is==2){
   
   
      $student_id=$request->student_id;
-     $term_id=$request->term_id;
+     $term_id=$request->term;
      $report_type=$request->report_type;
 
+
+    // dd($request->all());
 
      //Check Time Restriction
         
 
 $time_restriction=TimeRestriction::where('term_id', $term_id )->first();
+
 $from_date=$time_restriction->from;
 $to_date=$time_restriction->to;
 
@@ -466,19 +470,20 @@ $dateToCheck =Carbon::now();
 if ($dateToCheck->between($startDate, $endDate)) {
    
 
-  $payments=PaymentRestriction::where('student_id', $student_id)->exists();
+  $payments=PaymentRestriction::where('parent_id', Auth::user()->id)->exists();
+ 
 
   if($payments){
 
- echo "Cannot view report due to outstanding fees";
-
- 
-
- exit();
-
+flash()->overlay('<i class="fa-solid fa-exclamation text-error"></i> Error. Cannot view report due to outstanding fees.', 'Outstanding Fees');
+     
+return redirect()->back();
   }
       
   
+  if($report_type=="CBE"){
+
+ 
   
   //  $student_id=Crypt::decrypt($encrypted_student_id );
   
@@ -771,14 +776,61 @@ if ($dateToCheck->between($startDate, $endDate)) {
           return view('academic-admin.reports-management.cbe-report.view_grade5', compact('next_term_date','final_term_status','term_opening_date','term_closing_date','science','student_details','school','academic_sessions', 'comments', 'ict','maths', 'hpe', 'english','siswati',  'headteacher_comments', 'class_teacher_comments', 'term_id','agric','expressive_art', 'consumer_science','personal_skills', 'practical_arts','general_studies', 'stream', 'size', 'gutter', 'row', 'pass_mark', 'french','religious_education', 'agric', 'social_studies'));
       }
   
-  
+    }else{
+        $children = DB::table('parents_students')
+        ->join('users', 'users.id', '=', 'parents_students.student_id')
+        ->join('grades_students', 'grades_students.student_id', '=', 'users.id')
+        ->join('grades', 'grades.id', '=', 'grades_students.grade_id')
+        ->where('parents_students.parent_id', Auth::user()->id)
+        ->where('users.active', 1)
+        ->get();
+    
+    
+       // dd($children);
+    
+            $terms=Term::all();
+    
+    
+    
+            $terms=DB::table('terms')
+            ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
+          
+            ->select('terms.id as term_id','terms.term_name', 'academic_sessions.academic_session')
+            ->get();
+    
+            //Scope to current session ....think about it.
+    
+            //Streams
+            $streams=Stream::all();
+    
+            //Classes
+            $classes=Grade::all();
+    
+            //Section
+            $sections=Section::all();
+    
+            $assessements=DB::table('assessements')
+            ->join('terms','terms.id','=','assessements.term_id')
+            ->join('assessement_types','assessement_types.id','=','assessements.assessement_type')
+            ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
+            ->where('academic_sessions.active', 1 )//
+            ->select('assessements.id as assessement_id','terms.term_name', 'assessement_name', 'assessement_type_name')
+            ->get();
+            
+            $templates=ReportTemplate::all();
+    
+            $variables=ReportVariable::all();
+    
+    
+            return view('users.parents.performance.index',compact('children', 'terms', 'templates', 'variables', 'classes'));
+    }
   
      
     } else {
         echo "The date is not between the start and end dates.";
     }
     
-    
+
   
       }
 
