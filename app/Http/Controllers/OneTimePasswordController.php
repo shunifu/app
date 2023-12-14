@@ -56,7 +56,7 @@ $cellIs=$userExists->cell_number;
             'from'=>'Shunifu'
         ]);
 
-        return redirect('/login')->with('status','Password Successfully Reset! Use the code you have recieved as your password. Upon login, you will be prompted to create a new password. You will be requested to enter old password first, please use the OTP you have recieved as your old password. ');
+        return redirect('/login')->with('status','Good. Number is registered on System! ');
 
       } else {
         return redirect('/reset')->with('error','That number is not registered in the system. Please consult the system administrator for further assistance.');

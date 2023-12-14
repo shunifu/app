@@ -291,7 +291,7 @@ a[target='_blank']{
                         </div>
                      
                     
-                        <button class="btn btn-primary btn-block mt-3 px-3 submit">Send Verfication Code</button>
+                        <button class="btn btn-primary btn-block mt-3 px-3 submit">Submit</button>
                      
                         <div class="text-center pt-4 text-muted"> <a href="/login">Login</a>
                         </div>
