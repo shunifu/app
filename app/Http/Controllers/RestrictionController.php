@@ -130,13 +130,15 @@ class RestrictionController extends Controller
             $addParentRestrictions=PaymentRestriction::updateOrCreate([
             'student_id'=>$students[$i],
             'parent_id'=>$parents[$i],
-            'restriction_status'=>1
-            ], ['restriction_status'=>1]);
+            'restriction_status'=>0
+            ], ['restriction_status'=>0]);
 
         
          }
       
-         flash()->overlay('<i class="fas fa-check-circle success"></i>'.' Congratulations. You have successfully made restrictions.', 'Parent Restriction');
+         flash()->overlay('<i class="fas fa-check-circle success"></i>'.' Congratulations. You have successfully updated info.', 'Parent Restriction');
+
+         return redirect('/parent/restriction/payment-based');
 
     
 
