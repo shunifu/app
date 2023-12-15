@@ -86,25 +86,25 @@ foreach ($keys as $key => $value) {
 
 
 }
-$weight_sum=array_sum($weight);
-$score=($weight_sum/$total_strands)*100;
+// $weight_sum=array_sum($weight);
+// $score=($weight_sum/$total_strands)*100;
 
-if($score>100){
-   $cal_1=($weight_sum/$total_strands);
+// if($score>100){
+//    $cal_1=($weight_sum/$total_strands);
 
-   $cal_2=$cal_1*$total_strands;
+//    $cal_2=$cal_1*$total_strands;
    
-  $score=($weight_sum/$cal_2)*100;
-}
+//   $score=($weight_sum/$cal_2)*100;
+// }
 
 echo '<tr> <thead>';
 echo '<th>'."Comment".'</th>';
 
-foreach ($comments  as $comment) {
- if( in_array(round($score), range($comment->from,$comment->to)) ) 
-   echo '<td>'.$comment->comment.'</td>';
+// foreach ($comments  as $comment) {
+//  if( in_array(round($score), range($comment->from,$comment->to)) ) 
+//    echo '<td>'.$comment->comment.'</td>';
          
-}
+// }
 
 echo '</thead></tr>'; 
 
