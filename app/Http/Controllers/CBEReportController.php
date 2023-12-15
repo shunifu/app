@@ -470,7 +470,7 @@ $dateToCheck =Carbon::now();
 
    
 
-  $payments=PaymentRestriction::where('parent_id', Auth::user()->id)->exists();
+  $payments=PaymentRestriction::where('parent_id', Auth::user()->id)->where('restriction_status',1)->exists();
  
 
   if($payments){
