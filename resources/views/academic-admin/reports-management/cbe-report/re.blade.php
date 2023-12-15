@@ -1,27 +1,20 @@
-     @foreach ($religious_education as $item) 
-        
+@foreach ($religious_education as $item) 
+
 <div class="table-responsive">
  <table class="table  table-bordered table-sm" id="performance_table">
   <thead>
     <tr>
-      
        <th colspan="2"><strong>{{$item->subject_name}} </strong></th>
      </tr>
      <tr>
          <td>Strand</td>
          <td>Grade</td>
        </tr>
-
-      
    </thead>
 
    <tbody>
 
-     
      @php
-
-
-
 
 
 $strands=DB::table('strands')
@@ -36,24 +29,26 @@ $strands=DB::table('strands')
      ->where('cbe_marks.student_id',$item->student_id)
      ->where('teaching_loads.subject_id',$item->subject_id)
      ->where('cbe_marks.term_id',$term_id)
-     ->get();
+     ->get()->toArray();
 
 
 
-foreach ($strands as $strand) {
-echo '<tr>';
-
-echo '<td>'.$strand->strand.'</td>';
-echo '<td>'.$strand->assessement_grade.'</td>';
-
-echo '</tr>';
+    // dd($strands);
+     
+     $total_strands = count(collect($strands));
 
 
-}
+
+
+
+
+
+
+
 
 if($item->stream_id==1 OR $item->stream_id==2){
 
-  $strands_array = array();
+    $strands_array = array();
 foreach ($strands as $h) {
   $strands_array[] = $h->assessement_grade;
 }
@@ -113,9 +108,9 @@ foreach ($comments  as $comment) {
 
 echo '</thead></tr>'; 
 
+  
+
 }else{
-
-
 
 $marks=DB::table('student_subject_averages')
      
@@ -155,106 +150,31 @@ echo '<tr>';
 
 
 echo '</tr>';
-
-
-
 echo '<tr> <thead>';
 echo '<th>'."Comment".'</th>';
 
 foreach ($comments  as $comment) {
  if( in_array(round($mark->student_average), range($comment->from,$comment->to)) ) 
-            
-
-             echo '<td>'.$comment->comment.'</td>';
+   echo '<td>'.$comment->comment.'</td>';
          
 }
 
 echo '</thead></tr>'; 
 }
 
-
-
-
 }
+@endphp
 
-
-
-     @endphp
-
-     
+    
      
       
       
    </tbody>
 </table> 
 
+
+
+
 </div>
 
 @endforeach 
-
-@php
-$marks=DB::table('term_averages') 
-->where('term_averages.student_id',$item->student_id)
-->where('term_averages.term_id',$term_id)
-->get();
-
-@endphp
-
-@foreach ($marks  as $mark_item)
-           <table class="table  table-bordered table-sm">
-             <thead>
-               <tr>
-                 <th>Class Teacher's General Comments</th>
-               </tr>
-             </thead>
-             <tbody>
-              
-               <tr style="text-align: left;">
-         
-       
-     @foreach ($class_teacher_comments as $teacher_comment)
-               
-                  @if (in_array(number_format($mark_item->student_average), range($teacher_comment->from,$teacher_comment->to,  0.01)) )
-                  <td>
-                 <span >{{$teacher_comment->comment}}</span>
-                </td>    
-                  @endif
-                  @endforeach 
-
-               </tr>
-          
-             </tbody>
-             </table>
-     @endforeach
-            
-
-             <table class="table  table-bordered table-sm">
-               <thead>
-                 <tr>
-                   <th>Head Teacher's  Comments</th>
-                 </tr>
-               </thead>
-               <tbody>
-                 <tr>
-       
-                  @foreach ($marks  as $mark_item)
-                  <td>
-  
-                    @foreach ($headteacher_comments as $headteacher_comment)
-                   
-                    @if (in_array(number_format($mark_item->student_average), range($headteacher_comment->from,$headteacher_comment->to,  0.01)) )
-                   <span class="text-left">{{$headteacher_comment->comment}} </span>
-                        
-                    @endif
-                    @endforeach
-                  </td>
-                  @endforeach
-                 
-                 </tr>
- 
-               </tbody>
-               </table>
-
-  
-
-         
