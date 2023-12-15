@@ -1103,7 +1103,13 @@ foreach ($term_average as $student_term_data) {
                             <?php
                         
 
+$class_t=\DB::select(\DB::raw("SELECT users.salutation, users.name, users.lastname FROM grades_teachers INNER JOIN users ON grades_teachers.teacher_id=users.id INNER JOIN academic_sessions ON academic_sessions.id=grades_teachers.academic_session where grade_id=".$classofstudent." AND academic_sessions.active=1 "));
+foreach ($class_t as $key_t) {
 
+echo '<span class="font-italic font-weight-light">'.substr($key_t->name, 0, 1).'  '.$key_t->lastname.' </span>';
+
+
+}
 
 
 
@@ -1173,7 +1179,7 @@ foreach ($term_average as $student_term_data) {
                         </td> 
                     
              
-                        <td>  subject average was calculated based on the following assessement weight's;
+                        <td> {{$student_term_data->name}}'s subject average was calculated based on the following assessement weight's;
                             <ul>
                                 <li>Continuous Assessement: <strong>{{$ca_weight*100}}%</strong> </li>
                                 <li>Mock: <strong>{{$mock_weight*100}}%</strong></li>
@@ -1191,7 +1197,7 @@ foreach ($term_average as $student_term_data) {
                         
                         </td>
                 
-                        <td>  term average  was calculated using the following criteria:
+                        <td> {{$student_term_data->name}}'s  term average  was calculated using the following criteria:
                             <ul>
                             
                                 @if ($calculation_type=="default")

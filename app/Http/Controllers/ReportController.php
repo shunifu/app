@@ -26,6 +26,7 @@ use App\Models\StudentSubjectAverage;
 use Illuminate\Support\Facades\Schema;
 use App\Models\AssessementProgressReport;
 use App\Models\CA_Exam;
+use App\Models\PaymentRestriction;
 use App\Models\ReportTemplate;
 use App\Models\ReportVariable;
 use App\Models\StudentClass;
@@ -288,6 +289,20 @@ class ReportController extends Controller
 
           
         }
+
+
+        $payments=PaymentRestriction::where('parent_id', Auth::user()->id)->where('restriction_status',1)->exists();
+ 
+
+        if($payments){
+      
+    
+      
+      flash()->overlay('<i class="fas fa-check-circle text-error"></i> Error. Cannot view report.', 'Outstanding Fees');
+           
+      return redirect()->back();
+        }
+            
 
 
     //    DB::table('student_subject_averages')->delete();
