@@ -1626,6 +1626,7 @@ public function parent_link_store(Request $request){
         $students=$request->student_id[$i];
         $parents=($request->parent_id[$i]);
         $parent_cell=$request->parent_cell[$i];
+        
     
         $CellExists=User::where('cell_number',$parent_cell);
     
@@ -1634,6 +1635,7 @@ public function parent_link_store(Request $request){
       // User::where('cell_number',$parent_cell)->update(['cell_number'=>$request->parent_cell[$i]]);
 
         $parentID=User::where('cell_number',$parent_cell)->first();
+        $parent_id_is=$parentID->id;
         
         //check if there is a combination of both parent_students
         //if there is a match then do not add
@@ -1642,8 +1644,16 @@ public function parent_link_store(Request $request){
       // dd($parent_exists_in_parents_table);
 
       if($parent_exists_in_parents_table){
+
+
+        //update
+
+
       }else{
           if(is_null($parent_cell)){
+
+            //update parent cell
+            
 
           }else{
             $student_db=DB::table('parents_students')->upsert([
