@@ -124,17 +124,33 @@ class RestrictionController extends Controller
            $restriction_status=$request->restriction_status;
 
      
+           
 
            for($i = 0; $i <count($parents); $i++) {
+            
+            $parentExists=PaymentRestriction::where('parent_id', $parents[$i])->exists();
+            if ($parentExists) {
+               //update
+               $owes=PaymentRestriction::where('parent_id',$parents[$i] )->update([
+                'restriction_status'=>$restriction_status,
+               ]);
+              
+            } else {
+                $addParentRestrictions=PaymentRestriction::updateOrCreate([
+                    'student_id'=>$students[$i],
+                    'parent_id'=>$parents[$i],
+                    'restriction_status'=>$restriction_status
+                    ], ['restriction_status'=>$restriction_status]);
+            }
+            
 
-            $addParentRestrictions=PaymentRestriction::updateOrCreate([
-            'student_id'=>$students[$i],
-            'parent_id'=>$parents[$i],
-            'restriction_status'=>0
-            ], ['restriction_status'=>0]);
+         
 
         
          }
+
+         dd($addParentRestrictions);
+
       
          flash()->overlay('<i class="fas fa-check-circle success"></i>'.' Congratulations. You have successfully updated info.', 'Parent Restriction');
 

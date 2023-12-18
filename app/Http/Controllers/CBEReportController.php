@@ -475,10 +475,6 @@ $dateToCheck =Carbon::now();
 
   if($payments){
 
-
-
- 
-
 flash()->overlay('<i class="fas fa-check-circle text-error"></i> Error. Cannot view report.', 'Outstanding Fees');
      
 return redirect()->back();
