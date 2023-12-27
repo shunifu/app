@@ -52,6 +52,7 @@
         "spatie/laravel-google-calendar": "^3.2",
         "spatie/laravel-image-optimizer": "^1.7",
         "spatie/laravel-multitenancy": "^3.0",
+        "stancl/tenancy": "^3.7",
         "yajra/laravel-datatables-oracle": "~9.0",
         "yajra/laravel-disqus": "^1.2"
     },

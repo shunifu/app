@@ -2,22 +2,6 @@
 
 
 
-
-// $db_name="boyce";
-
-// use Illuminate\Support\Facades\URL;
-
-
-// $url = URL::to('/');
-
-// $bits = parse_url($url);
-// $subdomain = strtok($bits['host'], '.');
-
-
-// if($subdomain=="stfrancis"){
-// $name="St Francis High";
-// }
-
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -290,7 +274,7 @@ return [
     App\Providers\EventServiceProvider::class,
     App\Providers\BiServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
-    // App\Providers\TenancyServiceProvider::class, // <-- here
+    App\Providers\TenancyServiceProvider::class, // <-- here
     App\Providers\FortifyServiceProvider::class,
     App\Providers\JetstreamServiceProvider::class,
     Barryvdh\DomPDF\ServiceProvider::class,
