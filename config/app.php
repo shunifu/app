@@ -255,11 +255,11 @@ return [
     Illuminate\Translation\TranslationServiceProvider::class,
     Illuminate\Validation\ValidationServiceProvider::class,
     Illuminate\View\ViewServiceProvider::class,
-    \Yajra\Datatables\DataTablesServiceProvider::class,
-    Intervention\Image\ImageServiceProvider::class,
-    Barryvdh\Snappy\ServiceProvider::class,
-    
-    
+    // \Yajra\Datatables\DataTablesServiceProvider::class,
+    // Intervention\Image\ImageServiceProvider::class,
+    // Barryvdh\Snappy\ServiceProvider::class,
+
+
 
     /*
         * Package Service Providers...
@@ -274,15 +274,15 @@ return [
     App\Providers\EventServiceProvider::class,
     App\Providers\BiServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
-    App\Providers\TenancyServiceProvider::class, // <-- here
+    // App\Providers\TenancyServiceProvider::class, // <-- here
     App\Providers\FortifyServiceProvider::class,
     App\Providers\JetstreamServiceProvider::class,
-    Barryvdh\DomPDF\ServiceProvider::class,
+    // Barryvdh\DomPDF\ServiceProvider::class,
     CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
-    
-    
+
+
     //  Clickatell\ClickatellServiceProvider::class,
-    
+
 
 ],
 
