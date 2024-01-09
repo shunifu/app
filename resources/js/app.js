@@ -4,23 +4,23 @@ window._ = _;
 window.$ = window.jQuery = $;
 
 
-import'jquery/dist/jquery.min.js';
+// import'jquery/dist/jquery.min.js';
 //  import 'jquery-ui/ui/widgets/datepicker.js';
-import'admin-lte/plugins/jquery/jquery';
-import'admin-lte/plugins/bootstrap/js/bootstrap';
+// import'admin-lte/dist/js/'
+// import'admin-lte/plugins/bootstrap/js/bootstrap';
 import'@popperjs/core/';
 import * as Popper from '@popperjs/core';
 window.Popper = Popper;
 
 
 
-import'admin-lte/plugins/datatables/jquery.dataTables.min.js';
-import'admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js';
-import'admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js';
-import'admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js';
-import'admin-lte/plugins/select2/js/select2.full.min.js';
-import'admin-lte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.js';
-import 'alpinejs';
+// import'admin-lte/plugins/datatables/jquery.dataTables.min.js';
+// import'admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js';
+// import'admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js';
+// import'admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js';
+// import'admin-lte/plugins/select2/js/select2.full.min.js';
+// import'admin-lte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.js';
+// import 'alpinejs';
 
 // import * as Sentry from "@sentry/browser";
 // import { BrowserTracing } from "@sentry/tracing";

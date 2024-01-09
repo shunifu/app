@@ -9,33 +9,33 @@
         {{-- <link rel="manifest" href="/manifest.json"> --}}
         <!-- Chrome for Android theme color -->
         {{-- <meta name="theme-color" content="#000000"> --}}
-        
+
         <!-- Add to homescreen for Chrome on Android -->
          <meta name="mobile-web-app-capable" content="yes">
         <meta name="application-name" content="PWA">
-        <link rel="icon" sizes="512x512" href="{{config('app.school_logo')}}"> 
-        
+        <link rel="icon" sizes="512x512" href="{{config('app.school_logo')}}">
+
         <!-- Add to homescreen for Safari on iOS -->
          <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-title" content="PWA">
         <link rel="apple-touch-icon" href="{{config('app.school_logo')}}">
-        
+
         <meta name="csrf-token" content="{{ csrf_token() }}">
-         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
-   
+         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
 
          <style>
           .main-sidebar, .sidebar-dark-warning { background-color: rgb(49, 49, 49) !important }
 
           /* .sidebar-dark-warning{background-color: rgb(49, 49, 49) !important} */
          </style>
-      
+
          {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js'])  --}}
          {{-- @vite(['resources/css/app.css', 'resources/js/app.js'])
-  
-      
-   
+
+
+
     {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}">  --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link href="https://cdn.statically.io/gh/innovazania/assets/f6025c7d/app.css" rel="stylesheet">
@@ -47,17 +47,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" integrity="sha512-yDUXOUWwbHH4ggxueDnC5vJv4tmfySpVdIcN1LksGZi8W8EVZv4uKGrQc0pVf66zS7LDhFJM7Zdeow1sw1/8Jw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href=' https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
-         
+
 
            <!-- Step 1 - Include the fusioncharts core library -->
-          
+
            <!-- FusionCharts -->
            <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
            <!-- jQuery-FusionCharts -->
            <script type="text/javascript" src="https://rawgit.com/fusioncharts/fusioncharts-jquery-plugin/develop/dist/fusioncharts.jqueryplugin.min.js"></script>
            <!-- Fusion Theme -->
            <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
-     
+
         @livewireStyles
           <!-- Google Font: Source Sans Pro -->
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -70,23 +70,23 @@
         <title>{{ ($item->school_name) }}</title>
         @endforeach
         @endif
-       
-    
-        
- 
-        
-       
+
+
+
+
+
+
     </head>
 
     @foreach (\App\Models\School::all() as $item)
     <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
-     
+
         <div class="wrapper">
             <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
                 <!-- Left navbar links -->
                 <ul class="navbar-nav">
-                  
+
                     <li class="nav-item">
                         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                     </li>
@@ -111,7 +111,7 @@
                         </div>
                       </li>
                     </ul>
-                  
+
                     <!-- SEARCH FORM -->
                     <form action ="/search" method="POST" class="form-inline ml-3 d-none d-sm-inline-block d-none d-md-inline-block">
                       <div class="input-group input-group-sm">
@@ -123,11 +123,11 @@
                         </div>
                       </div>
                     </form>
-                  
+
                     <!-- Right navbar links -->
                     <ul class="navbar-nav ml-auto">
                       <!-- Messages Dropdown Menu -->
-  
+
                 </ul>
 
                 <!-- Right navbar links -->
@@ -139,7 +139,7 @@
                           <span class="badge badge-danger navbar-badge">0</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                          
+
                           <div class="dropdown-divider"></div>
                           <a href="#" class="dropdown-item dropdown-footer">No Messages</a>
                         </div>
@@ -174,7 +174,7 @@
 
                                 <x-jet-dropdown-link href="{{ route('profile.show') }}">
                                   {{-- <x-jet-dropdown-link href="/teacher/view/{{Crypt::encryptString(Auth::user()->id)}}"> --}}
-                                  
+
                                     {{ __('Profile') }}
                                 </x-jet-dropdown-link>
 
@@ -238,12 +238,12 @@
             <aside class="main-sidebar sidebar-dark-primary elevation-2">
                 <!-- Brand Logo -->
                 <a href="/" class="brand-link">
-                 
+
 
                     @foreach (\App\Models\School::all() as $item)
                     <span class="brand-text small font-weight-light">{{ $item->school_name }}</span>
                     @endforeach
-                  
+
                 </a>
 
                 <!-- Sidebar -->
@@ -267,11 +267,11 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-             
-              
-              
+
+
+
                <li class="nav-header">{{Auth::user()->name}}'s Dashboard</li>
-              
+
 
                <li class="nav-item">
                 <a href="/dashboard" class="nav-link">
@@ -282,13 +282,13 @@
                 </a>
               </li>
 
-            
 
 
-               
-               @role('teacher')      
 
-       
+
+               @role('teacher')
+
+
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book-reader"></i>
@@ -297,7 +297,7 @@
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-           
+
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ route('teacher.teaching_loads')}}" class="nav-link">
@@ -335,12 +335,12 @@
                 </a>
               </li>
             </ul>
- 
- 
+
+
           </li>
 
 
-          
+
 
          @endrole
 
@@ -359,7 +359,7 @@
       <i class="fas fa-angle-left right"></i>
     </p>
   </a>
- 
+
   <ul class="nav nav-treeview">
     <li class="nav-item">
       <a href="/view/school-news/" class="nav-link">
@@ -386,11 +386,11 @@
     </li>
   </ul>
 
-  
+
 </li>
 
 @endrole
-        
+
 
 
          {{-- <!----Beginning of Online Learning---------->
@@ -402,7 +402,7 @@
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-           
+
             <ul class="nav nav-treeview">
               @role('student')
               <li class="nav-item">
@@ -446,8 +446,8 @@
                   <p>View Results</p>
                 </a>
               </li>
-            
-             
+
+
               @endrole
 
               @role('teacher')
@@ -457,7 +457,7 @@
                   <p>Add Lesson</p>
                 </a>
               </li>
-{{-- 
+{{--
               <li class="nav-item">
                 <a href="{{ route('online-learning.virtual_class')}}" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
@@ -475,7 +475,7 @@
                 <a href="#" class="nav-link">
                   <i class="fas fa-pen nav-icon"></i>
                   <p>
-                    Add Assessments 
+                    Add Assessments
                     <i class="fas fa-angle-left right"></i>
                   </p>
                 </a>
@@ -492,23 +492,23 @@
                       <p>Without Lesson</p>
                     </a>
                   </li>
-  
+
                 </ul>
               </li>
-              
-              
-             
+
+
+
               <li class="nav-item">
                 <a href="/online-learning/lessons/assessement/manage/" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>Manage Assesements</p>
                 </a>
               </li> --}}
-           
+
               {{-- @endrole --}}
 
 
-              
+
 
               {{-- @role('school-administrator')
            <li class="nav-item">
@@ -523,16 +523,16 @@
                   <p>View Assessements</p>
                 </a>
               </li> --}}
-              
+
               {{-- <li class="nav-item">
                 <a href="{{ route('online-learning.create_assessement_teacher')}}" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
                   <p>View Results</p>
                 </a>
               </li>
-             
-            
-           
+
+
+
               @endrole
             </ul> --}}
             {{-- <li class="nav-item">
@@ -547,14 +547,14 @@
                 <p>Virtual Meeting</p>
               </a>
             </li> --}}
-        <!---end of Online Learning----->  
+        <!---end of Online Learning----->
 
 
 
         @role('parent')
-                   
 
-     
+
+
 
         @endrole
 
@@ -568,7 +568,7 @@
                       <i class="fas fa-angle-left right"></i>
                     </p>
                   </a>
-                 
+
                   <ul class="nav nav-treeview">
                     {{-- Logged in Student Performance link --}}
                     @role('student')
@@ -577,10 +577,10 @@
                         <i class="nav-icon fas fa-chevron-circle-right"></i>
                         <p>My Performance</p>
                       </a>
-                    </li>                   
+                    </li>
                     @endrole
 
- 
+
 
 
                     @if (Auth::user()->hasRole(['admin_teacher', 'school_administrator', 'class_teacher', 'class_tutor']))
@@ -591,7 +591,7 @@
                       </a>
                     </li> --}}
 
-                    
+
 
                      {{-- <li class="nav-item">
                       <a href="/insights/subject" class="nav-link">
@@ -617,19 +617,19 @@
                     <a href="#" class="nav-link">
                       <i class="fas fa-chart-bar nav-icon"></i>
                       <p>
-                       Assessement Insights 
+                       Assessement Insights
                         <i class="fas fa-angle-left right"></i>
                       </p>
                     </a>
 
-                 
+
                     <ul class="nav nav-treeview">
                       <li class="nav-item">
                         <a href="/analytics/assessement-based" class="nav-link">
                           <i class="nav-icon fas fa-check-circle"></i>
                           <p>Stream Based</p>
                         </a>
-  
+
                       </li>
 
                       <li class="nav-item">
@@ -637,7 +637,7 @@
                           <i class="nav-icon fas fa-check-circle"></i>
                           <p>Class Based</p>
                         </a>
-                      </li> 
+                      </li>
 
                     </ul>
                     </li>
@@ -647,35 +647,35 @@
                       <a href="#" class="nav-link">
                         <i class="fas fa-chart-bar nav-icon"></i>
                         <p>
-                         Term Insights 
+                         Term Insights
                           <i class="fas fa-angle-left right"></i>
                         </p>
-                      </a> 
-  
+                      </a>
+
                        <ul class="nav nav-treeview">
                         <li class="nav-item">
                           <a href="/analytics/term-based" class="nav-link">
                             <i class="nav-icon fas fa-check-circle"></i>
                             <p>Stream Based</p>
                           </a>
-    
+
                         </li>
-                 
-  
+
+
                         <li class="nav-item">
                           <a href="/analytics/term-based/class" class="nav-link">
                             <i class="nav-icon fas fa-check-circle"></i>
                             <p>Class Based</p>
                           </a>
-                        </li> 
-  
-                      </ul> 
+                        </li>
+
+                      </ul>
                       </li>
 
-                  
 
-                   
-                    @endif  
+
+
+                    @endif
 
                     @role('hod')
                      <li class="nav-item">
@@ -686,8 +686,8 @@
                     </li>
                     @endrole
 
-         
-      
+
+
                     @role('teacher')
                     <li class="nav-item">
                       <a href="#" class="nav-link">
@@ -696,12 +696,12 @@
                       </a>
                     </li>
                     @endrole
-                    
+
 
                   </ul>
-               
-                  
-              <!---end of analytics-----> 
+
+
+              <!---end of analytics----->
 
               @role('admin_teacher')
 
@@ -715,7 +715,7 @@
                 </a>
               </li>
               @endrole
-          
+
 
               <li class="nav-item">
                 <a href="/disciplinary-cases" class="nav-link">
@@ -726,7 +726,7 @@
                 </a>
               </li>
           @endrole
-            
+
 
 
               <!----Beginning of Reports Management---------->
@@ -756,16 +756,16 @@
                   </li>
                   @endrole
 
-             
-    
-    
+
+
+
                   @role('parent')
                   <li class="nav-item">
                     <a href="/reports/parent/assessement-based/" class="nav-link">
                       <i class="nav-icon fas fa-chevron-circle-right"></i>
                       <p>Assessement Report</p>
                     </a>
-                  </li>  
+                  </li>
 
                   {{-- <li class="nav-item">
                     <a href="/reports/parent/term-based/" class="nav-link">
@@ -777,10 +777,10 @@
                   @endrole
 
                   @if (Auth::user()->hasRole(['admin_teacher', 'school-administrator']))
-               
+
 
                   <li class="nav-item has-treeview">
-                  
+
                     <a href="#" class="nav-link">
                       <i class="nav-icon fas fa-chart-line"></i>
                       <p>
@@ -795,13 +795,13 @@
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Stream Report</p>
                         </a>
-                      </li> 
+                      </li>
                        <li class="nav-item">
                         <a href="/report/term-based/class" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
                           <p>Class Report</p>
                         </a>
-                      </li> 
+                      </li>
                       <li class="nav-item">
                         <a href="/report/term-based/individual" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
@@ -814,7 +814,7 @@
 
 
                   <li class="nav-item has-treeview">
-                  
+
                     <a href="#" class="nav-link">
                       <i class="nav-icon fas fa-chart-line"></i>
                       <p>
@@ -824,7 +824,7 @@
                     </a>
 
                     <ul class="nav nav-treeview">
-               
+
                       <li class="nav-item">
                         <a href="/report/term-based/stream/cbe" class="nav-link">
                           <i class="nav-icon fas fa-chevron-circle-right"></i>
@@ -837,37 +837,37 @@
                           <p>Class Based</p>
                         </a>
                       </li>
-                    
+
                     </ul>
                   </li>
 
 
 
-                  
 
-                
 
-             
 
-                 
+
+
+
+
 
                   @endif
-    
+
                   @role('teacher')
-               
+
 
                   @endrole
-                  
+
 
                 </ul>
-             
-                
-            <!---end of reports-----> 
+
+
+            <!---end of reports----->
 
 
             @role('teacher')
 
-           
+
 
 
             <li class="nav-item has-treeview">
@@ -885,42 +885,42 @@
                     <p>Articles</p>
                   </a>
                 </li>
-   
+
                 <li class="nav-item">
                   <a href="{{ route('inset.lesson') }}" class="nav-link">
                     <i class="nav-icon fas fa-check-circle"></i>
                     <p>Lessons</p>
                   </a>
-                </li> 
-  
+                </li>
+
                  <li class="nav-item">
                   <a href="{{ route('inset.workshop') }}" class="nav-link">
                     <i class="nav-icon fas fa-check-circle"></i>
                     <p>Workshop Requests</p>
                   </a>
                 </li>
-  
-               
-  
+
+
+
                 <li class="nav-item">
                   <a href="{{ route('inset.schedule') }}" class="nav-link">
                     <i class="nav-icon fas fa-check-circle"></i>
                     <p>CPD Schedule</p>
                   </a>
                 </li>
-              
-  
+
+
                </ul>
-            </li>  
-   
-                
+            </li>
+
+
 
             @endrole
- 
+
             {{-- <li class="nav-item">
               <a href="/rstp" class="nav-link">
 
-         
+
             <i class="nav-icon fa-solid fa-lightbulb"></i>
                 <p>RSTP Hub</p>
               </a>
@@ -928,15 +928,15 @@
 
 
    <!-----End of Promotions Management------------->
-         
-       
-      
-         
+
+
+
+
           @if (Auth::user()->hasRole(['class_teacher']))
-        
+
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-     
+
               <i class="nav-icon fa-solid fa-chalkboard-user"></i>
               <p>
                 My Class
@@ -976,14 +976,14 @@
                     </a>
                   </li>
 
-               
+
 
                 </ul>
               </li>
 
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
-              
+
                   <i class="nav-icon fa-solid fa-clipboard-user"></i>
                   <p>
                      Manage Attendance
@@ -1058,7 +1058,7 @@
 
               <li class="nav-item">
                 <a href="#" class="nav-link">
-            
+
                   <i class="nav-icon fa-solid fa-comments"></i>
                   <p>Class Teacher Comments</p>
                 </a>
@@ -1067,9 +1067,9 @@
               @role('class_tutor')
 
 
-              
 
-              
+
+
               <li class="nav-item">
                 <a href="/class/classtutor/comments" class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
@@ -1079,22 +1079,22 @@
 
               @endrole
 
-              
 
-            
 
-          
 
-           
 
-  
+
+
+
+
+
 
             </ul>
           </li>
          @endif
 
 
-         
+
           @role('teacher')
 
           {{-- <li class="nav-item has-treeview">
@@ -1162,7 +1162,7 @@
                   <p>Link Parents</p>
                 </a>
               </li>
-            
+
 
               <li class="nav-item">
                 <a href="/class/class-noticeboard" class="nav-link">
@@ -1170,10 +1170,10 @@
                   <p>Class Noticeboard</p>
                 </a>
               </li>
-          
 
-              
-            
+
+
+
 
             </ul>
           </li> --}}
@@ -1187,10 +1187,10 @@
               </p>
             </a>
 
-            
-            
+
+
             <ul class="nav nav-treeview">
-            
+
 
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
@@ -1201,7 +1201,7 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
-               
+
                   <li class="nav-item">
                     <a href="/report/term-based/" class="nav-link">
                       <i class="nav-icon fas fa-chevron-circle-right"></i>
@@ -1228,7 +1228,7 @@
                       <p>Subject Based</p>
                     </a>
                   </li>
-                
+
                 </ul>
               </li>
 
@@ -1242,7 +1242,7 @@
                   </p>
                 </a> --}}
                 <ul class="nav nav-treeview">
-               
+
                   {{-- <li class="nav-item">
                     <a href="/report/term-based/" class="nav-link">
                       <i class="nav-icon fas fa-chevron-circle-right"></i>
@@ -1255,7 +1255,7 @@
                       <p>Class Based</p>
                     </a>
                   </li> --}}
-                
+
                 </ul>
               </li>
 
@@ -1273,7 +1273,7 @@
 
           @role('teacher')
 
-          
+
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -1290,7 +1290,7 @@
                   <p>Enter Marks</p>
                 </a>
               </li>
-{{-- 
+{{--
               <li class="nav-item">
                 <a href="/marks/CBE"  class="nav-link">
                   <i class="nav-icon fas fa-check-circle"></i>
@@ -1313,7 +1313,7 @@
                 </a>
               </li>
 
-              
+
 
               <li class="nav-item">
                 <a href="/marks/manage"  class="nav-link">
@@ -1329,12 +1329,12 @@
                 </a>
               </li>
 
-             
+
             </ul>
           </li>
 
 
-         
+
           @endrole
 
           @role('admin_teacher')
@@ -1368,11 +1368,11 @@
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
                   <p>
-                   Strands Management 
+                   Strands Management
                     <i class="fas fa-angle-left right"></i>
                   </p>
                 </a>
-               
+
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
                     <a href="/academic-admin/strands-bank" class="nav-link">
@@ -1389,13 +1389,13 @@
                     </a>
                   </li>
                 </ul>
-    
-    
-           
-     
-     
+
+
+
+
+
               </li>
-    
+
 
               <li class="nav-item">
                 <a href="{{ route('allocation.create') }}" class="nav-link">
@@ -1426,8 +1426,8 @@
                   <p>Stream Management</p>
                 </a>
               </li>
-            
-              
+
+
             </ul>
           </li>
           @endrole
@@ -1441,7 +1441,7 @@
         <i class="fas fa-angle-left right"></i>
       </p>
     </a>
-   
+
     <ul class="nav nav-treeview">
       <li class="nav-item">
       <a href="{{route('resolutions.index')}}" class="nav-link">
@@ -1450,13 +1450,13 @@
         </a>
       </li>
     </ul>
-  
- 
+
+
   </li> --}}
 
   <li class="nav-item has-treeview">
     <a href="#" class="nav-link">
-  
+
 <i class="fas fa-forward  nav-iconf   "></i>
 
       <p>
@@ -1464,9 +1464,9 @@
         <i class="fas fa-angle-left right"></i>
       </p>
     </a>
-   
+
     <ul class="nav nav-treeview">
-     
+
 
       <li class="nav-item">
         <a href="{{route('transition.index')}}" class="nav-link">
@@ -1475,7 +1475,7 @@
           </a>
         </li>
 
-    
+
       <li class="nav-item">
         <a href="{{route('sequence.index')}}" class="nav-link">
              <i class="nav-icon fas fa-chevron-circle-right"></i>
@@ -1483,11 +1483,11 @@
           </a>
         </li>
     </ul>
-  
- 
+
+
   </li>
 
-  
+
 
   <li class="nav-item has-treeview">
     <a href="#" class="nav-link">
@@ -1497,7 +1497,7 @@
         <i class="fas fa-angle-left right"></i>
       </p>
     </a>
-   
+
     <ul class="nav nav-treeview">
       <li class="nav-item">
         {{-- <a href="{{route('timetable.index')}}" class="nav-link"> --}}
@@ -1514,8 +1514,8 @@
           </a>
         </li>
     </ul>
-  
- 
+
+
   </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -1538,10 +1538,10 @@
                   <p>Front Page Settings </p>
                 </a>
               </li> --}}
-             
-                
+
+
               </li>
-            
+
 
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
@@ -1559,28 +1559,28 @@
                       <p>Manage Session</p>
                     </a>
                   </li>
-              
-                 
+
+
                 </ul>
               </li>
               <li class="nav-item">
                 <a href="/marks/settings" class="nav-link">
                   <i class="fas fa-newspaper nav-icon"></i>
                   <p>Marks Settings</p>
-              
+
                 </a>
-                
+
               </li>
               <li class="nav-item">
                 <a href="{{route('assessement_settings.index')}}" class="nav-link">
                   <i class="fas fa-newspaper nav-icon"></i>
                   <p>Assessement Settings</p>
-              
+
                 </a>
-                
+
               </li>
               <li class="nav-item has-treeview">
-              
+
                 <a href="#" class="nav-link">
                   <i class="fas fa-newspaper nav-icon"></i>
                   <p>Report Settings</p>
@@ -1601,16 +1601,16 @@
                       <p>Report Variables</p>
                     </a>
                   </li>
-                
+
                 </ul>
-                
+
               </li>
 
-            
+
 
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
-                  
+
                   <i class="nav-icon fas fa-comments"></i>
                   <p>
                     Comments Settings
@@ -1638,17 +1638,17 @@
                       <p>Custom Comments</p>
                     </a>
                   </li>
-                
+
                 </ul>
               </li>
-             
-           
 
-             
-              
+
+
+
+
             </ul>
           </li>
-{{-- 
+{{--
           <li class="nav-header">Roles & Permissions</li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -1691,15 +1691,15 @@
                     </a>
                   </li> --}}
 
-         
+
                 {{-- </ul> --}}
 
 
-            
-             
+
+
                 {{-- <li class="nav-header">Teacher Services</li> --}}
 
-{{-- 
+{{--
                 <li class="nav-item has-treeview">
                   <a href="#" class="nav-link">
                     <i class="fas fa-stethoscope nav-icon"></i>
@@ -1715,35 +1715,35 @@
                         <p>Articles</p>
                       </a>
                     </li>
-       
+
                     <li class="nav-item">
                       <a href="{{ route('inset.lesson') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Lessons</p>
                       </a>
-                    </li> 
-      
+                    </li>
+
                      <li class="nav-item">
                       <a href="{{ route('inset.workshop') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Workshop Requests</p>
                       </a>
                     </li>
-      
-                   
-      
+
+
+
                     <li class="nav-item">
                       <a href="{{ route('inset.schedule') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>CPD Schedule</p>
                       </a>
                     </li>
-                  
-      
+
+
                    </ul>
                 </li>   --}}
-      
-      
+
+
                 {{-- <li class="nav-item has-treeview">
                   <a href="#" class="nav-link">
                     <i class="fas fa-stethoscope nav-icon"></i>
@@ -1761,35 +1761,35 @@
                       </a>
                     </li>  --}}
 
-{{-- 
+{{--
                     <li class="nav-item">
                       <a href="{{ route('index.students') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Cross Transfers</p>
                       </a>
                     </li>
-       
+
                      --}}
-{{--       
+{{--
                      <li class="nav-item">
                       <a href="{{ route('index.support-staff') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Queries</p>
                       </a>
                     </li> --}}
-{{--       
+{{--
                     <li class="nav-item">
                       <a href="{{ route('index.visitors') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>My Files</p>
                       </a>
                     </li>  --}}
-      
-                  
-      
+
+
+
                    {{-- </ul> --}}
                 {{-- </li>  --}}
-      
+
                 {{-- <li class="nav-item has-treeview"> --}}
                   {{-- <a href="#" class="nav-link">
                     <i class="fas fa-stethoscope nav-icon"></i>
@@ -1805,14 +1805,14 @@
                         <p>Apply for Marking </p>
                       </a>
                     </li> --}}
-       
+
                     {{-- <li class="nav-item">
                       <a href="{{ route('index.teachers') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Candidate Registration</p>
                       </a>
                     </li>  --}}
-      
+
                      {{-- <li class="nav-item">
                       <a href="{{ route('index.support-staff') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
@@ -1833,20 +1833,20 @@
                         <p> Syllabus</p>
                       </a>
                     </li> --}}
-      
+
                     {{-- <li class="nav-item">
                       <a href="{{ route('index.visitors') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Past Papers</p>
                       </a>
                     </li>  --}}
-      
-                  
-      
+
+
+
                    {{-- </ul>
-                </li> 
+                </li>
        --}}
-      
+
                 {{-- <li class="nav-item has-treeview">
                   <a href="#" class="nav-link">
                     <i class="fas fa-stethoscope nav-icon"></i>
@@ -1862,37 +1862,37 @@
                         <p>Apply for Loan</p>
                       </a>
                     </li>
-       
+
                     <li class="nav-item">
                       <a href="{{ route('index.teachers') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Online Statements</p>
                       </a>
-                    </li> 
+                    </li>
 
                     <li class="nav-item">
                       <a href="{{ route('index.teachers') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Psycologist</p>
                       </a>
-                    </li> 
-      
+                    </li>
+
                      <li class="nav-item">
                       <a href="{{ route('index.support-staff') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>SNAT Eagle</p>
                       </a>
                     </li>
-      
+
                     <li class="nav-item">
                       <a href="{{ route('index.visitors') }}" class="nav-link">
                         <i class="nav-icon fas fa-check-circle"></i>
                         <p>Visitors</p>
                       </a>
-                    </li> 
-      
-                  
-      
+                    </li>
+
+
+
                    </ul>
                 </li>  --}}
 
@@ -1900,7 +1900,7 @@
 
 
           <li class="nav-header">User Management</li>
-        
+
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -1953,8 +1953,8 @@
                   <p>Online Registration</p>
                 </a>
               </li>  --}}
-            
-             
+
+
               {{-- <li class="nav-item">
                 <a href="{{ route('student.manage')}}" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
@@ -1979,7 +1979,7 @@
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              
+
               <i class="nav-icon fas fa-user-friends"></i>
               <p>
                 Parents Management
@@ -2003,7 +2003,7 @@
 
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
-              
+
                   <i class="nav-icon fa-solid fa-clipboard-user"></i>
                   <p>
                      Parent Restriction
@@ -2050,7 +2050,7 @@
                   <p>Class Teacher</p>
                 </a>
               </li>
-{{-- 
+{{--
               <li class="nav-item">
                 <a href="/users/teacher/assign/classtutor" class="nav-link">
                   <i class="nav-icon fas fa-chevron-circle-right"></i>
@@ -2083,7 +2083,7 @@
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-             
+
               <i class="nav-icon fas fa-hospital-user"></i>
               <p>
                 Admin Staff
@@ -2115,7 +2115,7 @@
           @endif
 
           @role('bursar')
-     
+
           <li class="nav-header">School Accounting</li>
 
           <li class="nav-item">
@@ -2125,10 +2125,10 @@
               School Accounts
               </p>
             </a>
-          </li>   
+          </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-         
+
               <i class="nav-icon fas fa-money-check-alt"></i>
               <p>
                 Partners
@@ -2150,18 +2150,18 @@
                       <i class="nav-icon fas fa-chart-line"></i>
                       <p>
                        Manage School Partners
-                        
+
                       </p>
                     </a>
                   </li>
-                 
-          
+
+
             </ul>
           </li>
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-         
+
               <i class="nav-icon fas fa-money-check-alt"></i>
               <p>
                 Petty Cash
@@ -2183,7 +2183,7 @@
                       <i class="nav-icon fas fa-chart-line"></i>
                       <p>
                        Manage Petty Cash
-                        
+
                       </p>
                     </a>
                   </li>
@@ -2193,19 +2193,19 @@
                       <i class="nav-icon fas fa-chart-line"></i>
                       <p>
                       Petty Cash Report
-                        
+
                       </p>
                     </a>
                   </li>
 
-                  
+
             </ul>
           </li>
-          
+
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-         
+
               <i class="nav-icon fas fa-money-check-alt"></i>
               <p>
                 Income & Expenditure
@@ -2227,7 +2227,7 @@
                       <i class="nav-icon fas fa-chart-line"></i>
                       <p>
                        Manage Income & Expenditure
-                        
+
                       </p>
                     </a>
                   </li>
@@ -2237,7 +2237,7 @@
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-         
+
               <i class="nav-icon fas fa-money-check-alt"></i>
               <p>
                 Fees Management
@@ -2260,7 +2260,7 @@
                   <i class="nav-icon fas fa-chart-line"></i>
                   <p>
                    Quick Fees
-                    
+
                   </p>
                 </a>
               </li>
@@ -2269,11 +2269,11 @@
                       <i class="nav-icon fas fa-chart-line"></i>
                       <p>
                        Add Fees
-                        
+
                       </p>
                     </a>
                   </li>
-          
+
             </ul>
           </li>
 
@@ -2291,7 +2291,7 @@
                       <i class="nav-icon fas fa-chart-line"></i>
                       <p>
                        Fees Report
-                        
+
                       </p>
                     </a>
                   </li>
@@ -2311,13 +2311,13 @@
                       </p>
                     </a>
                   </li>
-          
+
             </ul>
           </li>
-        
-         
+
+
          @endrole
-          
+
         </ul>
       </nav>
                     <!-- /.sidebar-menu -->
@@ -2343,8 +2343,8 @@
                 {{-- <x:notify-messages /> --}}
                 <section class="content">
                     <div class="container-fluid">
-        
-                      
+
+
                         <div class="row">
                             <div class="col">
                                 {{ $slot }}
@@ -2361,11 +2361,11 @@
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
-  
+
             {{-- <footer class="main-footer">
                 <div class="float-right d-none d-sm-block">
                   @if(empty(\App\Models\School::all()))
-  
+
                   <b><a href="#">{{ config('app.name', 'Shunifu') }}</a></b>
                   @else
                   @foreach (\App\Models\School::all() as $item)
@@ -2374,49 +2374,49 @@
                   @endforeach
                   @endif
                 </div>
-                
+
             </footer> --}}
         </div>
 
         @stack('modals')
            <!-- Scripts -->
-      
-        <script src="https://cdn.statically.io/gist/innovazania/b8793c83a804e280c38ddcfe14d23f20/raw/d22fe37eb7ca6cdcbb3def5761244fae4dca450c/livewire.js" ></script>  
+
+        <script src="https://cdn.statically.io/gist/innovazania/b8793c83a804e280c38ddcfe14d23f20/raw/d22fe37eb7ca6cdcbb3def5761244fae4dca450c/livewire.js" ></script>
            @livewireScripts
 
           <script src="https://cdn.statically.io/gh/innovazania/assets/master/app.js"></script>
            <script src="https://cdn.statically.io/gh/innovazania/assets/7f444680/admin-lte.js"></script>
            <script src="https://cdn.statically.io/gh/innovazania/assets/9ec219d9/notify.js"></script>
 
-        
-          
+
+
           {{-- <script  src="/js/app.js" ></script>  --}}
           {{-- <script  src="/js/dist/jquery.js" ></script>  --}}
-        
-          
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
-     
-        
-        
+
+
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
         <script>
           $('#flash-overlay-modal').modal();
       </script>
       @notifyJs
-      
-       
+
+
         @stack('scripts')
         <script>
           $(window).load(function(){
     $.ajaxSetup({
         statusCode: {
             419: function(){
-                    location.reload(); 
+                    location.reload();
                 }
         }
     });
 });
         </script>
- 
+
  <!-- Smartsupp Live Chat script -->
 
  <div class="no-print">
@@ -2430,14 +2430,14 @@
 	window.fwSettings={
 	'widget_id':151000001568
 	};
-	!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
+	!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}()
 </script>
 <script type='text/javascript' src='https://widget.freshworks.com/widgets/151000001568.js' async defer></script> --}}
 {{-- <script>
 	window.fwSettings={
 	'widget_id':151000001568
 	};
-	!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
+	!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}()
 </script>
 <script type='text/javascript' src='https://widget.freshworks.com/widgets/151000001568.js' async defer></script> --}}
 
