@@ -65,7 +65,7 @@ class StudentController extends Controller
 
     public function send_msg(Request $request){
 
-       
+
 
     //     $username = config('app.sms_username');
     //     $apiKey   = config('app.sms_password');
@@ -95,7 +95,7 @@ class StudentController extends Controller
         $school=School::first();
         $code=$school->school_code;
         $student_id=$request->student_id;
-      
+
         $name=$request->name;
         $middlename=$request->middlename;
         $lastname=$request->lastname;
@@ -106,18 +106,18 @@ class StudentController extends Controller
 
 
         $class_id=$request->class_id;
-  
+
         $classes=Grade::all();
         $sessions=AcademicSession::where('active', 1)->get();
 
-        
+
         $sesh=AcademicSession::where('active', 1)->first();
         $session_id=$sesh->id;
 
-    
 
- 
-     
+
+
+
        // $allUploadApiReponse = array();
         if ($request->hasFile('student_image')) {
             $image = $request->file('student_image');
@@ -131,11 +131,11 @@ $student_image = cloudinary()->upload($request->file('student_image')->getRealPa
         //     $image_new = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $code.'-'.$student_id);
 
         //     $student_image=$image_new->getSecurePath();
-    
-    
-    
+
+
+
             User::where('id', $student_id)->update([
-    
+
                 'name'=>$name,
                 'middlename'=>$middlename,
                 'lastname'=>$lastname,
@@ -143,8 +143,8 @@ $student_image = cloudinary()->upload($request->file('student_image')->getRealPa
                 'gender'=>$gender,
                 'profile_photo_path'=>$student_image,
             ]);
-  
-    
+
+
     }else{
 
         User::where('id',$student_id)->update([
@@ -155,14 +155,14 @@ $student_image = cloudinary()->upload($request->file('student_image')->getRealPa
             'national_id'=>$national_id,
             'gender'=>$gender,
             // 'profile_photo_path'=>"",
-        
+
            ]);
-        
+
 
     }
-        
 
-  
+
+
 
 $students=DB::table('grades_students')
 ->join('grades','grades_students.grade_id','=','grades.id')
@@ -194,7 +194,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
     public function index(): View
     {
         $table = (new UsersTable())->setup();
-    
+
         return view('users.students.list.index', compact('table'));
     }
 
@@ -208,7 +208,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
 
         //Verify if student
         if(Auth::user()->hasRole('student')){
-            
+
 
             //Get student id
             //Get student class
@@ -220,7 +220,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
     }
 
 
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -242,13 +242,13 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
     {
         if(Auth::user()->hasRole('admin_teacher') OR Auth::user()->hasRole('bursar') ){
 
-//For future multi-tenancy, scope class based on school type and school grades 
+//For future multi-tenancy, scope class based on school type and school grades
         $class=Grade::all();
         $streams=Stream::all();
         $student_role=Role::where('name','student')->first();
         $inactive_students=User::where('role_id',$student_role->id)->where('active',0)->get();
 
-        
+
         $active_students=User::where('role_id',$student_role->id)->where('active',1)->get();
 
         $session=AcademicSession::where('active', 1)->get();
@@ -310,7 +310,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
         ->where('users.active', 1)
         ->select('users.*','grades.grade_name', 'grades.id as grade_id')
         ->get();
-        
+
         return response()->json($stream_data);
 
 
@@ -343,13 +343,13 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
         //     ->select('users.*','grades.grade_name', 'academic_sessions.academic_session')
         //     ->get();
 
-          
+
         // }
 
 
         return view('users.students.view-students', compact('grades', 'sessions', 'streams'));
 
-      
+
 
 
 
@@ -361,10 +361,10 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
         $session=AcademicSession::where('active', 1)->first();
         $session_id=$session->id;
 
-    
 
 
-    
+
+
 
         if($stream_id=="former_students"){
 
@@ -410,7 +410,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
         $session=AcademicSession::where('active', 1)->first();
         $session_id=$session->id;
 
-        
+
 
         // $students = DB::table('users')
         // ->join('grades_students', 'users.id', '=', 'grades_students.student_id')
@@ -435,7 +435,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
         ->where('users.active',1 )
         ->orderBy('lastname')->orderBy('name')->get();
 
-    
+
 
        // dd($request->all());
         return response()->json([
@@ -446,7 +446,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
     }
 
     public function student_search(Request $request){
-        
+
         $grade_id=$request->grade_id;
         $session=AcademicSession::where('active', 1)->first();
         $session_id=$session->id;
@@ -459,15 +459,15 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
         }
 
         // $query="Temabutfo";
-      
 
-        
+
+
 
         // $student_role_id=Role::where('name', 'Student')->first();
         // $student_role=$student_role_id->id;
 
         // $platform = DB::table('idgbPlatforms')->where('name', 'LIKE',"%{$requestedplatform}%")->first();
-  
+
 
 
             $students= DB::table('grades_students')
@@ -482,7 +482,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
             ->where('grades_students.active',1 )
             ->where('users.active',1 )
             ->orderBy('lastname')->orderBy('name')->get();
-    
+
     // $students ="HipHipHooray";
 
         return response()->json([
@@ -490,7 +490,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
     ]);
 
 
-       
+
     }
     /**
      * Store a newly created resource in storage.
@@ -502,11 +502,11 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
     {
 //         if(Auth::user()->hasRole('admin_teacher')){
 //        $student=Role::where('name', 'student')->first();
-     
-//        $parent_role=Role::where('name', 'parent')->first();
-      
 
-//         $user = User::create([ 
+//        $parent_role=Role::where('name', 'parent')->first();
+
+
+//         $user = User::create([
 //             'name'=>$request->first_name,
 //             'middlename'=>$request->middle_name,
 //             'lastname'=>$request->last_name,
@@ -519,7 +519,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
 //             'status'=>1,
 //             'role_id'=>$student->id,
 //        ]);
-       
+
 //       $user->attachRole($student);
 
 
@@ -533,7 +533,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
 //        ]);
 
 //        //insert parent number
-// //        $parent = User::create([ 
+// //        $parent = User::create([
 // //         'cell_number'=>$request->parent_cell,
 // //         'email'=>$request->parent_email,
 // //         'password'=>Hash::make(Str::random(24)),
@@ -553,7 +553,7 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
 //    return Redirect::back();
 
 //    }else{
-//     return view('errors.unauthorized'); 
+//     return view('errors.unauthorized');
 //    }
 
     }
@@ -563,18 +563,18 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
         $this->validate($request, [
             'import' => 'required|mimes:xls,xlsx,csv'
          ]);
-    
+
 $collection=Excel::import(new StudentsImport, $request->file('import'));
     //  $collection = (new StudentsImport)->toCollection($request->file('import'));
-        
+
         flash()->overlay('Success. You have added students', 'Add Students');
 
       return redirect('/users/student');
-     
-       
+
+
     }
 
-    
+
 
     /**
      * Display the specified resource.
@@ -596,7 +596,7 @@ $collection=Excel::import(new StudentsImport, $request->file('import'));
             ->select('grade_name')
             ->get();
 
-          
+
 
             if($student_id=ParentStudent::where('student_id', $id)->exists()){
                 $parent_id=$student_id->parent_id;
@@ -608,13 +608,13 @@ $collection=Excel::import(new StudentsImport, $request->file('import'));
             }else{
 
             }
-              
-            
+
+
 
             return view('users.students.view', compact('result'));
 
       //  return view('users.students.manage', compact('student'));
-       
+
     }else{
         return view('errors.unauthorized');
     }
@@ -655,11 +655,11 @@ public function profile($id){
       //  dd($result_parent);
         return view('users.students.profile', compact('result_user', 'result_class', 'result_parent'));
         }else{
-            
+
             return view('users.students.profile', compact('result_user', 'result_class'));
         }
 
-     
+
     }else{
         return view('errors.unauthorized');
     }
@@ -692,15 +692,15 @@ public function profile($id){
 
     if($isAdmin OR $isClassTeacher){
 
-      
+
         //Check Email
         //Check Cell
 
     //     $this->validate($request, [
     //    'email' => 'unique:users|email',
     // //'cell_number' => 'unique:users|cell_number',
-    // ]); 
-        
+    // ]);
+
 
     // dd($request->cell_number);
     $id = $request->id;
@@ -715,16 +715,16 @@ public function profile($id){
     //     $user_data->national_id = $request->national_id;
     //     $user_data->date_of_birth = $request->date_of_birth;
     //     $user_data->gender = $request->gender;
-       
+
 	// 	$user_data->save();
 
     //     flash()->overlay('Could not update some information as it already exists in the database. Either email or cell number', 'Update Information');
-      
+
     //     return Redirect::back();
 
     // }else{
 
-    
+
 
 		$user_data = User::find($id);
 		$user_data->name = $request->first_name;
@@ -739,9 +739,9 @@ public function profile($id){
 
         flash()->overlay('Success. You have updated student information', 'Update Data');
 
-    
 
- 
+
+
         $parent_exists=ParentStudent::where('student_id', $id)->exists();
 
         if($parent_exists){
@@ -750,7 +750,7 @@ public function profile($id){
             ->where('parents_students.student_id', $id)
             ->select('users.id')
             ->first();
-           
+
             $parent_id=$parent_data_db->id;
             $parent_data = User::find($parent_id);
             $parent_data->name = $request->parent_name;
@@ -764,7 +764,7 @@ public function profile($id){
 
         //Check number and email
         $number_exists=User::where('cell_number', $request->parent_cell)->exists();
-        
+
         $email_exists=User::where('email', $request->parent_email)->exists();
         $parent_role=Role::where('name', 'parent')->first();
 
@@ -776,9 +776,9 @@ public function profile($id){
 		return Redirect::back();
 
         }
-        
+
         if($number_exists ){
-           
+
             $parent=User::where('cell_number', $request->parent_cell)->first();
           //if has role of student stop update
 
@@ -788,20 +788,20 @@ public function profile($id){
             //Add student to parent_students
 
                   //insert parent number
-     
-                  
+
+
    $parent_student=ParentStudent::create([
 
     'parent_id'=>$parent_id,
     'student_id'=>$request->id,
    ]);
- 
-  
+
+
 return Redirect::back();
 
         }else if(!$number_exists AND !$email_exists){
                          //insert parent number
-       $parent = User::create([ 
+       $parent = User::create([
         'cell_number'=>$request->parent_cell,
         'email'=>$request->parent_email,
         'password'=>Hash::make(Str::random(24)),
@@ -820,7 +820,7 @@ return Redirect::back();
 
     //send email to parent
    //send sms to parent
- 
+
 
         }
 
@@ -840,7 +840,7 @@ public function parent_update(Request $request){
     $isClassTeacher=Auth::user()->hasRole('class_teacher');
 
     if($isAdmin OR $isClassTeacher){
-        
+
         $id = $request->id;
 
 		$user_data = User::find($id);
@@ -850,11 +850,11 @@ public function parent_update(Request $request){
         $user_data->national_id = $request->national_id;
         $user_data->date_of_birth = $request->date_of_birth;
         $user_data->gender = $request->gender;
-        
+
 
 		$user_data->save();
 
- 
+
         $parent_exists=ParentStudent::where('student_id', $id)->exists();
 
         if(!$parent_exists){
@@ -890,10 +890,10 @@ public function parent_update(Request $request){
     {
          //First delete assessement_reports
         // delete student loads
-       
+
         //delete marks
         //delete grades_students
-      
+
         //then delete users
 
 
@@ -906,7 +906,7 @@ public function parent_update(Request $request){
       //  $parent=ParentStudent::where('student_id', $id);
 
 
-      
+
       if($assessement_report->exists()){
         $assessement_report->delete();
     }
@@ -925,19 +925,19 @@ public function parent_update(Request $request){
         if($mark->exists()){
             $mark->delete();
         }
-        
+
 
 
         if($grade->exists()){
             $grade->delete();
         }
- 
+
         $delete=User::find($id)->delete();
         flash()->overlay('<i class="fas fa-check-circle "></i>'.' Success.You have deleted student', 'Delete Student');
 
-        
 
-       
+
+
       return redirect('users/student/manage');
 
     }
@@ -952,7 +952,7 @@ public function parent_update(Request $request){
         return view('users.students.removal-management.index', compact('classes', 'sessions'));
 
     }
-    
+
 
     public function student_issues_classteacher(){
         //Archive Students
@@ -989,10 +989,10 @@ public function parent_update(Request $request){
         ->where('academic_sessions.id',$session_id )
    //     ->where('grades_students.active',1 )
      //   ->where('users.active',1 )
-     
+
         // ->where('grades_students.active',1)
         ->select('users.id as user_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname','users.profile_photo_path', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class', 'users.active')->orderBy('lastname')->orderBy('name')->get();
-   
+
         return view('users.students.removal-management.view', compact('students', 'sessions', 'classes', 'session_id'));
 
 
@@ -1032,7 +1032,7 @@ public function parent_update(Request $request){
         ->where('academic_sessions.id',$session_id )
 
         ->select('users.id as user_id','users.profile_photo_path','national_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class', 'users.active')->orderBy('lastname')->orderBy('name')->get();
-   
+
         return view('users.students.classteacher.view', compact('students', 'sessions', 'classes', 'session_id'));
 
 
@@ -1049,25 +1049,25 @@ public function parent_update(Request $request){
 
         if (!Schema::hasTable('cbe_marks')) {
             Schema::create('cbe_marks', function($table){
-                  
+
                    $table->id();
                    $table->unsignedBigInteger('teacher_id');
                    $table->unsignedBigInteger('student_id');
                    $table->unsignedBigInteger('teaching_load_id');
                    $table->unsignedBigInteger('strand_id');
                    $table->unsignedBigInteger('term_id');
-               
+
                    $table->string('grade')->nullable();
                    $table->integer('active')->default('1');
-           
+
                    $table->timestamps();
            });
        }
 
 
        if ($request->btn=="merge") {
-      
-   
+
+
 
        $student_data=[];
        for ($i = 0; $i <count($student_list); $i++) {
@@ -1082,7 +1082,7 @@ public function parent_update(Request $request){
         ->where('academic_sessions.id',$session )
         ->where('users.id',$student_list[$i])
      ->select('users.id as student_id', 'users.name', 'users.middlename','users.lastname','grades.grade_name', 'academic_sessions.id as session_id', 'grades.id as grade_id')
-       
+
         ->first();
         // $student_data[]=User::where('id', $student_list[$i])->first();
 
@@ -1091,14 +1091,14 @@ public function parent_update(Request $request){
 
 
 //         $sub = StudentLoad::select('id')
-  
+
 //     ->where('student_id',$student_list)
 //     ->where('academic_session',$session )
 //     ->groupBy('subjects.id');
 
 // $kj=DB::table(DB::raw("($sub->toSq()) as loads"))
 //     ->mergeBindings($sub)
-  
+
 //     ->get();
 
 //     dd($kj);
@@ -1120,7 +1120,7 @@ public function parent_update(Request $request){
 // subjects.id"));
 
 
-      
+
        }
 
    //    dd($student_data);
@@ -1129,8 +1129,8 @@ public function parent_update(Request $request){
 
 
        }
-        
-      
+
+
         if ($request->btn=="delete") {
             for ($i = 0; $i <count($student_list); $i++) {
                 $assessement_report=AssessementProgressReport::where('student_id', $student_list[$i]);
@@ -1165,40 +1165,40 @@ public function parent_update(Request $request){
                 if ($cbe_mark->exists()) {
                     $cbe_mark->delete();
                 }
-        
+
 
                 if ($grade->exists()) {
                     $grade->delete();
                 }
- 
+
                 $delete=User::find($student_list[$i])->delete();
 
                 //student detach
             }
-        } 
+        }
 
 
-         
+
         if ($request->btn=="partial_delete") {
             for ($i = 0; $i <count($student_list); $i++) {
-               
+
                 $grade=StudentClass::where('student_id', $student_list[$i])->where('grade_id',$current_class )->first();
-        
+
 
 
                 if ($grade->exists()) {
                    $grade=StudentClass::where('id',$grade->id)->delete();
                 }
- 
+
 
                 //student detach
             }
-        } 
-        
+        }
+
         if($request->btn=="archive") {
             for ($i = 0; $i <count($student_list); $i++) {
 
-            
+
                 // $assessement_report=AssessementProgressReport::where('student_id', $student_list[$i]);
             $student_average=StudentSubjectAverage::where('student_id', $student_list[$i]);
             $term_averages=TermAverage::where('student_id', $student_list[$i]);
@@ -1210,10 +1210,10 @@ public function parent_update(Request $request){
             $user=User::where('id', $student_list[$i]);
             $cbe_mark=CBEMark::where('student_id', $student_list[$i]);
 
-             
-          
 
-        
+
+
+
 
                 //archive workflow
                 //1. users.active=0
@@ -1231,7 +1231,7 @@ public function parent_update(Request $request){
                 if ($grade->exists()) {
                     $grade->update(['active'=>'0']);
                 //    $grade->delete();
-                   
+
 
                 }
 
@@ -1262,7 +1262,7 @@ public function parent_update(Request $request){
         if($request->btn=="unarchive") {
             for ($i = 0; $i <count($student_list); $i++) {
 
-            
+
                 // $assessement_report=AssessementProgressReport::where('student_id', $student_list[$i]);
                 // $student_average=StudentSubjectAverage::where('student_id', $student_list[$i]);
                 // $term_averages=TermAverage::where('student_id', $student_list[$i]);
@@ -1274,10 +1274,10 @@ public function parent_update(Request $request){
             $user=User::where('id', $student_list[$i]);
             $cbe_mark=CBEMark::where('student_id', $student_list[$i]);
 
-             
-          
 
-        
+
+
+
 
                 //archive workflow
                 //1. users.active=0
@@ -1294,8 +1294,8 @@ public function parent_update(Request $request){
                 //3. grade_students.active=0
                 if ($grade->exists()) {
                     $grade->update(['active'=>'1']);
-               
-                   
+
+
 
                 }
 
@@ -1315,14 +1315,14 @@ public function parent_update(Request $request){
 
         if ($request->btn=="transfer") {
 
-            
+
             for ($i = 0; $i <count($student_list); $i++) {
 
             // dd($student_list);
                 $assessement_report=AssessementProgressReport::where('student_id', $student_list[$i])->where('student_class', $current_class);
 
-          
-            
+
+
                 // $student_average=StudentSubjectAverage::where('student_id', $student_list[$i]);
 
                 // $term_averages=TermAverage::where('student_id', $student_list[$i]);
@@ -1340,7 +1340,7 @@ public function parent_update(Request $request){
                 // dd($session);
 
                 $cbe_mark=CBEMark::where('student_id', $student_list[$i]);
-           
+
 
                 if ($assessement_report->exists()) {
                     $assessement_report->delete();
@@ -1366,7 +1366,7 @@ public function parent_update(Request $request){
                 if ($cbe_mark->exists()) {
                     $cbe_mark->delete();
                 }
-    
+
 
 
                 if ($grade->exists()) {
@@ -1378,7 +1378,7 @@ public function parent_update(Request $request){
 
         flash()->overlay('<i class="fas fa-check-circle "></i>'.' Success.Issue has been sorted', 'Sort Student Issues');
         return redirect('/users/student/manage/removal/');
-        
+
     }
 
     public function load(Request $request){
@@ -1418,8 +1418,8 @@ public function parent_update(Request $request){
             ->join('academic_sessions','grades_students.academic_session','=','academic_sessions.id')
             ->where('grade_id', $class_id)
             ->select('users.id as user_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname','users.profile_photo_path', 'users.salutation', 'academic_sessions.academic_session', 'users.id')
-            
-            
+
+
             ->get();
 
             return view('users.students.view', compact('result', 'class', 'session'));
@@ -1427,7 +1427,7 @@ public function parent_update(Request $request){
 
 
     public function  password_reset($id){
- 
+
         $user_data = User::find($id);
         $uniqid = Str::random(8);
         $password=$user_data->password = Hash::make($uniqid);
@@ -1437,7 +1437,7 @@ public function parent_update(Request $request){
         dd($uniqid);
 
 
-        
+
     }
 
 
@@ -1448,10 +1448,10 @@ public function parent_update(Request $request){
         $chosen=$request->chosen;
 
        $rejected=array_diff($students, array($chosen));
-    
 
-   
-       
+
+
+
 
 //       dd($rejected);
 
@@ -1471,7 +1471,7 @@ $chosen_student=DB::table('student_loads')
 
 
 
-          
+
 
          //   dd($chosen);
 
@@ -1501,24 +1501,24 @@ $chosen_student=DB::table('student_loads')
 
                  $chosen_subjectlist=implode(",",$chosen_student_subjects);
                  $rejected_subjectlist=implode(",",$rejected_students_subjects);
-               
-               
+
+
                  $comparison=array_diff(($rejected_students_subjects), ($chosen_student_subjects));
 
-           
-                 
+
+
                  foreach ($comparison as $key => $value) {
-                 
+
                     //transfer student
 
 
                  }
 
-                 
 
 
 
-           
+
+
 
         }
 
@@ -1526,7 +1526,7 @@ $chosen_student=DB::table('student_loads')
 
 public function  parent_link(Request $request){
 $streams=Grade::all();
-return view('users.students.parent-link.index',compact('streams'));      
+return view('users.students.parent-link.index',compact('streams'));
 }
 
 
@@ -1538,7 +1538,7 @@ public function  parent_link_class_teacher(Request $request){
     ->where('grades_teachers.teacher_id', Auth::user()->id)
     ->where('grades_teachers.academic_session', $session->id)
     ->select('grades.id as grade_id', 'grades.grade_name')->get();
-    return view('users.students.parent-link.classteacher.index_classteacher',compact('class'));      
+    return view('users.students.parent-link.classteacher.index_classteacher',compact('class'));
     }
 
 public function  parent_link_admin(Request $request){
@@ -1559,13 +1559,13 @@ public function  parent_link_admin(Request $request){
     // ->where('grades_teachers.academic_session', $session->id)
     ->select('grades.id as grade_id', 'grades.grade_name')->get();
 
-    return view('users.students.parent-link.index_classteacher',compact('streams'));      
+    return view('users.students.parent-link.index_classteacher',compact('streams'));
     }
 
 
 public function parent_link_show(Request $request){
 
-$students=DB::select(DB::raw("SELECT 
+$students=DB::select(DB::raw("SELECT
 users.id as student_id,
 users.name,
 users.middlename,
@@ -1574,7 +1574,7 @@ p.cell_number as cell_number,
 grades.grade_name,
 (SELECT parents_students.parent_id as parent_id from parents_students WHERE parents_students.student_id=users.id ) as parent_id
  from grades_students
- INNER JOIN users ON grades_students.student_id=users.id  
+ INNER JOIN users ON grades_students.student_id=users.id
 LEFT JOIN parents_students on parents_students.student_id=users.id
 LEFT JOIN users p ON p.id=parents_students.parent_id
 INNER JOIN grades on grades.id=grades_students.grade_id
@@ -1586,7 +1586,7 @@ return view('users.students.parent-link.list',compact('students'));
 
 public function classteacher_parent_link_show(Request $request){
 
-    $students=DB::select(DB::raw("SELECT 
+    $students=DB::select(DB::raw("SELECT
     users.id as student_id,
     users.name,
     users.middlename,
@@ -1595,14 +1595,14 @@ public function classteacher_parent_link_show(Request $request){
     grades.grade_name,
     (SELECT parents_students.parent_id as parent_id from parents_students WHERE parents_students.student_id=users.id ) as parent_id
      from grades_students
-     INNER JOIN users ON grades_students.student_id=users.id  
+     INNER JOIN users ON grades_students.student_id=users.id
     LEFT JOIN parents_students on parents_students.student_id=users.id
     LEFT JOIN users p ON p.id=parents_students.parent_id
     INNER JOIN grades on grades.id=grades_students.grade_id
     WHERE grades.id=$request->class_id
     ORDER BY `grades`.`grade_name`,`users`.`lastname`  ASC"));
     return view('users.students.parent-link.classteacher.list',compact('students'));
-    
+
     }
 
 // public function increase_time_limit(int $seconds): bool
@@ -1616,7 +1616,7 @@ public function classteacher_parent_link_show(Request $request){
 
 
 public function parent_link_store(Request $request){
- 
+
     $parent_role=Role::where('name', 'parent')->first();
     $parent_role_id=$parent_role->id;
     $parent_role_name=$parent_role->name;
@@ -1626,17 +1626,17 @@ public function parent_link_store(Request $request){
         $students=$request->student_id[$i];
         $parents=($request->parent_id[$i]);
         $parent_cell=$request->parent_cell[$i];
-        
-    
+
+
         $CellExists=User::where('cell_number',$parent_cell);
-    
+
         if($CellExists->exists()=="true"){
-    
+
       // User::where('cell_number',$parent_cell)->update(['cell_number'=>$request->parent_cell[$i]]);
 
         $parentID=User::where('cell_number',$parent_cell)->first();
         $parent_id_is=$parentID->id;
-        
+
         //check if there is a combination of both parent_students
         //if there is a match then do not add
 
@@ -1653,26 +1653,26 @@ public function parent_link_store(Request $request){
           if(is_null($parent_cell)){
 
             //update parent cell
-            
+
 
           }else{
             $student_db=DB::table('parents_students')->upsert([
                 [
-                    'student_id' => $students, 
-                    'parent_id' => $parentID->id,   
+                    'student_id' => $students,
+                    'parent_id' => $parentID->id,
                 ]
             ], ['student_id', 'id'], ['parent_id']);
 
           }
-     
+
       }
-           
+
         }else{
-    
+
         $ifCellExists=User::where('cell_number',$request->parent_cell[$i])->whereNull('cell_number')->exists();
-                    
+
         if($ifCellExists){
-    
+
      User::where('cell_number',$request->parent_cell[$i])->update(['cell'=>$request->parent_cell[$i]]);
         }else{
         $newParent= User::create([
@@ -1684,9 +1684,9 @@ public function parent_link_store(Request $request){
      ]);
 
      $newParent_id=$newParent->id;
-     
+
      $newParent->attachRole($parent_role_id);
-   
+
 
      $studentParentExists=ParentStudent::where('student_id',$students)->exists();
      if($studentParentExists){
@@ -1701,21 +1701,21 @@ public function parent_link_store(Request $request){
            ]);
 
      }
-    
+
      }
      }
     }
-     
+
   flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added Parents Data.', 'Add Parents Cell Numbers');
-            
+
   return redirect('/link/students-parents/');
-         
+
 }
 
 
 
 public function store_parent_cell(Request $request){
- 
+
     $parent_role=Role::where('name', 'parent')->first();
     $parent_role_id=$parent_role->id;
     $parent_role_name=$parent_role->name;
@@ -1725,15 +1725,15 @@ public function store_parent_cell(Request $request){
         $students=$request->student_id[$i];
         $parents=($request->parent_id[$i]);
         $parent_cell=$request->parent_cell[$i];
-    
+
         $CellExists=User::where('cell_number',$parent_cell);
-    
+
         if($CellExists->exists()=="true"){
-    
+
       // User::where('cell_number',$parent_cell)->update(['cell_number'=>$request->parent_cell[$i]]);
 
         $parentID=User::where('cell_number',$parent_cell)->first();
-        
+
         //check if there is a combination of both parent_students
         //if there is a match then do not add
 
@@ -1747,21 +1747,21 @@ public function store_parent_cell(Request $request){
           }else{
             $student_db=DB::table('parents_students')->upsert([
                 [
-                    'student_id' => $students, 
-                    'parent_id' => $parentID->id,   
+                    'student_id' => $students,
+                    'parent_id' => $parentID->id,
                 ]
             ], ['student_id', 'id'], ['parent_id']);
 
           }
-     
+
       }
-           
+
         }else{
-    
+
         $ifCellExists=User::where('cell_number',$request->parent_cell[$i])->whereNull('cell_number')->exists();
-                    
+
         if($ifCellExists){
-    
+
      User::where('cell_number',$request->parent_cell[$i])->update(['cell'=>$request->parent_cell[$i]]);
         }else{
         $newParent= User::create([
@@ -1773,9 +1773,9 @@ public function store_parent_cell(Request $request){
      ]);
 
      $newParent_id=$newParent->id;
-     
+
      $newParent->attachRole($parent_role_id);
-   
+
 
      $studentParentExists=ParentStudent::where('student_id',$students)->exists();
      if($studentParentExists){
@@ -1790,15 +1790,15 @@ public function store_parent_cell(Request $request){
            ]);
 
      }
-    
+
      }
      }
     }
-     
+
   flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added Parents Data.', 'Add Parents Cell Numbers');
-            
+
   return redirect('/class/student-management/link-parents');
-         
+
 }
 
 
@@ -1808,7 +1808,7 @@ public function store_parent_cell(Request $request){
 
 
 public function parent_cell_show($id, $student_id){
- //   
+ //
 
         // 1. check if number exists
     $parent_cell_exists=User::where('cell_number', $id)->exists();
@@ -1817,7 +1817,7 @@ public function parent_cell_show($id, $student_id){
 
     if($parent_cell_exists){
         // 2. if exists
-  
+
     $parent_cell=User::where('cell_number', $id)->first();
     $parent_id=$parent_cell->id;
 
@@ -1827,12 +1827,12 @@ public function parent_cell_show($id, $student_id){
     $updateParent=ParentStudent::where('student_id', $student_id)->where('parent_id', $parent_id)->update([
         "parent_id"=>$parent_id,
     ]);
-    
-  
+
+
 
     }else{
           //     if it does not exist
-    //      1. Add new number as user 
+    //      1. Add new number as user
 
     // $new_parent=User::create([
     //     'cell_number'=>$id
@@ -1843,8 +1843,8 @@ public function parent_cell_show($id, $student_id){
 
 
 
-    
-    
+
+
     $parent_cell=User::where('cell_number', $id)->first();
     $parent_id=$parent_cell->id;
 
@@ -1873,7 +1873,7 @@ public function get_students(Request $request){
     $class_id=$grade_id->id;
     $class_name=$grade_id->grade_name;
     $stream_id=$grade_id->stream_id;
-   
+
     $grades_list=Grade::where('stream_id',$stream_id)->get();
 
     $result=DB::table('grades_students')
@@ -1892,13 +1892,13 @@ public function get_students(Request $request){
 }
 
 public function transfer_students(Request $request){
- 
+
     //Check existing
     //check out the academic year as well
     //dd('sdf');
 
     dd($request->all());
-  
+
     for($i = 0; $i < count($request->student_id); $i++) {
     $students=$request->student_id[$i];
     $transfer_to=$request->transfer_to[$i];
@@ -1908,7 +1908,7 @@ public function transfer_students(Request $request){
     //Delete from marks
 
 $update_students=StudentClass::where('student_id', $students)->where('active', 1)->update(['grade_id' =>$transfer_to]);
-          
+
     }
     //Delete from student loads
     //Delete from grades students
@@ -1917,7 +1917,7 @@ $update_students=StudentClass::where('student_id', $students)->where('active', 1
 public function process_transfer($student_id,$transfer_to){
     // return response()->json($mark[0]);
      dd($student_id);
- 
+
  }
 
 
@@ -1939,7 +1939,7 @@ public function process_transfer($student_id,$transfer_to){
     //3. Add to role_Students
 
     //if parent exists add to the parents students table
-    
+
 
     if(Auth::user()->hasRole('admin_teacher')){
         $student=Role::where('name', 'student')->first();
@@ -1960,9 +1960,9 @@ public function process_transfer($student_id,$transfer_to){
             'parent_cell'=>'unique:users,cell_number|nullable|digits:8|starts_with:76,78,79',
             'parent_email'=>'unique:users,email|nullable|email:rfc,dns'
         ]);
-       
- 
-         $user = User::create([ 
+
+
+         $user = User::create([
              'name'=>$request->first_name,
              'middlename'=>$request->middle_name,
              'lastname'=>$request->last_name,
@@ -1975,12 +1975,12 @@ public function process_transfer($student_id,$transfer_to){
              'status'=>1,
              'role_id'=>$student->id,
         ]);
-        
+
        $user->attachRole($student);
- 
- 
+
+
         $student_id=$user->id;
- 
+
         //Add student to class/grade
         $class_student=StudentClass::create([
          'student_id'=>$student_id,
@@ -1993,16 +1993,16 @@ public function process_transfer($student_id,$transfer_to){
 
         //1 Check if parent_cell is filled
 
-        
+
 
         //     if(is_null($request->parent_cell)){
-              
+
 
 
         //     }else{
         //           //add parent to users table
         //           $parent_cell='';
-        //     $parent = User::create([ 
+        //     $parent = User::create([
         //         'cell_number'=>$parent_cell,
         //         'email'=>$parent_email,
         //         'password'=>Hash::make(Str::random(4)),
@@ -2023,32 +2023,32 @@ public function process_transfer($student_id,$transfer_to){
         //         $parent_email='';
         //     }
 
-          
 
-        
+
+
 
     flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added'.'<span class="text-bold"> '.$request->first_name.' '.$request->last_name.'</span> '.'into the student registry.', 'Register Student');
- 
+
     return Redirect::back();
- 
+
     }else{
-     return view('errors.unauthorized'); 
+     return view('errors.unauthorized');
     }
 
 }
 
 public function bulk_pathway_index(){
 
-    $class=Grade::all();
+    $classes=Grade::all();
     $session=AcademicSession::all();
-    return view('users.students.registration-pathways.bulk', compact('class', 'session'));
+    return view('users.students.registration-pathways.bulk', compact('classes', 'session'));
 
 }
 
 public function bulk_pathway_store(Request $request){
 
 dd($request->all());
-  
+
     $student=Role::where('name', 'student')->first();
     $parent_role=Role::where('name', 'parent')->first();
     $academic_year=AcademicSession::where('active', 1)->first();
@@ -2084,9 +2084,9 @@ dd($request->all());
         'status'=>1,
         'role_id'=>$student->id,
    ]);
-    
+
         $user->attachRole($student);
- 
+
         $student_id=$user->id;
 
 //    //     Add student to class/grade
@@ -2135,7 +2135,7 @@ dd($request->all());
 flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added'.'<span class="text-bold"> '.$request->first_name.' '.$request->last_name.'</span> '.'into the student registry.', 'Register Student');
 
 return Redirect::back();
-   
+
 
 }
 
@@ -2159,7 +2159,7 @@ public function spreadsheet_pathway_store(Request $request){
 
 public function getPayment(Request $request, $id, $grade_id){
 
-  
+
     // $student=User::find($id);
 
 //     if($student){
@@ -2169,7 +2169,7 @@ public function getPayment(Request $request, $id, $grade_id){
 //     'student'=>$student,
 // ]);
 //     }
-   
+
     $payment_data = DB::table('users')
     // ->rightjoin('student_fees', 'users.id', '=', 'student_fees.student_id')
     // ->join('grades_students', 'grades_students.id', '=', 'users.id')
@@ -2182,7 +2182,7 @@ public function getPayment(Request $request, $id, $grade_id){
     ->get();
 
 
-    
+
     return response()->json($payment_data);
 
 
@@ -2204,34 +2204,34 @@ public function makePayment_test(Request $request){
         $ref=$request->reference[$i];
         $payment_date=$request->payment_date[$i];
         $fy=$request->fy[$i];
-        
+
         //Delete duplicates
         if(is_null($request->amount[$i])){
-        
+
         } else{
-        
+
         StudentFees::create(
             ['student_id'=>$students,
             'amount'=>$amount,
             'ref'=>$ref,
-            'payment_date'=>$payment_date, 
+            'payment_date'=>$payment_date,
             'item'=>$item,
             'financial_year'=>$fy,
-            
+
              ]);
-        
-        }
-        
+
         }
 
-        
-     
+        }
+
+
+
 flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Good Work '.Auth::user()->name . ' You have successfully added Fees Information.', 'Add Fees');
 return Redirect::back();
 }
 public function makePayment(Request $request){
   //  dd($request->all());
-    
+
 
     $activeSession=AcademicSession::where('active', 1)->first();
     $session_id=$activeSession->id;
@@ -2242,30 +2242,30 @@ public function makePayment(Request $request){
         $ref=$request->ref[$i];
         $payment_date=$request->payment_date[$i];
         $session=$request->session[$i];
-        
-        
+
+
         //Delete duplicates
         if(is_null($request->amount[$i])){
-        
+
         } else{
-        
+
         StudentFees::updateOrCreate(
             ['student_id'=>$students,
             'amount'=>$amount,
             'ref'=>$ref,
             'amount'=>$ref,
-            'payment_date'=>$payment_date, 
+            'payment_date'=>$payment_date,
             'session_id'=>$session_id
-            
+
              ], ['amount'=>$amount]);
-        
+
         }
-        
+
         }
 
 //Check if same s
 
-  
+
 for($i = 0; $i < count($request->student_id); $i++) {
 $students=$request->student_id[$i];
 $amount=($request->amount[$i]);
@@ -2283,9 +2283,9 @@ StudentFees::updateOrCreate(
     ['student_id'=>$students,
     'amount'=>$amount,
     'ref'=>$ref,
-    'payment_date'=>$payment_date, 
+    'payment_date'=>$payment_date,
     'session_id'=>$session_id
-    
+
      ], ['amount'=>$amount]);
 
 }
@@ -2309,9 +2309,9 @@ public function student_image(Request $request){
     $school_code=$school->school_code;
 
 
- 
+
     // dd($request->all());
-   
+
     if($request->hasFile('student_image')){
 
 
@@ -2319,8 +2319,8 @@ public function student_image(Request $request){
         //     "public_id" => "dog_couch",
         //     "background_removal" => "cloudinary_ai",
         //     "notification_url" => "https://mysite.example.com/hooks"]);
-			
-				
+
+
         $image = $request->file('student_image')->storeOnCloudinaryAs('shunifu', $school_code.'-'.$student_id);
 
         $student_image=$image->getSecurePath();
@@ -2335,10 +2335,10 @@ public function student_image(Request $request){
      //   return Redirect::back();
 
     }else{
-      
+
     }
     // return Redirect::back();
-   
+
 }
 
 
