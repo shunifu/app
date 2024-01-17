@@ -10,17 +10,7 @@
   height: 70%;
 }
 
-/* .cover {
-    background-image: url(https://res.cloudinary.com/innovazaniacloud/image/upload/v1676214444/shunifu_header_nrmbj3.png);
-  
-    background-repeat:no-repeat;
-    background-attachment: local;
 
-/* background-size: contain;
-padding-top: 50%;
-padding-bottom: 50%; */
-
-} */
 
 </style>
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -64,10 +54,10 @@ box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54
 }
 .bg-gradient-scooter {
 background: #17ead9;
-background: -webkit-linear-gradient( 
+background: -webkit-linear-gradient(
 45deg
 , #17ead9, #6078ea)!important;
-background: linear-gradient( 
+background: linear-gradient(
 45deg
 , #17ead9, #6078ea)!important;
 }
@@ -92,32 +82,31 @@ margin-left: auto!important;
 }
 .bg-gradient-bloody {
 background: #f54ea2;
-background: -webkit-linear-gradient( 
+background: -webkit-linear-gradient(
 45deg
 , #f54ea2, #ff7676)!important;
-background: linear-gradient( 
+background: linear-gradient(
 45deg
 , #f54ea2, #ff7676)!important;
 }
 
 .bg-gradient-ohhappiness {
 background: #00b09b;
-background: -webkit-linear-gradient( 
+background: -webkit-linear-gradient(
 45deg
 , #00b09b, #96c93d)!important;
-background: linear-gradient( 
+background: linear-gradient(
 45deg
 , #00b09b, #96c93d)!important;
 }
 
 .bg-gradient-blooker {
 background: #ffdf40;
-background: -webkit-linear-gradient( 
+background: -webkit-linear-gradient(
 45deg
 , #ffdf40, #ff8359)!important;
-background: linear-gradient( 
+background: linear-gradient(
 45deg
 , #ffdf40, #ff8359)!important;
 }
       </style>
-  

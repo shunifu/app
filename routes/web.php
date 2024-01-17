@@ -106,11 +106,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/offline', function () {
 
-    return view('modules/laravelpwa/offline');
-    
-    });
 
 Route::get('/reset', function () {
     return view('auth.forgot-password');
@@ -118,7 +114,7 @@ Route::get('/reset', function () {
 
 Route::post('/password/reset', [OneTimePasswordController::class,'sendOTP']);
 
-// 
+//
 Route::post('/update-password',  [PasswordController::class,'change'])->name('password.change');
 
     Route::group(['middleware' => ['auth', 'CheckPassword']], function() {
@@ -127,26 +123,22 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
 
 
 
-    //class teacher routes
+    //beginning of class teacher routes
 
-    Route::group([ 'middleware' => ['role:class_teacher'],['role:admin_teacher']], function() {
+    Route::group([ 'middleware' => ['role:class_teacher|principal|deputy_principal']], function() {
 
     Route::get('/class/student-management',[StudentController::class,'student_issues_classteacher'])->name('student.student_issues_classteacher');
-    // Route::get('/class/student-management',[StudentController::class,'fetchAllClassStudents'])->name('fetchAllClassStudents');
     Route::post('/class/student-management/view',[StudentController::class,'classteacher_student_view'])->name('student.class_teacher_view');
-
     Route::post('/class/student-management/save',[StudentController::class,'store_student_updates'])->name('student.store_student_updates');
-    
-    // Route::post('/users/student/manage/removal/process',[StudentController::class,'removal_loadstudents'])->name('student.removal');
 
 
- 
     Route::get('/class/student-management/link-parents',  [StudentController::class,'parent_link_class_teacher'])->name('parent_link.index_class_teacher');
     Route::post('/class/student-management/show-parents',  [StudentController::class,'classteacher_parent_link_show'])->name('classteacher_parent_link_show');
-  Route::post('/class/student-management/add-parents',  [StudentController::class,'store_parent_cell'])->name('classteacher_parent_link.store');
-  Route::get('/parents-student/link/edit/{id}',  [StudentController::class,'parent_cell_show'])->name('parent_link.show_cell');
+    Route::post('/class/student-management/add-parents',  [StudentController::class,'store_parent_cell'])->name('classteacher_parent_link.store');
+    Route::get('/parents-student/link/edit/{id}',  [StudentController::class,'parent_cell_show'])->name('parent_link.show_cell');
 
-// Route::post('/link/students-parents/list',  [StudentController::class,'classteacher_parent_link_show'])->name('classteacher_parent_link.show');
+
+    //end of class teacher routes
 
 
     //Attendence Route
@@ -156,7 +148,7 @@ Route::get('/class/attendance/search/{id}', [ParentController::class,'search'])-
 Route::get('/kids/data/performance/{id}', [ParentController::class,'performance'])->name('kids.performance');
 
 //Beginning of Class Teacher
-Route::get('/class/student-attendance', [StudentAttendanceController::class,'index']); 
+Route::get('/class/student-attendance', [StudentAttendanceController::class,'index']);
 Route::get('/class/student-attendance/cumulative', [StudentAttendanceController::class,'create']);
 Route::post('/class/student-attendance/cummulative-store', [StudentAttendanceController::class,'cummulative_store'])->name('attendance.cummulative_store');
 Route::post('/class/student-attendance/mark-attendance', [StudentAttendanceController::class,'store'])->name('attendance.store');
@@ -167,25 +159,25 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
 //End of Class Teacher
 
 });
-   
+
 //Admin Routes
 
     Route::group([ 'middleware' => ['role:admin_teacher']], function() {
-     
+
     //Secton Routes
     Route::get('/academic-admin/section', [SectionController::class,'index'])->name('section.index');
     Route::post('/academic-admin/section/add', [SectionController::class,'store'])->name('section.store');
     Route::get('/academic-admin/section/edit/{section}', [StreamController::class,'edit'])->name('stream.edit');
     Route::get('/academic-admin/section/delete/{section}', [StreamController::class,'destroy'])->name('section.destroy');
-    
+
     //Stream Routes
     Route::get('/academic-admin/stream', [StreamController::class,'create'])->name('stream.create');
     Route::post('/academic-admin/stream/add', [StreamController::class,'store'])->name('stream.store');
     Route::get('/academic-admin/stream/edit/{id}', [StreamController::class,'edit'])->name('stream.edit');
     Route::patch('/academic-admin/update', [StreamController::class,'update'])->name('stream.update');
-    
+
     Route::get('/academic-admin/stream/delete/{stream}', [StreamController::class,'destroy'])->name('stream.destroy');
-    
+
     //Class Routes
     Route::get('/academic-admin/class', [GradeController::class,'index'])->name('grade.index');
     Route::get('/academic-admin/class-lists', [GradeController::class,'class_lists_index'])->name('grade.class_lists_index');
@@ -196,7 +188,7 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
     Route::get('/academic-admin/class/edit/{id}', [GradeController::class,'edit'])->name('grade.edit');
     Route::post('/academic-admin/class/update', [GradeController::class,'update'])->name('grade.update');
     Route::get('/academic-admin/class/delete/{section}', [GradeController::class,'destroy'])->name('grade.destroy');
-    
+
     //Subject Routes
     Route::get('/academic-admin/subject', [SubjectController::class,'create'])->name('subject.create');
     Route::post('/academic-admin/subject/add', [SubjectController::class,'store'])->name('subject.store');
@@ -209,7 +201,7 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
        Route::get('/academic-admin/strands-bank', [StrandController::class,'create'])->name('strands.create');
        Route::post('/academic-admin/strands/add', [StrandController::class,'store'])->name('strands.store');
 
-      
+
        Route::get('/academic-admin/strands-bank/view', [StrandController::class,'view'])->name('strands.view');
        Route::post('/academic-admin/strands-bank/show', [StrandController::class,'show'])->name('strands.show');
 
@@ -217,8 +209,8 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
        Route::post('/academic-admin/strands/update', [StrandController::class,'update'])->name('strands.update');
 
        Route::post('/subject/modify', [SubjectController::class,'modify'])->name('subject.modify');
-   
-    
+
+
     //Department Routes
     Route::get('/academic-admin/department', [DepartmentController::class,'create'])->name('department.create');
     Route::get('/academic-admin/department/teacher', [DepartmentController::class,'add_teacher'])->name('department.teacher');
@@ -226,65 +218,65 @@ Route::post('/attendance/manage/view', [StudentAttendanceController::class,'edit
     Route::get('/academic-admin/department/edit/{id}', [DepartmentController::class,'edit'])->name('department.edit');
     Route::post('/academic-admin/department/update', [DepartmentController::class,'update'])->name('department.update');
     Route::delete('/academic-admin/department/delete/{id}', [DepartmentController::class,'destroy'])->name('department.destroy');
-    
+
     Route::get('/users/student/class/get/students/{id} ', [StudentController::class,'search'])->name('students.search');
     Route::get('/students/transfer/',[StudentController::class,'transfer'])->name('students.transfer');
     Route::post('/students/transfer/load',[StudentController::class,'get_students'])->name('students.gets_students');
     Route::get('/students/transfer/process',[StudentController::class,'transfer_students'])->name('students.transfer_students');
-    
+
     Route::post('/student/import/',  [StudentController::class,'import'])->name('student.import');
-    
+
     //School Routes
     Route::get('/academic-admin/school', [SchoolController::class,'create'])->name('school.create');
     Route::post('/academic-admin/school/add', [SchoolController::class,'store'])->name('school.store');
     Route::post('/academic-admin/school/edit', [SchoolController::class,'edit'])->name('school.edit');
     Route::get('/academic-admin/school/delete/{id}', [SchoolController::class,'destroy'])->name('school.destroy');
-    
+
     //Academic Session Routes
     Route::get('/academic-admin/session', [AcademicSessionController::class,'create'])->name('session.create');
     Route::post('/academic-admin/session/add', [AcademicSessionController::class,'store'])->name('session.store');
     Route::get('/academic-admin/session/edit/{id}', [AcademicSessionController::class,'edit'])->name('session.edit');
     Route::post('/academic-admin/session/update', [AcademicSessionController::class,'update'])->name('session.update');
     Route::get('/academic-admin/session/delete/{id}', [AcademicSessionController::class,'destroy'])->name('sesson.destroy');
-    
+
     Route::get('/view/terms/{id}', [TermController::class,'index'])->name('term.index');
     Route::post('terms/add', [TermController::class,'store'])->name('term.store');
     Route::get('/terms/edit/{id}', [TermController::class,'edit'])->name('term.edit');
     Route::post('terms/update', [TermController::class,'update'])->name('term.update');
     Route::get('/terms/delete/{id}', [TermController::class,'destroy'])->name('term.destroy');
-    
+
     //Terms
     // Route::get('/academic-admin/terms', [ShunifuTermController::class,'create'])->name('term.create');
     // Route::post('/academic-admin/terms/add', [ShunifuTermController::class,'store'])->name('term.store');
     Route::get('/academic-admin/session/edit/{id}', [AcademicSessionController::class,'edit'])->name('term.edit');
     Route::get('/academic-admin/session/delete/{id}', [AcademicSessionController::class,'destroy'])->name('term.destroy');
-    
-    
-    
-    
+
+
+
+
     //End of terms
-    
+
     Route::get('/academic-admin/resolution-management/index', [ResolutionController::class,'index'])->name('resolutions.index');
-    
+
     Route::post('/academic-admin/resolution-management/view', [ResolutionController::class,'load'])->name('resolutions.load');
-    
-    
+
+
     //Roles Management
     Route::get('/roles/', [RolesManagementController::class,'create'])->name('roles.index');
     Route::post('/roles/add', [RolesManagementController::class,'store'])->name('roles.store');
     //Route::pac('/roles/', [RolesManagementController::class,'index'])->name('roles.index');
     //End of Roles Management
-    
-    
+
+
     //Permissions Management
     Route::get('/permissions/', [PermissionsManagementController::class,'create'])->name('permissions.index');
     Route::post('/permissions/add', [PermissionsManagementController::class,'store'])->name('permissions.store');
-    
+
     //End of Permissions Management
-    
-    
+
+
     //Lesson Plan Management //
-    
+
 
     //Student Data Route
 Route::get('/users/student', [StudentController::class,'create'])->name('student.create');
@@ -414,6 +406,12 @@ Route::get('/next/class/{id}', [TransitionController::class,'next_class'])->name
 
 
 //End of Migration Management
+
+//Custom Migration
+Route::get('/migration/custom', [TransitionController::class,'index_custom'])->name('transition.index_custom');
+
+
+//End of Custom Migration
 
 
 //Testimonial
@@ -1018,13 +1016,6 @@ Route::get('/virtual/class', [VirtualClassController::class,'create'])->name('vi
 Route::post('/virtual/class/save', [VirtualClassController::class,'store'])->name('virtual-class.store');
 
 
-//COVID-19 Module
-
-Route::get('/covid-19/survelliance/students',[CoronaSurvellianceController::class, 'index_students'])->name('index.students');
-Route::get('/covid-19/survelliance/visitors',[CoronaSurvellianceController::class, 'index_visitors'])->name('index.visitors');
-Route::get('/covid-19/survelliance/teachers',[CoronaSurvellianceController::class, 'index_teachers'])->name('index.teachers');
-Route::get('/covid-19/survelliance/support-stuff',[CoronaSurvellianceController::class, 'index_support_staff'])->name('index.support-staff');
-});
 
 
 //Register
@@ -1083,7 +1074,7 @@ Route::post('/onboarding/profile-setup/step-2',[OnboardingController::class, 'st
 
 //Route::get('/class/performance/',[OnboardingController::class, 'class_performance'])->name('onboarding.profile_setup');
 
-
+});
 //end of error tool
 
 
@@ -1099,13 +1090,13 @@ Route::get('/clear-cache', function() {
     $run = Artisan::call('cache:clear');
     $run = Artisan::call('config:cache');
     $run = Artisan::call('storage:link');
-    return 'FINISHED';  
+    return 'FINISHED';
 });
 
 Route::get('/cache', function() {
      Artisan::call('storage:link');
 
-     return 'FINISHED';  
+     return 'FINISHED';
 });
 
 

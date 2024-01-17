@@ -40,13 +40,17 @@ use App\Models\GradeTeacher;
 use App\Models\Intervention;
 use App\Models\School;
 use App\Models\CBEMark;
+use App\Models\Sponsor;
 use App\Models\StudentFees;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Exception;
 use FontLib\Table\Type\name;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session as Fas;
 use Image;
 use ImageOptimizer;
+use PhpParser\Node\Stmt\TryCatch;
 use Sabberworm\CSS\Property\Import;
 
 // use Validator;
@@ -229,10 +233,22 @@ return view('users.students.classteacher.view', compact('students', 'sessions', 
      */
     public function create()
     {
+
+
+        //update the table to have the student status and sponsor id columns
+
+        if (!Schema::hasColumn('grades_students', 'student_status'))   {
+             Schema::table('grades_students', function (Blueprint $table) {
+             $table->string('student_status')->nullable();
+             $table->string('sponsor_id')->nullable();
+           });
+       }
+
+
         if(Auth::user()->hasRole('admin_teacher')){
-        // $class=Grade::all();
-        // $session=AcademicSession::all();
+
         return view('users.students.index');
+
         }else{
             return view('errors.unauthorized');
         }
@@ -1924,7 +1940,7 @@ public function process_transfer($student_id,$transfer_to){
 
  public function single_pathway_index(){
     $class=Grade::all();
-    $session=AcademicSession::all();
+    $session=AcademicSession::all()->sortByDesc('academic_session');
     return view('users.students.registration-pathways.single', compact('class', 'session'));
 
 
@@ -1943,91 +1959,63 @@ public function process_transfer($student_id,$transfer_to){
 
     if(Auth::user()->hasRole('admin_teacher')){
         $student=Role::where('name', 'student')->first();
-        $parent_role=Role::where('name', 'parent')->first();
 
           //Step 1- Validate Request
           $validation=$request->validate([
             'first_name'=>'required|alpha',
             'middle_name'=>'nullable|alpha',
             'last_name'=>'required|alpha',
-            'national_id'=>'nullable|digits:13',
-            'date_of_birth'=>'date|nullable',
+            'national_id'=>'digits:13',
+            'date_of_birth'=>'date',
             'gender'=>'required',
             'session'=>'required',
             'grade'=>'required',
             'cell_number'=>'unique:users,cell_number|nullable|digits:8|starts_with:76,78,79',
             'email_address'=>'unique:users,email|nullable|email:rfc,dns',
             'parent_cell'=>'unique:users,cell_number|nullable|digits:8|starts_with:76,78,79',
-            'parent_email'=>'unique:users,email|nullable|email:rfc,dns'
+            'parent_email'=>'unique:users,email|nullable|email:rfc,dns',
+            'student_status'=>'required',
         ]);
+
+
+        try {
 
 
          $user = User::create([
-             'name'=>$request->first_name,
-             'middlename'=>$request->middle_name,
-             'lastname'=>$request->last_name,
-            //  'national_id'=>$request->national_id,
-            //  'date_of_birth'=>$request->date_of_birth,
-             'gender'=>$request->gender,
-            //  'cell_number'=>$request->cell_number,
-            //  'email'=>$request->email_address,
-             'password'=>Hash::make(Str::random(4)),
-             'status'=>1,
-             'role_id'=>$student->id,
+            'name'=>$request->first_name,
+            'middlename'=>$request->middle_name,
+            'lastname'=>$request->last_name,
+            'national_id'=>$request->national_id,
+            'date_of_birth'=>$request->date_of_birth,
+            'gender'=>$request->gender,
+            'cell_number'=>$request->cell_number,
+            'email'=>$request->email_address,
+            'password'=>Hash::make(Str::random(4)),
+            'status'=>1,
+            'role_id'=>$student->id,
         ]);
 
-       $user->attachRole($student);
-
-
+        $user->attachRole($student);
         $student_id=$user->id;
 
         //Add student to class/grade
         $class_student=StudentClass::create([
-         'student_id'=>$student_id,
-         'grade_id'=>$request->grade,
-         'academic_session'=>$request->session,
-         'active'=>1,
+        'student_id'=>$student_id,
+        'grade_id'=>$request->grade,
+        'academic_session'=>$request->session,
+        'active'=>1,
         ]);
 
-        //if parent details are avaiable then add parent details.
+        flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added'.'<span class="text-bold"> '.$request->first_name.' '.$request->last_name.'</span> '.'into the student registry.', 'Register Student');
 
-        //1 Check if parent_cell is filled
+    } catch (Exception $e) {
 
+            flash()->overlay('<i class=" fa-exclamation-triangle text-danger"></i>'.' Error. Student could not be added into the system.', 'Register Student');
 
+           Log::debug($e->getMessage());
+//Log::channel('slack')->info('Something happened!');
+        }
 
-        //     if(is_null($request->parent_cell)){
-
-
-
-        //     }else{
-        //           //add parent to users table
-        //           $parent_cell='';
-        //     $parent = User::create([
-        //         'cell_number'=>$parent_cell,
-        //         'email'=>$parent_email,
-        //         'password'=>Hash::make(Str::random(4)),
-        //         'status'=>1,
-        //         'role_id'=>$parent_role->id,
-        //    ]);
-        //    $parent->attachRole($parent_role);
-        //    $parent_id=$parent->id;
-
-        //     //Linking parent to student:
-        //     $parent_student=ParentStudent::create([
-        //     'parent_id'=>$parent_id,
-        //     'student_id'=>$student_id,
-        //    ]);
-        //     }
-
-        //     if(is_null($request->parent_email)){
-        //         $parent_email='';
-        //     }
-
-
-
-
-
-    flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added'.'<span class="text-bold"> '.$request->first_name.' '.$request->last_name.'</span> '.'into the student registry.', 'Register Student');
 
     return Redirect::back();
 
@@ -2039,100 +2027,95 @@ public function process_transfer($student_id,$transfer_to){
 
 public function bulk_pathway_index(){
 
-    $classes=Grade::all();
-    $session=AcademicSession::all();
-    return view('users.students.registration-pathways.bulk', compact('classes', 'session'));
+    $classes=Grade::all()->sortBy('grade_name');
+    $session=AcademicSession::all()->sortBy('academic_session');
+    $sponsors=Sponsor::all();
+    return view('users.students.registration-pathways.bulk', compact('classes', 'session', 'sponsors'));
 
 }
 
 public function bulk_pathway_store(Request $request){
 
-dd($request->all());
+
+    //Validation
+    $validation=$request->validate([
+        'first_name'=>'required',
+        'middle_name'=>'nullable',
+        'last_name'=>'required',
+        'student_class'=>'required',
+        'student_status'=>'required',
+        'student_sponsor'=>'required',
+        'student_gender'=>'required',
+    ]);
+
+
+
+// dd($request->all());
 
     $student=Role::where('name', 'student')->first();
-    $parent_role=Role::where('name', 'parent')->first();
     $academic_year=AcademicSession::where('active', 1)->first();
     $session=$academic_year->id;
 
- //   Validation
-    // $validation=$request->validate([
-    //     'name'=>'required|alpha',
-    //     'middlename'=>'nullable|alpha',
-    //     'lastname'=>'required|alpha',
-    //     'gender'=>'required',
-    //     'session'=>'required',
-    //     'grade'=>'required',
-    //     'parent_cell'=>'unique:users,cell_number|nullable|digits:8|starts_with:76,78,79',
-    //     'parent_email'=>'unique:users,email|nullable|email:rfc,dns'
-    // ]);
 
-    $name=$request->name;
-    $lastname=$request->lastname;
-    $middlename=$request->middlename;
-    $gender=$request->gender;
-    $parent_cell=$request->parent_cell;
-    $parent_email=$request->parent_email;
-    $grade=$request->grade;
 
-    for ($i = 0; $i <count($name); $i++) {
-        $user = User::create([
-        'name'=>$name[$i],
-        'middlename'=>$middlename[$i],
-        'lastname'=>$lastname[$i],
-        'gender'=>$gender[$i],
-        'password'=>Hash::make(Str::random(4)),
-        'status'=>1,
-        'role_id'=>$student->id,
-   ]);
+    $name=$request->first_name;
+    $lastname=$request->last_name;
+    $middlename=$request->middle_name;
+    $gender=$request->student_gender;
+    $student_status=$request->student_status;
+    $student_gender=$request->student_gender;
+    $student_sponsor=$request->student_sponsor;
+    $grade=$request->student_class;
 
-        $user->attachRole($student);
 
-        $student_id=$user->id;
 
-//    //     Add student to class/grade
-//         $class_student=StudentClass::create([
-//      'student_id'=>$student_id,
-//      'grade_id'=>$grade,
-//      'academic_session'=>$session,
-//      'active'=>1,
-//     ]);
+    try {
+        //code...
 
-        //if parent details are avaiable then add parent details.
+        for ($i = 0; $i <count($name); $i++) {
+            $user = User::create([
+            'name'=>$name[$i],
+            'middlename'=>$middlename[$i],
+            'lastname'=>$lastname[$i],
+            'password'=>Hash::make(Str::random(4)),
+            'status'=>1,
+            'role_id'=>$student->id,
+       ]);
 
-        //1 Check if parent_cell is filled
 
-      //  if (is_null($request->parent_cell) and is_null($request->parent_email)) {
 
-        //If both fields are empty then do nothing
-      //  } else {
-            // if (is_null($request->parent_cell)) {
-            //     $parent_cell='';
-            // }
+            $user->attachRole($student);
 
-            // if (is_null($request->parent_email)) {
-            //     $parent_email='';
-            // }
+            $student_id=$user->id;
 
-            //add parent to users table
-    //         $parent = User::create([
-    //         'cell_number'=>$parent_cell,
-    //         'email'=>$parent_email,
-    //         'password'=>Hash::make(Str::random(4)),
-    //         'status'=>1,
-    //         'role_id'=>$parent_role->id[$i],
-    //    ]);
-            // $parent->attachRole($parent_role);
-            // $parent_id=$parent->id;
 
-            //Linking parent to student:
-    //         $parent_student=ParentStudent::create([
-    //     'parent_id'=>$parent_id,
-    //     'student_id'=>$student_id,
-    //    ]);
-        //}
+
+       // Add student to class/grade
+        $class_student=StudentClass::create([
+        'student_id'=>$student_id,
+        'grade_id'=>$grade[$i],
+         'student_status'=>$student_status[$i],
+        'student_sponsor'=>$student_sponsor[$i],
+         'student_gender'=>$student_gender[$i],
+         'academic_session'=>$session[$i],
+         'active'=>1,
+        ]);
+
     }
+        flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added'.'<span class="text-bold"> Students</span> '.'into the student registry.', 'Register Student');
 
-flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added'.'<span class="text-bold"> '.$request->first_name.' '.$request->last_name.'</span> '.'into the student registry.', 'Register Student');
+    } catch (Exception $e) {
+
+        // print_r($e->getMessage());
+
+            flash()->overlay('<i class=" fa-exclamation-triangle text-danger"></i>'.' Error. Students could not be added into the system.', 'Register Student');
+
+           Log::debug($e->getMessage());
+//Log::channel('slack')->info('Something happened!');
+        }
+
+
+
 
 return Redirect::back();
 

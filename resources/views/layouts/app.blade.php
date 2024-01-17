@@ -1292,11 +1292,8 @@
               </li>
 {{--
               <li class="nav-item">
-                <a href="/marks/CBE"  class="nav-link">
-                  <i class="nav-icon fas fa-check-circle"></i>
-                  <p>CBE Grades</p>
-                </a>
-              </li> --}}
+
+ </li> --}}
 
 
               <li class="nav-item">
@@ -1465,15 +1462,36 @@
       </p>
     </a>
 
+
+
     <ul class="nav nav-treeview">
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book-reader"></i>
+              <p>
+               Student Migration
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('transition.index')}}" class="nav-link">
+                   <i class="nav-icon fas fa-chevron-circle-right"></i>
+                  <p>Automatic</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('strands.view')}}" class="nav-link">
+                   <i class="nav-icon fas fa-chevron-circle-right"></i>
+                  <p>Custom</p>
+                </a>
+              </li>
+            </ul>
 
 
-      <li class="nav-item">
-        <a href="{{route('transition.index')}}" class="nav-link">
-             <i class="nav-icon fas fa-chevron-circle-right"></i>
-            <p>Student Migration</p>
-          </a>
-        </li>
 
 
       <li class="nav-item">
@@ -1483,6 +1501,8 @@
           </a>
         </li>
     </ul>
+
+
 
 
   </li>

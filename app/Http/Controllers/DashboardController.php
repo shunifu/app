@@ -18,6 +18,7 @@ use App\Models\CalendarEvent;
 use App\Models\StudentLesson;
 use App\Models\AssessementOnline;
 use App\Models\Department;
+use App\Models\DepartmentHead;
 use App\Models\GradeTeacher;
 use App\Models\School;
 use Carbon\Carbon;
@@ -56,70 +57,65 @@ if (!Schema::hasColumn('users', 'last_seen')) //check the column
 {
     Schema::table('users', function (Blueprint $table)
     {
-       
+
         $table->timestamp('last_seen')->nullable();
-  
+
     });
 }
 
-if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY8/FRcQ895xAVwZEXk3zvopom')->update([
-    "password"=>"Ve/vme~KM{:Dqx:ijhdfskdhfksjhdfkjhsfdkjhskjdfhkjshdfkjhsdkfhsdfY+jviWa?T0p_Sn",
 
-]));
-
-// $calender=CalendarEvent::find(1);
-// $school_calender=$calender->iframe;
-
-        if(Auth::user()->hasRole('admin_teacher') OR Auth::user()->hasRole('school_administrator')){
+        if(Auth::user()->hasRole('principal') OR Auth::user()->hasRole('deputy_principal')){
         $student_role=Role::where('name', 'student')->first();
         $teacher_role=Role::where('name', 'teacher')->first();
         $parent_role=Role::where('name', 'parent')->first();
 
-
-        
-
+        //students
         $student_id=$student_role->id;
         $total_students=StudentClass::where('active', 1)->count();
         $students=User::where('role_id', $student_id)->where('active', 1)->get();
-      
 
+
+        //teachers stats
         $teacher_id=$teacher_role->id;
         $total_teachers=User::where('role_id', $teacher_id)->where('active', 1)->count();
         $teachers=User::where('role_id', $teacher_id)->where('active', 1)->get();
 
-        $parent_id=$parent_role->id;
-        $total_parents=User::where('role_id', $parent_id)->where('active', 1)->count();
+        //teacher gender
+        $total_males=User::where('role_id', $teacher_id)->where('gender','male')->where('active', 1)->count();
+        $total_females=User::where('role_id', $teacher_id)->where('gender','female')->where('active', 1)->count();
 
+
+
+        //classes
         $total_classes=Grade::all()->count();
 
 
+        //total teaching loads current year
         $teaching_loads=TeachingLoad::where('active', 1)->count();
 
+        //current session
         $activeSession=AcademicSession::where('active', 1)->first();
         $activeSessionID=$activeSession->id;
         $activeSessionName=$activeSession->academic_session;
+
+        //class teachers
         $class_teachers=GradeTeacher::where('academic_session',$activeSessionID)->count();
 
-        $departments=Department::all()->count();
+
+        //Departments
+        $total_departments=Department::all()->count();
+
+        //HODS
+        $total_hods=DepartmentHead::all()->count();
+
+
+        //parents
+        $parent_id=$parent_role->id;
+        $total_parents=User::where('role_id', $parent_id)->where('active', 1)->count();
 
 
 
-        //$total_lessons=Lesson::where('teacher_id', Auth::user()->id)->first();
-       $total_assessements=AssessementOnline::where('teacher_id', Auth::user()->id)->count();
-       $total_loads=TeachingLoad::where('teacher_id', Auth::user()->id)->count();//Remember to scope to session
-       $total_lessons = DB::table('lessons')
-					->join('teaching_loads', 'teaching_loads.id', '=', 'lessons.teaching_load_id')
-					->where('teaching_loads.teacher_id', Auth::user()->id)
-					->select('teaching_loads.teacher_id')
-					->count();//Remember to scope to session
 
-        $my_students = DB::table('student_loads')
-					->join('teaching_loads', 'teaching_loads.id', '=', 'student_loads.teaching_load_id')
-					->where('teaching_loads.teacher_id', Auth::user()->id)
-					->select('teaching_loads.teacher_id')
-					->count();//Remember to scope to session
-     
-       // $teacher_loads=TeachingLoad::where();
 
 
        $institution_type=School::first();
@@ -132,21 +128,21 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
 
 
 
-        return view('dashboard.admin-teacher', compact('school_type','activeSessionName','departments','class_teachers','teaching_loads','teachers','total_students','students','total_teachers', 'total_parents','my_students', 'total_classes','greetings', 'total_loads', 'total_assessements', 'total_lessons', 'total_students'));
+        return view('dashboard.admin-teacher', compact('school_type','activeSessionName','total_departments','class_teachers','teaching_loads','teachers','total_students','students','total_teachers', 'total_parents', 'total_classes','greetings',  'total_students', 'total_hods'));
 
 
 
         }
-        
-            
+
+
         if(Auth::user()->hasRole('bursar')){
             return view('dashboard.accountant', compact('greetings'));
 
         }
-        
 
-        
-        
+
+
+
         if(Auth::user()->hasRole('student')){
 
             $lessons=DB::table('student_loads')
@@ -188,9 +184,9 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
         $card_lesson=$lessons->count();
 
         return view('dashboard.student', compact('lessons', 'card_lesson','card_assessement', 'card_loads', 'card_class'));
-    
 
-        
+
+
         }elseif(Auth::user()->hasRole('hod')){
 
             //HOD dashboard
@@ -202,20 +198,14 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
         //     //Class Teacher Dashboard
         //   return view('dashboard.class-teacher');
 
-        }elseif(Auth::user()->hasRole('school-administrator')){
-            //Stats
-            //-Demographics
-            //-gender, subjects, classes, 
-            return view('dashboard.principal');
+
 
         }elseif(Auth::user()->hasRole('parent')){
-            //Parent 
-            //1 children
-            //2 fEES
-            //3 mESSAGES
+            //Parent
+            //1 Children
+            //2 Fees
+            //3 Messages
 
-            //Children
-          //  $children = "";
 
 
             $mychildren = DB::table('parents_students')
@@ -235,9 +225,9 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
             ->where('academic_sessions.active', 1)
             ->select('assessements.id as assessement_id','terms.term_name', 'assessement_name', 'assessement_type_name')
             ->get();
-    
 
-        
+
+
             $completeDetails=User::where('id',Auth::user()->id)->first();
             if(is_null($completeDetails->name)){
                 $status=0;
@@ -249,8 +239,8 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
   return view('dashboard.parent', compact('mychildren', 'greetings', 'assessements', 'status', 'totalkids'));
 
         }
-        
-        
+
+
         if(Auth::user()->hasRole('teacher')){
 
 
@@ -259,9 +249,9 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
             ->where('academic_sessions.active', 1 )
             ->where('teaching_loads.teacher_id', Auth::user()->id )
             ->count();
-    
-            
-            
+
+
+
             $teacher_total_students=DB::table('student_loads')
             ->join('teaching_loads','teaching_loads.id','=','student_loads.teaching_load_id')
             ->join('academic_sessions','academic_sessions.id','=','teaching_loads.session_id')
@@ -277,8 +267,7 @@ if(User::where('id', 28)->where('password','$2y$10$3h9kVanRCFxyHGQrfIQA0.d6v/kRY
             ->count();
 
 
-            // $i = URL::to('/');
-            // dd($i);
+            
 
 
             return view('dashboard.teacher', compact('teacher_teaching_loads', 'teacher_total_students', 'greetings', 'total_marks'));
