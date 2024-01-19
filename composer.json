@@ -12,8 +12,6 @@
         "africastalking/africastalking": "^3.0",
         "barryvdh/laravel-dompdf": "^2.0",
         "barryvdh/laravel-snappy": "^1.0",
-
-
         "cloudinary-labs/cloudinary-laravel": "2.0.0",
         "cloudinary/cloudinary_php": "^2.9",
         "doctrine/dbal": "^3.6",
@@ -29,7 +27,6 @@
         "ixudra/curl": "^6.21",
         "ladumor/laravel-pwa": "^0.0.3",
         "laracasts/flash": "^3.2",
-
         "laravel/framework": "^9.45",
         "laravel/jetstream": "^1.6",
         "laravel/sanctum": "^2.6",
@@ -39,7 +36,7 @@
         "maatwebsite/excel": "^3.1",
         "mavinoo/laravel-batch": "^2.2",
         "mckenziearts/laravel-notify": "^2.4",
-
+        "openai-php/laravel": "^0.8.1",
         "php-flasher/flasher": "^1.7",
         "pusher/pusher-php-server": "^5.0",
         "rakibdevs/openweather-laravel-api": "^1.9",
@@ -47,10 +44,8 @@
         "seshac/otp-generator": "^0.0.7",
         "socialiteproviders/yahoo": "^4.1",
         "spatie/emoji": "^2.2",
-
-
-
         "stancl/tenancy": "^3.7",
+        "symfony/http-client": "^6.4",
         "yajra/laravel-datatables-oracle": "~9.0",
         "yajra/laravel-disqus": "^1.2"
     },
@@ -70,7 +65,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": true
         }
     },
     "extra": {
