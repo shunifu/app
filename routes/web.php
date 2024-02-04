@@ -399,6 +399,11 @@ Route::get('/get/stream/{stream_id}', [SchoolFeeController::class,'getStream'])-
 //Migration Management
 
 Route::get('/migration/', [TransitionController::class,'index'])->name('transition.index');
+Route::get('/migration/automatic', [TransitionController::class,'index_automatic'])->name('automatic-migration.index');
+
+Route::get('/migration/custom', [TransitionController::class,'index_custom'])->name('custom-migration.index');
+
+Route::get('/migration/custom', [TransitionController::class,'index'])->name('transition.index');
 Route::post('/migration/process', [TransitionController::class,'process'])->name('transition.process');
 Route::post('/migration/store', [TransitionController::class,'store'])->name('transition.store');
 Route::get('/session-management/migration/class-type', [TransitionController::class,'class_type'])->name('transition.class_type');

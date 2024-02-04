@@ -1465,28 +1465,36 @@
 
 
     <ul class="nav nav-treeview">
+
+        <li class="nav-item">
+            <a href="/migration" class="nav-link">
+                 <i class="nav-icon fas fa-book-reader"></i>
+                <p>Student Migration</p>
+              </a>
+            </li>
+
         <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-book-reader"></i>
+              <i class="  nav-icon fas fa-chevron-circle-right"></i>
               <p>
-               Student Migration
+               Sequence Mapping
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
 
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('transition.index')}}" class="nav-link">
+                <a href="/academic-admin/stream" class="nav-link">
                    <i class="nav-icon fas fa-chevron-circle-right"></i>
-                  <p>Automatic</p>
+                  <p>Stream Map</p>
                 </a>
               </li>
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('strands.view')}}" class="nav-link">
+                <a href="{{route('sequence.index')}}" class="nav-link">
                    <i class="nav-icon fas fa-chevron-circle-right"></i>
-                  <p>Custom</p>
+                  <p>Class Map</p>
                 </a>
               </li>
             </ul>
@@ -1494,12 +1502,7 @@
 
 
 
-      <li class="nav-item">
-        <a href="{{route('sequence.index')}}" class="nav-link">
-             <i class="nav-icon fas fa-chevron-circle-right"></i>
-            <p>Class Sequencing</p>
-          </a>
-        </li>
+
     </ul>
 
 

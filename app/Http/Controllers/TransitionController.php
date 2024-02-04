@@ -35,62 +35,43 @@ class TransitionController extends Controller
     //not less than current year;
      //not greater than current year;
 
-     $from_year=date('Y')-1;
-     $to_year=date('Y');
-
-
-
-     $from=AcademicSession::where('academic_session', $from_year)->get();
-     $to=AcademicSession::where('academic_session', $to_year)->get();
 
 
 
 
+
+        return view('academic-admin.academic-session-management.session-migration.index');
+
+    }
+
+    public function index_automatic(){
+        $from_year=date('Y')-1;
+        $to_year=date('Y');
+        $from=AcademicSession::where('academic_session', $from_year)->get();
+        $to=AcademicSession::where('academic_session', $to_year)->get();
         $current_year=date('Y');
         $sessions=AcademicSession::where('active', 0)->where('academic_session', $current_year)->get();
         $grades=Grade::all();
 
-        //Check if that the session exists
-         //Check if that the session exists
-
-        return view('academic-admin.academic-session-management.session-migration.index', compact('from','to', 'grades'));
-
+        return view('academic-admin.academic-session-management.session-migration.automatic-migration.index', compact('from_year', 'to_year', 'from', 'to', 'current_year', 'sessions','grades'));
     }
 
 
     public function index_custom(){
 
-        //Show page to process transition...
-
-    // $from=AcademicSession::where('active', 0)->where('academic_session', $current_year)->get();
-    // $to=AcademicSession::where('active', 0)->where('academic_session', $current_year)->get();
-        //to
-
-    //Validation: new year
-    //not less than current year;
-     //not greater than current year;
-
-     $from_year=date('Y')-1;
-     $to_year=date('Y');
-
-
-
-     $from=AcademicSession::where('academic_session', $from_year)->get();
-     $to=AcademicSession::where('academic_session', $to_year)->get();
-
-
-
-
+        $from_year=date('Y')-1;
+        $to_year=date('Y');
+        $from=AcademicSession::where('academic_session', $from_year)->get();
+        $to=AcademicSession::where('academic_session', $to_year)->get();
         $current_year=date('Y');
         $sessions=AcademicSession::where('active', 0)->where('academic_session', $current_year)->get();
         $grades=Grade::all();
 
-        //Check if that the session exists
-         //Check if that the session exists
-
-        return view('academic-admin.academic-session-management.session-migration.index', compact('from','to', 'grades'));
+        return view('academic-admin.academic-session-management.session-migration.custom-migration.index', compact('from_year', 'to_year', 'from', 'to', 'current_year', 'sessions','grades'));
 
     }
+
+
 
     public function class_type(Request $request){
 
@@ -164,6 +145,45 @@ class TransitionController extends Controller
                 flash()->overlay('<i class="fas fa-check-circle text-warning "></i>'.' Error. . Stream type not set. Please set stream type ', 'Migration  Notice');
                 return redirect('/academic-admin/stream');
             }else{
+
+
+
+
+
+
+                //custom migration
+
+
+                if($request->migration_type=="custom"){
+
+                   //if it is custom migration then show
+                   //1. lsit of students
+
+                   $students=DB::table('users')
+                   ->join('grades_students','grades_students.student_id','=','users.id')
+                   ->join('grades','grades.id','=','grades_students.grade_id')
+
+                   // ->join('streams','streams.id','=','grades.stream_id')
+                   ->join('term_averages','term_averages.student_id','=','users.id')
+                   ->join('terms','terms.id','=','term_averages.term_id')
+                   ->where('grades.id', $request->class_id)
+                   ->where('grades_students.academic_session', $from_session)
+                   ->where('terms.academic_session', $from_session)
+                   // ->where('terms.id','term_averages.term_id')
+                   ->where('terms.final_term',1)
+                   ->select('users.id as student_id', 'term_averages.final_term_status as result','users.name', 'users.lastname', 'users.middlename', 'grades.id as grade_id', 'grades.grade_name', 'terms.academic_session', 'users.active as users_active', 'grades_students.active as grades_student_active')
+                   ->get();
+
+                   return view('academic-admin.academic-session-management.session-migration.custom-migration.view', compact('students', 'from_session', 'to_session', 'current_class', 'final_stream_status'));
+                }
+
+
+
+
+
+
+                //endof custom migration
+
 
 
             //Query to get students currently in the selected stream

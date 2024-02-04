@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      
+
     </x-slot>
     <div class="row">
         <div class="col-md-12">
@@ -21,11 +21,11 @@
                         <option value="">Select Class</option>
                         @foreach ($classes as $class)
                         <option value="{{$class->id}}">{{$class->grade_name}}</option>
-                            
+
                         @endforeach
                        </select>
                         @error('grade_id')
-                        <span class="text-danger">{{$message}}</span>  
+                        <span class="text-danger">{{$message}}</span>
                         @enderror
                         </div>
 
@@ -38,7 +38,7 @@
                             @endforeach
                            </select>
                             @error('subject_id')
-                            <span class="text-danger">{{$message}}</span>  
+                            <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
 
@@ -51,13 +51,13 @@
                                 @endforeach
                                </select>
                                 @error('academic_session')
-                                <span class="text-danger">{{$message}}</span>  
+                                <span class="text-danger">{{$message}}</span>
                                 @enderror
                             </div>
                 </div>
                 </div>
                 <!-- /.card-body -->
-      
+
                 <div class="card-footer">
                   <x-jet-button>Load Students</x-jet-button>
                 </div>
@@ -65,30 +65,30 @@
 
 
             </div>
-      
-      
+
+
         </div>
         <div class="col-md-12 mt-4">
 
           <div class="card bg-white">
-           
-          
+
+
             <div class="card-body">
-        
-        <p>Hi {{Auth::user()->name}}, you are adding  <span class="text-bold"> {{$load_subject->subject_name}} </span> for students in <span class="text-bold">{{$load_class->grade_name}}</span> for academic year <span class="text-bold">{{$load_session->academic_session}}</span> 
+
+        <p>Hi {{Auth::user()->name}}, you are adding  <span class="text-bold"> {{$load_subject->subject_name}} </span> for students in <span class="text-bold">{{$load_class->grade_name}}</span> for academic year <span class="text-bold">{{$load_session->academic_session}}</span>
         to continue, please select the students that you teach, if you teach all of them click on select all, but if you teach <span class="text-italics">some of them</span> click only on those that you teach. Siyabonga! </p>
               <p class="card-text">
-                <form action="{{route('teachingloads.store')}}" method="post">  
+                <form action="{{route('teachingloads.store')}}" method="post">
                   @csrf
                   <div class="student_list">
-        
+
           @if ($load_session->active==1)
             <input type="checkbox" id="select_all" name="select_all">
           <label for="students">Select All</label>
           <hr>
-          
+
           @foreach ($result_students as $item)
-		  
+
           <div>
            <input type="checkbox" class="students" name="students[]" value="{{$item->id}}" >
            <input type="hidden" id="teacher_id" name="teacher_id" value="{{Auth::user()->id}}">
@@ -97,12 +97,12 @@
            <input type="hidden" id="academic_session" name="academic_session" value="{{$item->academic_session}}">
            <label for="students">{{$item->lastname}} {{$item->name}} {{$item->middlename}} </label>
           </div>
-              
-           @endforeach    
+
+           @endforeach
           @else
-          Select Active Academic Year 
+          Select Active Academic Year
           @endif
-         
+
         </div>
 <hr>
               <div class=" m-0">
@@ -111,8 +111,8 @@
             </form>
             </div>
           </div>
- 
- 
+
+
    <script>
      $('#select_all').change(function() {
 
@@ -132,14 +132,13 @@ if ($('input:checkbox:checked.students').length === $("input:checkbox.students")
 })
 
    </script>
-    
-      
-      
-    
+
+
+
+
     </div>
-            
-          </div>  
-    
+
+          </div>
+
 </x-app-layout>
 
- 
