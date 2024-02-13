@@ -15,10 +15,9 @@
                 <div class="card-body">
                     <h3 class="lead">Hi, {{ Auth::user()->name }}</h3>
                     <div class="text-muted">
-                        <p class="card-text"> You are about to migrate students to <span class="text-bold">the next selected class</span>. If you want to migrate all the students to the destination class, select the "select all" option. However, if you only want to migrate specific students, click on the desired individuals.
+                        <p class="card-text"> You are about to migrate students to <span class="text-bold">{{$next_class_name}}</span>. If you want to migrate all the students to the {{$next_class_name}}, click the checkbox of  all the students, in the list. Alternatively, if you only want to migrate specific students, click only on those students you wish to migrate.
 
                         </p>
-
 
                     </div>
 
@@ -28,6 +27,8 @@
 
 <form action="{{route('transition.store')}}" method="post" name="migration" id="migration_form">
 @csrf
+
+<input type="hidden" value="custom" name="migration_type">
     <div class="card text-left">
         <div class="card-body">
 
@@ -39,6 +40,7 @@
                             <th>Name</th>
                             <th>Middlename</th>
                             <th>Current Class</th>
+                            <th>Next Class</th>
                         </tr>
                     </thead>
 
@@ -53,15 +55,14 @@
                             <td>{{$item->name}}</td>
                             <td>{{$item->middlename}}</td>
                             <td>{{$item->grade_name}}</td>
-
+                            <td>{{$next_class_name}}</td>
         <input type="hidden" name="student_id[]" value="{{$item->student_id}}">
-        <input type="hidden" name="student_name[]" value="{{$item->name}}">
-        <input type="hidden" name="student_result[]" value="{{$item->result}}">
+        {{-- <input type="hidden" name="student_name[]" value="{{$item->name}}"> --}}
         <input type="hidden" name="from_session[]" value="{{$from_session}}">
         <input type="hidden" name="to_session[]" value="{{$to_session}}">
         <input type="hidden" name="current_class[]" value="{{$current_class}}">
-        <input type="hidden"  name="final_stream_status" value="{{$final_stream_status}}">
-        <input type="hidden"  name="scope" value="internal">
+        <input type="hidden" name="destination_class[]" value="{{$destination_class}}">
+        {{-- <input type="hidden"  name="scope" value="custom"> --}}
 
                         </tr>
                         @endforeach

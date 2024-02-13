@@ -14,7 +14,7 @@
 <!-- Add to homescreen for Chrome on Android -->
  <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="PWA">
-<link rel="icon" sizes="512x512" href="{{config('app.school_logo')}}"> 
+<link rel="icon" sizes="512x512" href="{{config('app.school_logo')}}">
 
 <!-- Add to homescreen for Safari on iOS -->
  <meta name="apple-mobile-web-app-capable" content="yes">
@@ -26,18 +26,18 @@
 
 <script>
     window.addEventListener('installready', function(e){
-				
+
 				  //Show your own installation UI
 				  //Include our Install Button code for best results
-				  //e.detail.ios is true if the user is on Safari/iOS. 
+				  //e.detail.ios is true if the user is on Safari/iOS.
 				  //Or false if it's a native prompt (all other platforms)
-				  console.log(e.detail.ios); 
-				
+				  console.log(e.detail.ios);
+
 			});
 </script>
 
 
-<link rel="manifest" href="https://progressier.com/client/progressier.json?id=mRuQhHD6PyzeinPjlO9K"><script defer src="https://progressier.com/client/script.js?id=mRuQhHD6PyzeinPjlO9K"></script> 
+<link rel="manifest" href="https://progressier.com/client/progressier.json?id=mRuQhHD6PyzeinPjlO9K"><script defer src="https://progressier.com/client/script.js?id=mRuQhHD6PyzeinPjlO9K"></script>
 
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
@@ -54,7 +54,7 @@ font-weight: normal;
 color: gray;
 /* position: relative;
 z-index: 0; */
-padding: 0; 
+padding: 0;
 }
 /* body{
   font-family: "Lato", Arial, sans-serif;
@@ -64,8 +64,8 @@ font-weight: normal;
 color: gray;
 /* position: relative;
 z-index: 0; */
-/* padding: 0; 
-} */ 
+/* padding: 0;
+} */
 /* body:after {
 position: absolute;
 top: 0;
@@ -88,15 +88,15 @@ z-index: -1;
     width: 100%;
     top: 0;
     height: 100%;
-    
- 
+
+
 }
 .background img{
 
 }
 
 .overlay{
- 
+
   background-color: rgba(0, 0, 0, 0.623);
   content: '';
     position: absolute;
@@ -149,16 +149,16 @@ border-color: rgba(255, 255, 255, 0.4); }
 .form-control:focus {
 border-color: rgba(255, 255, 255, 0.4); }
 
-/* 
+/*
 input[type="text"]::placeholder { */
-                 
+
                  /* Firefox, Chrome, Opera */
                  /* text-align: center; */
-               
+
                  /* background-color: transparent; */
              /* } */
              /* input[type="password"]::placeholder { */
-                 
+
                  /* Firefox, Chrome, Opera */
                  /* text-align: center; */
              /* } */
@@ -200,7 +200,7 @@ a:hover{
 .panel{
     min-height: 380px;
     /* box-shadow: 20px 20px 80px rgb(218, 218, 218); */
-    border-radius: 12px; 
+    border-radius: 12px;
     background-color: rgb(255, 255, 255);
 }
 
@@ -221,7 +221,7 @@ a:hover{
     display: flex;
     align-items: center;
     cursor: pointer;
-    border: 1px solid #ddd; 
+    border: 1px solid #ddd;
     color: #4343ff00; */
 }
 input[type='text'],
@@ -229,7 +229,7 @@ input[type='password']{
     /* border: none;
     outline: none;
     box-shadow: none;
-    width: 100%; 
+    width: 100%;
     background-color: none; */
 }
 .fa-eye-slash.btn{
@@ -241,7 +241,7 @@ img{
     width: 80px;
     height: 80px;
     object-fit: cover;
- 
+
     position: relative;
 }
 a[target='_blank']{
@@ -281,25 +281,26 @@ a[target='_blank']{
 	 {{-- @laravelPWA --}}
 
 	</head>
- 
+
 <body>
 
 	<div class="background">
 	<div class="overlay">
     <div class="container">
-    
 
- 
+
+
     <div class="row">
         <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
             <div class="panel border">
                 <div class="panel-heading">
                     <h3 class="text-muted pt-3 font-weight-bold">{{$item->school_name}}</h3>
-          <?php
-// echo url()->current();
+
+ <div class="alert alert-danger mb-3 rounded-0" role="alert">
+                    You are using an old version of Shunifu. Upgrade to Shunifu X by 01 April 2024
+                </div>
 
 
-?>
                  <div class="text-muted">{{$item->school_slogan}}</div>
                 </div>
                 @endforeach
@@ -309,7 +310,7 @@ a[target='_blank']{
                     {{ session('status') }}
                 </div>
             @endif
-    
+
             @if (session('error'))
                 <div class="alert alert-danger mb-3 rounded-0" role="alert">
                     {{ session('error') }}
@@ -327,11 +328,11 @@ a[target='_blank']{
                             </div>
                         </div>
                         <div class="form-group ">
-                        
+
                             <div class="input-field">
                               <label  for="">Enter Password</label>
                                 <span class="fas fa-lock px-2"></span>
-                              
+
                                 <input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                 name="password" required autocomplete="current-password" placeholder="Enter Password">
                             <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
@@ -341,20 +342,20 @@ a[target='_blank']{
                                 </button>
                             </div>
                         </div>
-                    
+
                         <button class="btn btn-primary btn-block mt-1 px-3 submit">Login to Shunifu</button>
-                     
+
                         <div class="text-center pt-4 text-muted"> <a href="/reset">Verify Number</a>
                         </div>
                     </form>
                 </div>
-            
+
                 <div class="mx-3 my-2 py-2 bordert ">
                  <center><span class="text-justify text-muted small mt-3"><mark>Shunifu</mark> is built through the support & incubation of the <a href="https://rstp.org.sz">Royal Science & Technology Park</a>. RSTP is a government entity that was created  to promote science, technology & innovation and spearhead digital transformation in the Kingdom of Eswatini.</span></center>
                     <div class="text-center ">
 
-        
-                      
+
+
                     </div>
                 </div>
             </div>

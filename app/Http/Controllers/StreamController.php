@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Stream;
 use App\Models\Section;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Schema;
 
 class StreamController extends Controller
 {
@@ -16,7 +18,7 @@ class StreamController extends Controller
      */
     public function index()
     {
-       
+
     }
 
     /**
@@ -27,9 +29,15 @@ class StreamController extends Controller
     public function create()
 
     {
-       $stream_collection=Stream::all();
-        
-        return view('academic-admin.stream-management.add-stream', compact('stream_collection'));
+
+    if (!Schema::hasColumn('streams', 'grading_type')){
+			Schema::table('streams', function (Blueprint $table){
+				$table->integer('grading_type')->nullable();
+            });
+        }
+
+    $stream_collection=Stream::all();
+    return view('academic-admin.stream-management.add-stream', compact('stream_collection'));
     }
 
     /**
@@ -45,22 +53,25 @@ class StreamController extends Controller
             'stream_type'=>'required',
             'final_stream'=>'required',
             'next_stream'=>'required',
+            'grading'=>'required',
         ]);
 
         $stream_name=$request->input('stream_name');
         $stream_type=$request->input('stream_type');
         $final_stream=$request->input('final_stream');
         $next_stream=$request->input('next_stream');
-      
+        $grading=$request->input('grading');
+
         Stream::create([
             'stream_name' =>  $stream_name,
             'stream_type' =>  $stream_type,
-            'final_stream'  =>  $final_stream, 
-            'sequence'  =>  $next_stream, 
+            'final_stream'  =>  $final_stream,
+            'sequence'  =>  $next_stream,
+            'grading_type'  =>  $grading,
         ]);
 
 
-      
+
 
     }
 
@@ -85,15 +96,15 @@ class StreamController extends Controller
     public function edit(Stream $stream, $id)
     {
 
-       
+
         $stream_id=decrypt($id);
-    
+
         $stream=Stream::find($stream_id);
 
         $streams=Stream::where('id','<>', $stream_id)->get();
 
-       
-       
+
+
         return view('academic-admin.stream-management.edit', compact('stream', 'streams'));
 
 
@@ -109,7 +120,7 @@ class StreamController extends Controller
     public function update(Request $request, Stream $stream)
     {
 
-    
+
 
         //validation
         $validation=$request->validate([
@@ -117,34 +128,36 @@ class StreamController extends Controller
             'stream_type'=>'required',
             'final_stream'=>'required',
             'next_stream'=>'required',
+            'grading'=>'required',
         ]);
-    
+
         //Check if seqeunce already exists
 
         $check=Stream::where('sequence',$request->next_stream )->where('sequence','<>','0')->exists();
         if ($check) {
             flash()->overlay(' <i class="fa fa-exclamation-triangle" aria-hidden="true text-danger"></i> Error. The was an error updating. Sequence already exists. '.$request->stream_name, 'Edit Stream');
 
-            return Redirect::back();  
+            return Redirect::back();
         }else{
 
-        
-       
+
+
         $update=Stream::find($request->id)->update([
             "stream_name"=>$request->stream_name,
             "stream_type"=>$request->stream_type,
             "final_stream"=>$request->final_stream,
             "sequence"=>$request->next_stream,
+            "grading_type"=>$request->grading,
         ]);
 
         if($update){
             flash()->overlay(' <i class="fas fa-check-circle text-success"></i> Success. You have successfully updated '.$request->stream_name, 'Add Stream');
 
-            return redirect('/academic-admin/stream'); 
+            return redirect('/academic-admin/stream');
         }else{
             flash()->overlay(' <i class="fa fa-exclamation-triangle" aria-hidden="true text-danger"></i> Error. The was an error updating. Please try again. '.$request->stream_name, 'Edit Stream');
 
-            return Redirect::back();  
+            return Redirect::back();
         }
     }
     }
@@ -157,7 +170,7 @@ class StreamController extends Controller
      */
     public function destroy(Stream $stream)
     {
-      
+
          //check if exists in grades
 
       //  dd($stream);

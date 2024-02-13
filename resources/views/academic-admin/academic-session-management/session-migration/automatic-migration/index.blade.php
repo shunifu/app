@@ -36,7 +36,11 @@
                              <form action="/migration/process" method="post">
                                 <div class="card-body">
                                     @csrf
+
+
                                     <div class="form-row">
+
+                                        <input type="hidden"  value="automatic" name="migration_type" id="migration_type" >
 
 
                                         <div class="col-md-4  form-group">

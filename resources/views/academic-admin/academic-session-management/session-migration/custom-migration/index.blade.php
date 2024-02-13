@@ -38,9 +38,6 @@
                                     @csrf
                                     <div class="form-row">
 
-
-
-
                                         <input type="hidden"  value="custom" name="migration_type" id="migration_type" >
 
 

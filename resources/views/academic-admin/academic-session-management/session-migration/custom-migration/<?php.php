@@ -25,6 +25,21 @@ class TransitionController extends Controller
 {
     public function index(){
 
+        //Show page to process transition...
+
+    // $from=AcademicSession::where('active', 0)->where('academic_session', $current_year)->get();
+    // $to=AcademicSession::where('active', 0)->where('academic_session', $current_year)->get();
+        //to
+
+    //Validation: new year
+    //not less than current year;
+     //not greater than current year;
+
+
+
+
+
+
         return view('academic-admin.academic-session-management.session-migration.index');
 
     }
@@ -58,6 +73,23 @@ class TransitionController extends Controller
 
 
 
+    public function class_type(Request $request){
+
+        //validate GET parameter
+
+        $class_type=$request->class_type;
+        $streams=Stream::where('stream_type', $class_type)->get();
+
+
+        // if($class_type=="internal"){
+
+
+        // }else if($class_type=="external"){
+
+        // }
+        return response()->json($streams);
+
+    }
 
     public function process(Request $request){
 
@@ -78,6 +110,9 @@ class TransitionController extends Controller
     ->where('grades.id', $current_class)
     ->select( 'grades.id as grade_id', 'grades.grade_name', 'streams.id', 'streams.stream_type', 'final_stream')
     ->first();
+
+
+    dd($stream);
 
     $stream_type=$stream->stream_type;
     $final_stream_status=$stream->final_stream;
@@ -137,9 +172,43 @@ class TransitionController extends Controller
 
 
 
-          //if migration type is automatic
-            if($request->migration_type=="automatic"){
+            //Query to get students currently in the selected stream
 
+         if ($stream_type=="external") {
+
+            $students=DB::table('users')
+            ->join('grades_students','grades_students.student_id','=','users.id')
+            ->join('grades','grades.id','=','grades_students.grade_id')
+            ->where('grades.id', $request->class_id)
+            ->where('grades_students.academic_session', $from_session)
+
+
+            ->select('users.id as student_id', 'users.name', 'users.lastname', 'users.middlename', 'grades.id as grade_id', 'grades.grade_name', 'grades.stream_id', 'users.active as users_active', 'grades_students.active as grades_student_active')
+            ->get();
+
+
+         //   dd($students);
+
+           //Get the next stream
+                $next_stream=DB::table('streams')
+                ->join('grades','grades.stream_id','=','streams.id')
+                ->where('grades.id', $request->class_id)
+                ->first();
+
+
+              $stream_sequence=Grade::where('stream_id', $next_stream->sequence)->get();
+
+
+
+
+
+
+       $scope="external";
+
+
+
+
+         }else{
 
 
 
@@ -204,7 +273,7 @@ class TransitionController extends Controller
 
         public function store( Request $request){
 
-// dd($request->all());
+dd($request->all());
 
             //variables
             $from_session=$request->from_session;
@@ -213,25 +282,15 @@ class TransitionController extends Controller
             $present_class=$request->current_class;
             $result=$request->student_result;
             $destination_class=$request->destination_class;
-
-
-               //get info about stream of the selected current class
-    $stream=DB::table('streams')
-    ->join('grades','grades.stream_id','=','streams.id')
-    ->where('grades.id', $present_class)
-    ->select( 'grades.id as grade_id', 'grades.grade_name', 'streams.id', 'streams.stream_type', 'final_stream')
-    ->first();
-
-    $stream_type=$stream->stream_type;
-    $final_stream_status=$stream->final_stream;
+            $final_stream_status=$request->final_stream_status;
 
 
 
-    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+           DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-    Schema::table('grades_students', function (Blueprint $table) {
+       Schema::table('grades_students', function (Blueprint $table) {
 
-    $index_exists_session_FK= collect(DB::select("SHOW INDEXES FROM grades_students"))->pluck('Key_name')->contains('grades_students_academic_session_foreign');
+        $index_exists_session_FK= collect(DB::select("SHOW INDEXES FROM grades_students"))->pluck('Key_name')->contains('grades_students_academic_session_foreign');
 
         $index_exists_grade_FK = collect(DB::select("SHOW INDEXES FROM grades_students"))->pluck('Key_name')->contains('grades_students_grade_id_foreign');
 
@@ -260,39 +319,40 @@ class TransitionController extends Controller
 
             $combined = [];
 
+            //if the stream is the final stream
+            if($final_stream_status==1){
 
-                  //if the stream is the final stream then execute the code below;
-                  //Archive the student who is in the final stream
-                  if($final_stream_status==1){
+                foreach ($students as $key => $val) {
 
-                    foreach ($students as $key => $val) {
+                    $combined[] = ['student_id'=>$val, 'present_class'=>$present_class[$key]];
 
-                        $combined[] = ['student_id'=>$val, 'present_class'=>$present_class[$key]];
+                    $student=$combined[$key]['student_id'];
+                    $current_class=$combined[$key]['present_class'];
 
-                        $student=$combined[$key]['student_id'];
-                        $current_class=$combined[$key]['present_class'];
+                    //archive all students in that final stream
+                    User::where('id', $student)->update([ 'active'=> 0]);
 
-                        //archive all students in that final stream
-                        User::where('id', $student)->update([ 'active'=> 0]);
-                        ParentStudent::where('student_id', $student)->update(['active'=>0]);
-                    }
-
-                    flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success. . Migration Successful ', 'Migration Process Notice');
-                    return redirect('/migration');
-                    //end of final stream status
+                    ParentStudent::where('student_id', $student)->update(['active'=>0]);
                 }
 
+                flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success. . Migration Successful ', 'Migration Process Notice');
+                return redirect('/migration');
+                //end of final stream status
+            }
 
 
-            if($request->scope=="custom"){
 
+            if($request->scope=="external"){
 
-                //check if stream sequence exists
+                $validation=$request->validate([
+                    'destination_class'=>'required',
+
+                ]);
                $stream_sequence_exists=Stream::where('sequence','0' )->where('final_stream','0' )->exists();
 
                if($stream_sequence_exists){
-                //check if the sequence for stream has been set
 
+                //check if the sequence for stream has been set
                 flash()->overlay('<i class="fas fa-exclamation-circle text-danger "></i>'.' Error. . Please update Stream Sequence', 'Migration Process Notice');
                 return redirect('/academic-admin/stream');
                }else{
@@ -311,18 +371,15 @@ class TransitionController extends Controller
                     $to_session_is=$combined[$key]['academic_session'];
 
 
-                    //  The following code block checks if the destination class is greater than 0
-                    if ($next_class>0 ) {
 
 
-                        //check if the student exists in the destination class
+                    if ($next_class>'0' ) {
+                        //check
+
                         $student_exists=StudentClass::where('student_id', $student)->where('academic_session', $to_session_is)->exists();
-
                         if ($student_exists) {
                             # code...
                         }else{
-
-                        //if the student does not exist in the destination class then do the following;
 
                         $create_new_entry=StudentClass::updateOrCreate(
                             ['student_id' => $student, 'grade_id' => $next_class, 'academic_session' => $to_session_is, 'active'=>1],
@@ -349,11 +406,9 @@ class TransitionController extends Controller
                }
             }else{
 
-                //else if the migration type is automatic
+                //else if the stream
 
 
-
-            //check if the class map exists
             $class_map_exists=ClassSequence::where('origin', $present_class)->exists();
 
             if($class_map_exists){
@@ -361,7 +416,7 @@ class TransitionController extends Controller
 
                 //if the class map exists then
 
-                //1. migrate students according the next class based on sequence/map
+                //1. migrate students according the next class based on sequence
 
                 foreach ($students as $key => $val) {
 
@@ -375,7 +430,9 @@ class TransitionController extends Controller
 
 
                     if ($final_status=='Proceed' or $final_status=='Promoted') {
-
+                        //$create_new_entry=StudentClass::upsert([
+                        //['student_id' => $student, 'grade_id' => $destination, 'academic_session' => $to_session, 'active'=>1]
+                        //], ['student_id', 'grade_id', 'academic_session', 'active'], ['student_id', 'grade_id', 'academic_session', 'active']);
 
                         $create_new_entry=StudentClass::updateOrCreate(
                             ['student_id' => $student, 'grade_id' => $next_class, 'academic_session' => $to_session_is, 'active'=>1],
@@ -391,12 +448,20 @@ class TransitionController extends Controller
                         );
                     }
 
-
+                    if ($final_status==' ') {
+                        $create_new_entry=StudentClass::updateOrCreate(
+                            ['student_id' => $student, 'grade_id' => $current_class, 'academic_session' => $to_session_is, 'active'=>1],
+                            ['student_id' => $student, 'grade_id' => $current_class, 'academic_session' => $to_session_is, 'active'=>1]
+                        );
+                    }
 
                     if ($final_status=='Try Another School') {
 
                         User::find($student)->update([ 'active'=> 0]);
                     }
+
+
+
                 }
 
                 flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success. . Migration Successful ', 'Migration Process Notice');
@@ -409,6 +474,61 @@ class TransitionController extends Controller
                 return Redirect::back();
 
             }
+
+
+
+
+            // foreach ($students as $key => $val) {
+
+
+            //     $combined[] = ['student_id'=>$val, 'result'=>$result[$key], 'present_class'=>$present_class[$key]];
+
+            //     $student=$combined[$key]['student_id'];
+            //     $final_status=$combined[$key]['result'];
+            //     $current_class=$combined[$key]['present_class'];
+
+
+
+            //     if ($class_map_exists) {
+            //         //if class-map exists for that class
+            //         //get the next class
+            //         $next_class=ClassSequence::where('origin', $current_class)->first();
+            //         $destination=$next_class->destination;
+
+            //         if ($final_status=='Proceed' or $final_status=='Promoted') {
+            //             //$create_new_entry=StudentClass::upsert([
+            //             //['student_id' => $student, 'grade_id' => $destination, 'academic_session' => $to_session, 'active'=>1]
+            //             //], ['student_id', 'grade_id', 'academic_session', 'active'], ['student_id', 'grade_id', 'academic_session', 'active']);
+
+            //             $create_new_entry=StudentClass::updateOrCreate(
+            //                 ['student_id' => $student, 'grade_id' => $destination, 'academic_session' => $to_session, 'active'=>1],
+            //                 ['student_id' => $student, 'grade_id' => $destination, 'academic_session' => $to_session, 'active'=>1]
+            //             );
+            //         }
+
+            //         if ($final_status=='Repeat') {
+            //             $create_new_entry=StudentClass::updateOrCreate(
+            //                 ['student_id' => $student, 'grade_id' => $current_class, 'academic_session' => $to_session, 'active'=>1],
+            //                 ['student_id' => $student, 'grade_id' => $current_class, 'academic_session' => $to_session, 'active'=>1]
+            //             );
+            //         }
+
+            //         if ($final_status=='Try Another School') {
+
+            //             User::find($student)->update(['active', 0]);
+            //         }
+
+            //         // flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Congratulations. You have successfully migrated students to the next class', 'Migration Process Notice');
+            //         // return Redirect::back();
+            //     } else {
+            //         // if($class_map_doesnt_exist){
+            //         //else if it does not exist
+
+            //         flash()->overlay('<i class="fas fa-check-circle text-warning "></i>'.' Sorry. Class Mapping does not exist. Please map classes first, to do so, please click '.'<a href=/class-sequencing> here</a>', 'Migration Process Notice');
+
+            //         return Redirect::back();
+            //     }
+            // }
         }
     }
 
