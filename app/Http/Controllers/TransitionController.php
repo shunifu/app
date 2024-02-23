@@ -62,7 +62,6 @@ class TransitionController extends Controller
     public function process(Request $request){
 
 
-// dd($request->all());
 
     $from_session=$request->from_academic_session;
     $to_session=$request->to_academic_session;
@@ -143,6 +142,7 @@ class TransitionController extends Controller
 
 
 
+
             $students=DB::table('users')
             ->join('grades_students','grades_students.student_id','=','users.id')
             ->join('grades','grades.id','=','grades_students.grade_id')
@@ -157,6 +157,8 @@ class TransitionController extends Controller
             ->where('terms.final_term',1)
             ->select('users.id as student_id', 'term_averages.final_term_status as result','users.name', 'users.lastname', 'users.middlename', 'grades.id as grade_id', 'grades.grade_name', 'terms.academic_session', 'users.active as users_active', 'grades_students.active as grades_student_active')
             ->get();
+
+           
 
             $scope="internal";
 
@@ -203,8 +205,7 @@ class TransitionController extends Controller
 
 
         public function store( Request $request){
-
-// dd($request->all());
+//  dd($request->all());
 
             //variables
             $from_session=$request->from_session;
@@ -353,12 +354,13 @@ class TransitionController extends Controller
 
 
 
+
             //check if the class map exists
             $class_map_exists=ClassSequence::where('origin', $present_class)->exists();
 
             if($class_map_exists){
 
-
+dd($students);
                 //if the class map exists then
 
                 //1. migrate students according the next class based on sequence/map
