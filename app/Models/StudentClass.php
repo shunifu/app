@@ -17,7 +17,7 @@ class StudentClass extends Model
         'grade_id',
         'active',
         'student_status',
-        'student_sponsor'
+        'sponsor_id'
 
 
     ];

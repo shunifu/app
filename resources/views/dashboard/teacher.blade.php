@@ -14,7 +14,7 @@
     <div class="card-box  pl-2 pr-3  ">
         <div class="row align-items-center">
             <div class="col-md-4">
-                <img width="100%" height="100%" src="https://res.cloudinary.com/doramr0cr/image/upload/v1705267904/Screenshot_2024-01-14_at_23.28.12-removebg-preview_yyojzc.png" alt="" />
+                <img width="100%" height="100%" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1708988938/lzrrkkgcuutvreeqhsub.png" alt="" />
             </div>
             <div class="col-md-8">
                 <h4 class="font-20 weight-500 mb-10 text-capitalize">

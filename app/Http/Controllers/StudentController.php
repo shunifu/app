@@ -95,7 +95,7 @@ class StudentController extends Controller
     public function store_student_updates(Request $request){
 
 
-   //     dd($request->all());
+    //    dd($request->all());
 
         $school=School::first();
         $code=$school->school_code;
@@ -974,6 +974,15 @@ public function parent_update(Request $request){
     public function student_issues_classteacher(){
         //Archive Students
 
+
+        if (!Schema::hasColumn('grades_students', 'student_status'))   {
+            Schema::table('grades_students', function (Blueprint $table) {
+            $table->string('student_status')->nullable();
+            $table->string('sponsor_id')->nullable();
+          });
+      }
+
+
         $classes=DB::table('grades_teachers')
         ->join('academic_sessions','academic_sessions.id','=','grades_teachers.academic_session')
         ->join('grades','grades.id','=','grades_teachers.grade_id')
@@ -1074,9 +1083,15 @@ public function parent_update(Request $request){
         ->where('grades_students.academic_session', $session_id)
         ->where('academic_sessions.id',$session_id )
 
-        ->select('users.id as user_id','users.profile_photo_path','national_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class', 'users.active')->orderBy('lastname')->orderBy('name')->get();
+        ->select('users.id as user_id','users.profile_photo_path','national_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class','grades_students.student_status','grades_students.sponsor_id', 'users.active')->orderBy('lastname')->orderBy('name')->get();
 
-        return view('users.students.classteacher.view', compact('students', 'sessions', 'classes', 'session_id'));
+      //  dd($students);
+
+
+      $sponsors=Partner::where('partner_type', 1)->get();
+
+
+        return view('users.students.classteacher.view', compact('students', 'sessions', 'classes', 'session_id', 'sponsors'));
 
         }
 
