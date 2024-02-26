@@ -15,8 +15,10 @@ class StudentClass extends Model
         'student_id',
         'academic_session',
         'grade_id',
-        'active'
-     
-        
+        'active',
+        'student_status',
+        'student_sponsor'
+
+
     ];
 }

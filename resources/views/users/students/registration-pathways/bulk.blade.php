@@ -3,6 +3,13 @@
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
+
+      <style>
+        table th{
+            text-align: center;
+         }
+
+      </style>
     </x-slot>
     <div class="card card-light  ">
       <div class="card-header">
@@ -27,22 +34,18 @@
         <h3 class="card-title">Bulk Registration Pathway</h3>
       </div>
     <div class="card-body">
-      <div class="row">
-
-
 
 
                              <!-- form start -->
               <form action="{{route('pathway.bulk_store')}}" method="post">
-
-                      @csrf
+                 @csrf
 <div class="row">
 
     <div class="col" >
 
         <div class="form-group">
             <label> Student Class <span style="color: red">*</span></label>
-            <select class="form-control" name="student_class[]">
+            <select class="form-control" name="student_class">
             <option value=""> Select Class</option>
 
             @foreach ($classes as $class)
@@ -56,126 +59,36 @@
            </div>
     </div>
 
-    <div class="col" >
 
-     <div class="pb-4 mb-2"></div>
+</div>
 
-<button class="btn btn-success"  type="button" id="add_more"> <i class="fa fa-plus-circle"></i> Add More Student Rows</button>
 
-    </div>
+    <div class="row table-responsive">
+<table class="table " id="registration_table">
+    <thead class="thead-light">
+        <tr>
+            <th>#</th>
+            <th>lastname</th>
+            <th>Name</th>
+            <th>Middlename</th>
+            <th>Gender</th>
+
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody id='dynamic_field'>
+
+    </tbody>
+</table>
 
 
 </div>
-<hr>
-                      <div class="form-row" id="master-div">
-
-
-
-                        <div class="col-12 col-sm-6 col-md-auto">
-                          <div class="form-group">
-                        <label> Name</label>
-    <x-jet-input name="first_name[]" required value="{{ old('first_name') }}" placeholder="First Name" ></x-jet-input>
-                        @error('first_name')
-                        <span class="text-danger">{{$message}}</span>
-                        @enderror
-                       </div>
-
-                        </div>
-
-
-                        <div class="col-12 col-sm-6 col-md-auto">
-                          <div class="form-group">
-                        <label>Middle Name</label>
-                        <x-jet-input name="middle_name[]" value="{{ old('middle_name') }}" placeholder="Middle Name" ></x-jet-input>
-                        @error('middle_name')
-                        <span class="text-danger">{{$message}}</span>
-                        @enderror
-                       </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6 col-md-auto">
-                          <div class="form-group">
-                        <label>Last Name</label>
-                        <x-jet-input name="last_name[]" required value="{{ old('last_name') }}" placeholder="Last Name" ></x-jet-input>
-                        @error('last_name')
-                        <span class="text-danger">{{$message}}</span>
-                        @enderror
-                        </div>
-                        </div>
-
-
-
-                            <div class="col-12 col-sm-6 col-md-auto">
-                                <label> Status <span style="color: red">*</span></label></label>
-                                <select class="form-control" name="student_status[]">
-                                <option value=""> Status</option>
-                                <option value="ovc">OVC</option>
-                                <option value="non_ovc">NON-OVC</option>
-                                </select>
-                                @error('student_status')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-                               </div>
-
-                               <div class="col-12 col-sm-6 col-md-auto">
-                                <label> Gender <span style="color: red">*</span></label></label>
-                                <select class="form-control" name="student_gender[]">
-                                <option value=""> Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                </select>
-                                @error('student_gender')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-                               </div>
-
-
-                               <div class="col-12 col-sm-6 col-md-auto">
-                                <label> Sponsor <span style="color: red">*</span></label></label>
-                                <select class="form-control" name="student_sponsor[]">
-                                <option value=""> Sponsor</option>
-                                @foreach ($sponsors as $sponsor)
-
-                                <option value="{{$sponsor->id}}"> {{$sponsor->sponsor_name}}</option>
-                                @endforeach
-
-                                </select>
-                                @error('student_sponsor')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-
-
-
-                               </div>
-
-                               <div class="col-12 col-sm-6 col-md-auto">
-                                <label class="pb-3" for=""></label>
-
-                                <div class="remove-btn">
-<button class="btn btn-danger btn_remove" id="remove" name="remove" type="button"><i class="fas fa-times"></i>  </button>
-                                </div>
-
-
-
-                               </div>
+<button class="btn btn-success"  type="button" id="addRow"> <i class="fa fa-plus-circle"></i>  More Students</button>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
 
 
 
@@ -197,34 +110,35 @@
             </div>
 {{-- end of card  body--}}
 
-
-
-
-
-          </div>
+        </div>
         {{-- end of card --}}
 
         <script>
           $(document).ready(function () {
 
-
-              $('#add_more').click(function (e) {
-
-
-                $('#master-div').clone().find("label").text("").end().appendTo('#slave-div');
-                // <div class="d-flex  btn btn-link" id="remove-div" type="button" ></div>
-              });
-
-
-              $(document).on('click', '#remove', function (e) {
-
-              });
-
-
-
-            //   <button class="btn-danger btn_remove" name="remove" id="' +i+ '"  type="button">
-
-
+         $('#registration_table').hide();
+            var i = 0;
+$('#addRow').click(function() {
+  i++;
+  $('#registration_table').show();
+  $('#dynamic_field').append('<tr><td id="row_num' + i + '">' + i + '<input type="hidden" name="student_number[]" value=' + i + '></td>' +
+    '<td><input class="form-control" type="text" required name="student_lastname[]" required  ></td>' +
+    '<td><input class="form-control" type="text" required name="student_name[]" required  ></td>' +
+    '<td><input class="form-control" type="text" name="student_middlename[]"   ></td>' +
+    '<td><right><select name="student_gender[]" required  class="form-control">' +
+    '<option value="">Select Gender</option><option value="Male">Male</option><option value="Female">Female</option></select></center></td>' +
+    '<td><button type="button" name="remove" class="btn btn-danger btn_remove">X</button></td></tr>');
+});
+$(document).on('click', '.btn_remove', function() {
+  $(this).closest("tr").remove(); //use closest here
+  $('tbody tr').each(function(index) {
+    //change id of first tr
+    $(this).find("td:eq(0)").attr("id", "row_num" + (index + 1))
+    //change hidden input value
+    $(this).find("td:eq(0)").html((index + 1) + '<input type="hidden" name="student_number[]" value=' + (index + 1) + '>')
+  });
+  i--;
+});
 
           });
 

@@ -15,13 +15,13 @@
                 <hr>
                 <!-- form start -->
                 <form action="{{ route('student.class_teacher_view') }}" method="post">
-                
+
                         @csrf
                         <div class="form-row">
                             <div class="col form-group">
                                 <x-jet-label> Class Name</x-jet-label>
                                 <select class="form-control" name="grade_id">
-                              
+
                                     @foreach($classes as $class)
                                         <option value="{{ $class->id }}">{{ $class->grade_name }}</option>
 
@@ -32,16 +32,31 @@
                                 @enderror
                             </div>
 
+
+
                             <div class="col form-group">
                                 <x-jet-label> Academic Year</x-jet-label>
                                 <select class="form-control" name="academic_session">
-                          
+
                                     @foreach($sessions as $session)
-                               
+
                         <option value="{{ $session->id }}">{{ $session->academic_session }}</option>
                                     @endforeach
                                 </select>
                                 @error('academic_session')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+
+                            <div class="col form-group">
+                                <x-jet-label> Action</x-jet-label>
+                                <select class="form-control" required name="action">
+                                    <option value="">Choose Action</option>
+                                <option value="register">Add Students</option>
+                                <option value="manage">Manage Students</option>
+                                </select>
+                                @error('action')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

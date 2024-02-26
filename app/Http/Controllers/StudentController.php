@@ -40,6 +40,7 @@ use App\Models\GradeTeacher;
 use App\Models\Intervention;
 use App\Models\School;
 use App\Models\CBEMark;
+use App\Models\Partner;
 use App\Models\Sponsor;
 use App\Models\StudentFees;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
@@ -1003,11 +1004,8 @@ public function parent_update(Request $request){
         ->where('grades_students.grade_id', $class_id)
         ->where('grades_students.academic_session', $session_id)
         ->where('academic_sessions.id',$session_id )
-   //     ->where('grades_students.active',1 )
-     //   ->where('users.active',1 )
 
-        // ->where('grades_students.active',1)
-        ->select('users.id as user_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname','users.profile_photo_path', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class', 'users.active')->orderBy('lastname')->orderBy('name')->get();
+        ->select('grades_students.student_status','users.id as user_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname','users.profile_photo_path', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class', 'users.active')->orderBy('lastname')->orderBy('name')->get();
 
         return view('users.students.removal-management.view', compact('students', 'sessions', 'classes', 'session_id'));
 
@@ -1030,16 +1028,45 @@ public function parent_update(Request $request){
 
 
     public function classteacher_student_view(Request $request){
-   //     dd($request->all());
+    //    dd($request->all());
 
-        $classes=Grade::all();
-        $sessions=AcademicSession::where('active', 1)->get();
+
+            //Step 1- Validate Request
+            $validation=$request->validate([
+                'action'=>'required',
+            ]);
+
+
+
+
         $class_id=$request->grade_id;
         $session_id=$request->academic_session;
+        $action=$request->action;
+
+
+        if($action=="register"){
 
 
 
-        $students=DB::table('grades_students')
+            $classes=DB::table('grades_teachers')
+            ->join('academic_sessions','academic_sessions.id','=','grades_teachers.academic_session')
+            ->join('grades','grades.id','=','grades_teachers.grade_id')
+            ->where('academic_sessions.active', 1)
+            ->where('grades_teachers.teacher_id', Auth::user()->id)
+            ->select('grades.id as id', 'grades.grade_name')->get();
+
+            $session=AcademicSession::all()->sortBy('academic_session');
+            $sponsors=Partner::where('partner_type', 1)->get();
+
+            return view('users.students.registration-pathways.bulk', compact('classes', 'session', 'sponsors'));
+
+
+        }else{
+
+            $classes=Grade::all();
+            $sessions=AcademicSession::where('active', 1)->get();
+
+            $students=DB::table('grades_students')
         ->join('grades','grades_students.grade_id','=','grades.id')
         ->join('users','grades_students.student_id','=','users.id')
         ->join('academic_sessions','grades_students.academic_session','=','academic_sessions.id')
@@ -1050,6 +1077,11 @@ public function parent_update(Request $request){
         ->select('users.id as user_id','users.profile_photo_path','national_id', 'grades.grade_name','users.gender', 'users.cell_number','users.middlename', 'users.email', 'date_of_birth','users.name','users.lastname', 'users.salutation', 'academic_sessions.academic_session','grades.grade_name', 'users.id', 'academic_sessions.id as academic_session_id', 'grades.id as current_class', 'users.active')->orderBy('lastname')->orderBy('name')->get();
 
         return view('users.students.classteacher.view', compact('students', 'sessions', 'classes', 'session_id'));
+
+        }
+
+
+
 
 
     }
@@ -2029,22 +2061,23 @@ public function bulk_pathway_index(){
 
     $classes=Grade::all()->sortBy('grade_name');
     $session=AcademicSession::all()->sortBy('academic_session');
-    $sponsors=Sponsor::all();
+    $sponsors=Partner::where('partner_type', 1)->get();
+
     return view('users.students.registration-pathways.bulk', compact('classes', 'session', 'sponsors'));
 
 }
 
 public function bulk_pathway_store(Request $request){
 
+  //  dd($request->all());
 
     //Validation
     $validation=$request->validate([
-        'first_name'=>'required',
-        'middle_name'=>'nullable',
-        'last_name'=>'required',
+        'student_name'=>'required',
+        'student_middlename'=>'nullable',
+        'student_lastname'=>'required',
         'student_class'=>'required',
-        'student_status'=>'required',
-        'student_sponsor'=>'required',
+
         'student_gender'=>'required',
     ]);
 
@@ -2058,13 +2091,13 @@ public function bulk_pathway_store(Request $request){
 
 
 
-    $name=$request->first_name;
-    $lastname=$request->last_name;
-    $middlename=$request->middle_name;
+    $name=$request->student_name;
+    $lastname=$request->student_lastname;
+    $middlename=$request->student_middlename;
     $gender=$request->student_gender;
     $student_status=$request->student_status;
     $student_gender=$request->student_gender;
-    $student_sponsor=$request->student_sponsor;
+    // $student_sponsor=$request->student_sponsor;
     $grade=$request->student_class;
 
 
@@ -2089,16 +2122,17 @@ public function bulk_pathway_store(Request $request){
             $student_id=$user->id;
 
 
+            //dd(array($student_id));
 
        // Add student to class/grade
         $class_student=StudentClass::create([
         'student_id'=>$student_id,
-        'grade_id'=>$grade[$i],
-         'student_status'=>$student_status[$i],
-        'student_sponsor'=>$student_sponsor[$i],
-         'student_gender'=>$student_gender[$i],
-         'academic_session'=>$session[$i],
-         'active'=>1,
+        'grade_id'=>$grade,
+        'academic_session'=>$session,
+
+
+
+
         ]);
 
     }
@@ -2106,18 +2140,23 @@ public function bulk_pathway_store(Request $request){
 
     } catch (Exception $e) {
 
-        // print_r($e->getMessage());
+      //  dd($e->getMessage());
 
-            flash()->overlay('<i class=" fa-exclamation-triangle text-danger"></i>'.' Error. Students could not be added into the system.', 'Register Student');
+            flash()->overlay('<i class=" fa-exclamation-triangle text-danger"></i>'.' Error. Students could not be added into the systemm because of '.' '.$e->getMessage(), 'Register Student');
 
            Log::debug($e->getMessage());
 //Log::channel('slack')->info('Something happened!');
         }
 
 
+        if(Auth::user()->hasRole('class_teacher')){
+
+            return redirect('/class/student-management');
+}else{
+    return Redirect::back();
+}
 
 
-return Redirect::back();
 
 
 }

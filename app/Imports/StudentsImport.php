@@ -14,6 +14,7 @@ use App\Models\AcademicSession;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -21,7 +22,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Date;
 use PhpOffice\PhpSpreadsheet\Shared;
 
 
-class StudentsImport implements ToCollection, WithHeadingRow
+class StudentsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
     /**
     * @param array $row
@@ -39,18 +40,18 @@ class StudentsImport implements ToCollection, WithHeadingRow
             $academic_year=AcademicSession::where('active', 1)->first();
 
 
-         
-         
-     
+
+
+
             foreach ($rows as $row) {
             //  if (empty($row['student_cell'])) {
             //         $student_cell="";
-            //     } 
+            //     }
 
                 // if (empty($row['dob'])) {
                 //     $date_of_birth="";
-                // } 
-                
+                // }
+
                 //else {
                 //     $student_cell=$row['student_cell'];
                 // }
@@ -59,73 +60,78 @@ class StudentsImport implements ToCollection, WithHeadingRow
                 // } else {
                 //     $student_cell=$row['student_cell'];
                 // }
-        
+
                 // if (empty($row['pin'])) {
-               
+
                 // } else {
                 //     $pin=$row['pin'];
                 // }
 
-              
-             
 
-        
-         
-                
-                      
+
+
+
+
+
+
                 $student=User::create([
                         'name'=>$row['name'],
                         'lastname'=>$row['lastname'],
                         'middlename'=>$row['middlename'],
                         'national_id'=>$row['pin'],
-                       'date_of_birth' => " ",
-                        'user_code'=>$row['code'],
-                     //   'cell_number'=>$row['student_cell'],
-                       'gender'=>$row['gender'],
+                        'date_of_birth' => $row['date_of_birth'],
+                        'user_code'=>$row['admission_number'],
+                        'cell_number'=>$row['student_cell'],
+                        'gender'=>$row['gender'],
                         'role_id'=>$student_role->id,
                         'password'=>Hash::make(Str::random(5)),
                        ]);
-          
-                  
+
+
                 $student->syncRoles([$student_role_name]);
                 $student_id=$student->id;
+
                 //insert into class_student
                 $class_student=StudentClass::create([
-        'student_id'=>$student_id,
-        'grade_id'=>$row['class'],
-        'academic_session'=>$academic_year->id,
+                'student_id'=>$student_id,
+                'grade_id'=>$row['class'],
+                'academic_session'=>$academic_year->id,
        ]);
 
-                if (empty($row['cell_number'])) {
+                if (empty($row['parent_cell'])) {
                 } else {
-                    $parentExists=User::where('cell_number', $row['cell_number'])->exists();
+
+                    //check if the parent exists
+                    $parentExists=User::where('cell_number', $row['parent_cell'])->exists();
 
                     if ($parentExists) {
-                        $parent_data=User::where('cell_number', $row['cell_number'])->first();
-            
+                        //if the parent exists, then get the cell number
+                        $parent_data=User::where('cell_number', $row['parent_cell'])->first();
+
+
+                        //link the parent with the student
                         $parentStudent=ParentStudent::create([
-              'parent_id'=>$parent_data->id,
-              'student_id'=>$student_id,
-              
+                        'parent_id'=>$parent_data->id,
+                        'student_id'=>$student_id,
+
               ]);
                     } else {
                         //insert parent
                         $parent=User::create([
-      'cell_number'=>$row['cell_number'],
-      'password'=>Hash::make(Str::random(5)),
-      'role_id'=>$parent_role->id,
-      
+                        'cell_number'=>$row['parent_cell'],
+                        'password'=>Hash::make(Str::random(5)),
+                        'role_id'=>$parent_role->id,
      ]);
-  
+
                         $parent->syncRoles([$parent_role_name]);
                         $parent_id=$parent->id;
-  
+
                         //Link Parent wit Student
-  
+
                         $parentStudent=ParentStudent::create([
   'parent_id'=>$parent_id,
   'student_id'=>$student_id,
-  
+
   ]);
                     }
                 }

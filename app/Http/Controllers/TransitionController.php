@@ -158,7 +158,7 @@ class TransitionController extends Controller
             ->select('users.id as student_id', 'term_averages.final_term_status as result','users.name', 'users.lastname', 'users.middlename', 'grades.id as grade_id', 'grades.grade_name', 'terms.academic_session', 'users.active as users_active', 'grades_students.active as grades_student_active')
             ->get();
 
-           
+
 
             $scope="internal";
 
@@ -288,17 +288,6 @@ class TransitionController extends Controller
             if($request->scope=="custom"){
 
 
-                //check if stream sequence exists
-               $stream_sequence_exists=Stream::where('sequence','0' )->where('final_stream','0' )->exists();
-
-               if($stream_sequence_exists){
-                //check if the sequence for stream has been set
-
-                flash()->overlay('<i class="fas fa-exclamation-circle text-danger "></i>'.' Error. . Please update Stream Sequence', 'Migration Process Notice');
-                return redirect('/academic-admin/stream');
-               }else{
-              //  dd($combined);
-
                 foreach ($students as $key => $val) {
 
 
@@ -347,7 +336,7 @@ class TransitionController extends Controller
 
                 flash()->overlay('<i class="fas fa-check-circle text-success "></i>'.' Success. . Migration Successful ', 'Migration Process Notice');
                 return redirect('/migration');
-               }
+
             }else{
 
                 //else if the migration type is automatic
@@ -360,12 +349,14 @@ class TransitionController extends Controller
 
             if($class_map_exists){
 
-dd($students);
+
+                $total_students=$request->student_id;
+
                 //if the class map exists then
 
                 //1. migrate students according the next class based on sequence/map
 
-                foreach ($students as $key => $val) {
+                foreach ($total_students as $key => $val) {
 
                     $combined[] = ['student_id'=>$val, 'result'=>$result[$key], 'destination_class'=>$destination_class[$key],'present_class'=>$present_class[$key], 'academic_session'=>$to_session[$key]];
 

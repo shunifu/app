@@ -16,9 +16,9 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class StudentsExport implements  
-ShouldAutoSize, 
-WithMapping, 
+class StudentsExport implements
+ShouldAutoSize,
+WithMapping,
 WithHeadings,
 WithEvents,
 WithTitle
@@ -32,10 +32,10 @@ WithTitle
     public function __construct(string $grade)
     {
         $this->grade=$grade;
-         
+
     }
 
-    
+
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -44,15 +44,32 @@ WithTitle
     //     return User::query();
     // }
 
+                        // 'name'=>$row['name'],
+                        // 'lastname'=>$row['lastname'],
+                        // 'middlename'=>$row['middlename'],
+                        // 'national_id'=>$row['pin'],
+                        // 'date_of_birth' => $row['date_of_birth'],
+                        // 'user_code'=>$row['admission_number'],
+                        // 'cell_number'=>$row['student_cell'],
+                        // 'gender'=>$row['gender'],
+                        // 'role_id'=>$student_role->id,
+                        // 'password'=>Hash::make(Str::random(5)),
+
     public function map($user):array
     {
         return[
-            $user->id, 
-            $user->Student,
-            $user->Middlename, 
-            $user->Lastname, 
-            $user->ParentCell, 
-            $user->ParentEmail, 
+            $user->admission_number,
+            $user->lastname,
+            $user->name,
+            $user->middlename,
+            $user->gender,
+            $user->pin,
+            $user->class,
+            $user->date_of_birth,
+            $user->student_cell,
+            $user->parent_cell,
+            $user->parent_email,
+
 
         ];
 
@@ -61,14 +78,19 @@ WithTitle
     public function headings():array
     {
         return [
-            '#', 
-            'Student Name',
-            'Student Middlename',
-            'Student Surname', 
-            'Parent Cell',
-            'Parent Email',
-          
-        ]; 
+           'admission_number',
+            'lastname',
+            'name',
+            'middlename',
+            'gender',
+            'pin',
+            'class',
+            'date_of_birth',
+            'student_cell',
+            'parent_cell',
+            'parent_email',
+
+        ];
 
     }
 
@@ -76,14 +98,15 @@ WithTitle
     {
         return [
             AfterSheet::class=>function(AfterSheet $event){
-                $event->sheet->getStyle('A1:G1')->applyFromArray([
+                $event->sheet->getStyle('A2:A3:A7')->applyFromArray([
                     'font'=>[
 
                         'bold'=>true
+
                     ]
                     ]);
             }
-            
+
         ];
 
     }

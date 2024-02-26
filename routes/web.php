@@ -125,7 +125,7 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
 
     //beginning of class teacher routes
 
-    Route::group([ 'middleware' => ['role:class_teacher|principal|deputy_principal']], function() {
+    Route::group([ 'middleware' => ['role:class_teacher|principal|deputy_principal|admin_teacher']], function() {
 
     Route::get('/class/student-management',[StudentController::class,'student_issues_classteacher'])->name('student.student_issues_classteacher');
     Route::post('/class/student-management/view',[StudentController::class,'classteacher_student_view'])->name('student.class_teacher_view');
@@ -137,7 +137,7 @@ Route::post('/update-password',  [PasswordController::class,'change'])->name('pa
     Route::post('/class/student-management/add-parents',  [StudentController::class,'store_parent_cell'])->name('classteacher_parent_link.store');
     Route::get('/parents-student/link/edit/{id}',  [StudentController::class,'parent_cell_show'])->name('parent_link.show_cell');
 
-
+    Route::post('/registration/student/pathway/bulk/store', [StudentController::class,'bulk_pathway_store'])->name('pathway.bulk_store');
     //end of class teacher routes
 
 
@@ -298,7 +298,7 @@ Route::get('/registration/student/pathway/single', [StudentController::class,'si
 Route::post('/registration/student/pathway/single/store', [StudentController::class,'single_pathway_store'])->name('pathway.single_store');
 
 Route::get('/registration/student/pathway/bulk', [StudentController::class,'bulk_pathway_index'])->name('pathway.bulk_index');
-Route::post('/registration/student/pathway/bulk/store', [StudentController::class,'bulk_pathway_store'])->name('pathway.bulk_store');
+
 // End of Student-Registration Pathway
 
 Route::get('/students/management/stream/{id}', [StudentController::class,'student_management_stream'])->name('student.student_management_stream');
