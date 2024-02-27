@@ -50,9 +50,9 @@
                                             <th>Name</th>
                                             <th>Middlename</th>
                                             <th>Gender</th>
-                                            <th>PIN </th>
-                                            <th>Status </th>
-                                            <th>Sponsor </th>
+                                            <th>Personal Identification Number </th>
+                                            {{-- <th>Status </th>
+                                            <th>Sponsor </th> --}}
                                              <th>Action</th>
                                             </tr>
                                             </thead>
@@ -94,7 +94,7 @@
             </select>
             </td>
             <td> <input type="text" name="national_id" class="form-control" value="{{$item->national_id}}"/> </td>
-            <td>
+            {{-- <td>
                 <select class="form-control" name="status" id="status">
                 <option>{{$item->student_status}}</option>
                 <option value="ovc">OVC</option>
@@ -108,7 +108,7 @@
                    <option value="{{$sponsor->id}}">{{$sponsor->partner_name}}</option>
                    @endforeach
                     </select>
-                    </td>
+                    </td> --}}
             <td><button type="submit"  id="image-upload" class="btn btn-secondary btn-sm">Update</button></td>
             </form>
               </tr>
