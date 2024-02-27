@@ -1,467 +1,251 @@
+
 <x-app-layout>
 
     <x-slot name="header">
 
-      @include('partials.cards-style')
+      @include('partials.dashboard-css')
 
+      <style>
+
+body{
+  color:gray;
+
+}
+
+.small-text{
+  font-size:15px;
+}
+
+
+      </style>
 
     </x-slot>
 
+<div class="card text-left">
 
 
-<div class="container-fluid bg-white ">
+    <!-- Modal -->
+    <div class="modal fade" id="notice" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{$greetings}} {{\Spatie\Emoji\Emoji::waving_hand()}} {{Auth::user()->salutation}} {{Auth::user()->name}} {{Auth::user()->lastname}} </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+             Welcome to the Shunifu Platform @if (Auth::user()->salutation=="Mr" OR Auth::user()->salutation=="MR")
+                 <span class="text-bold">Sir</span>
+             @elseif(Auth::user()->salutation=="Mrs" OR Auth::user()->salutation=="Miss" OR Auth::user()->salutation=="Ms" OR Auth::user()->salutation=="MRS" OR Auth::user()->salutation=="MS" OR  Auth::user()->salutation=="MISS")
+                 <span class="text-bold">Ma'am</span>. We hope you had enough time to rest. Now that you are back at work, we at Shunifu  would like to wish you a productive & successful term. All the best to you and your students
 
-    <div class="card-box  pl-2 pr-3  ">
-        <div class="row align-items-center">
-            <div class="col-md-4">
-                <img width="100%" height="100%" src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1708988938/lzrrkkgcuutvreeqhsub.png" alt="" />
-            </div>
-            <div class="col-md-8">
-                <h4 class="font-20 weight-500 mb-10 text-capitalize">
-                    Welcome back
-                    <div class="weight-600 font-30 text-blue">Johnny Brown!</div>
-                </h4>
-                <p class="font-18 max-width-600">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde
-                    hic non repellendus debitis iure, doloremque assumenda. Autem
-                    modi, corrupti, nobis ea iure fugiat, veniam non quaerat
-                    mollitia animi error corporis.
-                </p>
-            </div>
-        </div>
-    </div>
+             @endif !<br>
 
-</div>
+             <?php
+if (!(\App\Models\TeachingLoad::where('teacher_id', Auth::user()->id)->where('active', 1))->exists()){
+  ?>
 
 
+                        Clueless about the system? No worries, below are the 2 basic steps to follow to start working.
+                       <hr>
+                        <span class="text-bold">Step 1<br>
+                        Adding Teaching Loads</span>- <br><span class="text-justify"> You first need to tell the system which subjects you teach and in which class you teach them as well as the students that you teach. To do that, go to <a href="/users/teacher/loads">Add Teaching Loads</a>. Or click on Teaching Loads in the menu bar and select add teaching loads. <br>After adding teaching loads, you can then start adding marks. Please note that teaching loads are added once a year or unless there is a change in your teaching loads. </span>
+
+                        <?php
+
+                        }else{
+
+                        }
+                        ?>
 
 
-<div class="mb-4">
+                        <hr>
+                        <p class="text-justify">
+
+<?php
+if (empty(\App\Models\Mark::where('teacher_id', Auth::user()->id))){
+  ?>
+
+  <span class="text-bold">Step 2<br>
+                        Adding Marks</span><br>
+                       Once teaching loads have been added you can now start adding marks. To add marks go to  <a href="/marks">Add Marks</a>, or click on the Marks icon in the menu bar.
+                        When adding marks you will first select the teaching load you want to add marks for and after adding the teaching load you will then select the assessement you want to add marks for.
+
+                        <br>
+                        If you happen to teach a subject whereby you group students, lets say for example you teach English Literature in Form 4 and you teach 4 students in Form 4A, 8 in Form 4B and 10 Form 4C, you can NOW select each of the classes  when you are adding the marks (multiple selection).You just need to select the checkboxes next to the classes you want to add the marks for (as a group).
+                        <?php
+}else{
+  ?>
+
+Welcome back to Shunifu, <span class="text-bold">Eswatini's leading school management platform</span>'. This platform has been specially designed to help you, <span class="text-bold">{{Auth::user()->name}}</span>, do your work quickly, effeciently and effectively. Shunifu is here for YOU!
+
+  <?php
+
+}
+
+                         ?>
 
 
 
-</div>
+                    </p>
 
-
-<div class="container-fluid">
-
-
-<div class="card bg-white mb-3">
-    <div class="card-body p-3">
-      <p class="fs--1 mb-0">
-       {{Auth::user()->name}}'s Shunifu Portal
-
-      </p>
-    </div>
-  </div>
-<div class="row">
-    <div class="col-md-4 col-xl-4 cols-1 stretch-card grid-margin">
-      <div class="card bg-gradient-white card-img-holder text-secondary card-rounded card-faded">
-        <div class="card-body">
-            <img src="https://res.cloudinary.com/doramr0cr/image/upload/v1705247636/coner3_x8nkjy.png" class="card-img-absolute" alt="circle-image">
-          <h4 class="font-weight-normal ">My Students <i class="mdi mdi-chart-line mdi-20px float-right"></i>
-          </h4>
-          <strong><h3 class="fs-4 mb-2 font-weight-normal text-sans-serif text-warning" >345</h3></strong>
-          <div class="table-responsive">
-            <table class="table table-sm table-compact table-bordered ">
-               <thead>
-                   <tr>
-                     <th>Male students</th>
-                     <th>Female students</th>
-
-                   </tr>
-               </thead>
-               <tbody>
-                   <tr>
-
-                       <td>89</td>
-                       <td>12</td>
-
-                   </tr>
-
-               </tbody>
-            </table>
-           </div>
-           <div class="card-footer text-muted">
-            <a href="#">View More</a>
-        </div>
+          </div>
+          <div class="modal-footer">
+            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok Thanks! Let me try</button>
+          </div>
         </div>
       </div>
     </div>
 
+    <div class="row justify-content-center">
 
-    <div class="col-md-4 col-xl-4 cols-1 stretch-card grid-margin">
-        <div class="card bg-gradient-white card-img-holder text-secondary card-rounded card-faded">
-          <div class="card-body">
-              <img src="https://res.cloudinary.com/doramr0cr/image/upload/v1705247863/Shuni4_qzsgow.png" class="card-img-absolute" alt="circle-image">
-            <h4 class="font-weight-normal ">My Teaching Loads  <i class="mdi mdi-chart-line mdi-20px float-right"></i>
-            </h4>
-            <strong><h3 class="fs-4 mb-2 font-weight-normal text-sans-serif text-warning" >345</h3></strong>
-            <div class="table-responsive">
-                <table class="table table-sm table-compact table-bordered ">
-                   <thead>
-                       <tr>
-                         <th>Subjects</th>
-                         <th>Classes</th>
+        <div class="col">
+          <img class="card-img-top"
+          src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1708994181/evxpe4qvbvgksqhs8kpx.png"
+          alt="">
+          <div class="bg-white shadow rounded overflow-hidden cover">
 
-                         <th>Week Periods</th>
-                       </tr>
-                   </thead>
-                   <tbody>
-                       <tr>
 
-                           <td>89</td>
-                           <td>12</td>
-                           <td>28</td>
+            <div class="bg-white p-3  ">
 
-                       </tr>
 
-                   </tbody>
-                </table>
+                <div class="col text-justify">
+                    <h4 class="mb-1 text-secondary" >{{Auth::user()->name}} {{Auth::user()->middlename}} {{Auth::user()->lastname}}<svg class="ml-1"  xmlns="http://www.w3.org/2000/svg"
+                            width="20" height="20" viewBox="0 0 24 23.25">
+                            <path
+                                d="M23.823,11.991a.466.466,0,0,0,0-.731L21.54,8.7c-.12-.122-.12-.243-.12-.486L21.779,4.8c0-.244-.121-.609-.478-.609L18.06,3.46c-.12,0-.36-.122-.36-.244L16.022.292a.682.682,0,0,0-.839-.244l-3,1.341a.361.361,0,0,1-.48,0L8.7.048a.735.735,0,0,0-.84.244L6.183,3.216c0,.122-.24.244-.36.244L2.58,4.191a.823.823,0,0,0-.48.731l.36,3.412a.74.74,0,0,1-.12.487L.18,11.381a.462.462,0,0,0,0,.732l2.16,2.437c.12.124.12.243.12.486L2.1,18.449c0,.244.12.609.48.609l3.24.735c.12,0,.36.122.36.241l1.68,2.924a.683.683,0,0,0,.84.244l3-1.341a.353.353,0,0,1,.48,0l3,1.341a.786.786,0,0,0,.839-.244L17.7,20.035c.122-.124.24-.243.36-.243l3.24-.734c.24,0,.48-.367.48-.609l-.361-3.413a.726.726,0,0,1,.121-.485Z"
+                                fill="#0D6EFD"></path>
+                            <path data-name="Path" d="M4.036,10,0,5.8,1.527,4.2,4.036,6.818,10.582,0,12,1.591Z"
+                                transform="translate(5.938 6.625)" fill="#fff"></path>
+                        </svg>
+                    </h4>
+                    <hr>
+
+
+
+                         {{-- <br> --}}
+               <span class="text-gray-700 mb-1 2h-base">
+
+               {{$greetings}}  {{\Spatie\Emoji\Emoji::waving_hand()}}{{Auth::user()->name}}, welcome back to  <span class="text-bold">Shunifu, the number 1 school management platform in Eswatini</span>. We are proud to serve you the most efficient, reliable, and convenient tool for managing your work. We know that as a teacher your time is valuable, which is why this platform has been specifically designed to help you <span class="text-bold">{{Auth::user()->salutation}} {{Auth::user()->lastname}}</span> work smarter, better & faster. With Shunifu, you can streamline your work  and automate repetitive manual tasks , allowing you to focus on what truly matters & that is educating & inspiring your students. Shunifu is here to help & support you achieve your teacher goals and make a difference in the lives of your students.
+           <hr>
+
+                 The Shunifu team, is on stand-by to help you in the event you need assistance. To get assisted  you can
+                 send us a message on WhatsApp  using the number
+                  <a href="https://api.whatsapp.com/send?phone=26876890726&text='Hi Shunifu, this is, {{Auth::user()->name}}  {{Auth::user()->lastname}}, from @foreach (\App\Models\School::all() as $item) {{$item->school_name }} @endforeach I need assistance, my email is {{Auth::user()->email}} and cell number is {{Auth::user()->cell_number}} "><i class="fab fa-whatsapp "></i> 76890726</a> or call  <a href="tel:+26876890726">7689 0726  </a><small>(MTN)</small> /
+                   <a href="tel:+26879890726">7989 0726 </a><small>(Eswatini Mobile)</small>. Thank you and have a splendid Shunifu experience.
+
+                </div>
+            </div>
+
+        </div>
+        <div class="mb-4">
+
+        </div>
+
+
+        <div class="container">
+          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+                 <div class="col">
+               <div class="card radius-10 border-start border-0 border-3 border-info">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
+
+                      <p class="mb-0 text-secondary">Total Students</p>
+                      <h4 class="my-1 text-info">{{$teacher_total_students}}</h4>
+                      <a href="/users/teacher/loads/manage"><p class="mb-0 font-13 text-info " >View Students </p></a>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa-solid fa-users-between-lines"></i>
+                    </div>
+                  </div>
+                </div>
                </div>
-               <div class="card-footer text-muted">
-                <a href="#">View More</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 col-xl-4 cols-1 stretch-card grid-margin">
-        <div class="card bg-gradient-white card-img-holder text-secondary card-rounded card-faded">
-          <div class="card-body">
-              <img src="https://prium.github.io/falcon/v2.8.2/default/assets/img/illustrations/corner-1.png" class="card-img-absolute" alt="circle-image">
-            <h4 class="font-weight-normal ">My Marks <i class="mdi mdi-chart-line mdi-20px float-right"></i>
-            </h4>
-            <strong><h3 class="fs-4 mb-2 font-weight-normal text-sans-serif text-warning" >0  <span class="text-sm">Today</span></h3></strong>
-            <div class="table-responsive">
-                <table class="table table-sm table-compact table-bordered ">
-                   <thead>
-                       <tr>
-                         <th>This Month</th>
-                         <th>This Term</th>
-                         <th>YTD</th>
-
-                       </tr>
-                   </thead>
-                   <tbody>
-                       <tr>
-
-                           <td>89</td>
-                           <td>12</td>
-                           <td>12</td>
-                       </tr>
-
-                   </tbody>
-                </table>
                </div>
-               <div class="card-footer text-muted">
-                <a href="#">View More</a>
+               <div class="col">
+              <div class="card radius-10 border-start border-0 border-3 border-danger">
+                 <div class="card-body">
+                   <div class="d-flex align-items-center">
+                     <div>
+                       <p class="mb-0 text-secondary"> Teaching Loads</p>
+                       <h4 class="my-1 text-danger">{{$teacher_teaching_loads}}</h4>
+                       <a href="/users/teacher/loads/manage"><p class="mb-0 font-13 text-danger">View Teaching Loads </p></a>
+                     </div>
+
+                     <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i class="fas fa-user-graduate    "></i>
+                     </div>
+                   </div>
+                 </div>
+              </div>
+              </div>
+              <div class="col">
+              <div class="card radius-10 border-start border-0 border-3 border-success">
+                 <div class="card-body">
+                   <div class="d-flex align-items-center">
+                     <div>
+                       <p class="mb-0 text-secondary">Total Marks</p>
+                       <h4 class="my-1 text-success">{{$total_marks}}<small class="small-text"> marks added</small></h4>
+                       <a href="/marks/"><p class="mb-0 font-13 text-success">View Marks</p></a>
+
+                     </div>
+                     <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class="fas fa-user-friends    "></i>
+                     </div>
+                   </div>
+                 </div>
+              </div>
+              </div>
+
+              <div class="col">
+              <div class="card radius-10 border-start border-0 border-3 border-warning">
+                 <div class="card-body">
+                   <div class="d-flex align-items-center">
+                     <div>
+                       <p class="mb-0 text-secondary">My Profile</p>
+                       <h4 class="my-1 text-warning">{{Auth::user()->name}}</h4>
+                      <a href="/teacher/view/{{Crypt::encryptString(Auth::user()->id)}}"> <p class="mb-0 font-13 text-secondary ">View My Profile</p></a>
+                     </div>
+                     <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto"><i class="fa fa-users"></i>
+                     </div>
+                   </div>
+                 </div>
+              </div>
+              </div>
+
+
+
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-xl-4 cols-1 stretch-card grid-margin">
-        <div class="card bg-gradient-white card-img-holder text-secondary card-rounded card-faded">
-          <div class="card-body">
-              <img src="https://prium.github.io/falcon/v2.8.2/default/assets/img/illustrations/corner-1.png" class="card-img-absolute" alt="circle-image">
-            <h4 class="font-weight-normal ">My Assessements <i class="mdi mdi-chart-line mdi-20px float-right"></i>
-            </h4>
-            <strong><h3 class="fs-4 mb-2 font-weight-normal text-sans-serif text-warning" >0  <span class="text-sm">Today</span></h3></strong>
-            <div class="table-responsive">
-                <table class="table table-sm table-compact table-bordered ">
-                   <thead>
-                       <tr>
-                         <th>This Month</th>
-                         <th>This Term</th>
-                         <th>YTD</th>
-
-                       </tr>
-                   </thead>
-                   <tbody>
-                       <tr>
-
-                           <td>89</td>
-                           <td>12</td>
-                           <td>12</td>
-                       </tr>
-
-                   </tbody>
-                </table>
-               </div>
-               <div class="card-footer text-muted">
-                <a href="#">View More</a>
-            </div>
-          </div>
-        </div>
-      </div>
 
 
 
-      <div class="col-md-4 col-xl-4 cols-1 stretch-card grid-margin">
-        <div class="card bg-gradient-white card-img-holder text-secondary card-rounded card-faded">
-          <div class="card-body">
-              <img src="https://prium.github.io/falcon/v2.8.2/default/assets/img/illustrations/corner-1.png" class="card-img-absolute" alt="circle-image">
-            <h4 class="font-weight-normal ">Class Attendance
-            </h4>
-            <strong><h3 class="fs-4 mb-2 font-weight-normal text-sans-serif text-warning" >0  <span class="text-sm">Today</span></h3></strong>
-            <div class="table-responsive">
-                <table class="table table-sm table-compact table-bordered ">
-                   <thead>
-                       <tr>
-                         <th>This Month</th>
-                         <th>This Term</th>
-                         <th>YTD</th>
-
-                       </tr>
-                   </thead>
-                   <tbody>
-                       <tr>
-
-                           <td>89%</td>
-                           <td>12%</td>
-                           <td>12%</td>
-                       </tr>
-
-                   </tbody>
-                </table>
-               </div>
-               <div class="card-footer text-muted">
-                <a href="#">View More</a>
-            </div>
-          </div>
-        </div>
-      </div>
 
 
-      <div class="col-md-4 col-xl-4 cols-1 stretch-card grid-margin">
-        <div class="card bg-gradient-white card-img-holder text-secondary card-rounded card-faded">
-          <div class="card-body">
-              <img src="https://prium.github.io/falcon/v2.8.2/default/assets/img/illustrations/corner-1.png" class="card-img-absolute" alt="circle-image">
-            <h4 class="font-weight-normal ">My Profile <i class="mdi mdi-chart-line mdi-20px float-right"></i>
-            </h4>
-            <strong><h3 class="fs-4 mb-2 font-weight-normal text-sans-serif text-warning" >My Profile  <span class="text-sm"></span></h3></strong>
-            <div class="table-responsive">
-                <table class="table table-sm table-compact table-bordered ">
-                   <thead>
-                       <tr>
-                         <th>PP</th>
-                         <th>Details</th>
-                         <th>Contact</th>
 
-                       </tr>
-                   </thead>
-                   <tbody>
-                       <tr>
 
-                           <td>0%</td>
-                           <td>0%</td>
-                           <td>0%</td>
-                       </tr>
+    <div class="mt-10 mb-25">
+    <hr>
 
-                   </tbody>
-                </table>
-               </div>
-               <div class="card-footer text-muted">
-                <a href="#">View More</a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-  </div>
-
-@role('hod')
-  <div class="card bg-white mb-3">
-    <div class="card-body p-3">
-      <p class="fs--1 mb-0">
-        Department Indicators
-
-      </p>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-4 col-xl-4 cols-3 stretch-card grid-margin ">
-      <div class="card bg-gradient-white card-img-holder text-secondary card-rounded card-faded">
-        <div class="card-body">
-            <img src="https://prium.github.io/falcon/v2.8.2/default/assets/img/illustrations/corner-1.png" class="card-img-absolute" alt="circle-image">
-          <h4 class="font-weight-normal ">Total Teachers
-          </h4>
-          <strong><h3 class="fs-4 mb-2 font-weight-normal text-sans-serif text-warning" > <strong> 345</strong></h3></strong>
-
-          <div class="table-responsive">
-         <table class="table table-sm table-compact table-bordered ">
-            <thead>
-                <tr>
-                    <th>Male</th>
-                    <th>Female</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-
-                    <td>12</td>
-                    <td>46</td>
-
-                </tr>
-
-            </tbody>
-         </table>
-        </div>
-        </div>
-      </div>
     </div>
 
 
-    <div class="col-md-4 col-xl-4 cols-1 stretch-card grid-margin ">
-        <div class="card bg-gradient-white card-img-holder text-secondary card-rounded card-faded">
-          <div class="card-body">
-              <img src="https://prium.github.io/falcon/v2.8.2/default/assets/img/illustrations/corner-1.png" class="card-img-absolute" alt="circle-image">
-            <h4 class="font-weight-normal ">Expenditure <i class="mdi mdi-chart-line mdi-20px float-right"></i>
-            </h4>
-            <strong><h3 class="fs-4 mb-2 font-weight-normal text-sans-serif text-warning" >Today: <strong>SZL 345</strong></h3></strong>
 
-            <div class="table-responsive">
-           <table class="table table-sm table-compact table-bordered ">
-              <thead>
-                  <tr>
-                      <th>C Month</th>
-                      <th>C Term</th>
-                      <th>YTD</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
+              <div class="row">
+                <!-- Left col -->
 
-                      <td>E34556,56</td>
-                      <td>E4563,90</td>
-                      <td>E2563,90</td>
-                  </tr>
+                <!-- /.Left col -->
+                <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                <section class="col-md-12 bg-white">
 
-              </tbody>
-           </table>
-          </div>
-          </div>
+
+
+                  <!-- /.card -->
+                </section>
+                <!-- right col -->
+              </div>
+
         </div>
-      </div>
-
-      <div class="col-md-4 col-xl-4 cols-1 stretch-card grid-margin ">
-        <div class="card bg-gradient-white card-img-holder text-secondary card-rounded card-faded">
-          <div class="card-body">
-              <img src="https://prium.github.io/falcon/v2.8.2/default/assets/img/illustrations/corner-1.png" class="card-img-absolute" alt="circle-image">
-            <h4 class="font-weight-normal ">Total Fees Paid <i class="mdi mdi-chart-line mdi-20px float-right"></i>
-            </h4>
-            <strong><h3 class="fs-4 mb-2 font-weight-normal text-sans-serif text-warning" >Today: <strong>SZL 345</strong></h3></strong>
-
-            <div class="table-responsive">
-           <table class="table table-sm table-compact table-bordered ">
-              <thead>
-                  <tr>
-                      <th>C Month</th>
-                      <th>Term</th>
-                      <th>YTD</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-
-                      <td>E34556,56</td>
-                      <td>E4563,90</td>
-                      <td>E2563,90</td>
-                  </tr>
-
-              </tbody>
-           </table>
-          </div>
-          </div>
-        </div>
-      </div>
-  </div>
-
-  <div class="card bg-white mb-3">
-    <div class="card-body p-3">
-      <p class="fs--1 mb-0">
-        Attendance &  Disciplinary Cases
-
-      </p>
     </div>
-  </div>
-  <div class="row">
-
-      <div class="col-md-6 col-xl-6 cols-1 stretch-card grid-margin ">
-        <div class="card bg-gradient-white card-img-holder text-secondary card-rounded card-faded">
-          <div class="card-body">
-              <img src="https://prium.github.io/falcon/v2.8.2/default/assets/img/illustrations/corner-1.png" class="card-img-absolute" alt="circle-image">
-            <h4 class="font-weight-normal ">Disciplinary Cases <i class="mdi mdi-chart-line mdi-20px float-right"></i>
-            </h4>
-            <strong><h3 class="fs-4 mb-2 font-weight-normal text-sans-serif text-warning" >Today: <strong>0</strong></h3></strong>
-
-            <div class="table-responsive">
-           <table class="table table-sm table-compact table-bordered ">
-              <thead>
-                  <tr>
-                    <th>This Month</th>
-                    <th>This Term</th>
-                      <th>YTD</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-
-                      <td>89</td>
-                      <td>12</td>
-                      <td>100</td>
-                  </tr>
-
-              </tbody>
-           </table>
-          </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-xl-6 cols-1 stretch-card grid-margin ">
-        <div class="card bg-gradient-white card-img-holder text-secondary card-rounded card-faded">
-          <div class="card-body">
-              <img src="https://prium.github.io/falcon/v2.8.2/default/assets/img/illustrations/corner-1.png" class="card-img-absolute" alt="circle-image">
-            <h4 class="font-weight-normal ">Attendance <i class="mdi mdi-chart-line mdi-20px float-right"></i>
-            </h4>
-            <strong><h3 class="fs-4 mb-2 font-weight-normal text-sans-serif text-warning" >Today: <strong>89%</strong></h3></strong>
-
-            <div class="table-responsive">
-           <table class="table table-sm table-compact table-bordered ">
-              <thead>
-                  <tr>
-                    <th>This Month</th>
-                    <th>This Term</th>
-                      <th>YTD</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-
-                      <td>70%</td>
-                      <td>90%</td>
-                      <td>76%</td>
-                  </tr>
-
-              </tbody>
-           </table>
-          </div>
-          </div>
-        </div>
-      </div>
-
-
-  </div>
-
-  @endrole
-
-
-</div>
-
 
 
 
