@@ -16,7 +16,7 @@
         <h3 class="card-title">Student Registration Portal</h3>
       </div>
 
-        <img class="card-img-top"  src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_250,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_32_style_light_align_center:Single-Student%20Registration Form,w_0.4,y_0.18/v1650135733/pexels-rodnae-productions-10375992_1_shjypq.jpg">
+        <img class="card-img-top"  src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1709015410/rtivhy8olqrzezyqzot2.png">
         <div class="card-body">
           <h4 class="lead">Student Registration Portal</h4>
 

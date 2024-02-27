@@ -6,17 +6,17 @@
         <div class="col-md-12">
             <div class="card card-light  ">
                 <div class="card-header">
-                  
+
                 </div>
 
                 <img class="card-img-top"
-                src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1673693197/Manage_Teachers_5_ubwtrg.png"
+                src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1709015378/pk5zfn9plutflmyzfza4.png"
                     alt="">
                 <div class="card-body">
                     <h3 class="lead">Hi, {{ Auth::user()->name }}</h3>
                     <div class="text-muted">
                         <p class="card-text"> Use this section to tell <span class="text-bold">Shunifu</span>, which subjects you teach and in which classes you teach those subjects.
-                            <span class="text-italic">You will do it one class at a time.</span> 
+                            <span class="text-italic">You will do it one class at a time.</span>
 
                         </p>
 
@@ -65,7 +65,7 @@
                                 <select class="form-control" name="academic_session">
                             <option value="">Select Academic Year</option>
                                     @foreach($sessions as $session)
-                               
+
                         <option value="{{ $session->id }}">{{ $session->academic_session }}</option>
                                     @endforeach
                                 </select>

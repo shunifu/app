@@ -10,7 +10,7 @@
                 </div>
 
                 <img class="card-img-top"
-                    src="https://res.cloudinary.com/innovazaniacloud/image/upload/c_fill,g_auto,h_220,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_30_style_light_align_center:Academic Session Migration,w_0.3,y_0.28/v1613303961/pexels-photo-5212359_ukdzdz.jpg"
+                    src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1709014711/zomds79zgkqxuefjdlvv.png"
                     alt="">
                 <div class="card-body">
                     <h3 class="lead">Hi, {{ Auth::user()->name }}</h3>
