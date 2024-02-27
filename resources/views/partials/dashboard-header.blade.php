@@ -4,7 +4,7 @@
 <div class="bg-white shadow rounded overflow-hidden cover">
 
 	 <img class="card-img-top"
-	 src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1688783408/nlinedpq3qdbjtf3irtq.png"
+	 src="https://res.cloudinary.com/innovazaniacloud/image/upload/v1708996069/hcxg80gsz8bdrfujwu0g.png"
 	 alt="">
 
 

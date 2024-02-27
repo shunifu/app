@@ -119,6 +119,7 @@ class StudentsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
                         //insert parent
                         $parent=User::create([
                         'cell_number'=>$row['parent_cell'],
+                        'email'=>$row['parent_email'],
                         'password'=>Hash::make(Str::random(5)),
                         'role_id'=>$parent_role->id,
      ]);

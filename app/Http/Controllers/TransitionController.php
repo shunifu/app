@@ -205,7 +205,7 @@ class TransitionController extends Controller
 
 
         public function store( Request $request){
-//  dd($request->all());
+ //dd($request->all());
 
             //variables
             $from_session=$request->from_session;
@@ -285,12 +285,10 @@ class TransitionController extends Controller
 
 
 
-            if($request->scope=="custom"){
+            if($request->migration_type=="custom"){
 
 
                 foreach ($students as $key => $val) {
-
-
 
                     $combined[] = ['student_id'=>$val,  'destination_class'=>$destination_class[$key],'present_class'=>$present_class[$key], 'academic_session'=>$to_session[$key]];
 

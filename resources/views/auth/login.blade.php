@@ -296,9 +296,9 @@ a[target='_blank']{
                 <div class="panel-heading">
                     <h3 class="text-muted pt-3 font-weight-bold">{{$item->school_name}}</h3>
 
- <div class="alert alert-danger mb-3 rounded-0" role="alert">
+ {{-- <div class="alert alert-danger mb-3 rounded-0" role="alert">
                     You are using an old version of Shunifu. Upgrade to Shunifu X by 01 April 2024
-                </div>
+                </div> --}}
 
 
                  <div class="text-muted">{{$item->school_slogan}}</div>
