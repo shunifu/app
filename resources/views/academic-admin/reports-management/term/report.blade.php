@@ -1055,7 +1055,7 @@ foreach ($term_average as $student_term_data) {
     <thead >
         <tr class="hope">
             <th class="background">Class Teacher's Comment</th>
-            <th class="background">Class Coordinator's Comment</th>
+            <th class="background">Head Teacher's Comment</th>
         </tr>
     </thead>
 
@@ -1115,7 +1115,7 @@ foreach ($term_average as $student_term_data) {
 
                     <div class="col">
                     <div id="signaturetitle">
-                    Coordinator's Signature:
+                    Headteacher's Signature:
                     </div>
                     <div class="text-center">
                     @if ($variable->principal_signature==1)
