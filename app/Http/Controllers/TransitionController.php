@@ -121,6 +121,7 @@ class TransitionController extends Controller
                    ->join('grades_students','grades_students.student_id','=','users.id')
                    ->join('grades','grades.id','=','grades_students.grade_id')
                    ->where('grades.id', $request->class_id)
+                   ->whereNull('grades_students')
                    ->where('grades_students.academic_session', $from_session)
                    ->select('users.id as student_id','users.name', 'users.lastname', 'users.middlename', 'grades.id as grade_id', 'grades.grade_name', 'users.active as users_active', 'grades_students.active as grades_student_active')
                    ->get();
