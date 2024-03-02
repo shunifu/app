@@ -339,6 +339,12 @@ if (($activeSessionID)!=($next_sessionID)) {
                             ['student_id' => $student, 'grade_id' => $next_class, 'academic_session' => $to_session_is, 'active'=>1],
                             ['student_id' => $student, 'grade_id' => $next_class, 'academic_session' => $to_session_is, 'active'=>1]
                         );
+
+                        $update=StudentClass::where('student_id', $student)->where('grade_id', $current_class)->update(
+                            [
+                                'migrated'=>1
+                            ]
+                        );
                     }
                 }
 
