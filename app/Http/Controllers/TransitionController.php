@@ -205,7 +205,7 @@ class TransitionController extends Controller
 
 
         public function store( Request $request){
- //dd($request->all());
+
 
             //variables
             $from_session=$request->from_session;
@@ -215,8 +215,30 @@ class TransitionController extends Controller
             $result=$request->student_result;
             $destination_class=$request->destination_class;
 
+//get the current active session
+$activeYearQuery=AcademicSession::where('active',1)->first();
+$activeSessionID=$activeYearQuery->id;
+$activeSessionName=$activeYearQuery->academic_session;
 
-               //get info about stream of the selected current class
+//next session id
+$next_sessionID=$to_session['0'];
+$next_sessionQuery=AcademicSession::where('id',$next_sessionID)->first();//query to get the next session
+$next_sessionName=$next_sessionQuery->academic_session;//the next session name
+
+
+
+//check if the current academic session is the same as the next session
+//this is to check if the active session is the same as the session being migrated to
+//this is to ensure that the user only migrates if he/she is in the new academic year
+
+if (($activeSessionID)!=($next_sessionID)) {
+    flash()->overlay('<i class="fa-solid fa-circle-exclamation" text-danger ></i>'.' Please note that,  you  have not activated academic year '.$next_sessionName.'. Before running the migration please activate the  '.$next_sessionName.' academic year. To do so, click  '.'<a href=/academic-admin/session> here</a> ' , 'Migration Process Notice');
+    return redirect('/migration/automatic');
+
+}else{
+
+
+    //get info about stream of the selected current class
     $stream=DB::table('streams')
     ->join('grades','grades.stream_id','=','streams.id')
     ->where('grades.id', $present_class)
@@ -402,6 +424,7 @@ class TransitionController extends Controller
             }
         }
     }
+}
 
       public function next_class($id){
 

@@ -45,7 +45,7 @@
 
                                         <div class="col-md-4  form-group">
                                             <x-jet-label> Class Name</x-jet-label>
-                                            <select class="form-control" name="class_id" id="class_id">
+                                            <select class="form-control" name="class_id" required id="class_id">
                                                 <option value="">Select Class</option>
                                                 @foreach ($grades as $class)
 
@@ -60,7 +60,7 @@
 
                                         <div class="col-md-4 form-group">
                                             <x-jet-label>From Year</x-jet-label>
-                                            <select class="form-control" name="from_academic_session" id="from_academic_session">
+                                            <select class="form-control" name="from_academic_session" required id="from_academic_session">
                                                 <option value="">Select From Academic Year</option>
                                                 @foreach($from as $from_academic_year)
                 <option value="{{ $from_academic_year->id }}">{{ $from_academic_year->academic_session }}</option>
@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="col-md-4  form-group">
                                             <x-jet-label>To Year</x-jet-label>
-                                            <select class="form-control" name="to_academic_session" id="to_academic_session">
+                                            <select class="form-control" name="to_academic_session"  required id="to_academic_session">
                                                 <option value="">Select New Academic Year</option>
                                                 @foreach($to as $to_academic_year)
                 <option value="{{$to_academic_year->id }}">{{$to_academic_year->academic_session }}</option>

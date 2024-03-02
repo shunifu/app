@@ -182,19 +182,19 @@ return [
 //     // The environment is local
 // }
 
-// 'DB_CONNECTION' => 'mysql',
-// 'DB_HOST' => "127.0.0.1",
-// 'DB_PORT' => '3306',
-// 'DB_DATABASE' => env('DB_NAME'),
-// 'DB_USERNAME' => 'root',
-// 'DB_PASSWORD'=>'',
-
 'DB_CONNECTION' => 'mysql',
-'DB_HOST' => "SG-yibanomusa-8169-mysql-master.servers.mongodirector.com",
+'DB_HOST' => "127.0.0.1",
 'DB_PORT' => '3306',
 'DB_DATABASE' => env('DB_NAME'),
-'DB_USERNAME' => 'sgroot',
-'DB_PASSWORD'=>'J7eEJ@VVDlRoAa49',
+'DB_USERNAME' => 'root',
+'DB_PASSWORD'=>'',
+
+// 'DB_CONNECTION' => 'mysql',
+// 'DB_HOST' => "SG-yibanomusa-8169-mysql-master.servers.mongodirector.com",
+// 'DB_PORT' => '3306',
+// 'DB_DATABASE' => env('DB_NAME'),
+// 'DB_USERNAME' => 'sgroot',
+// 'DB_PASSWORD'=>'J7eEJ@VVDlRoAa49',
 
 
 // 'DB_CONNECTION' => 'shunifuservices',
