@@ -48,9 +48,11 @@ class ParentController extends Controller
         $getParent=User::where('role_id', $parent_role_id)->get();
 
         
+
+
         return view('users.parents.manage', compact('getParent'));
 
-        
+
     }
 
 
@@ -66,7 +68,7 @@ class ParentController extends Controller
 
             $this->validate($request,[
                 'salutation'=>'required',
-               
+
                 'first_name'=>'required',
                 'last_name'=>'required',
                 'cell_number'=>'required|min:8|max:8',
@@ -74,12 +76,12 @@ class ParentController extends Controller
                ]);
             $parent_role=Role::where('name', 'parent')->first();
             $otp=Str::random(24);
-            $parent = User::create([ 
+            $parent = User::create([
                 'name'=>$request->first_name,
                 'salutation'=>$request->salutation,
                 'middlename'=>$request->middle_name,
                 'lastname'=>$request->last_name,
-                
+
                 'cell_number'=>$request->cell_number,
                 'email'=>$request->email_address,
                 'password'=>Hash::make($otp),
@@ -89,13 +91,13 @@ class ParentController extends Controller
            $parent->attachRole($parent_role);
 
            //SEND otp
-           
-           
+
+
            flash()->overlay('<i class="fas fa-check-circle text-success"></i> Success. You have added parent', 'Add Parent');
            return redirect('/users/parents/manage');
 
         }else{
-            return view('errors.unauthorized'); 
+            return view('errors.unauthorized');
         }
     }
 
@@ -112,16 +114,16 @@ class ParentController extends Controller
 
         if($isAdmin OR $isUser){
             $result_user=User::find($id);
-        
+
 
             return view('users.parents.view', compact('result_user'));
             }else{
                 return view('errors.unauthorized');
             }
-            
+
 
         }
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -137,7 +139,7 @@ class ParentController extends Controller
 
         if(Auth::user()->hasRole('admin_teacher') OR ($loggedin==$id)){
             $user=User::find($id);
-       
+
            try {
             $update=$user->update(['name'=>$request->first_name,'middlename'=>$request->middle_name, 'lastname'=>$request->last_name, 'national_id'=>$request->national_id,'date_of_birth'=>$request->date_of_birth,'gender'=>$request->gender, 'email'=>$request->email,'cell_number'=>$request->cell]);
 
@@ -156,9 +158,9 @@ class ParentController extends Controller
             }
           }
 
-          
-    
-       
+
+
+
     }
     }
 
@@ -166,7 +168,7 @@ class ParentController extends Controller
 
      //  dd($request->all());
 
-      
+
         $assessement_id=$request->assessement_id;
         $student_id=$request->student_id;
 
@@ -182,8 +184,8 @@ class ParentController extends Controller
 
     //    dd($kid);
 
-      
-        
+
+
 
         $marks= DB::table('marks')
         ->join('teaching_loads', 'teaching_loads.id', '=', 'marks.teaching_load_id')
@@ -204,9 +206,9 @@ class ParentController extends Controller
 
         // dd($assessement);
 
-        
+
         // $exam= DB::table('marks')
-        
+
         // ->join('teaching_loads', 'teaching_loads.id', '=', 'marks.teaching_load_id')
         // ->join('assessements', 'assessements.id', '=', 'marks.assessement_id')
         // ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
@@ -217,7 +219,7 @@ class ParentController extends Controller
 	    // ->get();
 
         // $test2= DB::table('marks')
-        
+
         // ->join('teaching_loads', 'teaching_loads.id', '=', 'marks.teaching_load_id')
         // ->join('assessements', 'assessements.id', '=', 'marks.assessement_id')
         // ->join('subjects', 'subjects.id', '=', 'teaching_loads.subject_id')
@@ -229,7 +231,7 @@ class ParentController extends Controller
 
        // dd($exam);
 
-    
+
        $children = DB::table('parents_students')
        ->join('users', 'users.id', '=', 'parents_students.student_id')
        ->where('parents_students.parent_id', Auth::user()->id)
@@ -253,7 +255,7 @@ class ParentController extends Controller
 
     }
 
- 
+
 
     /**
      * Update the specified resource in storage.
@@ -279,7 +281,7 @@ class ParentController extends Controller
         // ->join('users', 'users.id', '=', 'parents_students.student_id')
         // ->where('parents_students.parent_id', Auth::user()->id)
         // ->get()->count();
- 
+
     $children = DB::table('parents_students')
     ->join('users', 'users.id', '=', 'parents_students.student_id')
     ->join('grades_students', 'grades_students.student_id', '=', 'users.id')
@@ -297,7 +299,7 @@ class ParentController extends Controller
 
         $terms=DB::table('terms')
         ->join('academic_sessions', 'academic_sessions.id', '=', 'terms.academic_session')
-      
+
         ->select('terms.id as term_id','terms.term_name', 'academic_sessions.academic_session')
         ->get();
 
@@ -319,7 +321,7 @@ class ParentController extends Controller
         ->where('academic_sessions.active', 1 )//
         ->select('assessements.id as assessement_id','terms.term_name', 'assessement_name', 'assessement_type_name')
         ->get();
-        
+
         $templates=ReportTemplate::all();
 
         $variables=ReportVariable::all();
@@ -369,7 +371,7 @@ class ParentController extends Controller
 //https://
 
                  $url=substr( URL::to('/'),7);
-                
+
 
                    //we $uniqid = mt_rand(1000, 9999);
                     $password=$user_data->password = Hash::make($otp->token);
@@ -388,20 +390,20 @@ class ParentController extends Controller
                         $username = config('app.sms_username');// use 'sandbox' for development in the test environment
                      $apiKey   = config('app.sms_password'); // use your sandbox app API key for development in the test environment
                      $AT = new AfricasTalking($username, $apiKey);
-                     
+
                         // Get one of the services
                         $sms      = $AT->sms();
-                     
+
                         // Use the service
                         $result   = $sms->send([
                          'to'      => '+268'.$teacher_cell,
                          'message' => 'Hi '.$teacher_name.' Shunifu OTP is '.$otp->token.'. Go to '.URL::to('/').' .Need assistance? WhatsApp on 76890726. Thanks '.$salutation.' '.$teacher_surname.' ',
                          'from'=>'Shunifu'
                      ]);
-                     
-                        
+
+
                     }
-    
+
                     flash()->overlay('OTP is '.$otp->token.' ', 'Generate One Time Password');
                 } else {
                     flash()->overlay($teacher_name."'s OTP cannot be generated because that teacher is no longer active on the platform ", 'Generate One Time Password');
@@ -412,8 +414,8 @@ class ParentController extends Controller
                 return view('errors.unauthorized');
             }
 
-       
-       
+
+
 
         }else{
             return view('errors.unauthorized');

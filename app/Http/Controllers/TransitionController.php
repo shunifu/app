@@ -25,6 +25,13 @@ class TransitionController extends Controller
 {
     public function index(){
 
+        if (!Schema::hasColumn('grades_students', 'migrated'))   {
+            Schema::table('grades_students', function (Blueprint $table) {
+            $table->integer('migrated')->nullable();
+
+          });
+      }
+
         return view('academic-admin.academic-session-management.session-migration.index');
 
     }
@@ -121,7 +128,7 @@ class TransitionController extends Controller
                    ->join('grades_students','grades_students.student_id','=','users.id')
                    ->join('grades','grades.id','=','grades_students.grade_id')
                    ->where('grades.id', $request->class_id)
-                   ->whereNull('grades_students')
+                   ->whereNull('grades_students.migrated')
                    ->where('grades_students.academic_session', $from_session)
                    ->select('users.id as student_id','users.name', 'users.lastname', 'users.middlename', 'grades.id as grade_id', 'grades.grade_name', 'users.active as users_active', 'grades_students.active as grades_student_active')
                    ->get();
@@ -140,22 +147,41 @@ class TransitionController extends Controller
           //if migration type is automatic
             if($request->migration_type=="automatic"){
 
+    //get the final term of the from_academic session. i.e the academic session we are migrating from//
+    $final_term_query=Term::where('academic_session', $from_session)->where('final_term', 1)->first();
+
+    if (is_null($final_term_query)){
+
+        //next session id
+$from_sessionID=$from_session['0'];
+$from_sessionQuery=AcademicSession::where('id',$from_sessionID)->first();//query to get the  session being migrated from
+$from_sessionName=$from_sessionQuery->academic_session;//the name of the session being migrated from
+
+        //if final term is not set, then alert the user and redirect the user to make the term final term
+
+        flash()->overlay('<i class="fa-solid fa-circle-exclamation" text-danger ></i>'.' Please set the final term for academic year '.$from_sessionName.'. To do so, click on the Action button on the row of the term you want to make the final term, then click Edit term, a screen will appear with the details for the selected term, you must then click the final term checkbox, and then click the  Edit Term button.' , 'Migration Process Notice');
+        return redirect('/view/terms/'.$from_sessionID);
+
+
+    }
+    else{
+        $final_term_id=$final_term_query->id;
+    }
 
 
 
-
+        //Query to get the list of students to be shown in the migration table
             $students=DB::table('users')
             ->join('grades_students','grades_students.student_id','=','users.id')
             ->join('grades','grades.id','=','grades_students.grade_id')
 
-            // ->join('streams','streams.id','=','grades.stream_id')
             ->join('term_averages','term_averages.student_id','=','users.id')
             ->join('terms','terms.id','=','term_averages.term_id')
             ->where('grades.id', $request->class_id)
             ->where('grades_students.academic_session', $from_session)
             ->where('terms.academic_session', $from_session)
-            // ->where('terms.id','term_averages.term_id')
-            ->where('terms.final_term',1)
+
+            ->where('terms.id',$final_term_id)
             ->select('users.id as student_id', 'term_averages.final_term_status as result','users.name', 'users.lastname', 'users.middlename', 'grades.id as grade_id', 'grades.grade_name', 'terms.academic_session', 'users.active as users_active', 'grades_students.active as grades_student_active')
             ->get();
 

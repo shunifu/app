@@ -15,8 +15,9 @@
                 <div class="card-body">
                     <h3 class="lead">Hi, {{ Auth::user()->name }}</h3>
                     <div class="text-muted">
-                        <p class="card-text"> Use this section to migrate students to new academic session/year.<br>
-                            Students will be migrated to thier respective classes based on thier performance. 
+                        <p class="card-text"> Use this section to migrate students to the new academic year based on their academic performance in the previous academic year.
+                            <br>
+
                             <ul>
                                 <li>Those that <span class="text-bold">passed</span> in the previous academic year will proceed to the  class. </li>
                                 <li>Those that got <span class="text-bold">promoted</span> in the previous academic year will proceed to the  class. </li>
@@ -33,21 +34,21 @@ Please note that if you want to change a students status, please go back to Insi
 
             </div>
 
-     
+
 
             <form action="{{route('transition.store')}}" method="post" name="migration" id="migration_form">
                 @csrf
             <div class="card text-left">
-              
+
               <div class="card-body">
 
-            
-             
-                
+
+
+
              <table id="migration_table" class="table table-hover table-centered align-middle table-nowrap mb-0 table-responsive-md table-bordered" >
                     <thead class="thead-light">
                         <tr>
-                         
+
                             <th>Last Name</th>
                             <th>Name</th>
                             <th>Middlename</th>
@@ -55,32 +56,32 @@ Please note that if you want to change a students status, please go back to Insi
                             @if ($scope=="external")
                             <th>Migration Status</th>
                             @endif
-                          
-                                
-                           
+
+
+
                             <th>Next Class <i class="fas fa-info-circle " data-toggle="tooltip" data-placement="top" title="The class the student will migrate to when you click on Migrate Students"></th>
 
                                 @if ($scope=="internal")
                             <th>Result  <i class="fas fa-info-circle " data-toggle="tooltip" data-placement="top" title="If you want to change the result of the student, go to Insights Dashboard, then go Term Insights"></th>
                              @endif
-                             
-                            
+
+
                         </tr>
                     </thead>
 
 
                     @if ($scope=="internal")
-                        
-                   
-                   
+
+
+
                     <tbody class="response_data">
 
                         @foreach ($students as $item)
-                     
-                      
+
+
                         <tr>
-                         
-                     
+
+
                             <td>{{$item->lastname}}</td>
                             <td>{{$item->name}}</td>
                             <td>{{$item->middlename}}</td>
@@ -89,17 +90,17 @@ Please note that if you want to change a students status, please go back to Insi
                             <?php
                             $next_class_qry=\DB::select(\DB::raw("SELECT grades.id as origin_id, grades.grade_name as origin, b.grade_name as destination_class, b.id as destination_id FROM class_sequences INNER JOIN grades ON grades.id=class_sequences.origin INNER JOIN grades b ON b.id=class_sequences.destination where class_sequences.origin=".$item->grade_id.""));
 
-                           
+
 
                             foreach ($next_class_qry as $key) {
-                          
-                           
-                               
+
+
+
 
                                 if($item->result=="Repeat"){
                                     echo $key->origin;
                                     ?>
-                                    <input type="hidden" name="destination_class[]" value="{{$key->origin_id}}"> 
+                                    <input type="hidden" name="destination_class[]" value="{{$key->origin_id}}">
 
                                     <?php
                                 }
@@ -107,28 +108,28 @@ Please note that if you want to change a students status, please go back to Insi
                                 if( $item->result=="Try Another School"){
                                     echo "<strong>Akabuyi</strong>";
                                     ?>
-                                    <input type="hidden" name="destination_class[]" value="0"> 
+                                    <input type="hidden" name="destination_class[]" value="0">
 
                                     <?php
                                 }
-                                
-                                
+
+
 
                                 if($item->result=="Proceed" OR $item->result=="Promoted"){
                                     echo $key->destination_class;
                                     ?>
-                                    <input type="hidden" name="destination_class[]" value="{{$key->destination_id}}"> 
+                                    <input type="hidden" name="destination_class[]" value="{{$key->destination_id}}">
 
                                     <?php
                                 }
-                                   
-                                
-                            
-                               
+
+
+
+
                             }
                             ?>
                             </td>
-                            
+
 
                             <td>
 
@@ -147,72 +148,72 @@ Please note that if you want to change a students status, please go back to Insi
                         @if ($item->result=="Try Another School")
                         <span class="bg-gray"> {{$item->result}}</span>
                     @endif
-                                
+
                                </td>
-                          
-                            <input type="hidden" name="student_id[]" value="{{$item->student_id}}"> 
-                            <input type="hidden" name="student_name[]" value="{{$item->name}}"> 
-                            <input type="hidden" name="student_result[]" value="{{$item->result}}"> 
-                            <input type="hidden" name="from_session[]" value="{{$from_session}}"> 
-                            <input type="hidden" name="to_session[]" value="{{$to_session}}"> 
-                            <input type="hidden" name="current_class[]" value="{{$current_class}}"> 
+
+                            <input type="hidden" name="student_id[]" value="{{$item->student_id}}">
+                            <input type="hidden" name="student_name[]" value="{{$item->name}}">
+                            <input type="hidden" name="student_result[]" value="{{$item->result}}">
+                            <input type="hidden" name="from_session[]" value="{{$from_session}}">
+                            <input type="hidden" name="to_session[]" value="{{$to_session}}">
+                            <input type="hidden" name="current_class[]" value="{{$current_class}}">
                             <input type="hidden"  name="final_stream_status" value="{{$final_stream_status}}">
                             <input type="hidden"  name="scope" value="internal">
-                          
+
                         </tr>
                         @endforeach
                     </tbody>
                @elseif($scope=="external")
 
-              
-             
+
+
 
                <tbody class="response_data">
 
                    @foreach ($students as $item)
-                
-                 
+
+
                    <tr>
-                    
-                
+
+
                        <td>{{$item->lastname}}</td>
                        <td>{{$item->name}}</td>
                        <td>{{$item->middlename}}</td>
                        <td>{{$item->grade_name}}</td>
                        <td>
 
-                    
-                   
-                       
+
+
+
                         <select class="form-control" name="destination_class[]" required id="">
                             <option value="">Choose Class</option>
-                        
+
                             @foreach ($stream_sequence as $new_class)
                           <option value="{{$new_class->id}}">{{$new_class->grade_name}}</option>
                           @endforeach
                           <option value="0">Did not return</option>
                         </select>
-                     
-                     
-                      
+
+
+
                        </td>
-                       
+
 
                        <td>
 
-                        
-                           
+
+
                      </td>
-                     
-                       <input type="hidden" name="student_id[]" value="{{$item->student_id}}"> 
-                       <input type="hidden" name="student_name[]" value="{{$item->name}}"> 
-                       
-                       <input type="hidden" name="from_session[]" value="{{$from_session}}"> 
-                       <input type="hidden" name="to_session[]" value="{{$to_session}}"> 
-                       <input type="hidden" name="current_class[]" value="{{$current_class}}"> 
+
+                       <input type="hidden" name="student_id[]" value="{{$item->student_id}}">
+                       <input type="hidden" name="student_name[]" value="{{$item->name}}">
+
+                       <input type="hidden" name="from_session[]" value="{{$from_session}}">
+                       <input type="hidden" name="to_session[]" value="{{$to_session}}">
+                       <input type="hidden" name="current_class[]" value="{{$current_class}}">
                        <input type="hidden"  name="final_stream_status" value="{{$final_stream_status}}">
                        <input type="hidden"  name="scope" value="external">
-                     
+
                    </tr>
                    @endforeach
                </tbody>
@@ -220,7 +221,7 @@ Please note that if you want to change a students status, please go back to Insi
 
 
                @endif
-                
+
                 </table>
 
               </div>
@@ -260,7 +261,7 @@ Please note that if you want to change a students status, please go back to Insi
 
     </script>
 
-  
- 
+
+
 
 </x-app-layout>

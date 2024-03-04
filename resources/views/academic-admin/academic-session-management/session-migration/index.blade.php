@@ -28,7 +28,7 @@
             <li>Automatic Migration</li>
             <li>Custom Migration</li>
         </ul>
-        With automatic migration students will be automatically migrated by the system based on their performance in the previous academic year and sequence maps. On the other hand, with custom migration, you have the freedom to select the class the student(s) will be migrated to, without considering the sequence (stream or class) maps.
+        The system offers two options for migrating students. The first one is automatic migration where the system migrates students based on their performance in the previous academic year and sequence maps. The second option is custom migration, where you have the freedom to choose the class to which the student(s) will be migrated irrespective of the sequence (stream or class) maps.
         <hr>
 
      <div class="card-group">

@@ -13,7 +13,7 @@
 
           <hr>
          <div class="text-muted">
-          Hi, <span class="text-bold">{{Auth::user()->salutation}} {{Auth::user()->lastname}}</span>. Welcome to the  automatic student migration pathway.  This is where you will migrate students from  one academic year to another academic year, based on the student(s) academic performance and sequence maps . In order to migrate the students successfully, you need to first ensure that the following has been done properly. <p></p>
+          Hi, <span class="text-bold">{{Auth::user()->salutation}} {{Auth::user()->lastname}}</span>. Welcome to the  automatic student migration pathway.  This is where you will migrate students from  one academic year to another, based on their academic performance and sequence maps .  To ensure a successful migration, you need to ensure that the following has been done properly. <p></p>
 
           @include('partials.migration-checklist')
 

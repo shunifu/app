@@ -20,21 +20,21 @@ class TermController extends Controller
 
         $academic_session=AcademicSession::find($id);
 
-        
+
         $terms=DB::table('terms')
         ->join('academic_sessions','academic_sessions.id','=','terms.academic_session')
         ->where('academic_sessions.id', $id )
         ->select('terms.id as term_id', 'terms.term_name', 'terms.start_date','terms.end_date','terms.borders_return_date','terms.academic_session','terms.final_term','terms.next_term_date','academic_sessions.*')
         ->get();
 
-        
+
         return view('academic-admin.academic-session-management.terms.index', compact('academic_session', 'terms'));
 
     }
 
 
     public function create(){
-       
+
     }
 
     public function store(Request $request){
@@ -73,41 +73,41 @@ $term = Term::create([
 
 if(isset($request->final_term)){
 $reset=Term::where('final_term',1)->where('academic_session',$request->academic_session)->update([
-    'final_term'=>0      
+    'final_term'=>0
 ]);
 $update=Term::where('term_name',$request->term_name)->where('academic_session',$request->academic_session)->update([
-    'final_term'=>1       
+    'final_term'=>1
 ]);
 }
 flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Congratulations. You have successfully added term.', 'Add Term ');
-      
+
 return Redirect::back();
 
 
     }
 
     public function edit($id){
-      
+
         $term_id=decrypt($id);
-    
-      
-        
+
+
+
         $term=Term::find($term_id);
      return view('academic-admin.academic-session-management.terms.edit', compact('term'));
 
-  
+
 
     }
 
     public function update(Request $request){
 
-       
+    // dd($request->all());
 
 if(isset($request->final_term)){
-//remove where is 1
-$remove=Term::where('final_term', 1)->update([
-    "final_term"=>NULL,
 
+//Reset the final term status for that academic year
+$reset=Term::where('final_term',1)->where('academic_session',$request->academic_session)->update([
+    "final_term"=>NULL,
 ]);
 
 $final_term=1;
@@ -128,7 +128,7 @@ $final_term=1;
 
         ]);
 
-     
+
 
      if($update){
         flash()->overlay('<i class="fas fa-check-circle text-success"></i>'.' Success . Term has been successfully updated', 'Update Term ');
@@ -142,14 +142,14 @@ $final_term=1;
 
         $term_id=decrypt($term);
 
-     
-       
+
+
         //Checks
 
         //1. Check if the terms has been assigned assessments
         $existsInAssessements=Assessement::where('term_id', $term_id)->exists();
 
-        //2. Check if the terms has been assigned in ca_exams 
+        //2. Check if the terms has been assigned in ca_exams
         $existsInCa_Exams=CA_Exam::where('term_id', $term_id)->exists();
 
         //3. Check if the terms has been assigned in assessement_progress_reports
@@ -179,10 +179,10 @@ if ($existsInAssessements || $existsInCa_Exams || $existsInAssessementsProgressR
     return Redirect::back();
 
 
-    
+
 }else{
 
-  
+
     $TermExists=Term::where('id', $term_id)->exists();
 
     if($TermExists){
@@ -194,8 +194,8 @@ if ($existsInAssessements || $existsInCa_Exams || $existsInAssessementsProgressR
 
 
 
-   
-    
+
+
 }
 
     }
