@@ -1,16 +1,10 @@
-ARG ver=7.4
-FROM php:$ver-cli
-COPY --from=composer /usr/bin/composer /usr/bin/composer
-COPY composer.json composer.json
-RUN set -ex ; \
-    apt-get update ; \
-    apt-get install -y git zip ; \
-    composer -n validate --strict ; \
-    composer -n install --no-scripts --ignore-platform-reqs --no-dev
+FROM php:8.1
+RUN apt-get update -y && apt-get install -y openssl zip unzip git libonig-dev
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN docker-php-ext-install pdo
+WORKDIR /app
+COPY . /app
 
-ARG ver=7.4
-FROM php:$ver-apache
-RUN set -ex ; \
-    docker-php-ext-install pdo_mysql mysqli ; \
-    a2enmod rewrite
-COPY --from=0 vendor vendor
+RUN composer update
+CMD php artisan serve --host=0.0.0.0 --port=8181
+EXPOSE 8181
