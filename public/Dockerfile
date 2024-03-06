@@ -1,7 +1,21 @@
 FROM php:8.0.5-fpm-alpine
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
-WORKDIR /var/www
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+# Image config
+ENV SKIP_COMPOSER 1
+ENV WEBROOT /var/www/html/public
+ENV PHP_ERRORS_STDERR 1
+ENV RUN_SCRIPTS 1
+ENV REAL_IP_HEADER 1
+
+
+# Allow composer to run as root
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+
+
+WORKDIR /var/www/html/public
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
