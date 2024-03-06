@@ -1,17 +1,10 @@
-FROM php:8.2-fpm
-ARG user
-ARG uid
-RUN apt update && apt install -y \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev
-RUN apt clean && rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
-WORKDIR /var/www
-USER $user
+FROM php:8.0
+RUN apt-get update -y && apt-get install -y openssl zip unzip git libonig-dev
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN docker-php-ext-install pdo
+WORKDIR /app
+COPY . /app
+
+RUN composer update
+CMD php artisan serve --host=0.0.0.0 --port=8181
+EXPOSE 8181
