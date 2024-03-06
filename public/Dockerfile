@@ -1,7 +1,7 @@
 FROM ubuntu:latest AS base
 
 ENV DEBIAN_FRONTEND noninteractive
-
+ENV COMPOSER_ALLOW_SUPERUSER 1
 # Install dependencies
 RUN apt update
 RUN apt install -y software-properties-common
