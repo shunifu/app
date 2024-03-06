@@ -1,5 +1,6 @@
 FROM php:8.0.5-fpm-alpine
 
+ENV COMPOSER_ALLOW_SUPERUSER=1
 WORKDIR /var/www
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
